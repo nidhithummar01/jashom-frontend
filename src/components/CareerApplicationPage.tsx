@@ -46,7 +46,7 @@ export function CareerApplicationPage() {
   if (submitted) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#0B0F14' }}>
-        <SEO
+        <Seo
           title="Application Submitted | Jashom Careers"
           description="Your job application has been successfully submitted."
         />

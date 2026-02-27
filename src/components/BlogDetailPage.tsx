@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useParams, Link } from 'react-router-dom';
-import { SEO } from './SEO';
+import { SEO as Seo } from './SEO';
 import { Calendar } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getBlogBySlug } from '../api/blogs';
@@ -102,7 +102,7 @@ export function BlogDetailPage() {
 
   return (
     <div className="min-h-screen" style={{ background: '#0B0F14' }}>
-      <SEO
+      <Seo
         title={`${blog.title} | Jashom Blog`}
         description={blog.excerpt ?? blog.title}
         keywords={blog.tags ?? 'blog'}
@@ -148,7 +148,7 @@ export function BlogDetailPage() {
             className="text-xl mb-8 leading-relaxed"
             style={{ color: '#D1D5DB' }}
           >
-            {blog.excerpt || ''}
+            {blog.excerpt ?? ''}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -178,8 +178,13 @@ export function BlogDetailPage() {
               className="lg:col-span-8"
             >
               <article style={{ color: '#D1D5DB' }}>
-                {(blog.content_sections || []).map((sec: BlogContentSection, i: number) => (
-                  <BlogSection key={i} section={sec} index={i} slugifyId={slugifyId} />
+                {(blog.content_sections ?? []).map((sec: BlogContentSection, i: number) => (
+                  <BlogSection
+                    key={slugifyId(sec.title ?? 'section', i)}
+                    section={sec}
+                    index={i}
+                    slugifyId={slugifyId}
+                  />
                 ))}
               </article>
             </motion.div>
@@ -320,17 +325,19 @@ export function BlogDetailPage() {
   );
 }
 
+type BlogSectionProps = Readonly<{
+  section: BlogContentSection;
+  index: number;
+  slugifyId: (title: string, i: number) => string;
+}>;
+
 function BlogSection({
   section,
   index,
   slugifyId,
-}: {
-  section: BlogContentSection;
-  index: number;
-  slugifyId: (title: string, i: number) => string;
-}) {
-  const id = slugifyId(section.title || '', index);
-  const hasImages = section.images && section.images.length > 0;
+}: BlogSectionProps) {
+  const id = slugifyId(section.title ?? '', index);
+  const hasImages = !!section.images && section.images.length > 0;
 
   return (
     <div id={id} className="mb-16">
@@ -352,7 +359,7 @@ function BlogSection({
         </h2>
       )}
       <div className={hasImages ? 'grid grid-cols-1 md:grid-cols-2 gap-8 items-start' : ''}>
-        <div className={hasImages ? '' : ''}>
+        <div>
           {section.content && (
             <div
               className="blog-section-content"
@@ -361,13 +368,13 @@ function BlogSection({
             />
           )}
         </div>
-        {hasImages && (
+        {hasImages && section.images && (
           <div className="space-y-4 blog-detail-section-images">
-            {section.images!.map((img, i) => (
+            {section.images.map((img) => (
               <img
-                key={i}
+                key={`${img.url}-${img.alt ?? ''}`}
                 src={img.url}
-                alt={img.alt || ''}
+                alt={img.alt ?? ''}
                 className="blog-detail-img"
               />
             ))}

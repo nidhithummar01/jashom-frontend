@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { SEO } from './SEO';
+import { SEO as Seo } from './SEO';
 import { AnimatedCounter } from './AnimatedCounter';
 import { useEffect, useRef, useState } from 'react';
 import { getLatestInsights } from '../data/insightsData';
@@ -200,7 +199,7 @@ export function HomePage() {
 
   return (
     <>
-      <SEO
+      <Seo
         title="GPU Optimization Services & CUDA Development Company | Jashom"
         description="Jashom provides advanced GPU optimization, CUDA development, and high-performance computing solutions to accelerate AI, simulation, and enterprise workloads efficiently"
         keywords="GPU optimization, CUDA development, high-performance computing, AI acceleration, GPU consulting, CUDA experts"
@@ -847,9 +846,9 @@ export function HomePage() {
                             </div>
 
                             <div className="flex flex-wrap gap-1 mb-3">
-                              {project.tags.slice(0, 3).map((tag, idx) => (
+                              {project.tags.slice(0, 3).map((tag) => (
                                 <span
-                                  key={idx}
+                                  key={`${project.title}-${tag}`}
                                   className="px-2 py-0.5 rounded-md bg-white/5 border border-[#ffffff]/10 text-white/50 text-xs"
                                 >
                                   {tag}
@@ -1605,8 +1604,9 @@ export function HomePage() {
                     {/* Row 1: Name & Email */}
                     <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
                       <div>
-                        <label className="block text-white/90 mb-2 font-medium text-sm">Name *</label>
+                        <label htmlFor="home-contact-name" className="block text-white/90 mb-2 font-medium text-sm">Name *</label>
                         <input
+                          id="home-contact-name"
                           type="text"
                           name="name"
                           required
@@ -1620,8 +1620,9 @@ export function HomePage() {
                       </div>
 
                       <div>
-                        <label className="block text-white/90 mb-2 font-medium text-sm">Email *</label>
+                        <label htmlFor="home-contact-email" className="block text-white/90 mb-2 font-medium text-sm">Email *</label>
                         <input
+                          id="home-contact-email"
                           type="email"
                           name="email"
                           required
@@ -1638,8 +1639,9 @@ export function HomePage() {
                     {/* Row 2: Company & Phone */}
                     <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
                       <div>
-                        <label className="block text-white/90 mb-2 font-medium text-sm">Company</label>
+                        <label htmlFor="home-contact-company" className="block text-white/90 mb-2 font-medium text-sm">Company</label>
                         <input
+                          id="home-contact-company"
                           type="text"
                           name="company"
                           className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
@@ -1652,8 +1654,9 @@ export function HomePage() {
                       </div>
 
                       <div>
-                        <label className="block text-white/90 mb-2 font-medium text-sm">Phone</label>
+                        <label htmlFor="home-contact-phone" className="block text-white/90 mb-2 font-medium text-sm">Phone</label>
                         <input
+                          id="home-contact-phone"
                           type="tel"
                           name="phone"
                           className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
@@ -1668,8 +1671,9 @@ export function HomePage() {
 
                     {/* Row 3: Service Interest (Full Width) */}
                     <div>
-                      <label className="block text-white/90 mb-2 font-medium text-sm">Service Interest</label>
+                      <label htmlFor="home-contact-service" className="block text-white/90 mb-2 font-medium text-sm">Service Interest</label>
                       <select
+                        id="home-contact-service"
                         name="service"
                         className="w-full px-4 py-3 rounded-xl border text-white focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
                         style={{
@@ -1687,8 +1691,9 @@ export function HomePage() {
 
                     {/* Row 4: Message (Full Width) */}
                     <div>
-                      <label className="block text-white/90 mb-2 font-medium text-sm">Message *</label>
+                      <label htmlFor="home-contact-message" className="block text-white/90 mb-2 font-medium text-sm">Message *</label>
                       <textarea
+                        id="home-contact-message"
                         name="message"
                         required
                         rows={4}

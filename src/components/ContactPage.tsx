@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
-import { Helmet } from 'react-helmet-async';
-import { SEO } from './SEO';
-import { Mail, Phone, MapPin, ChevronDown } from 'lucide-react';
+import { SEO as Seo } from './SEO';
+import { Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +15,6 @@ export function ContactPage() {
   });
 
   const [focusedField, setFocusedField] = useState<string | null>(null);
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -53,7 +51,7 @@ export function ContactPage() {
 
   return (
     <>
-      <SEO
+      <Seo
         title="Contact Jashom | GPU & CUDA Development Consultation"
         description="Get in touch with Jashom for expert GPU optimization and CUDA development services. Contact our team to discuss your performance challenges and project requirements"
         keywords="contact Jashom, GPU consultation, CUDA development inquiry, AI consulting"
@@ -459,7 +457,7 @@ export function ContactPage() {
                   <div className="lg:col-span-8 space-y-3">
                     {faqs.map((faq, index) => (
                       <motion.div
-                        key={index}
+                        key={faq.question}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}

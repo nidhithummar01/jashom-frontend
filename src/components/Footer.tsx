@@ -105,14 +105,17 @@ export function Footer() {
               </div>
 
               {/* Map */}
-              <div 
-                className="w-full rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=414+Satyam-2+Amba+Business+Park+ATPL+Adalaj+Gujarat+India"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] block"
                 style={{
                   border: '1px solid rgba(16, 185, 129, 0.2)',
                   boxShadow: '0 4px 20px rgba(16, 185, 129, 0.1)',
                   height: '140px'
                 }}
-                onClick={() => window.open('https://www.google.com/maps/search/?api=1&query=414+Satyam-2+Amba+Business+Park+ATPL+Adalaj+Gujarat+India', '_blank')}
+                aria-label="Open Jashom office location in Google Maps"
               >
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3667.234!2d72.5840!3d23.1645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDA5JzUyLjIiTiA3MsKwMzUnMDIuNCJF!5e0!3m2!1sen!2sin!4v1707734400000!5m2!1sen!2sin&z=16&gestureHandling=none&maptype=roadmap&style=feature:all|element:geometry|color:0x212121&style=feature:all|element:labels.icon|visibility:off&style=feature:all|element:labels.text.fill|color:0x757575&style=feature:all|element:labels.text.stroke|color:0x212121&style=feature:administrative|element:geometry|color:0x757575&style=feature:landscape|element:geometry|color:0x212121&style=feature:poi|element:geometry|color:0x212121&style=feature:road|element:geometry.fill|color:0x2c2c2c&style=feature:road|element:labels.text.fill|color:0x8a8a8a&style=feature:road.arterial|element:geometry|color:0x373737&style=feature:road.highway|element:geometry|color:0x3c3c3c&style=feature:road.highway.controlled_access|element:geometry|color:0x4e4e4e&style=feature:road.local|element:labels.text.fill|color:0x616161&style=feature:transit|element:labels.text.fill|color:0x757575&style=feature:water|element:geometry|color:0x000000&style=feature:water|element:labels.text.fill|color:0x3d3d3d"
@@ -124,7 +127,7 @@ export function Footer() {
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Jashom Office Location"
                 />
-              </div>
+              </a>
             </div>
           </div>
 

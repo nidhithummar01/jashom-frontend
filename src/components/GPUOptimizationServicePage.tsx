@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
-import { Helmet } from 'react-helmet-async';
-import { SEO } from './SEO';
+import { SEO as Seo } from './SEO';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,7 +28,7 @@ export function GPUOptimizationServicePage() {
   };
   return (
     <div className="min-h-screen" style={{ background: '#0B0F14' }}>
-      <SEO
+      <Seo
         title="NVIDIA GPU Optimization Services | Optimize NVIDIA GPU Performance"
         description="Improve speed and efficiency with expert NVIDIA GPU optimization services. We help businesses optimize NVIDIA GPU performance for AI, HPC, and data-intensive applications."
         keywords="GPU optimization, NVIDIA GPU, GPU performance, AI acceleration, HPC optimization"

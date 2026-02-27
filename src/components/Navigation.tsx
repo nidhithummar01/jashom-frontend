@@ -53,13 +53,13 @@ function NavDropdown({
   activeDropdown,
   setActiveDropdown,
   handleLinkClick,
-}: {
+}: Readonly<{
   item: NavDropdownItem;
   location: { pathname: string };
   activeDropdown: string | null;
   setActiveDropdown: (s: string | null) => void;
   handleLinkClick: () => void;
-}) {
+}>) {
   const isOpen = activeDropdown === item.label;
   const isHireExpert = item.label === 'Hire Expert';
   const containerClasses = `absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 border border-white/25 rounded-lg shadow-xl py-2 backdrop-blur-xl ${
@@ -115,7 +115,7 @@ function NavLinkBlock({
   handleLinkClick,
   light,
   contactOutline,
-}: NavLinkBlockProps) {
+}: Readonly<NavLinkBlockProps>) {
   const { textClass, activeText, indicatorClass, outlineClass } = getNavClasses(light, contactOutline);
 
   const isDropdownItem = isDropdown(item);
@@ -134,15 +134,17 @@ function NavLinkBlock({
       className="relative"
     >
       {isDropdownItem ? (
-        <div
-          className="relative"
-          onMouseEnter={() => setActiveDropdown(item.label)}
-          onMouseLeave={() => setActiveDropdown(null)}
-        >
+        <div className="relative">
           <button
             type="button"
             className={`flex items-center gap-1 whitespace-nowrap font-medium leading-normal ${textClass} transition-colors cursor-pointer ${outlineClass}`}
             style={{ fontSize: '1rem' }}
+            aria-haspopup="true"
+            aria-expanded={activeDropdown === item.label}
+            onMouseEnter={() => setActiveDropdown(item.label)}
+            onClick={() =>
+              setActiveDropdown(activeDropdown === item.label ? null : item.label)
+            }
           >
             <motion.span
               whileHover={{ scale: 1.1 }}

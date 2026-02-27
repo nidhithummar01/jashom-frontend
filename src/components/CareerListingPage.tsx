@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { SEO } from './SEO';
+import { SEO as Seo } from './SEO';
 import { useState } from 'react';
 import { careers, getAllDepartments } from '../data/careersData';
 import { MapPin, Clock, Users, ArrowRight } from 'lucide-react';
@@ -15,7 +15,7 @@ export function CareerListingPage() {
 
   return (
     <div className="min-h-screen" style={{ background: '#000000' }}>
-      <SEO
+      <Seo
         title="Job Openings at Jashom | Explore Opportunities"
         description="Explore current job openings at Jashom. Join our team of innovators building the future of AI and GPU computing."
         keywords="job openings, careers, AI jobs, CUDA developer jobs, machine learning jobs, remote jobs"
@@ -435,9 +435,9 @@ export function CareerListingPage() {
                           Requirements
                         </h4>
                         <ul className="space-y-3">
-                          {career.requirements.slice(0, 4).map((item, idx) => (
+                          {career.requirements.slice(0, 4).map((item) => (
                             <li
-                              key={idx}
+                              key={`${career.id}-req-${item}`}
                               className="flex items-start gap-3 text-sm"
                               style={{ color: '#D1D5DB', lineHeight: 1.6 }}
                             >
@@ -460,9 +460,9 @@ export function CareerListingPage() {
                           Benefits
                         </h4>
                         <ul className="space-y-3">
-                          {career.benefits.slice(0, 4).map((item, idx) => (
+                          {career.benefits.slice(0, 4).map((item) => (
                             <li
-                              key={idx}
+                              key={`${career.id}-benefit-${item}`}
                               className="flex items-start gap-3 text-sm"
                               style={{ color: '#D1D5DB', lineHeight: 1.6 }}
                             >

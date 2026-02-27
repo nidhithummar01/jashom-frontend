@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
 import { GlassCard } from '../GlassCard';
-import { Helmet } from 'react-helmet-async';
 import { SEO } from '../SEO';
 import { Linkedin } from 'lucide-react';
 

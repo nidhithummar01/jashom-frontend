@@ -1,9 +1,8 @@
 import { motion } from 'motion/react';
-import { Helmet } from 'react-helmet-async';
 import { Award, Zap, DollarSign, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SEO } from './SEO';
+import { SEO as Seo } from './SEO';
 
 export function HireCudaDeveloperPage() {
   const navigate = useNavigate();
@@ -31,7 +30,7 @@ export function HireCudaDeveloperPage() {
 
   return (
     <>
-      <SEO
+      <Seo
         title="Hire CUDA Developers | Dedicated CUDA Programmers & GPU Experts"
         description="Looking to hire CUDA developers? Get skilled GPU programmers for NVIDIA CUDA projects, performance optimization, and custom parallel computing solutions."
         keywords="hire CUDA developers, CUDA programmers, GPU experts, NVIDIA CUDA, parallel computing"
