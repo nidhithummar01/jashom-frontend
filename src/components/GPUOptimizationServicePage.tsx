@@ -1,21 +1,19 @@
 import { motion } from 'motion/react';
 import { SEO as Seo } from './SEO';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SECTION_BG = '#0B0F14';
 const CARD_BG_LIGHT = '#f5f5f5';
 const BORDER_SUBTLE = 'rgba(255, 255, 255, 0.08)';
 const BENEFIT_CARD_BG = 'rgba(16, 185, 129, 0.05)';
+const BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba(16, 185, 129, 0.25)' } as const;
+const CHEVRON_DOWN_D = 'M19 9l-7 7-7-7';
 
-const CheckIcon = () => (
-  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
-const CheckIconLarge = () => (
-  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+const CHECK_PATH = 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z';
+const CheckIcon = ({ size = 'sm' }: { size?: 'sm' | 'lg' }) => (
+  <svg className={size === 'lg' ? 'w-6 h-6 text-white' : 'w-5 h-5 text-white'} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={CHECK_PATH} />
   </svg>
 );
 const QuoteIcon = () => (
@@ -81,6 +79,37 @@ const aiModelsData = [
 
 const formInputClass = 'w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all';
 const formInputStyle = { background: 'rgba(255, 255, 255, 0.06)', borderColor: 'rgba(255, 255, 255, 0.1)' } as const;
+
+const formFieldsConfig: { name: 'name' | 'email' | 'company' | 'phone' | 'message'; label: string; type: 'text' | 'email' | 'tel' | 'textarea'; placeholder: string; required?: boolean; rows?: number }[] = [
+  { name: 'name', label: 'Full Name *', type: 'text', placeholder: 'John Doe', required: true },
+  { name: 'email', label: 'Email Address *', type: 'email', placeholder: 'john@company.com', required: true },
+  { name: 'company', label: 'Company Name', type: 'text', placeholder: 'Your Company' },
+  { name: 'phone', label: 'Phone Number', type: 'tel', placeholder: '+1 (555) 000-0000' },
+  { name: 'message', label: 'Project Details *', type: 'textarea', placeholder: 'Tell us about your GPU optimization needs...', required: true, rows: 4 },
+];
+
+const OFFICE_ICON_BG = { background: 'rgba(16, 185, 129, 0.15)' } as const;
+const officeCardsData: { title: string; type: 'address' | 'email' | 'phone'; content: React.ReactNode; href?: string; subtitle?: string }[] = [
+  {
+    title: 'Address',
+    type: 'address',
+    content: <>414, Satyam-2, Amba Business Park,<br />ATPL, Adalaj, Gujarat,<br />India - 380054</>,
+  },
+  {
+    title: 'Email',
+    type: 'email',
+    content: 'info@jashom.com',
+    href: 'mailto:info@jashom.com',
+    subtitle: 'We respond within 24 hours',
+  },
+  {
+    title: 'Phone',
+    type: 'phone',
+    content: '+91 90239 06363',
+    href: 'tel:+919023906363',
+    subtitle: 'Mon-Fri, 9AM-6PM IST',
+  },
+];
 const officeCardStyle = { background: 'rgba(17, 24, 39, 0.6)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(14px)' } as const;
 
 export function GPUOptimizationServicePage() {
@@ -650,7 +679,7 @@ export function GPUOptimizationServicePage() {
                 style={{ borderColor: 'rgba(16, 185, 129, 0.3)' }}
               >
                 <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                  <CheckIconLarge />
+                  <CheckIcon size="lg" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
@@ -753,7 +782,7 @@ export function GPUOptimizationServicePage() {
                     <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
                       <h3 className="text-lg font-semibold text-white pr-4">{item.q}</h3>
                       <svg className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={CHEVRON_DOWN_D} />
                       </svg>
                     </summary>
                     <div className="px-6 pt-2 pb-8">
@@ -780,10 +809,7 @@ export function GPUOptimizationServicePage() {
             >
               <motion.div
                 className="inline-block mb-6 px-4 py-2 rounded-full border"
-                style={{
-                  background: 'rgba(16, 185, 129, 0.08)',
-                  borderColor: 'rgba(16, 185, 129, 0.25)'
-                }}
+                style={BADGE_STYLE}
               >
                 <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>Get In Touch</span>
               </motion.div>
@@ -844,84 +870,37 @@ export function GPUOptimizationServicePage() {
                 }}
               >
                 <form style={{ display: 'flex', flexDirection: 'column', gap: '28px' }} onSubmit={handleSubmit}>
-                  {/* Row 1: Name & Email */}
                   <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
-                    <div>
-                      <label htmlFor="gpuopt-name" className="block text-white/90 mb-2 font-medium text-sm">Full Name *</label>
-                      <input
-                        type="text"
-                        id="gpuopt-name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className={formInputClass}
-                        style={formInputStyle}
-                        placeholder="John Doe"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="gpuopt-email" className="block text-white/90 mb-2 font-medium text-sm">Email Address *</label>
-                      <input
-                        type="email"
-                        id="gpuopt-email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className={formInputClass}
-                        style={formInputStyle}
-                        placeholder="john@company.com"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Row 2: Company & Phone */}
-                  <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
-                    <div>
-                      <label htmlFor="gpuopt-company" className="block text-white/90 mb-2 font-medium text-sm">Company Name</label>
-                      <input
-                        type="text"
-                        id="gpuopt-company"
-                        name="company"
-                        value={formData.company}
-                        onChange={handleChange}
-                        className={formInputClass}
-                        style={formInputStyle}
-                        placeholder="Your Company"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="gpuopt-phone" className="block text-white/90 mb-2 font-medium text-sm">Phone Number</label>
-                      <input
-                        type="tel"
-                        id="gpuopt-phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className={formInputClass}
-                        style={formInputStyle}
-                        placeholder="+1 (555) 000-0000"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Row 3: Message (Full Width) */}
-                  <div>
-                    <label htmlFor="gpuopt-message" className="block text-white/90 mb-2 font-medium text-sm">Project Details *</label>
-                    <textarea
-                      id="gpuopt-message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={4}
-                      className={`${formInputClass} resize-none`}
-                      style={formInputStyle}
-                      placeholder="Tell us about your GPU optimization needs..."
-                    />
+                    {formFieldsConfig.map((field) => (
+                      <div key={field.name} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
+                        <label htmlFor={`gpuopt-${field.name}`} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
+                        {field.type === 'textarea' ? (
+                          <textarea
+                            id={`gpuopt-${field.name}`}
+                            name={field.name}
+                            value={formData[field.name]}
+                            onChange={handleChange}
+                            required={field.required}
+                            rows={field.rows ?? 4}
+                            className={`${formInputClass} resize-none`}
+                            style={formInputStyle}
+                            placeholder={field.placeholder}
+                          />
+                        ) : (
+                          <input
+                            type={field.type}
+                            id={`gpuopt-${field.name}`}
+                            name={field.name}
+                            value={formData[field.name]}
+                            onChange={handleChange}
+                            required={field.required}
+                            className={formInputClass}
+                            style={formInputStyle}
+                            placeholder={field.placeholder}
+                          />
+                        )}
+                      </div>
+                    ))}
                   </div>
 
                   {/* Submit Button */}
@@ -964,63 +943,34 @@ export function GPUOptimizationServicePage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Address */}
-                <div
-                  className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105"
-                  style={officeCardStyle}
-                >
-                  <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden" style={{ background: 'rgba(16, 185, 129, 0.15)' }}>
-                    <img
-                      src="/images/inidan.flag.jpg"
-                      alt="India Flag"
-                      className="w-full h-full object-cover"
-                    />
+                {officeCardsData.map((card) => (
+                  <div
+                    key={card.title}
+                    className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105"
+                    style={officeCardStyle}
+                  >
+                    <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden" style={OFFICE_ICON_BG}>
+                      {card.type === 'address' ? (
+                        <img src="/images/inidan.flag.jpg" alt="India Flag" className="w-full h-full object-cover" />
+                      ) : card.type === 'email' ? (
+                        <svg className="w-6 h-6 text-[#10B981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      ) : (
+                        <svg className="w-6 h-6 text-[#10B981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                      )}
+                    </div>
+                    <h4 className="text-lg font-semibold mb-3" style={{ color: '#FAFAFA' }}>{card.title}</h4>
+                    {card.href ? (
+                      <a href={card.href} className="text-sm inline-block text-[#10B981] hover:text-[#059669] transition-colors">{card.content}</a>
+                    ) : (
+                      <p className="text-sm leading-relaxed" style={{ color: '#9CA3AF' }}>{card.content}</p>
+                    )}
+                    {card.subtitle && <p className="text-xs mt-3" style={{ color: '#6B7280' }}>{card.subtitle}</p>}
                   </div>
-                  <h4 className="text-lg font-semibold mb-3" style={{ color: '#FAFAFA' }}>Address</h4>
-                  <p className="text-sm leading-relaxed" style={{ color: '#9CA3AF' }}>
-                    414, Satyam-2, Amba Business Park,<br />
-                    ATPL, Adalaj, Gujarat,<br />
-                    India - 380054
-                  </p>
-                </div>
-
-                {/* Email */}
-                <div
-                  className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105"
-                  style={officeCardStyle}
-                >
-                  <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: 'rgba(16, 185, 129, 0.15)' }}>
-                    <svg className="w-6 h-6 text-[#10B981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-3" style={{ color: '#FAFAFA' }}>Email</h4>
-                  <a href="mailto:info@jashom.com" className="text-sm inline-block text-[#10B981] hover:text-[#059669] transition-colors">
-                    info@jashom.com
-                  </a>
-                  <p className="text-xs mt-3" style={{ color: '#6B7280' }}>
-                    We respond within 24 hours
-                  </p>
-                </div>
-
-                {/* Phone */}
-                <div
-                  className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105"
-                  style={officeCardStyle}
-                >
-                  <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: 'rgba(16, 185, 129, 0.15)' }}>
-                    <svg className="w-6 h-6 text-[#10B981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-3" style={{ color: '#FAFAFA' }}>Phone</h4>
-                  <a href="tel:+919023906363" className="text-sm inline-block text-[#10B981] hover:text-[#059669] transition-colors">
-                    +91 90239 06363
-                  </a>
-                  <p className="text-xs mt-3" style={{ color: '#6B7280' }}>
-                    Mon-Fri, 9AM-6PM IST
-                  </p>
-                </div>
+                ))}
               </div>
             </motion.div>
 

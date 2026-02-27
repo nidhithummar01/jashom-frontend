@@ -68,6 +68,57 @@ const whyChooseBenefitsData: { title: string; description: string; pathD?: strin
 
 const BENEFIT_CARD_STYLE = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)' };
 const BENEFIT_ICON_BOX_STYLE = { background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)' };
+const BADGE_FAQ = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.2)' } as const;
+const FAQ_ITEM_STYLE = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)' } as const;
+const CHEVRON_DOWN_D = 'M19 9l-7 7-7-7';
+const REVIEW_CARD_STYLE = { background: '#FFFFFF', borderColor: 'rgba(16, 185, 129, 0.2)' } as const;
+const STAR_PATH_D = 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z';
+const VERIFIED_BADGE_STYLE = { background: '#E8F5E9' } as const;
+const VERIFIED_TEXT_STYLE = { color: '#2E7D32' } as const;
+const ENGAGEMENT_CARD_BG = 'rgba(16, 185, 129, 0.05)';
+const RELATED_SERVICE_CARD_STYLE = { background: '#2a2a2a', border: '1px solid #3a3a3a' } as const;
+const RELATED_SERVICE_BTN_STYLE = { background: '#10B981', color: '#FFFFFF' } as const;
+const HIRE_FORM_INPUT_STYLE = { background: '#1F2937', borderColor: 'rgba(16, 185, 129, 0.3)', color: '#FAFAFA' } as const;
+
+const reviewsData: { quote: string; author: string; filledStars: number }[] = [
+  { quote: '"Our GPU workloads were dramatically improved after working with this team. Their CUDA optimization strategy enhanced throughput and reduced system latency beyond expectations."', author: 'CTO, AI Solutions Firm', filledStars: 5 },
+  { quote: '"Their way of doing things in parallel contributed to us being able to meet our tight performance deadlines. Very well acquainted and technologically reliable."', author: 'VP Engineering, Data Platform Company', filledStars: 5 },
+  { quote: '"The extraordinary knowledge of CUDA architecture. They assisted us in moving away the CPU-bound systems to scalable GPU infrastructure quickly."', author: 'Lead ML Engineer, Tech Startup', filledStars: 5 },
+  { quote: '"Effective communication, good performance, and quantifiable performance benefits. They used their graphics prowess to enhance our analytics engine."', author: 'Director of Technology', filledStars: 4 },
+  { quote: '"The team provided CUDA versions that were optimized and that reduced the training time of our AI models by a large margin."', author: 'Head of AI Research', filledStars: 5 },
+  { quote: '"Professional, responsive, and highly skilled in GPU computing. We achieved performance milestones much faster than anticipated."', author: 'Product Engineering Manager', filledStars: 5 },
+];
+
+const faqData: { q: string; a: string }[] = [
+  { q: 'Why should I hire a dedicated CUDA developer instead of a general developer?', a: 'The CUDA developers are experts in the domain of the architecture of the GPUs, parallel computing, and optimization of performance. They reorganize algorithms with a specific execution in the GPU and provide much faster and more efficient performance in comparison to the general-purpose programming methods.' },
+  { q: 'What types of projects require CUDA development expertise?', a: 'AI/ML training, real-time data analytics, scientific simulations, computer vision, video processing, high-performance computing (HPC), and additional applications that rely on the acceleration provided by a graphics card are all applications that need CUDA skills.' },
+  { q: 'How do CUDA developers improve application performance?', a: 'They enhance the execution of the kernel, thread setup, memory, and the transfer of data between the CPU and the GPU. They remove bottlenecks and maximize throughput using profiling tools to get measurable performance improvements.' },
+  { q: 'Can you optimize an existing GPU or CUDA-based application?', a: 'Of course. Our CUDA team developers will examine existing implementations, uncover inefficiencies, and implement special-purpose optimization to achieve faster execution speed, scalability, and system stability.' },
+  { q: 'Do you support multi-GPU or distributed GPU environments?', a: 'Yes. Our work is scalable multi-GPU designs, where each workload is placed on multiple processors and devices communicate in a more efficient and optimal way to provide the performance of an enterprise.' },
+  { q: 'What hiring models are available for CUDA developers?', a: "You can hire CUDA developers on a full-time basis, part-time basis, hourly basis (time and material), and various other custom ability basis according to your project scope and performance needs." },
+];
+
+const getStartedFeaturesData: { title: string; description: string; pathD: string }[] = [
+  { title: 'Quick Response', description: 'We respond to all inquiries within 24 hours', pathD: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
+  { title: 'No Obligation', description: 'Free consultation with no commitment required', pathD: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
+  { title: 'Expert Matching', description: "We'll match you with developers suited to your project", pathD: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' },
+];
+
+const relatedServicesData = [
+  { title: 'GPU Optimization Service', description: 'Finetune your GPU workloads for maximum speed and efficiency, eliminating bottlenecks and maximizing resource utilization.', href: '/gpu-optimization-service' },
+  { title: 'CUDA Development Service', description: 'Build high-performance parallel applications with expert CUDA development tailored for speed, scalability and precision.', href: '/cuda-development-service' },
+];
+
+const hireFormFieldsConfig: { name: 'name' | 'email' | 'company' | 'phone' | 'hiringModel' | 'message'; label: string; type: 'text' | 'email' | 'tel' | 'select' | 'textarea'; placeholder?: string; required?: boolean; rows?: number; options?: { value: string; label: string }[] }[] = [
+  { name: 'name', label: 'Full Name *', type: 'text', placeholder: 'John Doe', required: true },
+  { name: 'email', label: 'Email Address *', type: 'email', placeholder: 'john@company.com', required: true },
+  { name: 'phone', label: 'Phone Number', type: 'tel', placeholder: '+1 (555) 000-0000' },
+  { name: 'company', label: 'Company Name', type: 'text', placeholder: 'Your Company' },
+  { name: 'hiringModel', label: 'Preferred Hiring Model *', type: 'select', required: true, options: [{ value: '', label: 'Select a hiring model' }, { value: 'hourly', label: 'Hourly Basis' }, { value: 'monthly', label: 'Monthly Basis' }, { value: 'fixed', label: 'Fixed Price Project' }, { value: 'not-sure', label: 'Not Sure Yet' }] },
+  { name: 'message', label: 'Project Requirements *', type: 'textarea', placeholder: 'Tell us about your project, timeline, and specific CUDA expertise needed...', required: true, rows: 4 },
+];
+
+const FEATURE_ICON_BOX_STYLE = { background: 'rgba(16, 185, 129, 0.1)' } as const;
 
 export function HireCudaDeveloperPage() {
   const navigate = useNavigate();
@@ -76,20 +127,16 @@ export function HireCudaDeveloperPage() {
     email: '',
     company: '',
     phone: '',
-    projectDetails: ''
+    hiringModel: '',
+    message: ''
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Redirect to thank you page
     navigate('/thank-you/');
   };
 
@@ -330,8 +377,8 @@ export function HireCudaDeveloperPage() {
                     <div className="flex-shrink-0">
                       <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: EXPERTISE_ICON_BG }}>
                         <svg className="w-8 h-8" style={{ color: EXPERTISE_ICON_COLOR }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          {item.pathDs.map((d, j) => (
-                            <path key={j} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={d} />
+                          {item.pathDs.map((d) => (
+                            <path key={d} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={d} />
                           ))}
                         </svg>
                       </div>
@@ -466,7 +513,7 @@ export function HireCudaDeveloperPage() {
                   <motion.div
                     key={model.title}
                     className="rounded-2xl p-8"
-                    style={{ background: 'rgba(16, 185, 129, 0.05)' }}
+                    style={{ background: ENGAGEMENT_CARD_BG }}
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -637,7 +684,7 @@ export function HireCudaDeveloperPage() {
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth={star === 5 ? 2 : 0}
-                          d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                          d={STAR_PATH_D}
                         />
                       </svg>
                     ))}
@@ -652,280 +699,36 @@ export function HireCudaDeveloperPage() {
 
               {/* 6 Review Cards - 3x2 Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                {/* Review 1 */}
-                <motion.div
-                  className="rounded-xl p-6 border"
-                  style={{ background: '#FFFFFF', borderColor: 'rgba(16, 185, 129, 0.2)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  {/* Stars */}
-                  <div className="flex items-center gap-1 mb-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <svg
-                        key={star}
-                        className="w-5 h-5"
-                        fill="#10B981"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                      </svg>
-                    ))}
-                  </div>
-
-                  {/* Quote */}
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#9E9E9E' }}>
-                    "Our GPU workloads were dramatically improved after working with this team. Their CUDA optimization strategy enhanced throughput and reduced system latency beyond expectations."
-                  </p>
-
-                  {/* Author */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div>
-                        <div className="font-semibold text-sm" style={{ color: '#000000' }}>CTO, AI Solutions Firm</div>
+                {reviewsData.map((review, i) => (
+                  <motion.div
+                    key={review.author}
+                    className="rounded-xl p-6 border"
+                    style={REVIEW_CARD_STYLE}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                  >
+                    <div className="flex items-center gap-1 mb-4">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <svg key={star} className="w-5 h-5" fill={star <= review.filledStars ? '#10B981' : 'none'} stroke={star > review.filledStars ? '#10B981' : 'none'} strokeWidth={2} viewBox="0 0 24 24">
+                          <path d={STAR_PATH_D} />
+                        </svg>
+                      ))}
+                    </div>
+                    <p className="text-sm leading-relaxed mb-4" style={{ color: '#9E9E9E' }}>{review.quote}</p>
+                    <div className="flex items-center justify-between">
+                      <div className="font-semibold text-sm" style={{ color: '#000000' }}>{review.author}</div>
+                      <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={VERIFIED_BADGE_STYLE}>
+                        <svg className="w-4 h-4" style={VERIFIED_TEXT_STYLE} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={2} />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
+                        </svg>
+                        <span className="text-xs font-medium" style={VERIFIED_TEXT_STYLE}>Verified</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={{ background: '#E8F5E9' }}>
-                      <svg className="w-4 h-4" style={{ color: '#2E7D32' }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={2} />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
-                      </svg>
-                      <span className="text-xs font-medium" style={{ color: '#2E7D32' }}>Verified</span>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Review 2 */}
-                <motion.div
-                  className="rounded-xl p-6 border"
-                  style={{ background: '#FFFFFF', borderColor: 'rgba(16, 185, 129, 0.2)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  {/* Stars */}
-                  <div className="flex items-center gap-1 mb-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <svg
-                        key={star}
-                        className="w-5 h-5"
-                        fill="#10B981"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                      </svg>
-                    ))}
-                  </div>
-
-                  {/* Quote */}
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#9E9E9E' }}>
-                    "Their way of doing things in parallel contributed to us being able to meet our tight performance deadlines. Very well acquainted and technologically reliable."
-                  </p>
-
-                  {/* Author */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div>
-                        <div className="font-semibold text-sm" style={{ color: '#000000' }}>VP Engineering, Data Platform Company</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={{ background: '#E8F5E9' }}>
-                      <svg className="w-4 h-4" style={{ color: '#2E7D32' }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={2} />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
-                      </svg>
-                      <span className="text-xs font-medium" style={{ color: '#2E7D32' }}>Verified</span>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Review 3 */}
-                <motion.div
-                  className="rounded-xl p-6 border"
-                  style={{ background: '#FFFFFF', borderColor: 'rgba(16, 185, 129, 0.2)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  {/* Stars */}
-                  <div className="flex items-center gap-1 mb-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <svg
-                        key={star}
-                        className="w-5 h-5"
-                        fill="#10B981"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                      </svg>
-                    ))}
-                  </div>
-
-                  {/* Quote */}
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#9E9E9E' }}>
-                    "The extraordinary knowledge of CUDA architecture. They assisted us in moving away the CPU-bound systems to scalable GPU infrastructure quickly."
-                  </p>
-
-                  {/* Author */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div>
-                        <div className="font-semibold text-sm" style={{ color: '#000000' }}>Lead ML Engineer, Tech Startup</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={{ background: '#E8F5E9' }}>
-                      <svg className="w-4 h-4" style={{ color: '#2E7D32' }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={2} />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
-                      </svg>
-                      <span className="text-xs font-medium" style={{ color: '#2E7D32' }}>Verified</span>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Review 4 */}
-                <motion.div
-                  className="rounded-xl p-6 border"
-                  style={{ background: '#FFFFFF', borderColor: 'rgba(16, 185, 129, 0.2)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                  {/* Stars */}
-                  <div className="flex items-center gap-1 mb-4">
-                    {[1, 2, 3, 4].map((star) => (
-                      <svg
-                        key={star}
-                        className="w-5 h-5"
-                        fill="#10B981"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                      </svg>
-                    ))}
-                    <svg className="w-5 h-5" fill="none" stroke="#10B981" strokeWidth={2} viewBox="0 0 24 24">
-                      <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                    </svg>
-                  </div>
-
-                  {/* Quote */}
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#9E9E9E' }}>
-                    "Effective communication, good performance, and quantifiable performance benefits. They used their graphics prowess to enhance our analytics engine."
-                  </p>
-
-                  {/* Author */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div>
-                        <div className="font-semibold text-sm" style={{ color: '#000000' }}>Director of Technology</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={{ background: '#E8F5E9' }}>
-                      <svg className="w-4 h-4" style={{ color: '#2E7D32' }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={2} />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
-                      </svg>
-                      <span className="text-xs font-medium" style={{ color: '#2E7D32' }}>Verified</span>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Review 5 */}
-                <motion.div
-                  className="rounded-xl p-6 border"
-                  style={{ background: '#FFFFFF', borderColor: 'rgba(16, 185, 129, 0.2)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                >
-                  {/* Stars */}
-                  <div className="flex items-center gap-1 mb-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <svg
-                        key={star}
-                        className="w-5 h-5"
-                        fill="#10B981"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                      </svg>
-                    ))}
-                  </div>
-
-                  {/* Quote */}
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#9E9E9E' }}>
-                    "The team provided CUDA versions that were optimized and that reduced the training time of our AI models by a large margin."
-                  </p>
-
-                  {/* Author */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div>
-                        <div className="font-semibold text-sm" style={{ color: '#000000' }}>Head of AI Research</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={{ background: '#E8F5E9' }}>
-                      <svg className="w-4 h-4" style={{ color: '#2E7D32' }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={2} />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
-                      </svg>
-                      <span className="text-xs font-medium" style={{ color: '#2E7D32' }}>Verified</span>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Review 6 */}
-                <motion.div
-                  className="rounded-xl p-6 border"
-                  style={{ background: '#FFFFFF', borderColor: 'rgba(16, 185, 129, 0.2)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
-                >
-                  {/* Stars */}
-                  <div className="flex items-center gap-1 mb-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <svg
-                        key={star}
-                        className="w-5 h-5"
-                        fill="#10B981"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                      </svg>
-                    ))}
-                  </div>
-
-                  {/* Quote */}
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#9E9E9E' }}>
-                    "Professional, responsive, and highly skilled in GPU computing. We achieved performance milestones much faster than anticipated."
-                  </p>
-
-                  {/* Author */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div>
-                        <div className="font-semibold text-sm" style={{ color: '#000000' }}>Product Engineering Manager</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={{ background: '#E8F5E9' }}>
-                      <svg className="w-4 h-4" style={{ color: '#2E7D32' }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={2} />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
-                      </svg>
-                      <span className="text-xs font-medium" style={{ color: '#2E7D32' }}>Verified</span>
-                    </div>
-                  </div>
-                </motion.div>
-
+                  </motion.div>
+                ))}
               </div>
             </div>
           </section>
@@ -950,67 +753,24 @@ export function HireCudaDeveloperPage() {
               {/* Service Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
 
-                {/* GPU Optimization Service Card */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  className="rounded-2xl p-8 transition-all duration-300 hover:scale-105"
-                  style={{
-                    background: '#2a2a2a',
-                    border: '1px solid #3a3a3a'
-                  }}
-                >
-                  <h3 className="text-2xl font-bold mb-4" style={{ color: '#FFFFFF' }}>
-                    GPU Optimization Service
-                  </h3>
-                  <p className="text-base mb-6 leading-relaxed" style={{ color: '#B0B0B0' }}>
-                    Finetune your GPU workloads for maximum speed and efficiency, eliminating bottlenecks and maximizing resource utilization.
-                  </p>
-                  <a
-                    href="/gpu-optimization-service"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-240 hover:opacity-90"
-                    style={{
-                      background: '#10B981',
-                      color: '#FFFFFF'
-                    }}
+                {relatedServicesData.map((service, i) => (
+                  <motion.div
+                    key={service.title}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                    className="rounded-2xl p-8 transition-all duration-300 hover:scale-105"
+                    style={RELATED_SERVICE_CARD_STYLE}
                   >
-                    <span>Know More</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </motion.div>
-
-                {/* CUDA Development Service Card */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="rounded-2xl p-8 transition-all duration-300 hover:scale-105"
-                  style={{
-                    background: '#2a2a2a',
-                    border: '1px solid #3a3a3a'
-                  }}
-                >
-                  <h3 className="text-2xl font-bold mb-4" style={{ color: '#FFFFFF' }}>
-                    CUDA Development Service
-                  </h3>
-                  <p className="text-base mb-6 leading-relaxed" style={{ color: '#B0B0B0' }}>
-                    Build high-performance parallel applications with expert CUDA development tailored for speed, scalability and precision.
-                  </p>
-                  <a
-                    href="/cuda-development-service"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-240 hover:opacity-90"
-                    style={{
-                      background: '#10B981',
-                      color: '#FFFFFF'
-                    }}
-                  >
-                    <span>Know More</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </motion.div>
+                    <h3 className="text-2xl font-bold mb-4" style={{ color: '#FFFFFF' }}>{service.title}</h3>
+                    <p className="text-base mb-6 leading-relaxed" style={{ color: '#B0B0B0' }}>{service.description}</p>
+                    <a href={service.href} className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-240 hover:opacity-90" style={RELATED_SERVICE_BTN_STYLE}>
+                      <span>Know More</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </a>
+                  </motion.div>
+                ))}
 
               </div>
             </div>
@@ -1029,10 +789,7 @@ export function HireCudaDeveloperPage() {
               >
                 <motion.div
                   className="inline-block mb-4 px-4 py-2 rounded-full border"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.05)',
-                    borderColor: 'rgba(16, 185, 129, 0.2)'
-                  }}
+                  style={BADGE_FAQ}
                 >
                   <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>FAQs</span>
                 </motion.div>
@@ -1046,198 +803,29 @@ export function HireCudaDeveloperPage() {
 
               {/* FAQ Items - full width, border kept on each item */}
               <div className="max-w-4xl mx-auto space-y-4">
-                  {/* FAQ 1 */}
+                {faqData.map((item, i) => (
                   <motion.div
+                    key={item.q}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
+                    transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
                     className="rounded-2xl border overflow-hidden"
-                    style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)' }}
+                    style={FAQ_ITEM_STYLE}
                   >
                     <details className="group">
                       <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                        <h3 className="text-lg font-semibold pr-4" style={{ color: '#FAFAFA' }}>
-                          Why should I hire a dedicated CUDA developer instead of a general developer?
-                        </h3>
-                        <svg
-                          className="w-6 h-6 transition-transform group-open:rotate-180"
-                          style={{ color: '#9E9E9E' }}
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        <h3 className="text-lg font-semibold pr-4" style={{ color: '#FAFAFA' }}>{item.q}</h3>
+                        <svg className="w-6 h-6 transition-transform group-open:rotate-180" style={{ color: '#9E9E9E' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={CHEVRON_DOWN_D} />
                         </svg>
                       </summary>
                       <div className="px-6 pt-2 pb-8">
-                        <p className="text-base leading-relaxed" style={{ color: '#9E9E9E' }}>
-                          The CUDA developers are experts in the domain of the architecture of the GPUs, parallel computing, and optimization of performance. They reorganize algorithms with a specific execution in the GPU and provide much faster and more efficient performance in comparison to the general-purpose programming methods.
-                        </p>
+                        <p className="text-base leading-relaxed" style={{ color: '#9E9E9E' }}>{item.a}</p>
                       </div>
                     </details>
                   </motion.div>
-
-                  {/* FAQ 2 */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="rounded-2xl border overflow-hidden"
-                    style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)' }}
-                  >
-                    <details className="group">
-                      <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                        <h3 className="text-lg font-semibold pr-4" style={{ color: '#FAFAFA' }}>
-                          What types of projects require CUDA development expertise?
-                        </h3>
-                        <svg
-                          className="w-6 h-6 transition-transform group-open:rotate-180"
-                          style={{ color: '#9E9E9E' }}
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </summary>
-                      <div className="px-6 pt-2 pb-8">
-                        <p className="text-base leading-relaxed" style={{ color: '#9E9E9E' }}>
-                          AI/ML training, real-time data analytics, scientific simulations, computer vision, video processing, high-performance computing (HPC), and additional applications that rely on the acceleration provided by a graphics card are all applications that need CUDA skills.
-                        </p>
-                      </div>
-                    </details>
-                  </motion.div>
-
-                  {/* FAQ 3 */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    className="rounded-2xl border overflow-hidden"
-                    style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)' }}
-                  >
-                    <details className="group">
-                      <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                        <h3 className="text-lg font-semibold pr-4" style={{ color: '#FAFAFA' }}>
-                          How do CUDA developers improve application performance?
-                        </h3>
-                        <svg
-                          className="w-6 h-6 transition-transform group-open:rotate-180"
-                          style={{ color: '#9E9E9E' }}
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </summary>
-                      <div className="px-6 pt-2 pb-8">
-                        <p className="text-base leading-relaxed" style={{ color: '#9E9E9E' }}>
-                          They enhance the execution of the kernel, thread setup, memory, and the transfer of data between the CPU and the GPU. They remove bottlenecks and maximize throughput using profiling tools to get measurable performance improvements.
-                        </p>
-                      </div>
-                    </details>
-                  </motion.div>
-
-                  {/* FAQ 4 */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    className="rounded-2xl border overflow-hidden"
-                    style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)' }}
-                  >
-                    <details className="group">
-                      <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                        <h3 className="text-lg font-semibold pr-4" style={{ color: '#FAFAFA' }}>
-                          Can you optimize an existing GPU or CUDA-based application?
-                        </h3>
-                        <svg
-                          className="w-6 h-6 transition-transform group-open:rotate-180"
-                          style={{ color: '#9E9E9E' }}
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </summary>
-                      <div className="px-6 pt-2 pb-8">
-                        <p className="text-base leading-relaxed" style={{ color: '#9E9E9E' }}>
-                          Of course. Our CUDA team developers will examine existing implementations, uncover inefficiencies, and implement special-purpose optimization to achieve faster execution speed, scalability, and system stability.
-                        </p>
-                      </div>
-                    </details>
-                  </motion.div>
-
-                  {/* FAQ 5 */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    className="rounded-2xl border overflow-hidden"
-                    style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)' }}
-                  >
-                    <details className="group">
-                      <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                        <h3 className="text-lg font-semibold pr-4" style={{ color: '#FAFAFA' }}>
-                          Do you support multi-GPU or distributed GPU environments?
-                        </h3>
-                        <svg
-                          className="w-6 h-6 transition-transform group-open:rotate-180"
-                          style={{ color: '#9E9E9E' }}
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </summary>
-                      <div className="px-6 pt-2 pb-8">
-                        <p className="text-base leading-relaxed" style={{ color: '#9E9E9E' }}>
-                          Yes. Our work is scalable multi-GPU designs, where each workload is placed on multiple processors and devices communicate in a more efficient and optimal way to provide the performance of an enterprise.
-                        </p>
-                      </div>
-                    </details>
-                  </motion.div>
-
-                  {/* FAQ 6 */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.6 }}
-                    className="rounded-2xl border overflow-hidden"
-                    style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)' }}
-                  >
-                    <details className="group">
-                      <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                        <h3 className="text-lg font-semibold pr-4" style={{ color: '#FAFAFA' }}>
-                          What hiring models are available for CUDA developers?
-                        </h3>
-                        <svg
-                          className="w-6 h-6 transition-transform group-open:rotate-180"
-                          style={{ color: '#9E9E9E' }}
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </summary>
-                      <div className="px-6 pt-2 pb-8">
-                        <p className="text-base leading-relaxed" style={{ color: '#9E9E9E' }}>
-                          You can hire CUDA developers on a full-time basis, part-time basis, hourly basis (time and material), and various other custom ability basis according to your project scope and performance needs.
-                        </p>
-                      </div>
-                    </details>
-                  </motion.div>
-
+                ))}
               </div>
             </div>
           </section>
@@ -1263,41 +851,19 @@ export function HireCudaDeveloperPage() {
                   </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="flex flex-col items-center text-center gap-3">
-                      <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(16, 185, 129, 0.1)' }}>
-                        <svg className="w-6 h-6" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+                    {getStartedFeaturesData.map((feature) => (
+                      <div key={feature.title} className="flex flex-col items-center text-center gap-3">
+                        <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style={FEATURE_ICON_BOX_STYLE}>
+                          <svg className="w-6 h-6 text-[#10B981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={feature.pathD} />
+                          </svg>
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold mb-2" style={{ color: '#FAFAFA' }}>{feature.title}</h3>
+                          <p className="text-sm" style={{ color: '#9E9E9E' }}>{feature.description}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold mb-2" style={{ color: '#FAFAFA' }}>Quick Response</h3>
-                        <p className="text-sm" style={{ color: '#9E9E9E' }}>We respond to all inquiries within 24 hours</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col items-center text-center gap-3">
-                      <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(16, 185, 129, 0.1)' }}>
-                        <svg className="w-6 h-6" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold mb-2" style={{ color: '#FAFAFA' }}>No Obligation</h3>
-                        <p className="text-sm" style={{ color: '#9E9E9E' }}>Free consultation with no commitment required</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col items-center text-center gap-3">
-                      <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(16, 185, 129, 0.1)' }}>
-                        <svg className="w-6 h-6" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold mb-2" style={{ color: '#FAFAFA' }}>Expert Matching</h3>
-                        <p className="text-sm" style={{ color: '#9E9E9E' }}>We'll match you with developers suited to your project</p>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </motion.div>
 
@@ -1329,10 +895,7 @@ export function HireCudaDeveloperPage() {
                           onChange={handleChange}
                           required
                           className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
-                          style={{
-                            background: '#1F2937', borderColor: 'rgba(16, 185, 129, 0.3)',
-                            color: '#FAFAFA'
-                          }}
+                          style={HIRE_FORM_INPUT_STYLE}
                           placeholder="John Doe"
                         />
                       </div>
@@ -1350,10 +913,7 @@ export function HireCudaDeveloperPage() {
                           onChange={handleChange}
                           required
                           className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
-                          style={{
-                            background: '#1F2937', borderColor: 'rgba(16, 185, 129, 0.3)',
-                            color: '#FAFAFA'
-                          }}
+                          style={HIRE_FORM_INPUT_STYLE}
                           placeholder="john@company.com"
                         />
                       </div>
@@ -1370,10 +930,7 @@ export function HireCudaDeveloperPage() {
                           value={formData.phone}
                           onChange={handleChange}
                           className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
-                          style={{
-                            background: '#1F2937', borderColor: 'rgba(16, 185, 129, 0.3)',
-                            color: '#FAFAFA'
-                          }}
+                          style={HIRE_FORM_INPUT_STYLE}
                           placeholder="+1 (555) 000-0000"
                         />
                       </div>
@@ -1390,10 +947,7 @@ export function HireCudaDeveloperPage() {
                           value={formData.company}
                           onChange={handleChange}
                           className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
-                          style={{
-                            background: '#1F2937', borderColor: 'rgba(16, 185, 129, 0.3)',
-                            color: '#FAFAFA'
-                          }}
+                          style={HIRE_FORM_INPUT_STYLE}
                           placeholder="Your Company"
                         />
                       </div>
@@ -1407,12 +961,11 @@ export function HireCudaDeveloperPage() {
                       <select
                         id="hiringModel"
                         name="hiringModel"
+                        value={formData.hiringModel}
+                        onChange={handleChange}
                         required
                         className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
-                        style={{
-                          background: '#1F2937', borderColor: 'rgba(16, 185, 129, 0.3)',
-                          color: '#FAFAFA'
-                        }}
+                        style={HIRE_FORM_INPUT_STYLE}
                       >
                         <option value="">Select a hiring model</option>
                         <option value="hourly">Hourly Basis</option>
@@ -1430,13 +983,12 @@ export function HireCudaDeveloperPage() {
                       <textarea
                         id="message"
                         name="message"
+                        value={formData.message}
+                        onChange={handleChange}
                         required
                         rows={4}
                         className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all resize-none"
-                        style={{
-                          background: '#1F2937', borderColor: 'rgba(16, 185, 129, 0.3)',
-                          color: '#FAFAFA'
-                        }}
+                        style={HIRE_FORM_INPUT_STYLE}
                         placeholder="Tell us about your project, timeline, and specific CUDA expertise needed..."
                       />
                     </div>

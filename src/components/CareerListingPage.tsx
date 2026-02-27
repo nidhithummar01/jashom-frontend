@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { careers, getAllDepartments } from '../data/careersData';
 import { MapPin, Clock, Users, ArrowRight } from 'lucide-react';
 
+const SECTION_BG = { black: '#000000', dark: '#0B0F14' } as const;
 const BENEFIT_CARD_STYLE = {
   background: 'rgba(17, 24, 39, 0.4)' as const,
   borderColor: 'rgba(16, 185, 129, 0.2)' as const,
@@ -13,6 +14,27 @@ const BENEFIT_ICON_BOX_STYLE = {
   background: 'rgba(16, 185, 129, 0.15)' as const,
   border: '1px solid rgba(16, 185, 129, 0.3)' as const,
 };
+const BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba(16, 185, 129, 0.25)' } as const;
+const DEPT_BUTTON_SELECTED = { background: '#0066FF', color: '#FFFFFF', border: '1px solid #0066FF', cursor: 'pointer' as const };
+const DEPT_BUTTON_UNSELECTED = { background: 'transparent', color: '#9CA3AF', border: '1px solid rgba(156, 163, 175, 0.3)', cursor: 'pointer' as const };
+const CAREER_CARD_BG = { background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.6) 0%, rgba(11, 15, 20, 0.8) 100%)' } as const;
+const DEPT_PILL_STYLE = { background: 'rgba(16, 185, 129, 0.15)', color: '#10B981', border: '1px solid rgba(16, 185, 129, 0.3)' } as const;
+const POSTED_PILL_STYLE = { background: 'rgba(255, 255, 255, 0.05)', color: '#9CA3AF' } as const;
+const APPLY_BUTTON_STYLE = {
+  background: 'linear-gradient(135deg, #10B981, #06B6D4)',
+  borderColor: 'transparent',
+  color: '#FFFFFF',
+  boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)',
+} as const;
+const APPLY_BUTTON_HOVER = {
+  background: 'linear-gradient(135deg, #059669, #0891B2)',
+  boxShadow: '0 12px 48px rgba(16, 185, 129, 0.6)',
+  transform: 'translateY(-2px)',
+} as const;
+const DIVIDER_STYLE = { height: '1px', background: 'linear-gradient(to right, transparent, rgba(16, 185, 129, 0.3), transparent)', margin: '32px 0' } as const;
+const HERO_BG_STYLE = { backgroundImage: 'url(/images/carrer.listing.hero.jpg)', backgroundSize: 'cover', backgroundPosition: '60% center', backgroundRepeat: 'no-repeat' } as const;
+const HERO_OVERLAY_STYLE = { background: 'linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.1) 70%, transparent 100%)' } as const;
+const META_ICON_COLOR = '#10B981';
 
 const benefitsData = [
   { title: 'FAST GROWING COMPANY', description: 'With our increasing growth and expansion every day, you can be an integral part of the progress.' },
@@ -46,7 +68,7 @@ export function CareerListingPage() {
     : careers.filter(career => career.department === selectedDepartment);
 
   return (
-    <div className="min-h-screen" style={{ background: '#000000' }}>
+    <div className="min-h-screen" style={{ background: SECTION_BG.black }}>
       <Seo
         title="Job Openings at Jashom | Explore Opportunities"
         description="Explore current job openings at Jashom. Join our team of innovators building the future of AI and GPU computing."
@@ -65,19 +87,12 @@ export function CareerListingPage() {
         {/* Background Image */}
         <div 
           className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: 'url(/images/carrer.listing.hero.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: '60% center',
-            backgroundRepeat: 'no-repeat'
-          }}
+          style={HERO_BG_STYLE}
         >
           {/* Lighter gradient overlay - fades from left to right */}
           <div 
             className="absolute inset-0" 
-            style={{ 
-              background: 'linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.1) 70%, transparent 100%)'
-            }}
+            style={HERO_OVERLAY_STYLE}
           />
         </div>
 
@@ -114,7 +129,7 @@ export function CareerListingPage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG.dark }}>
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <motion.div
@@ -125,10 +140,7 @@ export function CareerListingPage() {
           >
             <motion.div
               className="inline-block mb-4 px-4 py-2 rounded-full border"
-              style={{
-                background: 'rgba(16, 185, 129, 0.08)',
-                borderColor: 'rgba(16, 185, 129, 0.25)'
-              }}
+              style={BADGE_STYLE}
             >
               <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem', letterSpacing: '0.05em' }}>
                 BENEFITS
@@ -170,7 +182,7 @@ export function CareerListingPage() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8" style={{ background: '#000000' }}>
+      <section className="py-12 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG.black }}>
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -188,12 +200,7 @@ export function CareerListingPage() {
                   key={dept}
                   onClick={() => setSelectedDepartment(dept)}
                   className="px-6 py-2.5 rounded-full font-medium transition-all duration-300"
-                  style={{
-                    background: selectedDepartment === dept ? '#0066FF' : 'transparent',
-                    color: selectedDepartment === dept ? '#FFFFFF' : '#9CA3AF',
-                    border: `1px solid ${selectedDepartment === dept ? '#0066FF' : 'rgba(156, 163, 175, 0.3)'}`,
-                    cursor: 'pointer'
-                  }}
+                  style={selectedDepartment === dept ? DEPT_BUTTON_SELECTED : DEPT_BUTTON_UNSELECTED}
                 >
                   {dept}
                 </button>
@@ -204,7 +211,7 @@ export function CareerListingPage() {
       </section>
 
       {/* Career Cards Grid */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#000000' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG.black }}>
         <div className="max-w-7xl mx-auto">
           <div className="space-y-8">
             {filteredCareers.map((career, index) => (
@@ -218,9 +225,7 @@ export function CareerListingPage() {
               >
                 <div
                   className="relative rounded-3xl overflow-hidden transition-all duration-500 border border-[rgba(16,185,129,0.15)] shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:-translate-y-1 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.2)]"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.6) 0%, rgba(11, 15, 20, 0.8) 100%)'
-                  }}
+                  style={CAREER_CARD_BG}
                 >
                   <div className="p-8 md:p-10">
                     {/* Header Section */}
@@ -229,20 +234,13 @@ export function CareerListingPage() {
                         <div className="flex flex-wrap items-center gap-3 mb-4">
                           <span
                             className="px-4 py-1.5 rounded-full text-xs font-semibold"
-                            style={{
-                              background: 'rgba(16, 185, 129, 0.15)',
-                              color: '#10B981',
-                              border: '1px solid rgba(16, 185, 129, 0.3)'
-                            }}
+                            style={DEPT_PILL_STYLE}
                           >
                             {career.department}
                           </span>
                           <span
                             className="px-4 py-1.5 rounded-full text-xs"
-                            style={{
-                              background: 'rgba(255, 255, 255, 0.05)',
-                              color: '#9CA3AF'
-                            }}
+                            style={POSTED_PILL_STYLE}
                           >
                             {career.postedDate}
                           </span>
@@ -265,17 +263,17 @@ export function CareerListingPage() {
                         {/* Meta Information */}
                         <div className="flex flex-wrap items-center gap-4 text-sm" style={{ color: '#9CA3AF' }}>
                           <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4" style={{ color: '#10B981' }} />
+                            <MapPin className="w-4 h-4" style={{ color: META_ICON_COLOR }} />
                             <span>{career.location}</span>
                           </div>
                           <span>•</span>
                           <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4" style={{ color: '#10B981' }} />
+                            <Clock className="w-4 h-4" style={{ color: META_ICON_COLOR }} />
                             <span>{career.type}</span>
                           </div>
                           <span>•</span>
                           <div className="flex items-center gap-2">
-                            <Users className="w-4 h-4" style={{ color: '#10B981' }} />
+                            <Users className="w-4 h-4" style={{ color: META_ICON_COLOR }} />
                             <span>{career.openings} {career.openings === 1 ? 'Opening' : 'Openings'}</span>
                           </div>
                         </div>
@@ -285,20 +283,11 @@ export function CareerListingPage() {
                       <Link
                         to={`/careers/apply?role=${encodeURIComponent(career.title)}`}
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 whitespace-nowrap cursor-pointer border-0"
-                        style={{
-                          background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                          borderColor: 'transparent',
-                          color: '#FFFFFF',
-                          boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'linear-gradient(135deg, #059669, #0891B2)';
-                          e.currentTarget.style.boxShadow = '0 12px 48px rgba(16, 185, 129, 0.6)';
-                          e.currentTarget.style.transform = 'translateY(-2px)';
-                        }}
+                        style={APPLY_BUTTON_STYLE}
+                        onMouseEnter={(e) => Object.assign(e.currentTarget.style, APPLY_BUTTON_HOVER)}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'linear-gradient(135deg, #10B981, #06B6D4)';
-                          e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.4)';
+                          e.currentTarget.style.background = APPLY_BUTTON_STYLE.background;
+                          e.currentTarget.style.boxShadow = APPLY_BUTTON_STYLE.boxShadow;
                           e.currentTarget.style.transform = 'translateY(0)';
                         }}
                       >
@@ -308,13 +297,7 @@ export function CareerListingPage() {
                     </div>
 
                     {/* Divider */}
-                    <div
-                      style={{
-                        height: '1px',
-                        background: 'linear-gradient(to right, transparent, rgba(16, 185, 129, 0.3), transparent)',
-                        margin: '32px 0'
-                      }}
-                    />
+                    <div style={DIVIDER_STYLE} />
 
                     {/* Content Sections */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

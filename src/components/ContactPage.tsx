@@ -4,15 +4,30 @@ import { Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const PAGE_BG = '#000000';
+const SECTION_BG_DARK = '#0B0F14';
+const ACCENT_COLOR = '#10B981';
+const TEXT_WHITE = '#FFFFFF';
+const TEXT_MUTED = '#9CA3AF';
+const HERO_OVERLAY_GRADIENT = 'linear-gradient(to right, rgba(11, 15, 20, 0.95) 0%, rgba(11, 15, 20, 0.85) 40%, rgba(11, 15, 20, 0.6) 70%, rgba(11, 15, 20, 0.4) 100%)';
+const CTA_HERO_STYLE = { background: ACCENT_COLOR, color: TEXT_WHITE, boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.4)', border: 'none', cursor: 'pointer' } as const;
+const DIVIDER_ACCENT_STYLE = { background: ACCENT_COLOR, boxShadow: '0 0 15px rgba(16, 185, 129, 0.6)' } as const;
+const MAP_CONTAINER_STYLE: React.CSSProperties = { borderRadius: '20px', borderColor: 'rgba(16, 185, 129, 0.3)', boxShadow: '0 0 40px rgba(16, 185, 129, 0.2)', height: '450px' };
+const SUBMIT_BUTTON_STYLE = { background: 'linear-gradient(135deg, #0066FF 0%, #0052CC 100%)', color: TEXT_WHITE, boxShadow: '0 4px 25px rgba(0, 102, 255, 0.4)' } as const;
+const SUBMIT_BUTTON_HOVER = { boxShadow: '0 6px 35px rgba(0, 102, 255, 0.6)' } as const;
+const FAQ_ITEM_STYLE = { background: SECTION_BG_DARK, borderColor: 'rgba(255, 255, 255, 0.1)' } as const;
+const TEXT_WHITE_60 = 'rgba(255, 255, 255, 0.6)';
+const TEXT_WHITE_70 = 'rgba(255, 255, 255, 0.7)';
+
 const INPUT_BASE_STYLE: React.CSSProperties = {
   background: 'rgba(255, 255, 255, 0.05)',
-  color: '#FFFFFF',
+  color: TEXT_WHITE,
   borderRadius: '10px',
   fontSize: '15px',
   padding: '14px 18px',
 };
 const INPUT_FOCUSED = {
-  borderColor: '#10B981' as const,
+  borderColor: ACCENT_COLOR,
   boxShadow: '0 0 20px rgba(16, 185, 129, 0.4), inset 0 0 10px rgba(16, 185, 129, 0.1)',
 };
 const INPUT_BLUR = {
@@ -58,15 +73,11 @@ export function ContactPage() {
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
     navigate('/thank-you/');
   };
 
@@ -79,7 +90,7 @@ export function ContactPage() {
       />
 
       <div className="contact">
-        <div className="min-h-screen" style={{ background: '#000000' }}>
+        <div className="min-h-screen" style={{ background: PAGE_BG }}>
 
           {/* SECTION 1 - HERO SECTION */}
           <section
@@ -95,9 +106,7 @@ export function ContactPage() {
             {/* Dark Gradient Overlay - Left to Right fade for readability */}
             <div
               className="absolute inset-0"
-              style={{
-                background: 'linear-gradient(to right, rgba(11, 15, 20, 0.95) 0%, rgba(11, 15, 20, 0.85) 40%, rgba(11, 15, 20, 0.6) 70%, rgba(11, 15, 20, 0.4) 100%)'
-              }}
+              style={{ background: HERO_OVERLAY_GRADIENT }}
             />
 
             {/* Content - Premium Spacing */}
@@ -141,13 +150,7 @@ export function ContactPage() {
                   <a
                     href="#contact-form"
                     className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90 hover:scale-105"
-                    style={{
-                      background: '#10B981',
-                      color: '#FFFFFF',
-                      boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.4)',
-                      border: 'none',
-                      cursor: 'pointer'
-                    }}
+                    style={CTA_HERO_STYLE}
                   >
                     Get in Touch
                   </a>
@@ -157,12 +160,10 @@ export function ContactPage() {
           </section>
 
           {/* SECTION 2 - CONTACT FORM + OFFICE INFO */}
-          <section id="contact-form" style={{ padding: '120px 0', background: '#000000' }}>
+          <section id="contact-form" style={{ padding: '120px 0', background: PAGE_BG }}>
             <div className="px-4 sm:px-6 lg:px-8">
               <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 xl:gap-20 items-start"
-                  style={{ display: 'grid' }}
-                >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 xl:gap-20 items-start">
 
                   {/* LEFT SIDE - Info */}
                   <motion.div
@@ -173,32 +174,29 @@ export function ContactPage() {
                   >
                     <h2
                       className="text-4xl sm:text-5xl font-bold mb-8 leading-tight"
-                      style={{ color: '#FFFFFF' }}
+                      style={{ color: TEXT_WHITE }}
                     >
                       Our consultants bring deep technical expertise and{' '}
-                      <span style={{ color: '#10B981' }}>production-grade execution</span>.
+                      <span style={{ color: ACCENT_COLOR }}>production-grade execution</span>.
                     </h2>
 
                     {/* Cyan Divider */}
                     <div
                       className="h-1 w-32 rounded-full mb-12"
-                      style={{
-                        background: '#10B981',
-                        boxShadow: '0 0 15px rgba(16, 185, 129, 0.6)'
-                      }}
+                      style={DIVIDER_ACCENT_STYLE}
                     />
 
                     {/* Get in touch heading */}
                     <h3
                       className="text-3xl font-bold mb-6"
-                      style={{ color: '#FFFFFF' }}
+                      style={{ color: TEXT_WHITE }}
                     >
                       Get in touch with our GPU experts
                     </h3>
 
                     <p
                       className="text-lg mb-16"
-                      style={{ color: '#9CA3AF' }}
+                      style={{ color: TEXT_MUTED }}
                     >
                       We have CUDA consultants who will look at your needs and get back to you within two business days.
                     </p>
@@ -206,7 +204,7 @@ export function ContactPage() {
                     {/* Our Office Heading */}
                     <h3
                       className="text-3xl font-bold mb-6 mt-8"
-                      style={{ color: '#FFFFFF' }}
+                      style={{ color: TEXT_WHITE }}
                     >
                       Our Office
                     </h3>
@@ -218,13 +216,13 @@ export function ContactPage() {
                         <div>
                           <p
                             className="text-lg leading-relaxed"
-                            style={{ color: '#9CA3AF', marginBottom: '0' }}
+                            style={{ color: TEXT_MUTED, marginBottom: '0' }}
                           >
                             414, Satyam-2, Amba Business Park
                           </p>
                           <p
                             className="text-lg leading-relaxed"
-                            style={{ color: '#9CA3AF', marginTop: '18px', marginBottom: '0' }}
+                            style={{ color: TEXT_MUTED, marginTop: '18px', marginBottom: '0' }}
                           >
                             ATPL, Adalaj, Gujarat, India
                           </p>
@@ -233,22 +231,22 @@ export function ContactPage() {
 
                       <div style={{ marginTop: '28px' }}>
                         <div className="flex items-center gap-3" style={{ marginBottom: '16px' }}>
-                          <Mail className="w-6 h-6" style={{ color: '#10B981' }} />
+                          <Mail className="w-6 h-6" style={{ color: ACCENT_COLOR }} />
                           <a
                             href="mailto:info@jashom.com"
                             className="text-xl hover:underline transition-colors"
-                            style={{ color: '#FFFFFF' }}
+                            style={{ color: TEXT_WHITE }}
                           >
                             info@jashom.com
                           </a>
                         </div>
 
                         <div className="flex items-center gap-3">
-                          <Phone className="w-6 h-6" style={{ color: '#10B981' }} />
+                          <Phone className="w-6 h-6" style={{ color: ACCENT_COLOR }} />
                           <a
                             href="tel:+919023906363"
                             className="text-xl hover:underline transition-colors"
-                            style={{ color: '#FFFFFF' }}
+                            style={{ color: TEXT_WHITE }}
                           >
                             +91 90239 06363
                           </a>
@@ -258,7 +256,7 @@ export function ContactPage() {
 
                     <p
                       className="text-lg italic"
-                      style={{ color: '#9CA3AF', marginTop: '24px' }}
+                      style={{ color: TEXT_MUTED, marginTop: '24px' }}
                     >
                       Let's build something powerful together.
                     </p>
@@ -275,13 +273,13 @@ export function ContactPage() {
                     <div className="mb-20">
                       <h3
                         className="text-3xl font-bold mb-4"
-                        style={{ color: '#FFFFFF' }}
+                        style={{ color: TEXT_WHITE }}
                       >
                         Get in touch
                       </h3>
                       <p
                         className="text-base"
-                        style={{ color: '#9CA3AF' }}
+                        style={{ color: TEXT_MUTED }}
                       >
                         Our team will respond to you within 2 business days.
                       </p>
@@ -317,15 +315,8 @@ export function ContactPage() {
                       <motion.button
                         type="submit"
                         className="font-semibold text-sm transition-all duration-300 px-6 py-3 rounded-xl"
-                        style={{
-                          background: 'linear-gradient(135deg, #0066FF 0%, #0052CC 100%)',
-                          color: '#FFFFFF',
-                          boxShadow: '0 4px 25px rgba(0, 102, 255, 0.4)'
-                        }}
-                        whileHover={{
-                          scale: 1.02,
-                          boxShadow: '0 6px 35px rgba(0, 102, 255, 0.6)'
-                        }}
+                        style={SUBMIT_BUTTON_STYLE}
+                        whileHover={{ scale: 1.02, ...SUBMIT_BUTTON_HOVER }}
                         whileTap={{ scale: 0.98 }}
                       >
                         Submit
@@ -348,12 +339,7 @@ export function ContactPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
                   className="overflow-hidden border"
-                  style={{
-                    borderRadius: '20px',
-                    borderColor: 'rgba(16, 185, 129, 0.3)',
-                    boxShadow: '0 0 40px rgba(16, 185, 129, 0.2)',
-                    height: '450px'
-                  }}
+                  style={MAP_CONTAINER_STYLE}
                 >
                   <iframe
                     src="https://www.google.com/maps?q=414,+Satyam-2,+Amba+Business+Park,+ATPL,+Adalaj,+Gujarat,+India&output=embed"
@@ -374,7 +360,7 @@ export function ContactPage() {
           </section>
 
           {/* SECTION 4 - FAQs */}
-          <section style={{ padding: '120px 0', background: '#0B0F14' }}>
+          <section style={{ padding: '120px 0', background: SECTION_BG_DARK }}>
             <div className="px-4 sm:px-6 lg:px-8">
               <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
@@ -389,13 +375,13 @@ export function ContactPage() {
                   >
                     <p
                       className="text-xs font-semibold tracking-wider mb-3 uppercase"
-                      style={{ color: 'rgba(255, 255, 255, 0.6)' }}
+                      style={{ color: TEXT_WHITE_60 }}
                     >
                       FAQs
                     </p>
                     <h2
                       className="text-3xl sm:text-4xl font-bold leading-tight"
-                      style={{ color: '#FFFFFF' }}
+                      style={{ color: TEXT_WHITE }}
                     >
                       Frequently
                       <br />
@@ -413,22 +399,19 @@ export function ContactPage() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                         className="rounded-xl border overflow-hidden"
-                        style={{
-                          background: '#0B0F14',
-                          borderColor: 'rgba(255, 255, 255, 0.1)'
-                        }}
+                        style={FAQ_ITEM_STYLE}
                       >
                         <details className="group">
                           <summary className="flex items-center justify-between p-4 sm:p-5 cursor-pointer list-none">
                             <h4
                               className="font-semibold pr-3"
-                              style={{ color: '#FFFFFF' }}
+                              style={{ color: TEXT_WHITE }}
                             >
                               {faq.question}
                             </h4>
                             <svg
                               className="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180"
-                              style={{ color: 'rgba(255, 255, 255, 0.6)' }}
+                              style={{ color: TEXT_WHITE_60 }}
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -439,7 +422,7 @@ export function ContactPage() {
                           <div className="px-4 sm:px-5 pb-4 sm:pb-5">
                             <p
                               className="text-xs leading-relaxed"
-                              style={{ color: 'rgba(255, 255, 255, 0.7)' }}
+                              style={{ color: TEXT_WHITE_70 }}
                             >
                               {faq.answer}
                             </p>

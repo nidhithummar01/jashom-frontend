@@ -33,6 +33,29 @@ const STEP_CIRCLE_STYLE: React.CSSProperties = {
   border: '2px solid rgba(16, 185, 129, 0.3)',
 };
 
+const SECTION_BG = '#0B0F14';
+const BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba(16, 185, 129, 0.25)' } as const;
+const FORM_CONTAINER_STYLE: React.CSSProperties = {
+  background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.6) 0%, rgba(11, 15, 20, 0.8) 100%)',
+  borderColor: 'rgba(16, 185, 129, 0.2)',
+  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+};
+const DIVIDER_STYLE = { height: '1px', background: 'linear-gradient(to right, transparent, rgba(16, 185, 129, 0.3), transparent)', margin: '32px 0' } as const;
+const SUBMIT_BUTTON_STYLE = {
+  background: 'linear-gradient(135deg, #10B981, #06B6D4)',
+  borderColor: 'transparent',
+  color: '#FFFFFF',
+  boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)',
+} as const;
+const SUBMIT_BUTTON_HOVER = {
+  background: 'linear-gradient(135deg, #059669, #0891B2)',
+  boxShadow: '0 12px 48px rgba(16, 185, 129, 0.6)',
+  transform: 'translateY(-2px)',
+} as const;
+const CTA_PRIMARY_STYLE = { background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', color: '#FFFFFF', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)' } as const;
+const CTA_SECONDARY_STYLE = { background: 'rgba(255, 255, 255, 0.05)', color: '#FAFAFA', border: '1px solid rgba(255, 255, 255, 0.1)' } as const;
+const ACCENT_COLOR = '#10B981';
+
 export function CareerApplicationPage() {
   const [searchParams] = useSearchParams();
   const jobRole = searchParams.get('role') ?? '';
@@ -49,32 +72,25 @@ export function CareerApplicationPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFormData({
-        ...formData,
-        resume: file
-      });
+      setFormData((prev) => ({ ...prev, resume: file }));
       setFileName(file.name);
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Application submitted:', { ...formData, role: jobRole });
     setSubmitted(true);
   };
 
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#0B0F14' }}>
+      <div className="min-h-screen flex items-center justify-center px-4" style={{ background: SECTION_BG }}>
         <Seo
           title="Application Submitted | Jashom Careers"
           description="Your job application has been successfully submitted."
@@ -91,12 +107,9 @@ export function CareerApplicationPage() {
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
             className="inline-flex items-center justify-center w-24 h-24 rounded-full mb-8"
-            style={{
-              background: 'rgba(16, 185, 129, 0.15)',
-              border: '2px solid rgba(16, 185, 129, 0.3)'
-            }}
+            style={STEP_CIRCLE_STYLE}
           >
-            <CheckCircle className="w-12 h-12" style={{ color: '#10B981' }} />
+            <CheckCircle className="w-12 h-12" style={{ color: ACCENT_COLOR }} />
           </motion.div>
 
           <motion.h1
@@ -116,7 +129,7 @@ export function CareerApplicationPage() {
             className="text-lg mb-8"
             style={{ color: '#D1D5DB', lineHeight: 1.7 }}
           >
-            Thank you for applying for the <span style={{ color: '#10B981', fontWeight: 600 }}>{jobRole}</span> position. 
+            Thank you for applying for the <span style={{ color: ACCENT_COLOR, fontWeight: 600 }}>{jobRole}</span> position. 
             Our team will review your application and get back to you within 5-7 business days.
           </motion.p>
 
@@ -129,22 +142,14 @@ export function CareerApplicationPage() {
             <Link
               to="/careers/openings/"
               className="inline-flex items-center justify-center px-8 py-4 rounded-xl font-semibold transition-all duration-300"
-              style={{
-                background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-                color: '#FFFFFF',
-                boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
-              }}
+              style={CTA_PRIMARY_STYLE}
             >
               View Other Openings
             </Link>
             <Link
               to="/"
               className="inline-flex items-center justify-center px-8 py-4 rounded-xl font-semibold transition-all duration-300"
-              style={{
-                background: 'rgba(255, 255, 255, 0.05)',
-                color: '#FAFAFA',
-                border: '1px solid rgba(255, 255, 255, 0.1)'
-              }}
+              style={CTA_SECONDARY_STYLE}
             >
               Back to Home
             </Link>
@@ -155,7 +160,7 @@ export function CareerApplicationPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#0B0F14' }}>
+    <div className="min-h-screen" style={{ background: SECTION_BG }}>
       <Seo
         title={`Apply for ${jobRole ?? 'Position'} | Jashom Careers`}
         description="Submit your application to join the Jashom team."
@@ -175,7 +180,7 @@ export function CareerApplicationPage() {
             <Link
               to="/careers/openings/"
               className="inline-flex items-center gap-2 text-base transition-colors"
-              style={{ color: '#10B981' }}
+              style={{ color: ACCENT_COLOR }}
             >
               <ArrowLeft className="w-5 h-5" />
               Back to Openings
@@ -190,18 +195,15 @@ export function CareerApplicationPage() {
           >
             <motion.div
               className="inline-block mb-6 px-4 py-2 rounded-full border"
-              style={{
-                background: 'rgba(16, 185, 129, 0.08)',
-                borderColor: 'rgba(16, 185, 129, 0.25)'
-              }}
+              style={BADGE_STYLE}
             >
-              <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>
+              <span style={{ color: ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>
                 JOB APPLICATION
               </span>
             </motion.div>
 
             <h1 className="text-4xl sm:text-5xl font-bold mb-6" style={{ color: '#FAFAFA', letterSpacing: '-0.025em' }}>
-              Apply for <span style={{ color: '#10B981' }}>{jobRole ?? 'Position'}</span>
+              Apply for <span style={{ color: ACCENT_COLOR }}>{jobRole ?? 'Position'}</span>
             </h1>
             
             <p className="text-lg max-w-2xl mx-auto" style={{ color: '#9CA3AF', lineHeight: 1.7 }}>
@@ -219,11 +221,7 @@ export function CareerApplicationPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="rounded-3xl p-8 sm:p-12 border"
-            style={{
-              background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.6) 0%, rgba(11, 15, 20, 0.8) 100%)',
-              borderColor: 'rgba(16, 185, 129, 0.2)',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
-            }}
+            style={FORM_CONTAINER_STYLE}
           >
             <form onSubmit={handleSubmit} className="space-y-8">
               {formFieldsConfig.map((field) => (
@@ -278,9 +276,9 @@ export function CareerApplicationPage() {
                     className="hidden"
                   />
                   <div className="text-center">
-                    <Upload className="w-8 h-8 mx-auto mb-2" style={{ color: '#10B981' }} />
+                    <Upload className="w-8 h-8 mx-auto mb-2" style={{ color: ACCENT_COLOR }} />
                     {fileName ? (
-                      <p className="text-sm font-medium" style={{ color: '#10B981' }}>
+                      <p className="text-sm font-medium" style={{ color: ACCENT_COLOR }}>
                         {fileName}
                       </p>
                     ) : (
@@ -298,32 +296,17 @@ export function CareerApplicationPage() {
               </div>
 
               {/* Divider */}
-              <div
-                style={{
-                  height: '1px',
-                  background: 'linear-gradient(to right, transparent, rgba(16, 185, 129, 0.3), transparent)',
-                  margin: '32px 0'
-                }}
-              />
+              <div style={DIVIDER_STYLE} />
 
               {/* Submit Button */}
               <button
                 type="submit"
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0"
-                style={{
-                  background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                  borderColor: 'transparent',
-                  color: '#FFFFFF',
-                  boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #059669, #0891B2)';
-                  e.currentTarget.style.boxShadow = '0 12px 48px rgba(16, 185, 129, 0.6)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
+                style={SUBMIT_BUTTON_STYLE}
+                onMouseEnter={(e) => Object.assign(e.currentTarget.style, SUBMIT_BUTTON_HOVER)}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #10B981, #06B6D4)';
-                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.4)';
+                  e.currentTarget.style.background = SUBMIT_BUTTON_STYLE.background;
+                  e.currentTarget.style.boxShadow = SUBMIT_BUTTON_STYLE.boxShadow;
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
@@ -361,7 +344,7 @@ export function CareerApplicationPage() {
                     className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
                     style={STEP_CIRCLE_STYLE}
                   >
-                    <span className="text-2xl font-bold" style={{ color: '#10B981' }}>{step.number}</span>
+                    <span className="text-2xl font-bold" style={{ color: ACCENT_COLOR }}>{step.number}</span>
                   </div>
                   <h3 className="text-xl font-semibold mb-3" style={{ color: '#FAFAFA' }}>{step.title}</h3>
                   <p className="text-base leading-relaxed" style={{ color: '#9CA3AF' }}>{step.description}</p>

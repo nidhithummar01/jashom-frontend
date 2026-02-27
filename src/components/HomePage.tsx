@@ -23,6 +23,60 @@ import {
 
 const SECTION_BG = '#0B0F14';
 const BORDER_SUBTLE = 'rgba(255, 255, 255, 0.08)';
+const BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba(16, 185, 129, 0.25)' } as const;
+const BADGE_TESTIMONIAL = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.2)' } as const;
+const formInputClass = 'w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all';
+const formInputStyle = { background: 'rgba(255, 255, 255, 0.06)', borderColor: 'rgba(255, 255, 255, 0.1)' } as const;
+const formContainerStyle = {
+  background: 'rgba(17, 24, 39, 0.6)',
+  borderRadius: '20px',
+  border: '1px solid rgba(255, 255, 255, 0.08)',
+  backdropFilter: 'blur(14px)',
+  padding: '48px 32px',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
+} as const;
+const formGlowStyle = {
+  background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, transparent 60%)',
+  filter: 'blur(60px)',
+  opacity: 0.6
+} as const;
+const submitButtonStyle = {
+  background: 'linear-gradient(135deg, #10B981, #06B6D4)',
+  border: '1px solid transparent',
+  color: '#FFFFFF',
+  boxShadow: '0 4px 14px rgba(16, 185, 129, 0.25)'
+} as const;
+const LOGO_BASE_CLASS = 'w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300';
+
+const homeContactFormFields: {
+  id: string;
+  name: string;
+  label: string;
+  type: 'text' | 'email' | 'tel' | 'textarea' | 'select';
+  placeholder?: string;
+  required?: boolean;
+  rows?: number;
+  options?: { value: string; label: string }[];
+}[] = [
+  { id: 'home-contact-name', name: 'name', label: 'Name *', type: 'text', placeholder: 'John Doe', required: true },
+  { id: 'home-contact-email', name: 'email', label: 'Email *', type: 'email', placeholder: 'john@company.com', required: true },
+  { id: 'home-contact-company', name: 'company', label: 'Company', type: 'text', placeholder: 'Your Company' },
+  { id: 'home-contact-phone', name: 'phone', label: 'Phone', type: 'tel', placeholder: '+1 (555) 000-0000' },
+  {
+    id: 'home-contact-service',
+    name: 'service',
+    label: 'Service Interest',
+    type: 'select',
+    options: [
+      { value: '', label: 'Select a service' },
+      { value: 'gpu-optimization', label: 'GPU Optimization Service' },
+      { value: 'cuda-development', label: 'CUDA Development Service' },
+      { value: 'ai-ml', label: 'AI/ML Development' },
+      { value: 'consulting', label: 'AI Consulting' },
+    ],
+  },
+  { id: 'home-contact-message', name: 'message', label: 'Message *', type: 'textarea', placeholder: 'Tell us about your project...', required: true, rows: 4 },
+];
 
 const QuoteIcon = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -42,10 +96,10 @@ const servicesProvideData = [
 ];
 
 const trustedLogosData = [
-  { src: '/logos/nvidia.png', alt: 'NVIDIA', className: 'h-10 sm:h-12 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300' },
-  { src: '/logos/aws.png', alt: 'AWS', className: 'h-10 sm:h-12 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300' },
-  { src: '/logos/goggle cloud.png', alt: 'Google Cloud', className: 'h-10 sm:h-12 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300' },
-  { src: '/logos/microsoft-azure.png', alt: 'Microsoft Azure', className: 'h-12 sm:h-14 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300' },
+  { src: '/logos/nvidia.png', alt: 'NVIDIA', className: `h-10 sm:h-12 ${LOGO_BASE_CLASS}` },
+  { src: '/logos/aws.png', alt: 'AWS', className: `h-10 sm:h-12 ${LOGO_BASE_CLASS}` },
+  { src: '/logos/goggle cloud.png', alt: 'Google Cloud', className: `h-10 sm:h-12 ${LOGO_BASE_CLASS}` },
+  { src: '/logos/microsoft-azure.png', alt: 'Microsoft Azure', className: `h-12 sm:h-14 ${LOGO_BASE_CLASS}` },
 ];
 
 const trustedMetricsData = [
@@ -802,10 +856,7 @@ export function HomePage() {
               >
                 <motion.div
                   className="inline-block mb-4 px-4 py-2 rounded-full border"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.05)',
-                    borderColor: 'rgba(16, 185, 129, 0.2)'
-                  }}
+                  style={BADGE_TESTIMONIAL}
                 >
                   <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>Client Testimonials</span>
                 </motion.div>
@@ -863,10 +914,7 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <div className="inline-block mb-4 px-6 py-2 rounded-full border" style={{
-                  background: 'rgba(16, 185, 129, 0.08)',
-                  borderColor: 'rgba(16, 185, 129, 0.25)'
-                }}>
+                <div className="inline-block mb-4 px-6 py-2 rounded-full border" style={BADGE_STYLE}>
                   <span style={{ color: '#10B981', fontWeight: 600 }}>Why Choose Jashom?</span>
                 </div>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: '#FAFAFA', letterSpacing: '-0.025em' }}>
@@ -960,10 +1008,7 @@ export function HomePage() {
                 <div className="text-center mb-6">
                   <motion.div
                     className="inline-block mb-4 px-4 py-2 rounded-full border"
-                    style={{
-                      background: 'rgba(16, 185, 129, 0.08)',
-                      borderColor: 'rgba(16, 185, 129, 0.25)'
-                    }}
+                    style={BADGE_STYLE}
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
@@ -1140,10 +1185,7 @@ export function HomePage() {
               >
                 <motion.div
                   className="inline-block mb-6 px-4 py-2 rounded-full border"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.08)',
-                    borderColor: 'rgba(16, 185, 129, 0.25)'
-                  }}
+                  style={BADGE_STYLE}
                 >
                   <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>Get In Touch</span>
                 </motion.div>
@@ -1183,130 +1225,43 @@ export function HomePage() {
                 }}
               >
                 {/* Subtle radial glow behind form */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, transparent 60%)',
-                    filter: 'blur(60px)',
-                    opacity: 0.6
-                  }}
-                />
+                <div className="absolute inset-0 pointer-events-none" style={formGlowStyle} />
 
-                <div
-                  className="relative w-full"
-                  style={{
-                    background: 'rgba(17, 24, 39, 0.6)',
-                    borderRadius: '20px',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    backdropFilter: 'blur(14px)',
-                    padding: '48px 32px',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
-                  }}
-                >
+                <div className="relative w-full" style={formContainerStyle}>
                   <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-                    {/* Row 1: Name & Email */}
                     <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
-                      <div>
-                        <label htmlFor="home-contact-name" className="block text-white/90 mb-2 font-medium text-sm">Name *</label>
-                        <input
-                          id="home-contact-name"
-                          type="text"
-                          name="name"
-                          required
-                          className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.06)',
-                            borderColor: 'rgba(255, 255, 255, 0.1)'
-                          }}
-                          placeholder="John Doe"
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="home-contact-email" className="block text-white/90 mb-2 font-medium text-sm">Email *</label>
-                        <input
-                          id="home-contact-email"
-                          type="email"
-                          name="email"
-                          required
-                          className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.06)',
-                            borderColor: 'rgba(255, 255, 255, 0.1)'
-                          }}
-                          placeholder="john@company.com"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Row 2: Company & Phone */}
-                    <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
-                      <div>
-                        <label htmlFor="home-contact-company" className="block text-white/90 mb-2 font-medium text-sm">Company</label>
-                        <input
-                          id="home-contact-company"
-                          type="text"
-                          name="company"
-                          className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.06)',
-                            borderColor: 'rgba(255, 255, 255, 0.1)'
-                          }}
-                          placeholder="Your Company"
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="home-contact-phone" className="block text-white/90 mb-2 font-medium text-sm">Phone</label>
-                        <input
-                          id="home-contact-phone"
-                          type="tel"
-                          name="phone"
-                          className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.06)',
-                            borderColor: 'rgba(255, 255, 255, 0.1)'
-                          }}
-                          placeholder="+1 (555) 000-0000"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Row 3: Service Interest (Full Width) */}
-                    <div>
-                      <label htmlFor="home-contact-service" className="block text-white/90 mb-2 font-medium text-sm">Service Interest</label>
-                      <select
-                        id="home-contact-service"
-                        name="service"
-                        className="w-full px-4 py-3 rounded-xl border text-white focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
-                        style={{
-                          background: 'rgba(255, 255, 255, 0.06)',
-                          borderColor: 'rgba(255, 255, 255, 0.1)'
-                        }}
-                      >
-                        <option value="" className="bg-[#1A1A1A]">Select a service</option>
-                        <option value="gpu-optimization" className="bg-[#1A1A1A]">GPU Optimization Service</option>
-                        <option value="cuda-development" className="bg-[#1A1A1A]">CUDA Development Service</option>
-                        <option value="ai-ml" className="bg-[#1A1A1A]">AI/ML Development</option>
-                        <option value="consulting" className="bg-[#1A1A1A]">AI Consulting</option>
-                      </select>
-                    </div>
-
-                    {/* Row 4: Message (Full Width) */}
-                    <div>
-                      <label htmlFor="home-contact-message" className="block text-white/90 mb-2 font-medium text-sm">Message *</label>
-                      <textarea
-                        id="home-contact-message"
-                        name="message"
-                        required
-                        rows={4}
-                        className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all resize-none"
-                        style={{
-                          background: 'rgba(255, 255, 255, 0.06)',
-                          borderColor: 'rgba(255, 255, 255, 0.1)'
-                        }}
-                        placeholder="Tell us about your project..."
-                      />
+                      {homeContactFormFields.map((field) => (
+                        <div key={field.id} className={field.type === 'select' || field.type === 'textarea' ? 'md:col-span-2' : ''}>
+                          <label htmlFor={field.id} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
+                          {field.type === 'select' ? (
+                            <select id={field.id} name={field.name} className={formInputClass} style={formInputStyle}>
+                              {field.options?.map((opt) => (
+                                <option key={opt.value} value={opt.value} className="bg-[#1A1A1A]">{opt.label}</option>
+                              ))}
+                            </select>
+                          ) : field.type === 'textarea' ? (
+                            <textarea
+                              id={field.id}
+                              name={field.name}
+                              required={field.required}
+                              rows={field.rows ?? 4}
+                              className={`${formInputClass} resize-none`}
+                              style={formInputStyle}
+                              placeholder={field.placeholder}
+                            />
+                          ) : (
+                            <input
+                              id={field.id}
+                              type={field.type}
+                              name={field.name}
+                              required={field.required}
+                              className={formInputClass}
+                              style={formInputStyle}
+                              placeholder={field.placeholder}
+                            />
+                          )}
+                        </div>
+                      ))}
                     </div>
 
                     {/* Submit Button */}
@@ -1314,12 +1269,7 @@ export function HomePage() {
                       <motion.button
                         type="submit"
                         className="px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer"
-                        style={{
-                          background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                          border: '1px solid transparent',
-                          color: '#FFFFFF',
-                          boxShadow: '0 4px 14px rgba(16, 185, 129, 0.25)'
-                        }}
+                        style={submitButtonStyle}
                         whileHover={{
                           y: -2,
                           boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)'
