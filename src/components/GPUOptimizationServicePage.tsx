@@ -1669,9 +1669,10 @@ export function GPUOptimizationServicePage() {
                   {/* Row 1: Name & Email */}
                   <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
                     <div>
-                      <label className="block text-white/90 mb-2 font-medium text-sm">Full Name *</label>
+                      <label htmlFor="gpuopt-name" className="block text-white/90 mb-2 font-medium text-sm">Full Name *</label>
                       <input
                         type="text"
+                        id="gpuopt-name"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
@@ -1686,9 +1687,10 @@ export function GPUOptimizationServicePage() {
                     </div>
 
                     <div>
-                      <label className="block text-white/90 mb-2 font-medium text-sm">Email Address *</label>
+                      <label htmlFor="gpuopt-email" className="block text-white/90 mb-2 font-medium text-sm">Email Address *</label>
                       <input
                         type="email"
+                        id="gpuopt-email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
@@ -1706,9 +1708,10 @@ export function GPUOptimizationServicePage() {
                   {/* Row 2: Company & Phone */}
                   <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
                     <div>
-                      <label className="block text-white/90 mb-2 font-medium text-sm">Company Name</label>
+                      <label htmlFor="gpuopt-company" className="block text-white/90 mb-2 font-medium text-sm">Company Name</label>
                       <input
                         type="text"
+                        id="gpuopt-company"
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
@@ -1722,9 +1725,10 @@ export function GPUOptimizationServicePage() {
                     </div>
 
                     <div>
-                      <label className="block text-white/90 mb-2 font-medium text-sm">Phone Number</label>
+                      <label htmlFor="gpuopt-phone" className="block text-white/90 mb-2 font-medium text-sm">Phone Number</label>
                       <input
                         type="tel"
+                        id="gpuopt-phone"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
@@ -1740,8 +1744,9 @@ export function GPUOptimizationServicePage() {
 
                   {/* Row 3: Message (Full Width) */}
                   <div>
-                    <label className="block text-white/90 mb-2 font-medium text-sm">Project Details *</label>
+                    <label htmlFor="gpuopt-message" className="block text-white/90 mb-2 font-medium text-sm">Project Details *</label>
                     <textarea
+                      id="gpuopt-message"
                       name="message"
                       value={formData.message}
                       onChange={handleChange}

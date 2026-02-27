@@ -1,14 +1,12 @@
 import { motion } from 'motion/react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { SEO } from './SEO';
+import { Link, useSearchParams } from 'react-router-dom';
+import { SEO as Seo } from './SEO';
 import { useState } from 'react';
 import { CheckCircle, Upload, ArrowLeft, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 export function CareerApplicationPage() {
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const jobRole = searchParams.get('role') || '';
+  const jobRole = searchParams.get('role') ?? '';
   const [submitted, setSubmitted] = useState(false);
   const [fileName, setFileName] = useState('');
 
@@ -129,8 +127,8 @@ export function CareerApplicationPage() {
 
   return (
     <div className="min-h-screen" style={{ background: '#0B0F14' }}>
-      <SEO
-        title={`Apply for ${jobRole || 'Position'} | Jashom Careers`}
+      <Seo
+        title={`Apply for ${jobRole ?? 'Position'} | Jashom Careers`}
         description="Submit your application to join the Jashom team."
         keywords="job application, career application, apply for job"
       />
@@ -174,7 +172,7 @@ export function CareerApplicationPage() {
             </motion.div>
 
             <h1 className="text-4xl sm:text-5xl font-bold mb-6" style={{ color: '#FAFAFA', letterSpacing: '-0.025em' }}>
-              Apply for <span style={{ color: '#10B981' }}>{jobRole || 'Position'}</span>
+              Apply for <span style={{ color: '#10B981' }}>{jobRole ?? 'Position'}</span>
             </h1>
             
             <p className="text-lg max-w-2xl mx-auto" style={{ color: '#9CA3AF', lineHeight: 1.7 }}>

@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import { Helmet } from 'react-helmet-async';
 import { SEO } from './SEO';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -1284,9 +1283,10 @@ export function CUDADevelopmentServicePage() {
                 {/* Row 1: Name & Email */}
                 <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
                   <div>
-                    <label className="block text-white/90 mb-2 font-medium text-sm">Full Name *</label>
+                    <label htmlFor="cuda-name" className="block text-white/90 mb-2 font-medium text-sm">Full Name *</label>
                     <input
                       type="text"
+                      id="cuda-name"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
@@ -1301,9 +1301,10 @@ export function CUDADevelopmentServicePage() {
                   </div>
 
                   <div>
-                    <label className="block text-white/90 mb-2 font-medium text-sm">Email Address *</label>
+                    <label htmlFor="cuda-email" className="block text-white/90 mb-2 font-medium text-sm">Email Address *</label>
                     <input
                       type="email"
+                      id="cuda-email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
@@ -1321,9 +1322,10 @@ export function CUDADevelopmentServicePage() {
                 {/* Row 2: Company & Phone */}
                 <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
                   <div>
-                    <label className="block text-white/90 mb-2 font-medium text-sm">Company Name</label>
+                    <label htmlFor="cuda-company" className="block text-white/90 mb-2 font-medium text-sm">Company Name</label>
                     <input
                       type="text"
+                      id="cuda-company"
                       name="company"
                       value={formData.company}
                       onChange={handleChange}
@@ -1337,9 +1339,10 @@ export function CUDADevelopmentServicePage() {
                   </div>
 
                   <div>
-                    <label className="block text-white/90 mb-2 font-medium text-sm">Phone Number</label>
+                    <label htmlFor="cuda-phone" className="block text-white/90 mb-2 font-medium text-sm">Phone Number</label>
                     <input
                       type="tel"
+                      id="cuda-phone"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
@@ -1355,8 +1358,9 @@ export function CUDADevelopmentServicePage() {
 
                 {/* Row 3: Message (Full Width) */}
                 <div>
-                  <label className="block text-white/90 mb-2 font-medium text-sm">Project Details *</label>
+                  <label htmlFor="cuda-message" className="block text-white/90 mb-2 font-medium text-sm">Project Details *</label>
                   <textarea
+                    id="cuda-message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}

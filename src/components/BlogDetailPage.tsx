@@ -41,8 +41,8 @@ export function BlogDetailPage() {
   const sections: { id: string; title: string }[] =
     blog?.content_sections
       ?.map((s, i) => ({
-        id: slugifyId(s.title || '', i),
-        title: s.title || `Section ${i + 1}`,
+        id: slugifyId(s.title ?? '', i),
+        title: s.title ?? `Section ${i + 1}`,
       }))
       .filter((s) => s.title) ?? [];
 
@@ -98,14 +98,14 @@ export function BlogDetailPage() {
     );
   }
 
-  const heroImage = blog.featured_image_url || '/images/service-hero-bg.jpg';
+  const heroImage = blog.featured_image_url ?? '/images/service-hero-bg.jpg';
 
   return (
     <div className="min-h-screen" style={{ background: '#0B0F14' }}>
       <SEO
         title={`${blog.title} | Jashom Blog`}
-        description={blog.excerpt || blog.title}
-        keywords={blog.tags || 'blog'}
+        description={blog.excerpt ?? blog.title}
+        keywords={blog.tags ?? 'blog'}
       />
 
       {/* Hero - padding so content starts below fixed navbar */}

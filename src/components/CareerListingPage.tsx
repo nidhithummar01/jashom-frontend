@@ -300,21 +300,9 @@ export function CareerListingPage() {
                 className="group"
               >
                 <div
-                  className="relative rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl"
+                  className="relative rounded-3xl overflow-hidden transition-all duration-500 border border-[rgba(16,185,129,0.15)] shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:-translate-y-1 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.2)]"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.6) 0%, rgba(11, 15, 20, 0.8) 100%)',
-                    border: '1px solid rgba(16, 185, 129, 0.15)',
-                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                    e.currentTarget.style.transform = 'translateY(-4px)';
-                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(16, 185, 129, 0.2)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.15)';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+                    background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.6) 0%, rgba(11, 15, 20, 0.8) 100%)'
                   }}
                 >
                   <div className="p-8 md:p-10">
@@ -422,9 +410,9 @@ export function CareerListingPage() {
                           Key Responsibilities
                         </h4>
                         <ul className="space-y-3">
-                          {career.responsibilities.slice(0, 4).map((item, idx) => (
+                          {career.responsibilities.slice(0, 4).map((item) => (
                             <li
-                              key={idx}
+                              key={`${career.id}-resp-${item}`}
                               className="flex items-start gap-3 text-sm"
                               style={{ color: '#D1D5DB', lineHeight: 1.6 }}
                             >

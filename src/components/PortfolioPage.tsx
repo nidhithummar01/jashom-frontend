@@ -291,7 +291,13 @@ export function PortfolioPage() {
 
         {/* Case Studies by Category */}
         <div className="space-y-16 mt-16">
-          {groupedProjects.map(({ category, projects }, categoryIndex) => (
+          {groupedProjects.map(({ category, projects }, categoryIndex) => {
+            let gridColsClass: string;
+            if (projects.length === 1) gridColsClass = 'grid-cols-1';
+            else if (projects.length === 2) gridColsClass = 'grid-cols-1 md:grid-cols-2';
+            else gridColsClass = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+
+            return (
             <div key={category} className={categoryIndex > 0 ? 'pt-12 sm:pt-16' : ''}>
               {/* Category Header */}
               <motion.div
@@ -308,11 +314,7 @@ export function PortfolioPage() {
               </motion.div>
 
               {/* Projects in this category - columns match project count (1→1, 2→2, 3+→3) */}
-              <div className={`pt-10 sm:pt-12 grid gap-6 sm:gap-8 ${
-                projects.length === 1 ? 'grid-cols-1' :
-                projects.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
-                'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-              }`}>
+              <div className={`pt-10 sm:pt-12 grid gap-6 sm:gap-8 ${gridColsClass}`}>
               {projects.map((study, index) => (
                 <GlassCard key={`${category}-${index}`}>
                   <div className="flex flex-col h-full">
@@ -420,7 +422,8 @@ export function PortfolioPage() {
               ))}
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
 
         {/* Stats Section */}

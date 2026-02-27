@@ -43,9 +43,10 @@ export interface Blog {
 
 async function api<T>(path: string): Promise<T> {
   const base = getBaseUrl();
-  const url = `${base}${path.startsWith('/') ? path : `/${path}`}`;
+  const pathStr = path.startsWith('/') ? path : '/' + path;
+  const url = base + pathStr;
   const res = await fetch(url);
-  if (!res.ok) throw new Error(res.statusText || 'Request failed');
+  if (!res.ok) throw new Error(res.statusText ?? 'Request failed');
   return res.json();
 }
 
@@ -56,7 +57,8 @@ export async function getBlogs(params?: { status?: string; limit?: number; offse
   if (params?.limit != null) search.set('limit', String(params.limit));
   if (params?.offset != null) search.set('offset', String(params.offset));
   const q = search.toString();
-  return api<Blog[]>(`/v1/admin/blogs${q ? `?${q}` : ''}`);
+  const path = q ? '/v1/admin/blogs?' + q : '/v1/admin/blogs';
+  return api<Blog[]>(path);
 }
 
 /** Fetch a single blog by id. */
