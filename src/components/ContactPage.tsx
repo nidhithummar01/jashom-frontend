@@ -96,7 +96,7 @@ const faqsData = [
     }
   ];
 
-function SectionContent({ children }: { children: React.ReactNode }) {
+function SectionContent({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">{children}</div>
@@ -104,7 +104,7 @@ function SectionContent({ children }: { children: React.ReactNode }) {
   );
 }
 
-function ContactLink({ href, icon: Icon, children, last }: { href: string; icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>; children: React.ReactNode; last?: boolean }) {
+function ContactLink({ href, icon: Icon, children, last }: Readonly<{ href: string; icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>; children: React.ReactNode; last?: boolean }>) {
   return (
     <div className="flex items-center gap-3" style={last ? undefined : { marginBottom: '16px' }}>
       <Icon className="w-6 h-6" style={ACCENT_STYLE} />

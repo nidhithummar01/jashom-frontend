@@ -25,6 +25,8 @@ const img = (file: string) => `${PORTFOLIO_IMG}/${file}`;
 
 type CaseStudyInput = Omit<CaseStudy, 'client'> & { client?: string };
 
+type StudyFields = Omit<CaseStudyInput, 'link'> & { link?: string };
+
 function slugFromLink(link: string): string {
   return link.replace(/^\//, '').split('/').pop() ?? '';
 }
@@ -36,8 +38,18 @@ function toCaseStudy(s: CaseStudyInput): CaseStudy {
   return { client: CLIENT.JAY_DAVE, ...s, image };
 }
 
+/** Builds a case study with link defaulting to /projects/{slug}. */
+function projectStudy(slug: string, fields: StudyFields): CaseStudyInput {
+  return { ...fields, link: fields.link ?? `/projects/${slug}` };
+}
+
+/** Builds a case study with link defaulting to /portfolio/{slug} and client Jashom. */
+function portfolioStudy(slug: string, fields: Omit<StudyFields, 'client'>): CaseStudyInput {
+  return { ...fields, client: CLIENT.JASHOM, link: `/portfolio/${slug}` };
+}
+
 const RAW_STUDIES: CaseStudyInput[] = [
-  {
+  projectStudy('boostreferral', {
     title: 'BoostReferral - SaaS Platform',
     industry: 'SaaS',
     category: CATEGORY.SAAS,
@@ -45,10 +57,9 @@ const RAW_STUDIES: CaseStudyInput[] = [
     solution: 'Founded and developed a comprehensive referral management platform that automates referral programs, tracks analytics, and drives customer acquisition for businesses.',
     impact: ['Automated referral program management', 'Increased customer acquisition rates', '99.9% platform uptime', 'Scalable SaaS architecture serving thousands of users'],
     tags: ['SaaS Platform', 'Referral Management', 'Analytics', 'Automation'],
-    link: '/projects/boostreferral',
     liveUrl: 'https://www.boostreferral.com',
-  },
-  {
+  }),
+  projectStudy('projectsphere', {
     title: 'ProjectSphere - Project Management Platform',
     industry: 'SaaS',
     category: CATEGORY.SAAS,
@@ -56,9 +67,8 @@ const RAW_STUDIES: CaseStudyInput[] = [
     solution: 'ProjectSphere offers a complete project management platform with real-time collaboration, resource management, and advanced analytics for better project outcomes.',
     impact: ['45% improvement in team efficiency', '30% faster project delivery', '85% user adoption rate', 'Real-time team collaboration'],
     tags: ['Project Management', 'Real-time Collaboration', 'Resource Management', 'Analytics Dashboard'],
-    link: '/projects/projectsphere',
-  },
-  {
+  }),
+  projectStudy('enviropulse', {
     title: 'EnviroPulse - Environmental Monitoring',
     industry: 'Environmental Tech',
     category: CATEGORY.ENV_TECH,
@@ -66,10 +76,9 @@ const RAW_STUDIES: CaseStudyInput[] = [
     solution: 'EnviroPulse combines IoT sensors with advanced analytics to provide real-time monitoring and insights across multiple environmental parameters.',
     impact: ['35% reduction in environmental incidents', '45% improvement in compliance reporting efficiency', 'Real-time environmental monitoring', 'Multi-zone tracking capabilities'],
     tags: ['IoT Integration', 'Real-time Data', 'Data Visualization', 'Environmental Sensors', 'Analytics Dashboard'],
-    link: '/projects/enviropulse',
     liveUrl: 'https://enviropulse.jashom.com',
-  },
-  {
+  }),
+  projectStudy('greensphere', {
     title: 'GreenSphere - ESG Management Platform',
     industry: 'ESG Platform',
     category: CATEGORY.ENV_TECH,
@@ -77,10 +86,9 @@ const RAW_STUDIES: CaseStudyInput[] = [
     solution: 'GreenSphere provides a comprehensive platform for tracking, analyzing, and reporting ESG metrics, helping organizations achieve their sustainability goals.',
     impact: ['23% average reduction in carbon emissions', '65% improvement in ESG reporting efficiency', 'ESG metrics tracking', 'Sustainability reporting automation'],
     tags: ['ESG Metrics', 'Sustainability Tracking', 'Reporting Tools', 'Data Visualization', 'Compliance Management'],
-    link: '/projects/greensphere',
     liveUrl: 'https://greenesg.jashom.com/',
-  },
-  {
+  }),
+  projectStudy('ecobot-ai', {
     title: 'EcoBot AI - Sustainability Assistant',
     industry: 'AI Platform',
     category: CATEGORY.ENV_TECH,
@@ -88,10 +96,9 @@ const RAW_STUDIES: CaseStudyInput[] = [
     solution: 'EcoBot AI leverages advanced language models to provide instant, accurate responses to sustainability queries, helping organizations make informed decisions and maintain compliance.',
     impact: ['40% reduction in compliance-related issues', '60% improvement in sustainability decision-making efficiency', 'Instant sustainability query responses', 'High accuracy LLM integration'],
     tags: ['AI Integration', 'Natural Language Processing', 'Sustainability Analytics', 'Environmental Compliance', 'Real-time Analytics'],
-    link: '/projects/ecobot-ai',
     liveUrl: 'https://ecoai.jashom.com/dashboard',
-  },
-  {
+  }),
+  projectStudy('jashom-health', {
     title: 'Jashom Health - Hospital System',
     industry: 'Healthcare Platform',
     category: CATEGORY.HEALTHCARE,
@@ -99,10 +106,9 @@ const RAW_STUDIES: CaseStudyInput[] = [
     solution: 'Jashom Health provides a comprehensive hospital management system designed specifically for multi-location healthcare facilities with HIPAA-compliant security and real-time monitoring.',
     impact: ['99.9% system uptime ensuring continuous patient care', '40% reduction in administrative overhead', '60% improvement in patient care coordination', '100% HIPAA compliance with zero security incidents', 'Supports 25+ hospital locations simultaneously'],
     tags: ['HIPAA Compliance', 'Multi-location Support', 'Real-time Monitoring', 'Patient Management', 'Healthcare Analytics'],
-    link: '/projects/jashom-health',
     liveUrl: 'https://jashomhealth.jashom.com',
-  },
-  {
+  }),
+  projectStudy('jashom-healthcare', {
     title: 'Jashom Healthcare - Interoperability Platform',
     industry: 'Healthcare Interoperability',
     category: CATEGORY.HEALTHCARE,
@@ -110,10 +116,9 @@ const RAW_STUDIES: CaseStudyInput[] = [
     solution: 'Jashom Healthcare provides seamless interoperability between healthcare systems using industry-standard protocols (HL7, FHIR) and advanced integration technology.',
     impact: ['99.9% system uptime ensuring continuous data flow', '35% reduction in duplicate patient records', '50+ healthcare partners successfully integrated', '60% faster care coordination across facilities', '24/7 real-time synchronization'],
     tags: ['HL7 Integration', 'FHIR Standards', 'EMR/LIS/PACS', 'IoT Device Integration', 'Real-time Sync', 'HIPAA Compliance'],
-    link: '/projects/jashom-healthcare',
     liveUrl: 'https://jashomhealthcare.jashom.com',
-  },
-  {
+  }),
+  projectStudy('jashom-icu-connect', {
     title: 'Jashom ICU Connect - Remote Monitoring',
     industry: 'Remote ICU Monitoring',
     category: CATEGORY.HEALTHCARE,
@@ -121,10 +126,9 @@ const RAW_STUDIES: CaseStudyInput[] = [
     solution: 'Jashom ICU Connect provides a comprehensive remote monitoring and collaboration platform that bridges the gap between rural hospitals and specialist care.',
     impact: ['40% reduction in unnecessary patient transfers', '15+ hospitals now have specialist oversight', '< 30 second response time for critical alerts', 'Improved outcomes through 24/7 specialist collaboration', '100% 24/7 monitoring coverage'],
     tags: ['Real-time Monitoring', 'Vital Signs Tracking', 'Expert Collaboration', 'Secure Communication', 'Role-based Access', 'HIPAA Compliance'],
-    link: '/projects/jashom-icu-connect',
     liveUrl: 'https://jashomhealthcareplus.jashom.com',
-  },
-  {
+  }),
+  projectStudy('rag-lu', {
     title: 'RAG.LU - AI Knowledge Platform',
     industry: 'AI & Machine Learning',
     category: CATEGORY.AI_ML,
@@ -132,54 +136,45 @@ const RAW_STUDIES: CaseStudyInput[] = [
     solution: 'Founded an innovative AI platform leveraging Retrieval-Augmented Generation (RAG) technology for intelligent knowledge management and information retrieval solutions.',
     impact: ['93% accuracy in information retrieval', '10x faster processing speed', 'RAG-powered knowledge management', 'AI transformation solutions for enterprises'],
     tags: ['RAG Technology', 'AI Platform', 'Machine Learning', 'Knowledge Management'],
-    link: '/projects/rag-lu',
     liveUrl: 'https://rag.lu',
     image: img('rag-lu.ai.png'),
-  },
-  {
+  }),
+  portfolioStudy('rankzy-ai', {
     title: 'RANKZY AI - AI Visibility Optimization Platform',
-    client: CLIENT.JASHOM,
     industry: 'AI SEO & Optimization',
     category: CATEGORY.AI_ML,
     challenge: 'Businesses struggle to maintain visibility in AI-powered search and recommendations across ChatGPT, Claude, Google Gemini, and Perplexity, as traditional SEO methods are becoming obsolete in the AI-first discovery era.',
     solution: 'Rankzy AI is the world\'s first comprehensive AI Visibility Optimization Platform that helps businesses dominate AI-powered search and recommendations across multiple AI models through multi-stage prompt testing, brand mention detection, competitor tracking, and citation analysis.',
     impact: ['Future-proof marketing strategy for AI-first discovery', 'Data-driven competitive intelligence in AI responses', 'Actionable insights with specific implementation guidance', 'Real-time monitoring of AI visibility performance', 'First-mover advantage in emerging AI optimization market'],
     tags: ['AI SEO', 'AI Visibility', 'Large Language Model Optimization', 'AI Search Ranking', 'Multi-Provider AI Testing'],
-    link: '/portfolio/rankzy-ai',
-  },
-  {
+  }),
+  portfolioStudy('pod-ai-clipforge', {
     title: 'POD AI (CLIPFORGE) - AI Content Creation & Repurposing Platform',
-    client: CLIENT.JASHOM,
     industry: 'AI Content Automation',
     category: CATEGORY.AI_ML,
     challenge: 'Content creators and businesses need to produce professional videos, social media posts, and presentations at scale, but existing tools lack comprehensive multi-format AI processing and brand consistency across platforms.',
     solution: 'POD AI (ClipForge) is an all-in-one AI-powered content creation platform that transforms any content format into professional videos, social media posts, presentations, and more with intelligent automation, brand consistency, and platform-specific optimization.',
     impact: ['Multi-format AI processing in single platform (text, voice, video, images, documents)', 'Deep brand integration for consistent professional presentation', 'Credit-based pricing eliminates unused subscription waste', 'Platform-specific optimization for YouTube, TikTok, Instagram, LinkedIn', 'No technical skills required with intuitive user interface'],
     tags: ['AI Content Creation', 'Video Generation', 'Content Repurposing', 'Social Media Automation', 'Voice AI Technology'],
-    link: '/portfolio/pod-ai-clipforge',
-  },
-  {
+  }),
+  portfolioStudy('nvtrust-gpu-attestation', {
     title: 'NVTRUST GPU ATTESTATION - Secure Hardware Verification System',
-    client: CLIENT.JASHOM,
     industry: 'GPU Security & Confidential Computing',
     category: CATEGORY.AI_ML,
     challenge: 'Enterprises need to verify GPU authenticity and integrity for confidential computing workloads, but existing solutions lack cryptographic verification protocols and tamper detection capabilities for NVIDIA H100 GPUs.',
     solution: 'nvTrust GPU Attestation System provides enterprise-grade secure remote attestation for NVIDIA H100 GPUs using cryptographic verification protocols with dual-verification architecture, hardware-rooted trust, and SPDM compliance to ensure hardware authenticity and integrity.',
     impact: ['Cryptographic proof of genuine NVIDIA hardware', 'Verification of untampered GPU firmware and configuration', 'Current responses with nonce-based validation', 'ECDSA signatures provide cryptographic attestation proof', 'Standards compliance with SPDM protocol'],
     tags: ['GPU Security', 'Hardware Attestation', 'Confidential Computing', 'NVIDIA GPU Verification', 'Cryptographic Verification'],
-    link: '/portfolio/nvtrust-gpu-attestation',
-  },
-  {
+  }),
+  portfolioStudy('hti-cuda-acceleration', {
     title: 'HTI CUDA GPU ACCELERATION - Energy-Efficient AI Computing',
-    client: CLIENT.JASHOM,
     industry: 'GPU Optimization & Energy Efficiency',
     category: CATEGORY.AI_ML,
     challenge: 'AI training workloads consume excessive energy on enterprise GPUs, but existing optimization solutions compromise computational accuracy or lack real-time power monitoring capabilities for distributed multi-GPU environments.',
     solution: 'HTI (High-dimensional Token Integration) CUDA Acceleration provides research-grade GPU optimization for NVIDIA A100/H100 enterprise GPUs, achieving up to 82% energy reduction while maintaining computational accuracy through optimized kernel fusion and real-time power monitoring.',
     impact: ['Up to 82.3% energy reduction on specific AI workloads', 'Zero accuracy loss while optimizing energy consumption', 'Real-time power monitoring with NVML-based energy sampling', 'Multi-GPU scaling proven across multiple A100/H100 GPUs', 'Significant power consumption savings for data centers'],
     tags: ['GPU Optimization', 'CUDA Acceleration', 'Energy Efficiency', 'AI Performance', 'Multi-GPU Scaling'],
-    link: '/portfolio/hti-cuda-acceleration',
-  },
+  }),
 ];
 
 export const CASE_STUDIES: CaseStudy[] = RAW_STUDIES.map(toCaseStudy);

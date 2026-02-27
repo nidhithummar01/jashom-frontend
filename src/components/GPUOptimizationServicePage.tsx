@@ -2,150 +2,91 @@ import { motion } from 'motion/react';
 import { SEO as Seo } from './SEO';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const SECTION_BG = '#0B0F14';
-const CARD_BG_LIGHT = '#f5f5f5';
-const BORDER_SUBTLE = 'rgba(255, 255, 255, 0.08)';
-const BENEFIT_CARD_BG = 'rgba(16, 185, 129, 0.05)';
-const BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba(16, 185, 129, 0.25)' } as const;
-const BADGE_TESTIMONIAL = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.2)' } as const;
-const CHEVRON_DOWN_D = 'M19 9l-7 7-7-7';
-
-const ACCENT_COLOR = '#10B981';
-const TEXT_WHITE = '#FFFFFF';
-const TEXT_FAFAFA = '#FAFAFA';
-const TEXT_MUTED = '#9CA3AF';
-const TEXT_SUBTLE = '#6B7280';
-const TEXT_GRAY = '#9E9E9E';
-const TEXT_QUOTE = '#D1D5DB';
-const CARD_DESC_GRAY = '#666666';
-const HERO_OVERLAY_GRADIENT = 'linear-gradient(to right, rgba(11, 15, 20, 0.85) 0%, rgba(11, 15, 20, 0.75) 40%, rgba(11, 15, 20, 0.5) 70%, rgba(11, 15, 20, 0.3) 100%)';
-const HERO_BG_CENTER = { backgroundSize: 'cover' as const, backgroundPosition: 'center' as const, backgroundRepeat: 'no-repeat' as const };
-const OVERVIEW_BADGE = { background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)' } as const;
-const KEY_STAT_BOX = { background: BENEFIT_CARD_BG, border: '1px solid rgba(16, 185, 129, 0.2)' } as const;
-const IMAGE_SHADOW_ACCENT = { boxShadow: '0 20px 60px rgba(16, 185, 129, 0.3)' } as const;
-const IMAGE_SHADOW_ACCENT_ALT = { borderRadius: '20px', boxShadow: '0 20px 60px rgba(16, 185, 129, 0.25), 0 0 40px rgba(16, 185, 129, 0.1)' } as const;
-const CTA_HERO_STYLE = { background: ACCENT_COLOR, color: TEXT_WHITE, boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.4)' } as const;
-const CTA_SIMPLE = { background: ACCENT_COLOR, color: TEXT_WHITE } as const;
-const PROCESS_GRADIENT_BG = 'linear-gradient(180deg, #0B0F14 0%, #111827 50%, #0B0F14 100%)';
-const FORM_GRADIENT_BG = 'linear-gradient(180deg, #0B0F14 0%, #111827 100%)';
-const FORM_GLOW_STYLE = { background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, transparent 60%)', filter: 'blur(60px)', opacity: 0.6 } as const;
-const FORM_CONTAINER_STYLE: React.CSSProperties = { background: 'rgba(17, 24, 39, 0.6)', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(14px)', padding: '48px 32px', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)' };
-const SUBMIT_BTN_STYLE = { background: 'linear-gradient(135deg, #10B981, #06B6D4)', border: '1px solid transparent', color: TEXT_WHITE, boxShadow: '0 4px 14px rgba(16, 185, 129, 0.25)', minWidth: '200px' } as const;
-const SUBMIT_BTN_HOVER = { boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)' } as const;
-const HEADING_TITLE_STYLE = { color: TEXT_FAFAFA, letterSpacing: '-0.025em', lineHeight: 1.2 } as const;
-const FORM_LAYOUT = { display: 'flex' as const, flexDirection: 'column' as const, gap: '28px' } as const;
-const FORM_GRID_GAP = { gap: '24px' } as const;
-const FORM_MAX_WIDTH = { maxWidth: '1100px', margin: '0 auto' } as const;
-const CHECK_ICON_BG = { background: ACCENT_COLOR } as const;
-const WHY_CHOOSE_BORDER = { borderColor: 'rgba(16, 185, 129, 0.3)' } as const;
-const AI_MODEL_CARD_STYLE: React.CSSProperties = { background: 'rgba(17, 24, 39, 0.4)', backdropFilter: 'blur(10px)', border: '1px solid rgba(16, 185, 129, 0.1)' };
-const GRADIENT_TEXT_STYLE = { background: 'linear-gradient(135deg, #10B981, #06B6D4)', WebkitBackgroundClip: 'text' as const, WebkitTextFillColor: 'transparent' as const };
-
-const CHECK_PATH = 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z';
-const CheckIcon = ({ size = 'sm' }: { size?: 'sm' | 'lg' }) => (
-  <svg className={size === 'lg' ? 'w-6 h-6 text-white' : 'w-5 h-5 text-white'} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={CHECK_PATH} />
-  </svg>
-);
-const QuoteIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
-    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
-  </svg>
-);
-const DividerLine = () => (
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-  </div>
-);
-
-const servicesData = [
-  { title: 'CUDA\nOptimization', description: 'We optimize the underlying kernel execution, better shared memory assignment, and also readjust thread block settings to optimize performance. The services of our CUDA Development are aimed at removing the warp divergence and the latency in the NVIDIA GPU architecture.' },
-  { title: 'AI/ML\nAcceleration', description: 'Optimize the equilibrium of both the speed of model training and inference via optimized batch operations and the control of accessing memory. We optimize compute to reduce training time and improve predictive performance.' },
-  { title: 'Performance\nProfiling', description: 'We identify the areas of inefficiency in the execution flow and memory transfers into increasingly sophisticated profiling frameworks. The benefits of detailed benchmarking are accuracy in making optimization decisions and quantifiable performance improvements.' },
-];
-const industryItems = ['AI & Machine Learning', 'Scientific Computing', 'Data Analytics', 'Rendering & Graphics'];
-const processSteps = [
-  { title: 'Assessment', description: 'Assess existing GPU architecture, load, and establish specific optimization objectives.', gradient: 'from-blue-500 to-blue-500', shadow: 'shadow-blue-500/50', pathD: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2' },
-  { title: 'Analysis', description: 'Gather real-time monitoring information and spot performance issues and performance bottlenecks.', gradient: 'from-purple-500 to-pink-500', shadow: 'shadow-purple-500/50', pathD: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4' },
-  { title: 'Kernel Optimization', description: 'Refine CUDA kernels and improve parallel execution balance.', gradient: 'from-blue-500 to-blue-500', shadow: 'shadow-cyan-500/50', pathD: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' },
-  { title: 'Tuning', description: 'Expenses in runtime parameters and memory allocation, better throughput.', gradient: 'from-pink-500 to-rose-500', shadow: 'shadow-pink-500/50', pathD: 'M13 10V3L4 14h7v7l9-11h-7z' },
-  { title: 'Testing', description: 'Authenticate gains with validation checkpoints.', gradient: 'from-indigo-500 to-purple-500', shadow: 'shadow-indigo-500/50', pathD: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
-  { title: 'Deployment', description: 'Employ workloads that are optimized, monitored, and improved.', gradient: 'from-green-500 to-emerald-500', shadow: 'shadow-green-500/50', pathD: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z' },
-];
-const benefitsData = [
-  { title: 'Faster\nProcessing\nSpeed', description: 'Fasten hardened compute tasks with an ideal use of parallelization and data movement. With decreased processing time, there will be shorter experimentation times and shorter delivery times.', borderColor: 'rgba(16, 185, 129, 0.35)' },
-  { title: 'Lower Costs of\nInfrastructure', description: 'Optimize the use of GPUs in order to reduce costs on clouds and hardware. Harmful efficiency brings a decrease in over-provisioning and enhanced resource allocation.', borderColor: 'rgba(6, 182, 212, 0.35)' },
-  { title: 'Improved\nScalability', description: 'Processes more data and intricate programs with no drop in performance or increased proportional cost.', borderColor: 'rgba(139, 92, 246, 0.35)' },
-  { title: 'Enhanced\nModel\nPerformance', description: 'Improve the performance of AI models training and inference with optimal CUDA execution paths.', borderColor: 'rgba(236, 72, 153, 0.35)' },
-  { title: 'Competitive\nAdvantage', description: 'Become better computers to hasten innovation and become more powerful in data-based markets.', borderColor: 'rgba(251, 146, 60, 0.35)' },
-  { title: 'Energy\nEfficiency', description: 'Minimize energy use by optimizing the use of GPUs, which helps on the sustainability agenda and limits the cost of running the operations.', borderColor: 'rgba(52, 211, 153, 0.35)' },
-];
-const whyChooseItems = [
-  { title: 'Advanced Parallel Computing Expertise', description: 'Our experts have extensive expertise in CUDA implementation, tuning of the GPU architecture, and high-performance parallel systems. This is done at low-level kernel optimization all the way up to optimizing an entire NVIDIA GPU, and we work to squeeze the highest performance out of every tier of your computing system.' },
-  { title: 'Results Backed by Data', description: 'We value quantitative difference. Each interaction is predetermined by profiling information, systematic testing, and efficiency metrics showing evident acceleration, competitive advantages, and enhanced hardware use.' },
-  { title: 'Optimization Built Around Your Workload', description: 'No generic templates. We will create application-specific GPU optimization that will respond to your application and run a discussion, infrastructure configuration, as well as scalability needs by making the performance consistently enhanced on a long-term basis.' },
-];
-const testimonialsData = [
-  { quote: '"Their graphics processing optimization experience minimized our processing latency. The CUDA execution benefits were fast and quantifiable."', initials: 'AM', name: 'Arjun Mehta', role: 'Director of Engineering, NovaAI Labs', avatarGradient: 'linear-gradient(135deg, #10B981, #06B6D4)' },
-  { quote: '"Our AI training pipeline became significantly faster after their optimization work. Clear performance gains with reduced infrastructure strain."', initials: 'SA', name: 'Sofia Alvarez', role: 'CTO, Quantix Systems', avatarGradient: 'linear-gradient(135deg, #10B981, #06B6D4)' },
-  { quote: '"We hired their CUDA developers for complex optimization tasks. The results were stable, scalable, and production-ready."', initials: 'DB', name: 'Daniel Brooks', role: 'Chief Operating Officer, CoreTech Solutions', avatarGradient: 'linear-gradient(135deg, #10B981, #06B6D4)' },
-];
-const faqData = [
-  { q: 'How long does a GPU optimization project typically take?', a: 'The timelines of projects are based on the complexity of the workload, the level of infrastructure, and the objectives of the performance. Enterprise environments take most optimization engagements between a few weeks and a few months.' },
-  { q: 'Can you optimize legacy CUDA codebases?', a: 'Yes. We test current CUDA implementations, determine architectural waste, and cull kernels to optimize memory access characteristics, parallel execution ratio, and total performance.' },
-  { q: 'What metrics do you use to measure optimization success?', a: 'We assess the use of GPUs, the performance, the ability to use memory, the decrease in latency, the efficiency of the scalability, and the savings in costs using structured profiling and benchmarking techniques.' },
-  { q: 'Do optimized workloads remain stable in production?', a: 'Absolutely. All optimizations are tested, regressed, and monitored during deployment to make sure that the performance improvements will be maintained in the field.' },
-];
-const aiModelsData = [
-  { name: 'GPT-4o', src: '/images/AI Models exeperty/gpt-4o.jpg.jpg', alt: 'GPT-4o' },
-  { name: 'Llama 3', src: '/images/AI Models exeperty/llama-3.jpg.webp', alt: 'Llama 3' },
-  { name: 'PaLM 2', src: '/images/AI Models exeperty/palm-2.jpg.webp', alt: 'PaLM 2' },
-  { name: 'Stability AI', src: '/images/AI Models exeperty/stability-ai.jpg.webp', alt: 'Stability AI' },
-  { name: 'Google Gemini', src: '/images/AI Models exeperty/google-gemini.jpg.webp', alt: 'Google Gemini' },
-  { name: 'Vicuna', src: '/images/AI Models exeperty/vicuna.jpg.webp', alt: 'Vicuna' },
-  { name: 'Mistral', src: '/images/AI Models exeperty/mistral.jpg.webp', alt: 'Mistral' },
-  { name: 'Claude', src: '/images/AI Models exeperty/claude.jpg.webp', alt: 'Claude' },
-];
-
-const formInputClass = 'w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all';
-const formInputStyle = { background: 'rgba(255, 255, 255, 0.06)', borderColor: 'rgba(255, 255, 255, 0.1)' } as const;
-
-const formFieldsConfig: { name: 'name' | 'email' | 'company' | 'phone' | 'message'; label: string; type: 'text' | 'email' | 'tel' | 'textarea'; placeholder: string; required?: boolean; rows?: number }[] = [
-  { name: 'name', label: 'Full Name *', type: 'text', placeholder: 'John Doe', required: true },
-  { name: 'email', label: 'Email Address *', type: 'email', placeholder: 'john@company.com', required: true },
-  { name: 'company', label: 'Company Name', type: 'text', placeholder: 'Your Company' },
-  { name: 'phone', label: 'Phone Number', type: 'tel', placeholder: '+1 (555) 000-0000' },
-  { name: 'message', label: 'Project Details *', type: 'textarea', placeholder: 'Tell us about your GPU optimization needs...', required: true, rows: 4 },
-];
-
-const OFFICE_ICON_BG = { background: 'rgba(16, 185, 129, 0.15)' } as const;
-const officeCardsData: { title: string; type: 'address' | 'email' | 'phone'; content: React.ReactNode; href?: string; subtitle?: string }[] = [
-  {
-    title: 'Address',
-    type: 'address',
-    content: <>414, Satyam-2, Amba Business Park,<br />ATPL, Adalaj, Gujarat,<br />India - 380054</>,
-  },
-  {
-    title: 'Email',
-    type: 'email',
-    content: 'info@jashom.com',
-    href: 'mailto:info@jashom.com',
-    subtitle: 'We respond within 24 hours',
-  },
-  {
-    title: 'Phone',
-    type: 'phone',
-    content: '+91 90239 06363',
-    href: 'tel:+919023906363',
-    subtitle: 'Mon-Fri, 9AM-6PM IST',
-  },
-];
-const officeCardStyle = { background: 'rgba(17, 24, 39, 0.6)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(14px)' } as const;
+import {
+  SECTION_BG,
+  CARD_BG_LIGHT,
+  BORDER_SUBTLE,
+  BENEFIT_CARD_BG,
+  ACCENT_COLOR,
+  TEXT_WHITE,
+  TEXT_FAFAFA,
+  TEXT_MUTED,
+  TEXT_SUBTLE,
+  TEXT_GRAY,
+  TEXT_QUOTE,
+  CARD_DESC_GRAY,
+  BADGE_STYLE,
+  BADGE_TESTIMONIAL,
+  HERO_OVERLAY_GRADIENT,
+  HERO_BG_CENTER,
+  OVERVIEW_BADGE,
+  KEY_STAT_BOX,
+  IMAGE_SHADOW_ACCENT,
+  IMAGE_SHADOW_ACCENT_ALT,
+  CTA_HERO_STYLE,
+  CTA_SIMPLE,
+  PROCESS_GRADIENT_BG,
+  FORM_GRADIENT_BG,
+  FORM_GLOW_STYLE,
+  FORM_CONTAINER_STYLE,
+  SUBMIT_BTN_STYLE,
+  SUBMIT_BTN_HOVER,
+  HEADING_TITLE_STYLE,
+  FORM_LAYOUT,
+  FORM_GRID_GAP,
+  FORM_MAX_WIDTH,
+  CHECK_ICON_BG,
+  WHY_CHOOSE_BORDER,
+  AI_MODEL_CARD_STYLE,
+  GRADIENT_TEXT_STYLE,
+  OFFICE_ICON_BG,
+  officeCardStyle,
+  formInputStyle,
+  formInputClass,
+  CHEVRON_DOWN_D,
+  CHECK_PATH,
+} from '../constants/theme';
+import {
+  servicesData,
+  industryItems,
+  processSteps,
+  benefitsData,
+  whyChooseItems,
+  testimonialsData,
+  faqData,
+  aiModelsData,
+  formFieldsConfig,
+  officeCardsData,
+} from './GPUOptimizationServicePage/data';
 
 const OFFICE_ICON_SVG_CLASS = 'w-6 h-6';
 const OFFICE_ICON_SVG_PROPS = { fill: 'none' as const, viewBox: '0 0 24 24', stroke: 'currentColor' };
+
+function CheckIcon({ size = 'sm' }: Readonly<{ size?: 'sm' | 'lg' }>) {
+  return (
+    <svg className={size === 'lg' ? 'w-6 h-6 text-white' : 'w-5 h-5 text-white'} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={CHECK_PATH} />
+    </svg>
+  );
+}
+
+function QuoteIcon() {
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
+      <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
+    </svg>
+  );
+}
+
+function DividerLine() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+    </div>
+  );
+}
+
 function renderOfficeCardIcon(type: 'address' | 'email' | 'phone') {
   if (type === 'address') return <img src="/images/inidan.flag.jpg" alt="India Flag" className="w-full h-full object-cover" />;
   if (type === 'email') return (
@@ -167,7 +108,13 @@ function renderGpuFormField(
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
 ) {
   const id = `gpuopt-${field.name}`;
-  const base = { name: field.name, value: formData[field.name], onChange: handleChange, required: field.required, placeholder: field.placeholder };
+  const base = {
+    name: field.name,
+    value: formData[field.name],
+    onChange: handleChange,
+    placeholder: field.placeholder,
+    ...('required' in field && { required: field.required }),
+  };
   if (field.type === 'textarea') {
     return <textarea id={id} rows={field.rows ?? 4} className={`${formInputClass} resize-none`} style={formInputStyle} {...base} />;
   }
@@ -916,7 +863,7 @@ export function GPUOptimizationServicePage() {
                     {card.href ? (
                       <a href={card.href} className="text-sm inline-block hover:text-[#059669] transition-colors" style={{ color: ACCENT_COLOR }}>{card.content}</a>
                     ) : (
-                      <p className="text-sm leading-relaxed" style={{ color: TEXT_MUTED }}>{card.content}</p>
+                      <p className="text-sm leading-relaxed" style={{ color: TEXT_MUTED, whiteSpace: 'pre-line' }}>{card.content}</p>
                     )}
                     {card.subtitle && <p className="text-xs mt-3" style={{ color: TEXT_SUBTLE }}>{card.subtitle}</p>}
                   </div>
