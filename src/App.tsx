@@ -144,18 +144,19 @@ function AnimatedRoutes() {
 
 export default function App() {
   useEffect(() => {
-    // Load Tawk.to chat widget
+    // Load Tawk.to chat widget. SRI (integrity) is intentionally not used: the script is
+    // hosted and updated by Tawk.to; a fixed hash would break when they deploy changes.
     const Tawk_API: any = (window as any).Tawk_API ?? {};
     const Tawk_LoadStart = new Date();
     (window as any).Tawk_API = Tawk_API;
     (window as any).Tawk_LoadStart = Tawk_LoadStart;
-    
+
     (function () {
       const s1 = document.createElement("script");
       const s0 = document.getElementsByTagName("script")[0];
       s1.async = true;
       s1.src = "https://embed.tawk.to/699ecfbd8b10421c355a9f93/1jia5mv9u";
-      s1.setAttribute("crossorigin", "*");
+      s1.setAttribute("crossorigin", "anonymous");
       if (s0?.parentNode) {
         s0.parentNode.insertBefore(s1, s0);
       } else {
