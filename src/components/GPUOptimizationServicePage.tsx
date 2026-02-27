@@ -22,8 +22,6 @@ export function GPUOptimizationServicePage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Redirect to thank you page
     navigate('/thank-you/');
   };
   return (
@@ -823,21 +821,11 @@ export function GPUOptimizationServicePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300"
+              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
               style={{
                 background: 'rgba(17, 24, 39, 0.4)',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.1)';
-                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
@@ -865,21 +853,11 @@ export function GPUOptimizationServicePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300"
+              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
               style={{
                 background: 'rgba(17, 24, 39, 0.4)',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.1)';
-                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
@@ -907,21 +885,11 @@ export function GPUOptimizationServicePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300"
+              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
               style={{
                 background: 'rgba(17, 24, 39, 0.4)',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.1)';
-                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
@@ -949,21 +917,11 @@ export function GPUOptimizationServicePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300"
+              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
               style={{
                 background: 'rgba(17, 24, 39, 0.4)',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.1)';
-                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
@@ -991,21 +949,11 @@ export function GPUOptimizationServicePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300"
+              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
               style={{
                 background: 'rgba(17, 24, 39, 0.4)',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.1)';
-                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
@@ -1033,21 +981,11 @@ export function GPUOptimizationServicePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300"
+              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
               style={{
                 background: 'rgba(17, 24, 39, 0.4)',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.1)';
-                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
@@ -1075,21 +1013,11 @@ export function GPUOptimizationServicePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.7 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300"
+              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
               style={{
                 background: 'rgba(17, 24, 39, 0.4)',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.1)';
-                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
@@ -1117,21 +1045,11 @@ export function GPUOptimizationServicePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.8 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300"
+              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
               style={{
                 background: 'rgba(17, 24, 39, 0.4)',
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.1)';
-                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>

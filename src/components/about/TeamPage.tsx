@@ -27,6 +27,14 @@ const staggerItem = {
   }
 };
 
+function getInitials(name: string): string {
+  return name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase();
+}
+
 export function TeamPage() {
   const teamMembers = [
     {
@@ -112,9 +120,9 @@ export function TeamPage() {
             whileInView="show"
             viewport={{ once: true }}
           >
-            {teamMembers.map((member, index) => (
+            {teamMembers.map((member) => (
               <motion.div
-                key={index}
+                key={member.name}
                 variants={staggerItem}
               >
                 <GlassCard>
@@ -131,25 +139,15 @@ export function TeamPage() {
                           <img
                             src={member.image}
                             alt={member.name}
-                            className="w-full h-full object-cover object-center"
-                            style={{
-                              objectFit: 'cover',
-                              objectPosition: 'center center',
-                              display: 'block',
-                              width: '100%',
-                              height: '100%',
-                              maxWidth: '100%',
-                              maxHeight: '100%'
-                            }}
+                            className="w-full h-full object-cover object-center block"
                             onError={(e) => {
-                              // Fallback to initials if image fails to load
                               const target = e.target as HTMLImageElement;
                               const parent = target.parentElement;
                               if (parent) {
                                 parent.innerHTML = `
                                   <div class="w-full h-full rounded-full bg-white/5 border-2 border-white/20 flex items-center justify-center">
                                     <span class="text-white/40 text-2xl sm:text-3xl font-semibold">
-                                      ${member.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                                      ${getInitials(member.name)}
                                     </span>
                                   </div>
                                 `;
@@ -160,7 +158,7 @@ export function TeamPage() {
                       ) : (
                         <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white/5 border-2 border-white/20 flex items-center justify-center">
                           <span className="text-white/40 text-2xl sm:text-3xl font-semibold">
-                            {member.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                            {getInitials(member.name)}
                           </span>
                         </div>
                       )}

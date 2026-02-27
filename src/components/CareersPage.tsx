@@ -183,11 +183,8 @@ export function CareersPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-center"
             >
-              <div className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4" style={{
-                background: 'rgba(16, 185, 129, 0.1)',
-                border: '1px solid rgba(16, 185, 129, 0.3)'
-              }}>
-                <Users className="w-8 h-8" style={{ color: '#10B981' }} />
+              <div className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 border border-[rgba(16,185,129,0.3)] bg-[rgba(16,185,129,0.1)]">
+                <Users className="w-8 h-8 text-[#10B981]" />
               </div>
               <h3 className="text-xl font-bold mb-2" style={{ color: '#FAFAFA' }}>Great Team</h3>
               <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
@@ -203,11 +200,8 @@ export function CareersPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-center"
             >
-              <div className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4" style={{
-                background: 'rgba(16, 185, 129, 0.1)',
-                border: '1px solid rgba(16, 185, 129, 0.3)'
-              }}>
-                <TrendingUp className="w-8 h-8" style={{ color: '#10B981' }} />
+              <div className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 border border-[rgba(16,185,129,0.3)] bg-[rgba(16,185,129,0.1)]">
+                <TrendingUp className="w-8 h-8 text-[#10B981]" />
               </div>
               <h3 className="text-xl font-bold mb-2" style={{ color: '#FAFAFA' }}>Career Growth</h3>
               <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
@@ -223,11 +217,8 @@ export function CareersPage() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="text-center"
             >
-              <div className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4" style={{
-                background: 'rgba(16, 185, 129, 0.1)',
-                border: '1px solid rgba(16, 185, 129, 0.3)'
-              }}>
-                <Heart className="w-8 h-8" style={{ color: '#10B981' }} />
+              <div className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 border border-[rgba(16,185,129,0.3)] bg-[rgba(16,185,129,0.1)]">
+                <Heart className="w-8 h-8 text-[#10B981]" />
               </div>
               <h3 className="text-xl font-bold mb-2" style={{ color: '#FAFAFA' }}>Work-Life Balance</h3>
               <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
@@ -243,11 +234,8 @@ export function CareersPage() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="text-center"
             >
-              <div className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4" style={{
-                background: 'rgba(16, 185, 129, 0.1)',
-                border: '1px solid rgba(16, 185, 129, 0.3)'
-              }}>
-                <Briefcase className="w-8 h-8" style={{ color: '#10B981' }} />
+              <div className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 border border-[rgba(16,185,129,0.3)] bg-[rgba(16,185,129,0.1)]">
+                <Briefcase className="w-8 h-8 text-[#10B981]" />
               </div>
               <h3 className="text-xl font-bold mb-2" style={{ color: '#FAFAFA' }}>Cutting-Edge Projects</h3>
               <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
@@ -435,23 +423,7 @@ export function CareersPage() {
                 {/* Apply Button */}
                 <Link
                   to={`/careers/apply?role=${encodeURIComponent(job.title)}`}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0"
-                  style={{
-                    background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                    borderColor: 'transparent',
-                    color: '#FFFFFF',
-                    boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #059669, #0891B2)';
-                    e.currentTarget.style.boxShadow = '0 12px 48px rgba(16, 185, 129, 0.6)';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #10B981, #06B6D4)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.4)';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#10B981] to-[#06B6D4] shadow-[0_8px_32px_rgba(16,185,129,0.4)] hover:from-[#059669] hover:to-[#0891B2] hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)] hover:-translate-y-0.5"
                 >
                   <span>Apply Now</span>
                   <ArrowRight className="w-4 h-4" />
@@ -631,23 +603,7 @@ export function CareersPage() {
                 {/* Submit Button - Full Width */}
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0"
-                  style={{
-                    background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                    borderColor: 'transparent',
-                    color: '#FFFFFF',
-                    boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #059669, #0891B2)';
-                    e.currentTarget.style.boxShadow = '0 12px 48px rgba(16, 185, 129, 0.6)';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #10B981, #06B6D4)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.4)';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#10B981] to-[#06B6D4] shadow-[0_8px_32px_rgba(16,185,129,0.4)] hover:from-[#059669] hover:to-[#0891B2] hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)] hover:-translate-y-0.5"
                 >
                   <span>Submit Application</span>
                   <ArrowRight className="w-4 h-4" />
@@ -679,23 +635,7 @@ export function CareersPage() {
             </p>
             <a
               href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0"
-              style={{
-                background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                borderColor: 'transparent',
-                color: '#FFFFFF',
-                boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #059669, #0891B2)';
-                e.currentTarget.style.boxShadow = '0 12px 48px rgba(16, 185, 129, 0.6)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #10B981, #06B6D4)';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.4)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#10B981] to-[#06B6D4] shadow-[0_8px_32px_rgba(16,185,129,0.4)] hover:from-[#059669] hover:to-[#0891B2] hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)] hover:-translate-y-0.5"
             >
               <span>Get In Touch</span>
               <ArrowRight className="w-4 h-4" />

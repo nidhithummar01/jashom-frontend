@@ -17,8 +17,8 @@
   <script type="text/javascript">
     (function (c, l, a, r, i, t, y) {
       c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
-      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+      const clarityScript = l.createElement(r); clarityScript.async = 1; clarityScript.src = "https://www.clarity.ms/tag/" + i;
+      const firstScript = l.getElementsByTagName(r)[0]; firstScript.parentNode.insertBefore(clarityScript, firstScript);
     })(window, document, "clarity", "script", "u3spfqeqx7");
   </script>
   <meta charset="UTF-8" />

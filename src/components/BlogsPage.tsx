@@ -59,16 +59,12 @@ export function BlogsPage() {
             className="text-center"
           >
             <motion.div
-              className="inline-block mb-6 px-4 py-2 rounded-full border"
-              style={{
-                background: 'rgba(16, 185, 129, 0.08)',
-                borderColor: 'rgba(16, 185, 129, 0.25)',
-              }}
+              className="inline-block mb-6 px-4 py-2 rounded-full border border-[rgba(16,185,129,0.25)] bg-[rgba(16,185,129,0.08)]"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>Blog & Resources</span>
+              <span className="text-[#10B981] font-semibold text-sm">Blog & Resources</span>
             </motion.div>
             <h1
               className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
@@ -197,22 +193,7 @@ export function BlogsPage() {
             className="text-center mt-16 sm:mt-20"
           >
             <button
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-240"
-              style={{
-                background: 'rgba(16, 185, 129, 0.12)',
-                border: '1px solid rgba(16, 185, 129, 0.35)',
-                color: '#FAFAFA'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(16, 185, 129, 0.18)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.5)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(16, 185, 129, 0.12)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.35)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-[#FAFAFA] transition-all duration-240 border border-[rgba(16,185,129,0.35)] bg-[rgba(16,185,129,0.12)] hover:bg-[rgba(16,185,129,0.18)] hover:border-[rgba(16,185,129,0.5)] hover:-translate-y-0.5"
             >
               <span>Load More Blogs</span>
               <ArrowRight className="w-4 h-4" />
@@ -258,19 +239,7 @@ export function BlogsPage() {
                   }}
                 />
                 <button
-                  className="px-6 py-3 rounded-xl font-semibold whitespace-nowrap transition-all duration-240"
-                  style={{
-                    background: '#10B981',
-                    color: '#FFFFFF'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#0284C7';
-                    e.currentTarget.style.transform = 'scale(1.05)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#10B981';
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
+                  className="px-6 py-3 rounded-xl font-semibold whitespace-nowrap text-white bg-[#10B981] hover:bg-[#0284C7] hover:scale-105 transition-all duration-240"
                 >
                   Subscribe
                 </button>
@@ -290,15 +259,9 @@ export function BlogsPage() {
             className="text-center"
           >
             <motion.div
-              className="inline-block mb-4 px-4 py-2 rounded-full border"
-              style={{
-                background: 'rgba(16, 185, 129, 0.08)',
-                borderColor: 'rgba(16, 185, 129, 0.25)'
-              }}
+              className="inline-block mb-4 px-4 py-2 rounded-full border border-[rgba(16,185,129,0.25)] bg-[rgba(16,185,129,0.08)]"
             >
-              <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>
-                GET IN TOUCH
-              </span>
+              <span className="text-[#10B981] font-semibold text-sm">GET IN TOUCH</span>
             </motion.div>
             
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: '#FAFAFA', letterSpacing: '-0.025em' }}>
@@ -311,23 +274,7 @@ export function BlogsPage() {
             
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0"
-              style={{
-                background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                borderColor: 'transparent',
-                color: '#FFFFFF',
-                boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #059669, #0891B2)';
-                e.currentTarget.style.boxShadow = '0 12px 48px rgba(16, 185, 129, 0.6)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #10B981, #06B6D4)';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.4)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#10B981] to-[#06B6D4] shadow-[0_8px_32px_rgba(16,185,129,0.4)] hover:from-[#059669] hover:to-[#0891B2] hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)] hover:-translate-y-0.5"
             >
               <span>Contact Us</span>
               <ArrowRight className="w-4 h-4" />

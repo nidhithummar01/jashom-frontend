@@ -296,22 +296,12 @@ export function HomePage() {
                 >
                   <Link
                     to="/contact/"
-                    className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 font-semibold"
+                    className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)]"
                     style={{
                       background: 'linear-gradient(135deg, #10B981, #06B6D4)',
                       borderColor: 'transparent',
                       color: '#FFFFFF',
                       boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, #059669, #0891B2)';
-                      e.currentTarget.style.boxShadow = '0 12px 48px rgba(16, 185, 129, 0.6)';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, #10B981, #06B6D4)';
-                      e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.4)';
-                      e.currentTarget.style.transform = 'translateY(0)';
                     }}
                   >
                     Start Your AI Transformation
@@ -320,21 +310,11 @@ export function HomePage() {
                     href="https://calendly.com/jaydave-jashom/new-meeting"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240"
+                    className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(16,185,129,0.4)] hover:-translate-y-px"
                     style={{
                       background: 'rgba(255, 255, 255, 0.04)',
                       borderColor: 'rgba(255, 255, 255, 0.12)',
                       color: '#FAFAFA'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                      e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                      e.currentTarget.style.transform = 'translateY(-1px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-                      e.currentTarget.style.transform = 'translateY(0)';
                     }}
                   >
                     Schedule a Meeting
@@ -482,18 +462,10 @@ export function HomePage() {
                   <div className="w-full mt-auto text-right">
                   <a
                     href="/gpu-optimization-service/"
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300"
+                    className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-[#059669] hover:-translate-y-0.5"
                     style={{
                       background: '#10B981',
                       color: '#FFFFFF'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#059669';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = '#10B981';
-                      e.currentTarget.style.transform = 'translateY(0)';
                     }}
                   >
                     Explore Service →
@@ -533,18 +505,10 @@ export function HomePage() {
                   <div className="w-full mt-auto text-right">
                   <a
                     href="/cuda-development-service/"
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300"
+                    className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5"
                     style={{
                       background: 'linear-gradient(135deg, #7C3AED, #06B6D4)',
                       color: '#FFFFFF'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, #6D28D9, #0891B2)';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, #7C3AED, #06B6D4)';
-                      e.currentTarget.style.transform = 'translateY(0)';
                     }}
                   >
                     Explore Service →
@@ -718,7 +682,7 @@ export function HomePage() {
                   { value: '24/7', label: 'Support Available' }
                 ].map((stat, index) => (
                   <AnimatedCounter
-                    key={index}
+                    key={stat.label}
                     value={stat.value}
                     label={stat.label}
                     duration={2 + index * 0.2}
@@ -787,9 +751,9 @@ export function HomePage() {
                       transform: `translateX(-${currentSlide * (100 / cardsPerView + (cardsPerView === 1 ? 0 : 24 / cardsPerView))}%)`
                     }}
                   >
-                    {portfolioProjects.map((project, index) => (
+                    {portfolioProjects.map((project) => (
                       <div
-                        key={index}
+                        key={project.link}
                         className="flex-shrink-0"
                         style={{
                           width: cardsPerView === 1
@@ -1130,19 +1094,11 @@ export function HomePage() {
                 <motion.div
                   variants={staggerItem}
                   whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300"
+                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
                   style={{
                     background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
                     borderColor: 'rgba(16, 185, 129, 0.2)',
                     backdropFilter: 'blur(8px)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.2)';
-                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   <div className="relative z-10">
@@ -1163,19 +1119,11 @@ export function HomePage() {
                 <motion.div
                   variants={staggerItem}
                   whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300"
+                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
                   style={{
                     background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
                     borderColor: 'rgba(16, 185, 129, 0.2)',
                     backdropFilter: 'blur(8px)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.2)';
-                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   <div className="relative z-10">
@@ -1196,19 +1144,11 @@ export function HomePage() {
                 <motion.div
                   variants={staggerItem}
                   whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300"
+                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
                   style={{
                     background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
                     borderColor: 'rgba(16, 185, 129, 0.2)',
                     backdropFilter: 'blur(8px)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.2)';
-                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   <div className="relative z-10">
@@ -1229,19 +1169,11 @@ export function HomePage() {
                 <motion.div
                   variants={staggerItem}
                   whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300"
+                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
                   style={{
                     background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
                     borderColor: 'rgba(16, 185, 129, 0.2)',
                     backdropFilter: 'blur(8px)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.2)';
-                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   <div className="relative z-10">
@@ -1262,19 +1194,11 @@ export function HomePage() {
                 <motion.div
                   variants={staggerItem}
                   whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300"
+                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
                   style={{
                     background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
                     borderColor: 'rgba(16, 185, 129, 0.2)',
                     backdropFilter: 'blur(8px)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.2)';
-                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   <div className="relative z-10">
@@ -1295,19 +1219,11 @@ export function HomePage() {
                 <motion.div
                   variants={staggerItem}
                   whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300"
+                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
                   style={{
                     background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
                     borderColor: 'rgba(16, 185, 129, 0.2)',
                     backdropFilter: 'blur(8px)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.2)';
-                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   <div className="relative z-10">
@@ -1334,22 +1250,12 @@ export function HomePage() {
               >
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)]"
                   style={{
                     background: 'linear-gradient(135deg, #10B981, #06B6D4)',
                     borderColor: 'transparent',
                     color: '#FFFFFF',
                     boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #059669, #0891B2)';
-                    e.currentTarget.style.boxShadow = '0 12px 48px rgba(16, 185, 129, 0.6)';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #10B981, #06B6D4)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.4)';
-                    e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
                   <span>Start Your AI Transformation</span>
@@ -1498,21 +1404,11 @@ export function HomePage() {
               >
                 <Link
                   to="/blogs/"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-240"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-240 hover:bg-[rgba(16,185,129,0.18)] hover:border-[rgba(16,185,129,0.5)] hover:-translate-y-0.5"
                   style={{
                     background: 'rgba(16, 185, 129, 0.12)',
                     border: '1px solid rgba(16, 185, 129, 0.35)',
                     color: '#FAFAFA'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(16, 185, 129, 0.18)';
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.5)';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(16, 185, 129, 0.12)';
-                    e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.35)';
-                    e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
                   <span>View All</span>
