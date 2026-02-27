@@ -1,0 +1,70 @@
+import type React from 'react';
+import { GRADIENT_EMERALD_CYAN } from '../../constants/theme';
+
+export const servicesData = [
+  { title: 'Custom Parallel\nAlgorithm Design', description: 'To maintain long-term computational performance, we build workload-specific parallel plans, compromising thread allocation, the use of memory hierarchy, and synchronization.' },
+  { title: 'GPU Acceleration for\nExisting Systems', description: 'With little disturbance, legacy applications are reformed to run on the GPU. We control the optimization of data transfer, API correspondence, and validation to production readiness.' },
+  { title: 'End-to-End Performance\nArchitecture', description: 'Since we do initial modeling, benchmark validation, and hardening against deployment, we manage all the steps of the CUDA implementation with precision-driven engineering requirements.' },
+] as const;
+
+export const industryItems = [
+  'Artificial Intelligence Model Training & Inference Systems',
+  'Super-Accurate Scientific Research Platforms',
+  'Risk Engines and Algorithms Trading',
+  'Instant Media Rendering and Analysis',
+] as const;
+
+export const processSteps = [
+  { title: 'Computational Profiling', description: 'We measure execution patterns, memory loads, and bottlenecks in order to come up with realistic acceleration targets.', gradient: 'from-blue-500 to-blue-500', shadow: 'shadow-blue-500/50', pathD: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
+  { title: 'Parallel Systems Blueprint', description: 'Models known as thread hierarchy, shared memory models, and workload partitioning are designed for models that are ideal to execute using the GPUs.', gradient: 'from-purple-500 to-pink-500', shadow: 'shadow-purple-500/50', pathD: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z' },
+  { title: 'CUDA Core Development', description: 'The high-occupancy kernels are also designed to provide the predictability of throughput when operating at peak loading.', gradient: 'from-blue-500 to-blue-500', shadow: 'shadow-cyan-500/50', pathD: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' },
+  { title: 'Bottleneck Elimination & Benchmarking', description: 'The profiling tools reveal the areas of inefficiency so that they can be refined to achieve continuous and reliable performance improvements.', gradient: 'from-pink-500 to-rose-500', shadow: 'shadow-pink-500/50', pathD: 'M13 10V3L4 14h7v7l9-11h-7z' },
+  { title: 'Application Integration', description: 'GPU modules are integrated into your software ecosystem with clean interfaces and continuity.', gradient: 'from-indigo-500 to-purple-500', shadow: 'shadow-indigo-500/50', pathD: 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z' },
+  { title: 'Production Optimization', description: 'Scalability is guaranteed during post-deployment analysis, based on the changing workloads and multi-GPUs.', gradient: 'from-green-500 to-emerald-500', shadow: 'shadow-green-500/50', pathD: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z' },
+] as const;
+
+export const benefitsData = [
+  { title: 'Accelerated\nComputational\nPerformance', description: 'CUDA allows parallel computation of thousands of Cores on the GPU, which saves a lot of processing time when dealing with complex workloads, like AI training, simulations, and applications of large data analytics.', borderColor: 'rgba(16, 185, 129, 0.35)' },
+  { title: 'Improved\nInfrastructure\nEfficiency', description: 'By moving more intensive workloads off of CPU and onto the GPUs, the organizations are able to handle larger data volumes with reduced hardware resources to enhance performance-per-watt and infrastructure ROI.', borderColor: 'rgba(6, 182, 212, 0.35)' },
+  { title: 'Enhanced\nCompetitive\nPositioning', description: 'A rapid computational speed can be more useful in fast experimentation, real-time analysis, and sophisticated modeling, which will enable companies to innovate faster and have a high level of technological superiority in their industry.', borderColor: 'rgba(139, 92, 246, 0.35)' },
+  { title: 'Scalable\nHigh-Performance\nArchitecture', description: 'The architecture of CUDA-based systems is built so that it can be used in both multi-GPU architectures and high-performance clusters, both in terms of throughput and reliability, as data requirements and computing complexity rise.', borderColor: 'rgba(236, 72, 153, 0.35)' },
+  { title: 'Future-Ready\nTechnology\nInvestment', description: 'Adopting CUDA aligns your infrastructure with evolving GPU advancements, ensuring compatibility with emerging AI frameworks, deep learning models, and next-generation computational workloads.', borderColor: 'rgba(251, 146, 60, 0.35)' },
+  { title: 'Reduced\nDevelopment\nCycles', description: 'The performance in terms of optimization of GPU acceleration reduces the time of implementation in testing and in the process of iteration, whereby development teams can quickly rise above their experimental levels and proceed with their production processes more efficiently.', borderColor: 'rgba(52, 211, 153, 0.35)' },
+] as const;
+
+export const whyChooseItems = [
+  { title: 'Advanced Parallel Computing Expertise', description: 'Our engineers have extensive practical experience in CUDA programming and in the design of large-scale parallel architecture, as well as in the management of the GPU memory. We build production-ready acceleration frameworks that prioritize execution stability, optimal resource utilization, and sustained high-throughput performance across demanding computational environments.' },
+  { title: 'Quantifiable Performance Improvements', description: 'All CUDA implementations have advanced profiling, benchmarking, and performance analysis. We quantify the reduction of latency, throughput improvement as well as resource efficiency to make sure that optimization outcomes are realistic, evidence-based, and consistent with clearly established performance goals.' },
+  { title: 'Workload-Specific Optimization Strategy', description: "We do not just make some arbitrary acceleration, but instead analyze the patterns of execution of your application, data dependencies, and scaling needs. This enables us to design CUDA solutions that are highly targeted to optimally match workload behaviour and provide predictable and orderable computational benefits." },
+] as const;
+
+export const testimonialsData = [
+  { quote: '"GPU acceleration significantly enhanced our data processing framework, reducing execution cycles under high-load scenarios."', initials: 'DE', role: 'Director of Engineering', company: 'AI Platform', avatarGradient: GRADIENT_EMERALD_CYAN },
+  { quote: '"Our migration to CUDA-based execution improved analytical throughput without expanding infrastructure costs."', initials: 'CT', role: 'Chief Technology Officer', company: 'Technology Company', avatarGradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)' },
+  { quote: '"The architectural redesign delivered predictable performance scaling across multiple GPU nodes."', initials: 'HS', role: 'Head of Systems Engineering', company: 'Engineering Company', avatarGradient: 'linear-gradient(135deg, #10B981, #34D399)' },
+] as const;
+
+export const faqData = [
+  { q: 'How do I know if my application is suitable for CUDA acceleration?', a: 'Applications whose operations are frequently repeated in numbers, process large datasets, matrix calculations, or can be performed in parallel are good candidates. Performing profiling measurements helps us identify whether there are any performance improvements that can be realized and achieved through the use of GPU acceleration.' },
+  { q: 'Can CUDA be integrated into an existing production system?', a: 'Yes. We refactor and modularize elements such that there is no disruption to other business operations, and a full system rebuild is not necessary to add the acceleration of a graphics card to your existing architecture.' },
+  { q: 'What is the difference between CPU optimization and CUDA optimization?', a: 'CPU optimization enhances the ability to run sequence-related tasks, whereas CUDA optimization rearranges workloads to execute them in a massively parallel fashion across the armies of cores in GPUs, which is much more efficient at providing high throughput in tasks of high compute intensity.' },
+  { q: 'Do you support multi-GPU and cluster-based deployments?', a: 'Absolutely. Our CUDA architectures are optimized to be scaled to multi-GPU and high-performance cluster environments, such that the performance remains consistent as the level of computational requirements rises.' },
+  { q: 'How do you measure performance improvement in CUDA projects?', a: 'Before and after optimization, we measure the reduction of execution time, the increased memory efficiency, and scalability through profiling tools, benchmarking frameworks, and throughput analysis.' },
+  { q: 'Is ongoing CUDA performance tuning necessary?', a: 'Yes. With the changing workloads, periodical profiling and optimization will ensure the efficiency is maintained and avoid any bottlenecks, keeping the utilization of the GPUs optimal over time.' },
+] as const;
+
+export const formFieldsConfig = [
+  { name: 'name' as const, label: 'Full Name *', type: 'text' as const, placeholder: 'John Doe', required: true },
+  { name: 'email' as const, label: 'Email Address *', type: 'email' as const, placeholder: 'john@company.com', required: true },
+  { name: 'company' as const, label: 'Company Name', type: 'text' as const, placeholder: 'Your Company' },
+  { name: 'phone' as const, label: 'Phone Number', type: 'tel' as const, placeholder: '+1 (555) 000-0000' },
+  { name: 'message' as const, label: 'Project Details *', type: 'textarea' as const, placeholder: 'Tell us about your CUDA development needs...', required: true, rows: 4 },
+] as const;
+
+const ADDRESS_TEXT = '414, Satyam-2, Amba Business Park,\nATPL, Adalaj, Gujarat,\nIndia - 380054';
+
+export const officeCardsData: { title: string; type: 'address' | 'email' | 'phone'; content: React.ReactNode; href?: string; subtitle?: string }[] = [
+  { title: 'Address', type: 'address', content: ADDRESS_TEXT },
+  { title: 'Email', type: 'email', content: 'info@jashom.com', href: 'mailto:info@jashom.com', subtitle: 'We respond within 24 hours' },
+  { title: 'Phone', type: 'phone', content: '+91 90239 06363', href: 'tel:+919023906363', subtitle: 'Available Mon-Fri, 9AM-6PM IST' },
+];

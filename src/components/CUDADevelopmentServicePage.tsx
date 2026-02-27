@@ -2,143 +2,99 @@ import { motion } from 'motion/react';
 import { SEO } from './SEO';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  SECTION_BG,
+  CARD_BG_LIGHT,
+  BORDER_SUBTLE,
+  BENEFIT_CARD_BG,
+  ACCENT_COLOR,
+  TEXT_WHITE,
+  TEXT_FAFAFA,
+  TEXT_MUTED,
+  TEXT_SUBTLE,
+  TEXT_GRAY,
+  HERO_OVERLAY_GRADIENT,
+  HERO_BG_TOP,
+  OVERVIEW_BADGE,
+  KEY_STAT_BOX,
+  IMAGE_SHADOW_ACCENT,
+  CTA_HERO_STYLE,
+  FORM_GLOW_STYLE,
+  FORM_CONTAINER_STYLE,
+  SUBMIT_BTN_STYLE,
+  SUBMIT_BTN_HOVER,
+  HEADING_TITLE_STYLE,
+  PROCESS_GRADIENT_BG,
+  FORM_LAYOUT,
+  FORM_GRID_GAP,
+  FORM_MAX_WIDTH,
+  CHECK_ICON_BG,
+  CHEVRON_DOWN_D,
+  CHECK_PATH,
+  HERO_H1_STYLE,
+  HERO_P_STYLE,
+  HERO_CONTENT_PADDING,
+  SECTION_CLASS,
+  SECTION_CONTAINER,
+  MOTION_FADE_UP_20,
+  MOTION_FADE_UP_30,
+  MOTION_FADE_SCALE,
+  OFFICE_ICON_BG,
+  officeCardStyle,
+  formInputStyle,
+  formInputClass,
+  OVERLAY_DARK,
+  OFFICE_ICON_SVG_CLASS,
+  OFFICE_ICON_SVG_PROPS,
+  TESTIMONIAL_CARD_STYLE,
+  BADGE_TESTIMONIAL,
+} from '../constants/theme';
+import {
+  servicesData,
+  industryItems,
+  processSteps,
+  benefitsData,
+  whyChooseItems,
+  testimonialsData,
+  faqData,
+  formFieldsConfig,
+  officeCardsData,
+} from './CUDADevelopmentServicePage/data';
 
-const SECTION_BG = '#0B0F14';
-const CARD_BG_LIGHT = '#f5f5f5';
-const BORDER_SUBTLE = 'rgba(255, 255, 255, 0.08)';
-const BENEFIT_CARD_BG = 'rgba(16, 185, 129, 0.05)';
-const BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba(16, 185, 129, 0.25)' } as const;
-const BADGE_TESTIMONIAL = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.2)' } as const;
-const CHEVRON_DOWN_D = 'M19 9l-7 7-7-7';
+const CUDA_HERO_IMAGE = '/images/cuda.service.hero.jpg';
 
-const ACCENT_COLOR = '#10B981';
-const TEXT_WHITE = '#FFFFFF';
-const TEXT_FAFAFA = '#FAFAFA';
-const TEXT_MUTED = '#9CA3AF';
-const TEXT_SUBTLE = '#6B7280';
-const TEXT_GRAY = '#9E9E9E';
-const OVERLAY_DARK = 'rgba(11, 15, 20, 0.4)';
-const HERO_OVERLAY_GRADIENT = 'linear-gradient(to right, rgba(11, 15, 20, 0.85) 0%, rgba(11, 15, 20, 0.75) 40%, rgba(11, 15, 20, 0.5) 70%, rgba(11, 15, 20, 0.3) 100%)';
-const HERO_BG_BASE = { backgroundSize: 'cover' as const, backgroundPosition: 'center top' as const, backgroundRepeat: 'no-repeat' as const };
-const OVERVIEW_BADGE = { background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)' } as const;
-const KEY_STAT_BOX = { background: BENEFIT_CARD_BG, border: '1px solid rgba(16, 185, 129, 0.2)' } as const;
-const IMAGE_SHADOW_ACCENT = { boxShadow: '0 20px 60px rgba(16, 185, 129, 0.3)' } as const;
-const CTA_HERO_STYLE = { background: ACCENT_COLOR, color: TEXT_WHITE, boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.4)' } as const;
-const FORM_GLOW_STYLE = { background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, transparent 60%)', filter: 'blur(60px)', opacity: 0.6 } as const;
-const FORM_CONTAINER_STYLE: React.CSSProperties = { background: 'rgba(17, 24, 39, 0.6)', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(14px)', padding: '48px 32px', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)' };
-const SUBMIT_BTN_STYLE = { background: 'linear-gradient(135deg, #10B981, #06B6D4)', border: '1px solid transparent', color: TEXT_WHITE, boxShadow: '0 4px 14px rgba(16, 185, 129, 0.25)', minWidth: '200px' } as const;
-const SUBMIT_BTN_HOVER = { boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)' } as const;
-const HEADING_TITLE_STYLE = { color: TEXT_FAFAFA, letterSpacing: '-0.025em', lineHeight: 1.2 } as const;
-const PROCESS_GRADIENT_BG = 'linear-gradient(180deg, #0B0F14 0%, #111827 50%, #0B0F14 100%)';
-const FORM_LAYOUT = { display: 'flex' as const, flexDirection: 'column' as const, gap: '28px' } as const;
-const FORM_GRID_GAP = { gap: '24px' } as const;
-const FORM_MAX_WIDTH = { maxWidth: '1100px', margin: '0 auto' } as const;
-const CHECK_ICON_BG = { backgroundColor: ACCENT_COLOR };
+function CheckIcon({ size = 'sm' }: Readonly<{ size?: 'sm' | 'lg' }>) {
+  return (
+    <svg className={size === 'lg' ? 'w-6 h-6 text-white' : 'w-5 h-5 text-white'} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={CHECK_PATH} />
+    </svg>
+  );
+}
 
-const CHECK_PATH = 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z';
-const CheckIcon = ({ size = 'sm' }: { size?: 'sm' | 'lg' }) => (
-  <svg className={size === 'lg' ? 'w-6 h-6 text-white' : 'w-5 h-5 text-white'} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={CHECK_PATH} />
-  </svg>
-);
+function QuoteIcon() {
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
+      <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
+    </svg>
+  );
+}
 
-const QuoteIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
-    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
-  </svg>
-);
+function DividerLine() {
+  return (
+    <div className={`${SECTION_CONTAINER} px-4 sm:px-6 lg:px-8`}>
+      <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+    </div>
+  );
+}
 
-const DividerLine = () => (
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-  </div>
-);
-
-const servicesData = [
-  { title: 'Custom Parallel\nAlgorithm Design', description: 'To maintain long-term computational performance, we build workload-specific parallel plans, compromising thread allocation, the use of memory hierarchy, and synchronization.' },
-  { title: 'GPU Acceleration for\nExisting Systems', description: 'With little disturbance, legacy applications are reformed to run on the GPU. We control the optimization of data transfer, API correspondence, and validation to production readiness.' },
-  { title: 'End-to-End Performance\nArchitecture', description: 'Since we do initial modeling, benchmark validation, and hardening against deployment, we manage all the steps of the CUDA implementation with precision-driven engineering requirements.' },
-];
-
-const industryItems = [
-  'Artificial Intelligence Model Training & Inference Systems',
-  'Super-Accurate Scientific Research Platforms',
-  'Risk Engines and Algorithms Trading',
-  'Instant Media Rendering and Analysis',
-];
-
-const processSteps = [
-  { title: 'Computational Profiling', description: 'We measure execution patterns, memory loads, and bottlenecks in order to come up with realistic acceleration targets.', gradient: 'from-blue-500 to-blue-500', shadow: 'shadow-blue-500/50', pathD: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
-  { title: 'Parallel Systems Blueprint', description: 'Models known as thread hierarchy, shared memory models, and workload partitioning are designed for models that are ideal to execute using the GPUs.', gradient: 'from-purple-500 to-pink-500', shadow: 'shadow-purple-500/50', pathD: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z' },
-  { title: 'CUDA Core Development', description: 'The high-occupancy kernels are also designed to provide the predictability of throughput when operating at peak loading.', gradient: 'from-blue-500 to-blue-500', shadow: 'shadow-cyan-500/50', pathD: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' },
-  { title: 'Bottleneck Elimination & Benchmarking', description: 'The profiling tools reveal the areas of inefficiency so that they can be refined to achieve continuous and reliable performance improvements.', gradient: 'from-pink-500 to-rose-500', shadow: 'shadow-pink-500/50', pathD: 'M13 10V3L4 14h7v7l9-11h-7z' },
-  { title: 'Application Integration', description: 'GPU modules are integrated into your software ecosystem with clean interfaces and continuity.', gradient: 'from-indigo-500 to-purple-500', shadow: 'shadow-indigo-500/50', pathD: 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z' },
-  { title: 'Production Optimization', description: 'Scalability is guaranteed during post-deployment analysis, based on the changing workloads and multi-GPUs.', gradient: 'from-green-500 to-emerald-500', shadow: 'shadow-green-500/50', pathD: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z' },
-];
-
-const benefitsData = [
-  { title: 'Accelerated\nComputational\nPerformance', description: 'CUDA allows parallel computation of thousands of Cores on the GPU, which saves a lot of processing time when dealing with complex workloads, like AI training, simulations, and applications of large data analytics.', borderColor: 'rgba(16, 185, 129, 0.35)' },
-  { title: 'Improved\nInfrastructure\nEfficiency', description: 'By moving more intensive workloads off of CPU and onto the GPUs, the organizations are able to handle larger data volumes with reduced hardware resources to enhance performance-per-watt and infrastructure ROI.', borderColor: 'rgba(6, 182, 212, 0.35)' },
-  { title: 'Enhanced\nCompetitive\nPositioning', description: 'A rapid computational speed can be more useful in fast experimentation, real-time analysis, and sophisticated modeling, which will enable companies to innovate faster and have a high level of technological superiority in their industry.', borderColor: 'rgba(139, 92, 246, 0.35)' },
-  { title: 'Scalable\nHigh-Performance\nArchitecture', description: 'The architecture of CUDA-based systems is built so that it can be used in both multi-GPU architectures and high-performance clusters, both in terms of throughput and reliability, as data requirements and computing complexity rise.', borderColor: 'rgba(236, 72, 153, 0.35)' },
-  { title: 'Future-Ready\nTechnology\nInvestment', description: 'Adopting CUDA aligns your infrastructure with evolving GPU advancements, ensuring compatibility with emerging AI frameworks, deep learning models, and next-generation computational workloads.', borderColor: 'rgba(251, 146, 60, 0.35)' },
-  { title: 'Reduced\nDevelopment\nCycles', description: 'The performance in terms of optimization of GPU acceleration reduces the time of implementation in testing and in the process of iteration, whereby development teams can quickly rise above their experimental levels and proceed with their production processes more efficiently.', borderColor: 'rgba(52, 211, 153, 0.35)' },
-];
-
-const whyChooseItems = [
-  { title: 'Advanced Parallel Computing Expertise', description: 'Our engineers have extensive practical experience in CUDA programming and in the design of large-scale parallel architecture, as well as in the management of the GPU memory. We build production-ready acceleration frameworks that prioritize execution stability, optimal resource utilization, and sustained high-throughput performance across demanding computational environments.' },
-  { title: 'Quantifiable Performance Improvements', description: 'All CUDA implementations have advanced profiling, benchmarking, and performance analysis. We quantify the reduction of latency, throughput improvement as well as resource efficiency to make sure that optimization outcomes are realistic, evidence-based, and consistent with clearly established performance goals.' },
-  { title: 'Workload-Specific Optimization Strategy', description: "We do not just make some arbitrary acceleration, but instead analyze the patterns of execution of your application, data dependencies, and scaling needs. This enables us to design CUDA solutions that are highly targeted to optimally match workload behaviour and provide predictable and orderable computational benefits." },
-];
-
-const testimonialsData = [
-  { quote: '"GPU acceleration significantly enhanced our data processing framework, reducing execution cycles under high-load scenarios."', initials: 'DE', role: 'Director of Engineering', company: 'AI Platform', avatarGradient: 'linear-gradient(135deg, #10B981, #06B6D4)' },
-  { quote: '"Our migration to CUDA-based execution improved analytical throughput without expanding infrastructure costs."', initials: 'CT', role: 'Chief Technology Officer', company: 'Technology Company', avatarGradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)' },
-  { quote: '"The architectural redesign delivered predictable performance scaling across multiple GPU nodes."', initials: 'HS', role: 'Head of Systems Engineering', company: 'Engineering Company', avatarGradient: 'linear-gradient(135deg, #10B981, #34D399)' },
-];
-
-const faqData = [
-  { q: 'How do I know if my application is suitable for CUDA acceleration?', a: 'Applications whose operations are frequently repeated in numbers, process large datasets, matrix calculations, or can be performed in parallel are good candidates. Performing profiling measurements helps us identify whether there are any performance improvements that can be realized and achieved through the use of GPU acceleration.' },
-  { q: 'Can CUDA be integrated into an existing production system?', a: 'Yes. We refactor and modularize elements such that there is no disruption to other business operations, and a full system rebuild is not necessary to add the acceleration of a graphics card to your existing architecture.' },
-  { q: 'What is the difference between CPU optimization and CUDA optimization?', a: 'CPU optimization enhances the ability to run sequence-related tasks, whereas CUDA optimization rearranges workloads to execute them in a massively parallel fashion across the armies of cores in GPUs, which is much more efficient at providing high throughput in tasks of high compute intensity.' },
-  { q: 'Do you support multi-GPU and cluster-based deployments?', a: 'Absolutely. Our CUDA architectures are optimized to be scaled to multi-GPU and high-performance cluster environments, such that the performance remains consistent as the level of computational requirements rises.' },
-  { q: 'How do you measure performance improvement in CUDA projects?', a: 'Before and after optimization, we measure the reduction of execution time, the increased memory efficiency, and scalability through profiling tools, benchmarking frameworks, and throughput analysis.' },
-  { q: 'Is ongoing CUDA performance tuning necessary?', a: 'Yes. With the changing workloads, periodical profiling and optimization will ensure the efficiency is maintained and avoid any bottlenecks, keeping the utilization of the GPUs optimal over time.' },
-];
-
-const formInputClass = 'w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all';
-const formInputStyle = { background: 'rgba(255, 255, 255, 0.06)', borderColor: 'rgba(255, 255, 255, 0.1)' } as const;
-
-const formFieldsConfig: { name: 'name' | 'email' | 'company' | 'phone' | 'message'; label: string; type: 'text' | 'email' | 'tel' | 'textarea'; placeholder: string; required?: boolean; rows?: number }[] = [
-  { name: 'name', label: 'Full Name *', type: 'text', placeholder: 'John Doe', required: true },
-  { name: 'email', label: 'Email Address *', type: 'email', placeholder: 'john@company.com', required: true },
-  { name: 'company', label: 'Company Name', type: 'text', placeholder: 'Your Company' },
-  { name: 'phone', label: 'Phone Number', type: 'tel', placeholder: '+1 (555) 000-0000' },
-  { name: 'message', label: 'Project Details *', type: 'textarea', placeholder: 'Tell us about your CUDA development needs...', required: true, rows: 4 },
-];
-
-const OFFICE_ICON_BG = { background: 'rgba(16, 185, 129, 0.15)' } as const;
-const officeCardsData: { title: string; type: 'address' | 'email' | 'phone'; content: React.ReactNode; href?: string; subtitle?: string }[] = [
-  { title: 'Address', type: 'address', content: <>414, Satyam-2, Amba Business Park,<br />ATPL, Adalaj, Gujarat,<br />India - 380054</> },
-  { title: 'Email', type: 'email', content: 'info@jashom.com', href: 'mailto:info@jashom.com', subtitle: 'We respond within 24 hours' },
-  { title: 'Phone', type: 'phone', content: '+91 90239 06363', href: 'tel:+919023906363', subtitle: 'Available Mon-Fri, 9AM-6PM IST' },
-];
-const officeCardStyle = { background: 'rgba(17, 24, 39, 0.6)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(14px)' } as const;
-
-const OFFICE_ICON_SVG_CLASS = 'w-6 h-6';
-const OFFICE_ICON_SVG_PROPS = { fill: 'none' as const, viewBox: '0 0 24 24', stroke: 'currentColor' };
 function renderOfficeCardIcon(type: 'address' | 'email' | 'phone') {
-  if (type === 'address') {
-    return <img src="/images/inidan.flag.jpg" alt="India Flag" className="w-full h-full object-cover" />;
-  }
-  if (type === 'email') {
-    return (
-      <svg className={OFFICE_ICON_SVG_CLASS} style={{ color: ACCENT_COLOR }} {...OFFICE_ICON_SVG_PROPS}>
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    );
-  }
+  if (type === 'address') return <img src="/images/inidan.flag.jpg" alt="India Flag" className="w-full h-full object-cover" />;
+  if (type === 'email') return (
+    <svg className={OFFICE_ICON_SVG_CLASS} style={{ color: ACCENT_COLOR }} {...OFFICE_ICON_SVG_PROPS}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+  );
   return (
     <svg className={OFFICE_ICON_SVG_CLASS} style={{ color: ACCENT_COLOR }} {...OFFICE_ICON_SVG_PROPS}>
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -153,7 +109,13 @@ function renderCudaFormField(
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
 ) {
   const id = `cuda-${field.name}`;
-  const base = { name: field.name, value: formData[field.name], onChange: handleChange, required: field.required, placeholder: field.placeholder };
+  const base = {
+    name: field.name,
+    value: formData[field.name],
+    onChange: handleChange,
+    placeholder: field.placeholder,
+    ...('required' in field && { required: field.required }),
+  };
   if (field.type === 'textarea') {
     return <textarea id={id} rows={field.rows ?? 4} className={`${formInputClass} resize-none`} style={formInputStyle} {...base} />;
   }
@@ -189,14 +151,14 @@ export function CUDADevelopmentServicePage() {
       {/* Hero Section */}
       <section
         className="relative overflow-hidden"
-        style={{ minHeight: '100vh', backgroundImage: 'url(/images/cuda.service.hero.jpg)', ...HERO_BG_BASE }}
+        style={{ minHeight: '100vh', backgroundImage: `url(${CUDA_HERO_IMAGE})`, ...HERO_BG_TOP }}
       >
-        <div className="absolute inset-0" style={{ backgroundImage: 'url(/images/cuda.service.hero.jpg)', ...HERO_BG_BASE, filter: 'brightness(1.2)' }} />
+        <div className="absolute inset-0" style={{ backgroundImage: `url(${CUDA_HERO_IMAGE})`, ...HERO_BG_TOP, filter: 'brightness(1.2)' }} />
         <div className="absolute inset-0" style={{ background: HERO_OVERLAY_GRADIENT }} />
 
         {/* Content - Premium Spacing */}
         <div className="relative z-10 min-h-screen flex items-center">
-          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full" style={{ paddingTop: '140px', paddingBottom: '100px' }}>
+          <div className={`${SECTION_CONTAINER} px-6 sm:px-8 lg:px-12 w-full`} style={HERO_CONTENT_PADDING}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -204,30 +166,10 @@ export function CUDADevelopmentServicePage() {
               className="text-left"
               style={{ maxWidth: '620px' }}
             >
-              {/* Heading */}
-              <h1
-                className="font-bold text-white leading-tight"
-                style={{
-                  fontSize: 'clamp(28px, 4vw, 48px)',
-                  textShadow: '0 4px 20px rgba(0, 0, 0, 0.8)',
-                  letterSpacing: '-0.02em',
-                  marginBottom: '32px'
-                }}
-              >
+              <h1 className="font-bold text-white leading-tight" style={HERO_H1_STYLE}>
                 Custom CUDA Development for Advanced GPU Computing
               </h1>
-
-              {/* Paragraph */}
-              <p
-                className="text-white/90"
-                style={{
-                  fontSize: 'clamp(17px, 2vw, 20px)',
-                  lineHeight: '1.75',
-                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.6)',
-                  marginBottom: '48px',
-                  maxWidth: '560px'
-                }}
-              >
+              <p className="text-white/90" style={HERO_P_STYLE}>
                 Revolutionize computational pressure to run scalable performance using master CUDA engineering. Our architectures are built and deployed in the form of GPU-native, which opens the door to the efficiency of parallel processing of the AI systems, simulations, and data-intensive programs.
               </p>
 
@@ -245,14 +187,12 @@ export function CUDADevelopmentServicePage() {
       </section>
 
       {/* Overview Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: SECTION_BG }}>
-        {/* Decorative background elements */}
+      <section className={`${SECTION_CLASS} relative overflow-hidden`} style={{ background: SECTION_BG }}>
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
           <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
         </div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className={`${SECTION_CONTAINER} relative z-10`}>
           {/* Section title - full width centered */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -328,8 +268,8 @@ export function CUDADevelopmentServicePage() {
       <div className="premium-divider" />
 
       {/* Services Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
-        <div className="max-w-7xl mx-auto">
+      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
+        <div className={SECTION_CONTAINER}>
           {/* Section title - full width centered */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -378,7 +318,7 @@ export function CUDADevelopmentServicePage() {
       </section>
 
       {/* Industry-Specific Services Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: SECTION_BG }}>
+      <section className={`${SECTION_CLASS} relative overflow-hidden`} style={{ background: SECTION_BG }}>
         {/* Brightness layer for background image */}
         <div 
           className="absolute inset-0 z-0"
@@ -394,7 +334,7 @@ export function CUDADevelopmentServicePage() {
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 z-0" style={{ background: OVERLAY_DARK }} />
 
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className={`${SECTION_CONTAINER} relative z-10`}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -428,14 +368,12 @@ export function CUDADevelopmentServicePage() {
       <DividerLine />
 
       {/* Process Flow Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: PROCESS_GRADIENT_BG }}>
-        {/* Animated background elements */}
+      <section className={`${SECTION_CLASS} relative overflow-hidden`} style={{ background: PROCESS_GRADIENT_BG }}>
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className={`${SECTION_CONTAINER} relative z-10`}>
           {/* Section Heading */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -508,8 +446,8 @@ export function CUDADevelopmentServicePage() {
       <DividerLine />
 
       {/* Business Benefits Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
-        <div className="max-w-7xl mx-auto">
+      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
+        <div className={SECTION_CONTAINER}>
           {/* Section Heading */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -549,7 +487,7 @@ export function CUDADevelopmentServicePage() {
 
       {/* Why Choose Section */}
       <section className="px-4 sm:px-6 lg:px-8 py-[100px]" style={{ background: SECTION_BG }}>
-        <div className="max-w-7xl mx-auto">
+        <div className={SECTION_CONTAINER}>
           {/* Section Heading */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -591,8 +529,8 @@ export function CUDADevelopmentServicePage() {
       </section>
 
       {/* What Our Clients Say Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
-        <div className="max-w-7xl mx-auto">
+      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
+        <div className={SECTION_CONTAINER}>
           {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -653,8 +591,8 @@ export function CUDADevelopmentServicePage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
-        <div className="max-w-7xl mx-auto">
+      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
+        <div className={SECTION_CONTAINER}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             {/* Left Column - Title */}
             <div className="lg:col-span-4">
@@ -703,7 +641,7 @@ export function CUDADevelopmentServicePage() {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+      <div className={`${SECTION_CONTAINER} px-4 sm:px-6 lg:px-8 pb-20`}>
         {/* Contact Form Section */}
         <motion.div
           className="mt-12 sm:mt-20"
@@ -803,7 +741,7 @@ export function CUDADevelopmentServicePage() {
                       {card.subtitle && <p className="text-xs mt-3" style={{ color: TEXT_SUBTLE }}>{card.subtitle}</p>}
                     </>
                   ) : (
-                    <p className="text-sm leading-relaxed" style={{ color: TEXT_MUTED }}>{card.content}</p>
+                    <p className="text-sm leading-relaxed" style={{ color: TEXT_MUTED, whiteSpace: typeof card.content === 'string' ? 'pre-line' : undefined }}>{card.content}</p>
                   )}
                 </div>
               ))}
