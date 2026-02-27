@@ -9,7 +9,102 @@ const menuItemVariants = {
   open: { opacity: 1, x: 0 }
 };
 
-type NavItemType = { path: string; label: string } | { label: string; dropdown: { path: string; label: string }[] };
+type NavPathItem = { path: string; label: string };
+type NavDropdownItem = { label: string; dropdown: NavPathItem[] };
+type NavItemType = NavPathItem | NavDropdownItem;
+
+type NavLinkBlockProps = {
+  item: NavItemType;
+  index: number;
+  location: { pathname: string };
+  activeDropdown: string | null;
+  setActiveDropdown: (s: string | null) => void;
+  handleLinkClick: () => void;
+  light?: boolean;
+  contactOutline?: boolean;
+};
+
+const NAV_ANIM_DELAY_STEP = 0.05;
+
+function getNavClasses(light?: boolean, contactOutline?: boolean) {
+  const textClass = light ? 'text-[#333333] hover:text-gray-600' : 'text-white hover:text-gray-300';
+  const activeText = light ? 'text-[#333333]' : 'text-white';
+  const indicatorClass = light ? 'bg-[#333333]' : 'bg-white';
+  const outlineClass = contactOutline ? 'border border-[#3B82F6] rounded-lg px-3 py-1.5 hover:bg-[#3B82F6]/10' : '';
+
+  return { textClass, activeText, indicatorClass, outlineClass };
+}
+
+function isDropdown(item: NavItemType): item is NavDropdownItem {
+  return 'dropdown' in item && !!item.dropdown;
+}
+
+function getItemPath(item: NavItemType): string {
+  return 'path' in item ? item.path : '/';
+}
+
+function getIsActive(location: { pathname: string }, path: string) {
+  return location.pathname === path;
+}
+
+function NavDropdown({
+  item,
+  location,
+  activeDropdown,
+  setActiveDropdown,
+  handleLinkClick,
+}: {
+  item: NavDropdownItem;
+  location: { pathname: string };
+  activeDropdown: string | null;
+  setActiveDropdown: (s: string | null) => void;
+  handleLinkClick: () => void;
+}) {
+  const isOpen = activeDropdown === item.label;
+  const isHireExpert = item.label === 'Hire Expert';
+  const containerClasses = `absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 border border-white/25 rounded-lg shadow-xl py-2 backdrop-blur-xl ${
+    isHireExpert ? 'whitespace-nowrap' : ''
+  }`;
+
+  const renderDropdownLink = (link: NavPathItem) => {
+    const active = getIsActive(location, link.path);
+    const base = 'block px-6 py-3 transition-colors whitespace-nowrap cursor-pointer';
+    const stateClass = active ? 'text-white bg-white/10' : 'text-white hover:bg-white/5';
+
+    return (
+      <Link
+        key={link.path}
+        to={link.path}
+        onClick={handleLinkClick}
+        className={`${base} ${stateClass}`}
+      >
+        {link.label}
+      </Link>
+    );
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          onMouseEnter={() => setActiveDropdown(item.label)}
+          onMouseLeave={() => setActiveDropdown(null)}
+          className={containerClasses}
+          style={{ minWidth: 'max-content', backgroundColor: 'rgba(31, 41, 55, 0.95)' }}
+        >
+          <div
+            className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-b-[8px] border-l-transparent border-r-transparent"
+            style={{ borderBottomColor: 'rgba(31, 41, 55, 0.95)' }}
+          />
+          {item.dropdown.map(renderDropdownLink)}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 function NavLinkBlock({
   item,
@@ -19,67 +114,77 @@ function NavLinkBlock({
   setActiveDropdown,
   handleLinkClick,
   light,
-  contactOutline
-}: {
-  item: NavItemType;
-  index: number;
-  location: { pathname: string };
-  activeDropdown: string | null;
-  setActiveDropdown: (s: string | null) => void;
-  handleLinkClick: () => void;
-  light?: boolean;
-  contactOutline?: boolean;
-}) {
-  const textClass = light ? 'text-[#333333] hover:text-gray-600' : 'text-white hover:text-gray-300';
-  const activeText = light ? 'text-[#333333]' : 'text-white';
-  const indicatorClass = light ? 'bg-[#333333]' : 'bg-white';
-  const hasDropdown = 'dropdown' in item && item.dropdown;
-  const outlineClass = contactOutline ? 'border border-[#3B82F6] rounded-lg px-3 py-1.5 hover:bg-[#3B82F6]/10' : '';
+  contactOutline,
+}: NavLinkBlockProps) {
+  const { textClass, activeText, indicatorClass, outlineClass } = getNavClasses(light, contactOutline);
+
+  const isDropdownItem = isDropdown(item);
+  const path = getItemPath(item);
+  const isActive = getIsActive(location, path);
+  const isHome = item.label === 'Home';
+
+  const baseLinkClass = 'relative transition-colors cursor-pointer whitespace-nowrap leading-normal font-medium';
+  const linkTextClass = isActive ? activeText : textClass;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05 }}
+      transition={{ delay: index * NAV_ANIM_DELAY_STEP }}
       className="relative"
     >
-      {hasDropdown ? (
-        <div className="relative" onMouseEnter={() => setActiveDropdown(item.label)} onMouseLeave={() => setActiveDropdown(null)}>
-          <button className={`flex items-center gap-1 whitespace-nowrap font-medium leading-normal ${textClass} transition-colors cursor-pointer ${outlineClass}`} style={{ fontSize: '1rem' }}>
-            <motion.span whileHover={{ scale: 1.1 }} transition={{ type: "spring", stiffness: 300 }}>{item.label}</motion.span>
-            <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
+      {isDropdownItem ? (
+        <div
+          className="relative"
+          onMouseEnter={() => setActiveDropdown(item.label)}
+          onMouseLeave={() => setActiveDropdown(null)}
+        >
+          <button
+            type="button"
+            className={`flex items-center gap-1 whitespace-nowrap font-medium leading-normal ${textClass} transition-colors cursor-pointer ${outlineClass}`}
+            style={{ fontSize: '1rem' }}
+          >
+            <motion.span
+              whileHover={{ scale: 1.1 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
+              {item.label}
+            </motion.span>
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`}
+            />
           </button>
-          <AnimatePresence>
-            {activeDropdown === item.label && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                onMouseEnter={() => setActiveDropdown(item.label)}
-                onMouseLeave={() => setActiveDropdown(null)}
-                className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 border border-white/25 rounded-lg shadow-xl py-2 backdrop-blur-xl ${item.label === 'Hire Expert' ? 'whitespace-nowrap' : ''}`}
-                style={{ minWidth: 'max-content', backgroundColor: 'rgba(31, 41, 55, 0.95)' }}
-              >
-                <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-b-[8px] border-l-transparent border-r-transparent" style={{ borderBottomColor: 'rgba(31, 41, 55, 0.95)' }} />
-                {item.label === 'Services'
-                  ? item.dropdown.map((service: { path: string; label: string }) => (
-                      <Link key={service.path} to={service.path} onClick={handleLinkClick} className={`block px-6 py-3 transition-colors whitespace-nowrap cursor-pointer ${location.pathname === service.path ? 'text-white bg-white/10' : 'text-white hover:bg-white/5'}`}>
-                        {service.label}
-                      </Link>
-                    ))
-                  : item.dropdown.map((subItem: { path: string; label: string }) => (
-                      <Link key={subItem.path} to={subItem.path} onClick={handleLinkClick} className={`block px-6 py-3 transition-colors whitespace-nowrap cursor-pointer ${location.pathname === subItem.path ? 'text-white bg-white/10' : 'text-white hover:bg-white/5'}`}>
-                        {subItem.label}
-                      </Link>
-                    ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+
+          <NavDropdown
+            item={item}
+            location={location}
+            activeDropdown={activeDropdown}
+            setActiveDropdown={setActiveDropdown}
+            handleLinkClick={handleLinkClick}
+          />
         </div>
       ) : (
-        <Link to={'path' in item ? item.path : '/'} className={`relative transition-colors cursor-pointer whitespace-nowrap leading-normal font-medium ${location.pathname === ('path' in item ? item.path : '') ? activeText : textClass} ${outlineClass}`} style={{ fontSize: '1rem', ...(item.label === 'Home' && { fontWeight: 600 }) }}>
-          <motion.span whileHover={{ scale: 1.1 }} transition={{ type: "spring", stiffness: 300 }}>{item.label}</motion.span>
-          {location.pathname === ('path' in item ? item.path : '') && !contactOutline && (
-            <motion.div layoutId="nav-indicator" className={`absolute -bottom-[21px] left-0 right-0 h-0.5 ${indicatorClass}`} transition={{ type: "spring", stiffness: 300, damping: 30 }} />
+        <Link
+          to={path}
+          className={`${baseLinkClass} ${linkTextClass} ${outlineClass}`}
+          style={{
+            fontSize: '1rem',
+            ...(isHome && { fontWeight: 600 }),
+          }}
+          onClick={handleLinkClick}
+        >
+          <motion.span
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: 'spring', stiffness: 300 }}
+          >
+            {item.label}
+          </motion.span>
+          {isActive && !contactOutline && (
+            <motion.div
+              layoutId="nav-indicator"
+              className={`absolute -bottom-[21px] left-0 right-0 h-0.5 ${indicatorClass}`}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            />
           )}
         </Link>
       )}
