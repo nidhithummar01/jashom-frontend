@@ -25,6 +25,31 @@ const SECTION_BG = '#0B0F14';
 const BORDER_SUBTLE = 'rgba(255, 255, 255, 0.08)';
 const BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba(16, 185, 129, 0.25)' } as const;
 const BADGE_TESTIMONIAL = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.2)' } as const;
+
+const ACCENT_COLOR = '#10B981';
+const VIOLET_COLOR = '#7C3AED';
+const TEXT_WHITE = '#FFFFFF';
+const TEXT_FAFAFA = '#FAFAFA';
+const TEXT_MUTED = '#9CA3AF';
+const TEXT_GRAY = '#9E9E9E';
+const TEXT_QUOTE = '#D1D5DB';
+const TEXT_SUBTLE = '#6B7280';
+const PORTFOLIO_IMG = '/images/portfolio';
+const img = (file: string) => `${PORTFOLIO_IMG}/${file}`;
+const GRADIENT_EMERALD_CYAN = 'linear-gradient(135deg, #10B981, #06B6D4)';
+const CTA_GRADIENT_STYLE = { background: GRADIENT_EMERALD_CYAN, borderColor: 'transparent', color: TEXT_WHITE, boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)' } as const;
+const HEADING_TITLE_STYLE = { color: TEXT_FAFAFA, letterSpacing: '-0.025em', lineHeight: 1.2 } as const;
+const FORM_LAYOUT = { display: 'flex' as const, flexDirection: 'column' as const, gap: '28px' } as const;
+const FORM_GRID_GAP = { gap: '24px' } as const;
+const FORM_MAX_WIDTH = { maxWidth: '1100px', margin: '0 auto' } as const;
+const SUBMIT_BTN_HOVER = { boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)' } as const;
+const GRADIENT_TEXT_STYLE = { background: GRADIENT_EMERALD_CYAN, WebkitBackgroundClip: 'text' as const, WebkitTextFillColor: 'transparent' as const };
+const BENEFIT_CARD_STYLE = { background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)', borderColor: 'rgba(16, 185, 129, 0.2)', backdropFilter: 'blur(8px)' } as const;
+const BENEFIT_ICON_BOX = { background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)', border: '1px solid rgba(16, 185, 129, 0.3)' } as const;
+const BLOG_CARD_BG = '#111827';
+const BLOG_CARD_BORDER = '1px solid rgba(255, 255, 255, 0.08)';
+const BLOG_BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.15)', color: ACCENT_COLOR, border: '1px solid rgba(16, 185, 129, 0.3)', backdropFilter: 'blur(8px)' } as const;
+const VIEW_ALL_BTN_STYLE = { background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.35)', color: TEXT_FAFAFA } as const;
 const formInputClass = 'w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all';
 const formInputStyle = { background: 'rgba(255, 255, 255, 0.06)', borderColor: 'rgba(255, 255, 255, 0.1)' } as const;
 const formContainerStyle = {
@@ -41,7 +66,7 @@ const formGlowStyle = {
   opacity: 0.6
 } as const;
 const submitButtonStyle = {
-  background: 'linear-gradient(135deg, #10B981, #06B6D4)',
+  background: GRADIENT_EMERALD_CYAN,
   border: '1px solid transparent',
   color: '#FFFFFF',
   boxShadow: '0 4px 14px rgba(16, 185, 129, 0.25)'
@@ -78,10 +103,46 @@ const homeContactFormFields: {
   { id: 'home-contact-message', name: 'message', label: 'Message *', type: 'textarea', placeholder: 'Tell us about your project...', required: true, rows: 4 },
 ];
 
+function renderFormField(field: (typeof homeContactFormFields)[number]) {
+  if (field.type === 'select') {
+    return (
+      <select id={field.id} name={field.name} className={formInputClass} style={formInputStyle}>
+        {field.options?.map((opt) => (
+          <option key={opt.value} value={opt.value} className="bg-[#1A1A1A]">{opt.label}</option>
+        ))}
+      </select>
+    );
+  }
+  if (field.type === 'textarea') {
+    return (
+      <textarea
+        id={field.id}
+        name={field.name}
+        required={field.required}
+        rows={field.rows ?? 4}
+        className={`${formInputClass} resize-none`}
+        style={formInputStyle}
+        placeholder={field.placeholder}
+      />
+    );
+  }
+  return (
+    <input
+      id={field.id}
+      type={field.type}
+      name={field.name}
+      required={field.required}
+      className={formInputClass}
+      style={formInputStyle}
+      placeholder={field.placeholder}
+    />
+  );
+}
+
 const QuoteIcon = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
-    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
+    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
+    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
   </svg>
 );
 
@@ -91,8 +152,8 @@ const whatWeDoData = [
 ];
 
 const servicesProvideData = [
-  { title: 'GPU Optimization Service', description: 'We optimize AI and compute workloads with the help of advanced GPU optimization, performance, efficiency, and hardware usage.', href: '/gpu-optimization-service/', Icon: Cpu, colorKey: 'emerald' as const, buttonStyle: { background: '#10B981', color: '#FFFFFF' } },
-  { title: 'CUDA Development Service', description: 'Hire skilled CUDA developers to create and optimize parallel advanced applications that meet your requirements.', href: '/cuda-development-service/', Icon: Zap, colorKey: 'violet' as const, buttonStyle: { background: 'linear-gradient(135deg, #7C3AED, #06B6D4)', color: '#FFFFFF' } },
+  { title: 'GPU Optimization Service', description: 'We optimize AI and compute workloads with the help of advanced GPU optimization, performance, efficiency, and hardware usage.', href: '/gpu-optimization-service/', Icon: Cpu, colorKey: 'emerald' as const, buttonStyle: { background: ACCENT_COLOR, color: TEXT_WHITE } },
+  { title: 'CUDA Development Service', description: 'Hire skilled CUDA developers to create and optimize parallel advanced applications that meet your requirements.', href: '/cuda-development-service/', Icon: Zap, colorKey: 'violet' as const, buttonStyle: { background: 'linear-gradient(135deg, #7C3AED, #06B6D4)', color: TEXT_WHITE } },
 ];
 
 const trustedLogosData = [
@@ -110,7 +171,7 @@ const trustedMetricsData = [
 ];
 
 const testimonialsData = [
-  { quote: '"Jashom\'s GPU optimization reduced our inference latency by 73%. The team\'s expertise in CUDA programming is unmatched."', initials: 'DC', name: 'David Chen', role: 'VP Engineering, Apex AI', avatarGradient: 'linear-gradient(135deg, #10B981, #06B6D4)' },
+  { quote: '"Jashom\'s GPU optimization reduced our inference latency by 73%. The team\'s expertise in CUDA programming is unmatched."', initials: 'DC', name: 'David Chen', role: 'VP Engineering, Apex AI', avatarGradient: GRADIENT_EMERALD_CYAN },
   { quote: '"The AI automation solutions delivered by Jashom transformed our workflow. We achieved 5x faster processing with their custom ML pipeline."', initials: 'MR', name: 'Maria Rodriguez', role: 'CTO, DataFlow Systems', avatarGradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)' },
   { quote: '"Outstanding DevSecOps implementation. Jashom\'s team integrated security seamlessly into our CI/CD pipeline without compromising speed."', initials: 'EW', name: 'Emily Watson', role: 'Head of Security, TechCorp', avatarGradient: 'linear-gradient(135deg, #10B981, #34D399)' },
 ];
@@ -183,7 +244,7 @@ export function HomePage() {
       solution: 'Comprehensive referral management platform with analytics',
       impact: ['Automated referral management', '99.9% platform uptime', 'Scalable SaaS architecture'],
       tags: ['SaaS Platform', 'Analytics', 'Automation'],
-      image: '/images/portfolio/boostreferral.jpg',
+      image: img('boostreferral.jpg'),
       link: '/projects/boostreferral',
       liveUrl: 'https://www.boostreferral.com'
     },
@@ -194,7 +255,7 @@ export function HomePage() {
       solution: 'Complete project management platform with real-time collaboration',
       impact: ['45% team efficiency', '30% faster delivery', '85% user adoption'],
       tags: ['Project Management', 'Collaboration', 'Analytics'],
-      image: '/images/portfolio/projectsphere.jpg',
+      image: img('projectsphere.jpg'),
       link: '/projects/projectsphere'
     },
     {
@@ -204,7 +265,7 @@ export function HomePage() {
       solution: 'IoT sensors with advanced analytics for environmental monitoring',
       impact: ['35% reduction in incidents', 'Real-time monitoring', 'Multi-zone tracking'],
       tags: ['IoT', 'Real-time Data', 'Analytics'],
-      image: '/images/portfolio/enviropulse.jpg',
+      image: img('enviropulse.jpg'),
       link: '/projects/enviropulse',
       liveUrl: 'https://enviropulse.jashom.com'
     },
@@ -215,7 +276,7 @@ export function HomePage() {
       solution: 'Comprehensive ESG tracking and reporting platform',
       impact: ['23% carbon reduction', '65% reporting efficiency', 'Automated reporting'],
       tags: ['ESG', 'Sustainability', 'Reporting'],
-      image: '/images/portfolio/greensphere.jpg',
+      image: img('greensphere.jpg'),
       link: '/projects/greensphere',
       liveUrl: 'https://greenesg.jashom.com/'
     },
@@ -226,7 +287,7 @@ export function HomePage() {
       solution: 'AI-powered sustainability assistant with instant responses',
       impact: ['40% reduced compliance issues', '60% better decisions', 'Instant responses'],
       tags: ['AI', 'NLP', 'Sustainability'],
-      image: '/images/portfolio/ecobot-ai.jpg',
+      image: img('ecobot-ai.jpg'),
       link: '/projects/ecobot-ai',
       liveUrl: 'https://ecoai.jashom.com/dashboard'
     },
@@ -237,7 +298,7 @@ export function HomePage() {
       solution: 'Comprehensive hospital management with real-time monitoring',
       impact: ['99.9% uptime', '40% reduced overhead', '100% HIPAA compliance'],
       tags: ['HIPAA', 'Healthcare', 'Real-time'],
-      image: '/images/portfolio/jashom-health.jpg',
+      image: img('jashom-health.jpg'),
       link: '/projects/jashom-health',
       liveUrl: 'https://jashomhealth.jashom.com'
     },
@@ -248,7 +309,7 @@ export function HomePage() {
       solution: 'Seamless interoperability with HL7/FHIR protocols',
       impact: ['99.9% uptime', '35% reduced duplicates', '50+ partners integrated'],
       tags: ['HL7', 'FHIR', 'Integration'],
-      image: '/images/portfolio/jashom-healthcare.jpg',
+      image: img('jashom-healthcare.jpg'),
       link: '/projects/jashom-healthcare',
       liveUrl: 'https://jashomhealthcare.jashom.com'
     },
@@ -259,7 +320,7 @@ export function HomePage() {
       solution: 'Remote monitoring platform bridging rural hospitals and specialists',
       impact: ['40% reduced transfers', '15+ hospitals connected', '<30s response time'],
       tags: ['Remote Monitoring', 'Vital Signs', 'Collaboration'],
-      image: '/images/portfolio/jashom-icu-connect.jpg',
+      image: img('jashom-icu-connect.jpg'),
       link: '/projects/jashom-icu-connect',
       liveUrl: 'https://jashomhealthcareplus.jashom.com'
     },
@@ -270,7 +331,7 @@ export function HomePage() {
       solution: 'RAG technology for knowledge management',
       impact: ['93% accuracy', '10x faster processing', 'AI transformation'],
       tags: ['RAG', 'AI', 'Knowledge Management'],
-      image: '/images/portfolio/rag-lu.ai.png',
+      image: img('rag-lu.ai.png'),
       link: '/projects/rag-lu',
       liveUrl: 'https://rag.lu'
     }
@@ -369,13 +430,13 @@ export function HomePage() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <span style={{ color: '#9E9E9E' }}>Next-Gen AI Solutions</span>
+                  <span style={{ color: TEXT_GRAY }}>Next-Gen AI Solutions</span>
                 </motion.div>
 
                 <motion.h1
                   className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl px-2 sm:px-0"
                   style={{
-                    color: '#FAFAFA',
+                    color: TEXT_FAFAFA,
                     fontWeight: 700,
                     letterSpacing: '-0.03em',
                     lineHeight: 1.15
@@ -385,7 +446,7 @@ export function HomePage() {
                   transition={{ delay: 0.3 }}
                 >
                   Powering High-Performance AI with <span style={{
-                    background: 'linear-gradient(135deg, #10B981 0%, #7C3AED 50%, #06B6D4 100%)',
+                    background: `linear-gradient(135deg, ${ACCENT_COLOR} 0%, ${VIOLET_COLOR} 50%, #06B6D4 100%)`,
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -396,7 +457,7 @@ export function HomePage() {
                 <motion.p
                   className="mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base px-4 sm:px-0"
                   style={{
-                    color: '#9E9E9E',
+                    color: TEXT_GRAY,
                     lineHeight: 1.8,
                     textShadow: '0 2px 10px rgba(0,0,0,0.9)'
                   }}
@@ -416,12 +477,7 @@ export function HomePage() {
                   <Link
                     to="/contact/"
                     className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)]"
-                    style={{
-                      background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                      borderColor: 'transparent',
-                      color: '#FFFFFF',
-                      boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
-                    }}
+                    style={CTA_GRADIENT_STYLE}
                   >
                     Start Your AI Transformation
                   </Link>
@@ -433,7 +489,7 @@ export function HomePage() {
                     style={{
                       background: 'rgba(255, 255, 255, 0.04)',
                       borderColor: 'rgba(255, 255, 255, 0.12)',
-                      color: '#FAFAFA'
+                      color: TEXT_FAFAFA
                     }}
                   >
                     Schedule a Meeting
@@ -467,8 +523,8 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold" style={{ color: '#FAFAFA', fontFamily: 'Inter, sans-serif', letterSpacing: '-0.025em' }}>
-                  What We <span style={{ color: '#10B981' }}>Do</span>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold" style={{ color: TEXT_FAFAFA, fontFamily: 'Inter, sans-serif', letterSpacing: '-0.025em' }}>
+                  What We <span style={{ color: ACCENT_COLOR }}>Do</span>
                 </h2>
               </motion.div>
 
@@ -482,7 +538,7 @@ export function HomePage() {
                 {whatWeDoData.map((item) => {
                   const isEmerald = item.colorKey === 'emerald';
                   const rgb = isEmerald ? '16, 185, 129' : '124, 58, 237';
-                  const color = isEmerald ? '#10B981' : '#7C3AED';
+                  const color = isEmerald ? ACCENT_COLOR : VIOLET_COLOR;
                   return (
                     <motion.div
                       key={item.title}
@@ -523,10 +579,10 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: '#10B981' }}>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: ACCENT_COLOR }}>
                   Which Services We Provide
                 </h2>
-                <p className="text-lg max-w-2xl mx-auto" style={{ color: '#9CA3AF' }}>
+                <p className="text-lg max-w-2xl mx-auto" style={{ color: TEXT_MUTED }}>
                   Explore our specialized GPU and CUDA development services
                 </p>
               </motion.div>
@@ -536,7 +592,7 @@ export function HomePage() {
                 {servicesProvideData.map((item, i) => {
                   const isEmerald = item.colorKey === 'emerald';
                   const rgb = isEmerald ? '16, 185, 129' : '124, 58, 237';
-                  const color = isEmerald ? '#10B981' : '#7C3AED';
+                  const color = isEmerald ? ACCENT_COLOR : VIOLET_COLOR;
                   const Icon = item.Icon;
                   return (
                     <motion.div
@@ -552,7 +608,7 @@ export function HomePage() {
                         <Icon className="w-6 h-6" style={{ color }} />
                       </div>
                       <h3 className="text-xl font-bold mb-3" style={{ color }}>{item.title}</h3>
-                      <p className="text-base mb-6 leading-relaxed" style={{ color: '#9CA3AF' }}>{item.description}</p>
+                      <p className="text-base mb-6 leading-relaxed" style={{ color: TEXT_MUTED }}>{item.description}</p>
                       <div className="w-full mt-auto text-right">
                         <a href={item.href} className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5" style={item.buttonStyle}>
                           Explore Service →
@@ -858,14 +914,14 @@ export function HomePage() {
                   className="inline-block mb-4 px-4 py-2 rounded-full border"
                   style={BADGE_TESTIMONIAL}
                 >
-                  <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>Client Testimonials</span>
+                  <span style={{ color: ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Client Testimonials</span>
                 </motion.div>
 
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={{ color: '#FAFAFA', letterSpacing: '-0.025em', lineHeight: 1.2 }}>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={HEADING_TITLE_STYLE}>
                   What Our Clients Say
                 </h2>
 
-                <p className="text-lg max-w-2xl mx-auto" style={{ color: '#9CA3AF', lineHeight: 1.7 }}>
+                <p className="text-lg max-w-2xl mx-auto" style={{ color: TEXT_MUTED, lineHeight: 1.7 }}>
                   The industry leaders are banking on our CUDA and GPU engineering skills to get the compute workloads on high throughput, enhance AI responsiveness, and implement stable high-performance units with results that can be measured.
                 </p>
               </motion.div>
@@ -883,12 +939,12 @@ export function HomePage() {
                   >
                     <div className="h-full p-8 rounded-2xl border transition-all duration-300" style={{ background: 'rgba(255, 255, 255, 0.02)', borderColor: BORDER_SUBTLE, backdropFilter: 'blur(10px)' }}>
                       <div className="mb-4"><QuoteIcon /></div>
-                      <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>{t.quote}</p>
+                      <p className="text-base mb-8" style={{ color: TEXT_QUOTE, lineHeight: 1.8 }}>{t.quote}</p>
                       <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: BORDER_SUBTLE }}>
                         <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold text-white" style={{ background: t.avatarGradient }}>{t.initials}</div>
                         <div>
-                          <div className="text-[#FAFAFA] font-semibold text-[15px]">{t.name}</div>
-                          <div className="text-[#9CA3AF] text-[13px]">{t.role}</div>
+                          <div className="font-semibold text-[15px]" style={{ color: TEXT_FAFAFA }}>{t.name}</div>
+                          <div className="text-[13px]" style={{ color: TEXT_MUTED }}>{t.role}</div>
                         </div>
                       </div>
                     </div>
@@ -899,7 +955,7 @@ export function HomePage() {
           </section>
 
           {/* Why Jashom - Benefits Section */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #111827 0%, #0B0F14 100%)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${BLOG_CARD_BG} 0%, ${SECTION_BG} 100%)` }}>
             {/* Subtle background glow */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
@@ -915,12 +971,12 @@ export function HomePage() {
                 viewport={{ once: true }}
               >
                 <div className="inline-block mb-4 px-6 py-2 rounded-full border" style={BADGE_STYLE}>
-                  <span style={{ color: '#10B981', fontWeight: 600 }}>Why Choose Jashom?</span>
+                  <span style={{ color: ACCENT_COLOR, fontWeight: 600 }}>Why Choose Jashom?</span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: '#FAFAFA', letterSpacing: '-0.025em' }}>
-                  Why Choose <span style={{ color: '#10B981' }}>Jashom</span>?
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: TEXT_FAFAFA, letterSpacing: '-0.025em' }}>
+                  Why Choose <span style={{ color: ACCENT_COLOR }}>Jashom</span>?
                 </h2>
-                <p className="max-w-2xl mx-auto text-base sm:text-lg" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
+                <p className="max-w-2xl mx-auto text-base sm:text-lg" style={{ color: TEXT_GRAY, lineHeight: 1.8 }}>
                   Experience the Jashom advantage with cutting-edge GPU optimization and CUDA development solutions
                 </p>
               </motion.div>
@@ -941,21 +997,14 @@ export function HomePage() {
                       variants={staggerItem}
                       whileHover={{ y: -10, scale: 1.02 }}
                       className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
-                      style={{
-                        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
-                        borderColor: 'rgba(16, 185, 129, 0.2)',
-                        backdropFilter: 'blur(8px)'
-                      }}
+                      style={BENEFIT_CARD_STYLE}
                     >
                       <div className="relative z-10">
-                        <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                          background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)',
-                          border: '1px solid rgba(16, 185, 129, 0.3)'
-                        }}>
-                          <Icon className="w-8 h-8" style={{ color: '#10B981' }} />
+                        <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={BENEFIT_ICON_BOX}>
+                          <Icon className="w-8 h-8" style={{ color: ACCENT_COLOR }} />
                         </div>
-                        <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>{item.title}</h3>
-                        <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>{item.description}</p>
+                        <h3 className="text-xl font-bold mb-3" style={{ color: TEXT_FAFAFA }}>{item.title}</h3>
+                        <p className="leading-relaxed" style={{ color: TEXT_GRAY, lineHeight: 1.8 }}>{item.description}</p>
                       </div>
                     </motion.div>
                   );
@@ -972,12 +1021,7 @@ export function HomePage() {
                 <Link
                   to="/contact"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)]"
-                  style={{
-                    background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                    borderColor: 'transparent',
-                    color: '#FFFFFF',
-                    boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
-                  }}
+                  style={CTA_GRADIENT_STYLE}
                 >
                   <span>Start Your AI Transformation</span>
                   <ArrowRight className="w-4 h-4" />
@@ -1014,10 +1058,10 @@ export function HomePage() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 }}
                   >
-                    <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>Resources</span>
+                    <span style={{ color: ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Resources</span>
                   </motion.div>
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold" style={{ color: '#FAFAFA', letterSpacing: '-0.025em' }}>
-                    Our Latest <span style={{ color: '#10B981' }}>Blogs</span>
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold" style={{ color: TEXT_FAFAFA, letterSpacing: '-0.025em' }}>
+                    Our Latest <span style={{ color: ACCENT_COLOR }}>Blogs</span>
                   </h2>
                 </div>
               </motion.div>
@@ -1029,7 +1073,7 @@ export function HomePage() {
                     <div
                       key={i}
                       className="h-full rounded-2xl overflow-hidden animate-pulse"
-                      style={{ background: '#111827', border: '1px solid rgba(255, 255, 255, 0.08)' }}
+                      style={{ background: BLOG_CARD_BG, border: BLOG_CARD_BORDER }}
                     >
                       <div className="h-48 bg-[#1E293B]" />
                       <div className="p-6 space-y-3">
@@ -1046,7 +1090,7 @@ export function HomePage() {
                 </div>
               )}
               {blogsError && (
-                <div className="text-center py-12 mb-8" style={{ color: '#9CA3AF' }}>
+                <div className="text-center py-12 mb-8" style={{ color: TEXT_MUTED }}>
                   Unable to load latest blogs. Try again later.
                 </div>
               )}
@@ -1061,13 +1105,10 @@ export function HomePage() {
                       transition={{ delay: index * 0.15, duration: 0.5 }}
                       className="group"
                     >
-                      <Link to={`/blogs/${blog.slug}/`} className="block h-full">
+                      <Link to={`/blogs/${blog.slug}/`} className="block h-full" style={{ ['--accent' as string]: ACCENT_COLOR } as React.CSSProperties}>
                         <div
                           className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-[1.02]"
-                          style={{
-                            background: '#111827',
-                            border: '1px solid rgba(255, 255, 255, 0.08)'
-                          }}
+                          style={{ background: BLOG_CARD_BG, border: BLOG_CARD_BORDER }}
                         >
                           {/* Image Section */}
                           <div className="relative h-48 overflow-hidden" style={{ background: '#1E293B' }}>
@@ -1085,12 +1126,7 @@ export function HomePage() {
 
                             {/* Category Badge */}
                             <div className="absolute top-4 left-4">
-                              <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={{
-                                background: 'rgba(16, 185, 129, 0.15)',
-                                color: '#10B981',
-                                border: '1px solid rgba(16, 185, 129, 0.3)',
-                                backdropFilter: 'blur(8px)'
-                              }}>
+                              <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={BLOG_BADGE_STYLE}>
                                 Blog
                               </div>
                             </div>
@@ -1098,22 +1134,22 @@ export function HomePage() {
 
                           {/* Content Section */}
                           <div className="p-6">
-                            <h3 className="text-lg font-bold mb-3 line-clamp-2 transition-colors duration-240 group-hover:text-[#10B981]" style={{
-                              color: '#FAFAFA',
+                            <h3 className="text-lg font-bold mb-3 line-clamp-2 transition-colors duration-240 group-hover:text-[var(--accent)]" style={{
+                              color: TEXT_FAFAFA,
                               lineHeight: 1.4
                             }}>
                               {blog.title}
                             </h3>
 
                             <p className="text-sm mb-4 line-clamp-2" style={{
-                              color: '#9CA3AF',
+                              color: TEXT_MUTED,
                               lineHeight: 1.6
                             }}>
                               {blog.excerpt ?? ''}
                             </p>
 
                             {/* Meta Info */}
-                            <div className="flex items-center gap-4 mb-4 text-xs" style={{ color: '#6B7280' }}>
+                            <div className="flex items-center gap-4 mb-4 text-xs" style={{ color: TEXT_SUBTLE }}>
                               <div className="flex items-center gap-1.5">
                                 <Calendar className="w-3.5 h-3.5" />
                                 <span>{formatBlogDate(blog.published_at)}</span>
@@ -1125,7 +1161,7 @@ export function HomePage() {
                             </div>
 
                             {/* Read More Link */}
-                            <div className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-240" style={{ color: '#10B981' }}>
+                            <div className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-240" style={{ color: ACCENT_COLOR }}>
                               <span>Read More</span>
                               <ArrowRight className="w-4 h-4 transition-transform duration-240 group-hover:translate-x-1" />
                             </div>
@@ -1142,7 +1178,7 @@ export function HomePage() {
                 </div>
               )}
               {!blogsLoading && !blogsError && latestBlogs.length === 0 && (
-                <div className="text-center py-12 mb-8" style={{ color: '#9CA3AF' }}>
+                <div className="text-center py-12 mb-8" style={{ color: TEXT_MUTED }}>
                   No blogs yet.
                 </div>
               )}
@@ -1157,11 +1193,7 @@ export function HomePage() {
                 <Link
                   to="/blogs/"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-240 hover:bg-[rgba(16,185,129,0.18)] hover:border-[rgba(16,185,129,0.5)] hover:-translate-y-0.5"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.12)',
-                    border: '1px solid rgba(16, 185, 129, 0.35)',
-                    color: '#FAFAFA'
-                  }}
+                  style={VIEW_ALL_BTN_STYLE}
                 >
                   <span>View All</span>
                   <ArrowRight className="w-4 h-4" />
@@ -1174,7 +1206,7 @@ export function HomePage() {
           <div className="premium-divider" />
 
           {/* Contact Form Section - Premium Layout */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #0B0F14 0%, #111827 100%)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${SECTION_BG} 0%, ${BLOG_CARD_BG} 100%)` }}>
             <div className="max-w-7xl mx-auto">
               {/* Header */}
               <motion.div
@@ -1187,26 +1219,22 @@ export function HomePage() {
                   className="inline-block mb-6 px-4 py-2 rounded-full border"
                   style={BADGE_STYLE}
                 >
-                  <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>Get In Touch</span>
+                  <span style={{ color: ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Get In Touch</span>
                 </motion.div>
 
                 <h2
                   className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight"
-                  style={{ color: '#FAFAFA', letterSpacing: '-0.025em' }}
+                  style={{ color: TEXT_FAFAFA, letterSpacing: '-0.025em' }}
                 >
                   Let's Build High-Performance{' '}
-                  <span style={{
-                    background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
-                  }}>
+                  <span style={GRADIENT_TEXT_STYLE}>
                     AI Systems
                   </span>
                 </h2>
 
                 <p
                   className="text-base sm:text-lg mb-4 leading-relaxed max-w-2xl mx-auto"
-                  style={{ color: '#9CA3AF' }}
+                  style={{ color: TEXT_MUTED }}
                 >
                   Hire CUDA Developers today to experience highly accurate solutions to suit your goals.
                 </p>
@@ -1219,47 +1247,17 @@ export function HomePage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
                 className="relative"
-                style={{
-                  maxWidth: '1100px',
-                  margin: '0 auto'
-                }}
+                style={FORM_MAX_WIDTH}
               >
-                {/* Subtle radial glow behind form */}
                 <div className="absolute inset-0 pointer-events-none" style={formGlowStyle} />
 
                 <div className="relative w-full" style={formContainerStyle}>
-                  <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-                    <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
+                  <form onSubmit={handleFormSubmit} style={FORM_LAYOUT}>
+                    <div className="grid grid-cols-1 md:grid-cols-2" style={FORM_GRID_GAP}>
                       {homeContactFormFields.map((field) => (
                         <div key={field.id} className={field.type === 'select' || field.type === 'textarea' ? 'md:col-span-2' : ''}>
                           <label htmlFor={field.id} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
-                          {field.type === 'select' ? (
-                            <select id={field.id} name={field.name} className={formInputClass} style={formInputStyle}>
-                              {field.options?.map((opt) => (
-                                <option key={opt.value} value={opt.value} className="bg-[#1A1A1A]">{opt.label}</option>
-                              ))}
-                            </select>
-                          ) : field.type === 'textarea' ? (
-                            <textarea
-                              id={field.id}
-                              name={field.name}
-                              required={field.required}
-                              rows={field.rows ?? 4}
-                              className={`${formInputClass} resize-none`}
-                              style={formInputStyle}
-                              placeholder={field.placeholder}
-                            />
-                          ) : (
-                            <input
-                              id={field.id}
-                              type={field.type}
-                              name={field.name}
-                              required={field.required}
-                              className={formInputClass}
-                              style={formInputStyle}
-                              placeholder={field.placeholder}
-                            />
-                          )}
+                          {renderFormField(field)}
                         </div>
                       ))}
                     </div>
@@ -1270,10 +1268,7 @@ export function HomePage() {
                         type="submit"
                         className="px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer"
                         style={submitButtonStyle}
-                        whileHover={{
-                          y: -2,
-                          boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)'
-                        }}
+                        whileHover={{ y: -2, ...SUBMIT_BTN_HOVER }}
                         whileTap={{ scale: 0.98 }}
                       >
                         Send Message

@@ -20,10 +20,20 @@ const CATEGORY = {
   AI_ML: 'AI & Machine Learning',
 } as const;
 
+const PORTFOLIO_IMG = '/images/portfolio';
+const img = (file: string) => `${PORTFOLIO_IMG}/${file}`;
+
 type CaseStudyInput = Omit<CaseStudy, 'client'> & { client?: string };
 
+function slugFromLink(link: string): string {
+  return link.replace(/^\//, '').split('/').pop() ?? '';
+}
+
 function toCaseStudy(s: CaseStudyInput): CaseStudy {
-  return { client: CLIENT.JAY_DAVE, ...s };
+  const slug = slugFromLink(s.link);
+  const defaultImage = s.link.startsWith('/projects/') && slug ? img(`${slug}.jpg`) : undefined;
+  const image = s.image ?? defaultImage;
+  return { client: CLIENT.JAY_DAVE, ...s, image };
 }
 
 const RAW_STUDIES: CaseStudyInput[] = [
@@ -37,7 +47,6 @@ const RAW_STUDIES: CaseStudyInput[] = [
     tags: ['SaaS Platform', 'Referral Management', 'Analytics', 'Automation'],
     link: '/projects/boostreferral',
     liveUrl: 'https://www.boostreferral.com',
-    image: '/images/portfolio/boostreferral.jpg',
   },
   {
     title: 'ProjectSphere - Project Management Platform',
@@ -48,7 +57,6 @@ const RAW_STUDIES: CaseStudyInput[] = [
     impact: ['45% improvement in team efficiency', '30% faster project delivery', '85% user adoption rate', 'Real-time team collaboration'],
     tags: ['Project Management', 'Real-time Collaboration', 'Resource Management', 'Analytics Dashboard'],
     link: '/projects/projectsphere',
-    image: '/images/portfolio/projectsphere.jpg',
   },
   {
     title: 'EnviroPulse - Environmental Monitoring',
@@ -60,7 +68,6 @@ const RAW_STUDIES: CaseStudyInput[] = [
     tags: ['IoT Integration', 'Real-time Data', 'Data Visualization', 'Environmental Sensors', 'Analytics Dashboard'],
     link: '/projects/enviropulse',
     liveUrl: 'https://enviropulse.jashom.com',
-    image: '/images/portfolio/enviropulse.jpg',
   },
   {
     title: 'GreenSphere - ESG Management Platform',
@@ -72,7 +79,6 @@ const RAW_STUDIES: CaseStudyInput[] = [
     tags: ['ESG Metrics', 'Sustainability Tracking', 'Reporting Tools', 'Data Visualization', 'Compliance Management'],
     link: '/projects/greensphere',
     liveUrl: 'https://greenesg.jashom.com/',
-    image: '/images/portfolio/greensphere.jpg',
   },
   {
     title: 'EcoBot AI - Sustainability Assistant',
@@ -84,7 +90,6 @@ const RAW_STUDIES: CaseStudyInput[] = [
     tags: ['AI Integration', 'Natural Language Processing', 'Sustainability Analytics', 'Environmental Compliance', 'Real-time Analytics'],
     link: '/projects/ecobot-ai',
     liveUrl: 'https://ecoai.jashom.com/dashboard',
-    image: '/images/portfolio/ecobot-ai.jpg',
   },
   {
     title: 'Jashom Health - Hospital System',
@@ -96,7 +101,6 @@ const RAW_STUDIES: CaseStudyInput[] = [
     tags: ['HIPAA Compliance', 'Multi-location Support', 'Real-time Monitoring', 'Patient Management', 'Healthcare Analytics'],
     link: '/projects/jashom-health',
     liveUrl: 'https://jashomhealth.jashom.com',
-    image: '/images/portfolio/jashom-health.jpg',
   },
   {
     title: 'Jashom Healthcare - Interoperability Platform',
@@ -108,7 +112,6 @@ const RAW_STUDIES: CaseStudyInput[] = [
     tags: ['HL7 Integration', 'FHIR Standards', 'EMR/LIS/PACS', 'IoT Device Integration', 'Real-time Sync', 'HIPAA Compliance'],
     link: '/projects/jashom-healthcare',
     liveUrl: 'https://jashomhealthcare.jashom.com',
-    image: '/images/portfolio/jashom-healthcare.jpg',
   },
   {
     title: 'Jashom ICU Connect - Remote Monitoring',
@@ -120,7 +123,6 @@ const RAW_STUDIES: CaseStudyInput[] = [
     tags: ['Real-time Monitoring', 'Vital Signs Tracking', 'Expert Collaboration', 'Secure Communication', 'Role-based Access', 'HIPAA Compliance'],
     link: '/projects/jashom-icu-connect',
     liveUrl: 'https://jashomhealthcareplus.jashom.com',
-    image: '/images/portfolio/jashom-icu-connect.jpg',
   },
   {
     title: 'RAG.LU - AI Knowledge Platform',
@@ -132,7 +134,7 @@ const RAW_STUDIES: CaseStudyInput[] = [
     tags: ['RAG Technology', 'AI Platform', 'Machine Learning', 'Knowledge Management'],
     link: '/projects/rag-lu',
     liveUrl: 'https://rag.lu',
-    image: '/images/portfolio/rag-lu.ai.png',
+    image: img('rag-lu.ai.png'),
   },
   {
     title: 'RANKZY AI - AI Visibility Optimization Platform',

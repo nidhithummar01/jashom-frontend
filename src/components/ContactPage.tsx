@@ -19,6 +19,41 @@ const FAQ_ITEM_STYLE = { background: SECTION_BG_DARK, borderColor: 'rgba(255, 25
 const TEXT_WHITE_60 = 'rgba(255, 255, 255, 0.6)';
 const TEXT_WHITE_70 = 'rgba(255, 255, 255, 0.7)';
 
+const HEADING_WHITE_STYLE = { color: TEXT_WHITE } as const;
+const MUTED_STYLE = { color: TEXT_MUTED } as const;
+const ACCENT_STYLE = { color: ACCENT_COLOR } as const;
+const SECTION_PADDING_120 = { padding: '120px 0' } as const;
+const SECTION_PADDING_100 = { padding: '100px 0' } as const;
+const HERO_SECTION_STYLE: React.CSSProperties = {
+  minHeight: '100vh',
+  backgroundImage: 'url(/images/contact.hero.jpg)',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+};
+const HERO_H1_STYLE: React.CSSProperties = {
+  fontSize: 'clamp(28px, 4vw, 48px)',
+  textShadow: '0 4px 20px rgba(0, 0, 0, 0.8)',
+  letterSpacing: '-0.02em',
+  marginBottom: '32px',
+};
+const HERO_P_STYLE: React.CSSProperties = {
+  fontSize: 'clamp(17px, 2vw, 20px)',
+  lineHeight: '1.75',
+  textShadow: '0 2px 10px rgba(0, 0, 0, 0.6)',
+  marginBottom: '48px',
+  maxWidth: '560px',
+};
+const HERO_CONTENT_PADDING = { paddingTop: '140px', paddingBottom: '100px' };
+const MOTION_FADE_LEFT = { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true }, transition: { duration: 0.6 } } as const;
+const MOTION_FADE_RIGHT = { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true }, transition: { duration: 0.6 } } as const;
+const MOTION_FADE_UP = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.6 } } as const;
+const MOTION_FAQ_ITEM = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true } } as const;
+const FAQ_ANSWER_STYLE = { color: TEXT_WHITE_70 } as const;
+const FAQ_LABEL_STYLE = { color: TEXT_WHITE_60 } as const;
+const MAP_IFRAME_STYLE: React.CSSProperties = { border: 0, filter: 'invert(90%) hue-rotate(180deg) saturate(0.8) brightness(0.9)' };
+const INPUT_CLASS_BASE = 'w-full border transition-all duration-300';
+
 const INPUT_BASE_STYLE: React.CSSProperties = {
   background: 'rgba(255, 255, 255, 0.05)',
   color: TEXT_WHITE,
@@ -61,6 +96,25 @@ const faqsData = [
     }
   ];
 
+function SectionContent({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">{children}</div>
+    </div>
+  );
+}
+
+function ContactLink({ href, icon: Icon, children, last }: { href: string; icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>; children: React.ReactNode; last?: boolean }) {
+  return (
+    <div className="flex items-center gap-3" style={last ? undefined : { marginBottom: '16px' }}>
+      <Icon className="w-6 h-6" style={ACCENT_STYLE} />
+      <a href={href} className="text-xl hover:underline transition-colors" style={HEADING_WHITE_STYLE}>
+        {children}
+      </a>
+    </div>
+  );
+}
+
 export function ContactPage() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -93,16 +147,7 @@ export function ContactPage() {
         <div className="min-h-screen" style={{ background: PAGE_BG }}>
 
           {/* SECTION 1 - HERO SECTION */}
-          <section
-            className="relative overflow-hidden"
-            style={{
-              minHeight: '100vh',
-              backgroundImage: 'url(/images/contact.hero.jpg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
-            }}
-          >
+          <section className="relative overflow-hidden" style={HERO_SECTION_STYLE}>
             {/* Dark Gradient Overlay - Left to Right fade for readability */}
             <div
               className="absolute inset-0"
@@ -111,7 +156,7 @@ export function ContactPage() {
 
             {/* Content - Premium Spacing */}
             <div className="relative z-10 min-h-screen flex items-center">
-              <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full" style={{ paddingTop: '140px', paddingBottom: '100px' }}>
+              <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full" style={HERO_CONTENT_PADDING}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -120,29 +165,12 @@ export function ContactPage() {
                   style={{ maxWidth: '620px' }}
                 >
                   {/* Heading */}
-                  <h1
-                    className="font-bold text-white leading-tight"
-                    style={{
-                      fontSize: 'clamp(28px, 4vw, 48px)',
-                      textShadow: '0 4px 20px rgba(0, 0, 0, 0.8)',
-                      letterSpacing: '-0.02em',
-                      marginBottom: '32px'
-                    }}
-                  >
+                  <h1 className="font-bold text-white leading-tight" style={HERO_H1_STYLE}>
                     Accelerate Your Compute Strategy with GPU & CUDA Expertise
                   </h1>
 
                   {/* Paragraph */}
-                  <p
-                    className="text-white/90"
-                    style={{
-                      fontSize: 'clamp(17px, 2vw, 20px)',
-                      lineHeight: '1.75',
-                      textShadow: '0 2px 10px rgba(0, 0, 0, 0.6)',
-                      marginBottom: '48px',
-                      maxWidth: '560px'
-                    }}
-                  >
+                  <p className="text-white/90" style={HERO_P_STYLE}>
                     Need to optimize AI training, high-performance computing, or data-intensive jobs? Our GPU and CUDA consulting team helps you design, optimize, and scale parallel computing systems that deliver measurable speed, efficiency, and cost performance.
                   </p>
 
@@ -160,24 +188,15 @@ export function ContactPage() {
           </section>
 
           {/* SECTION 2 - CONTACT FORM + OFFICE INFO */}
-          <section id="contact-form" style={{ padding: '120px 0', background: PAGE_BG }}>
-            <div className="px-4 sm:px-6 lg:px-8">
-              <div className="max-w-7xl mx-auto">
+          <section id="contact-form" style={{ ...SECTION_PADDING_120, background: PAGE_BG }}>
+            <SectionContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 xl:gap-20 items-start">
 
                   {/* LEFT SIDE - Info */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <h2
-                      className="text-4xl sm:text-5xl font-bold mb-8 leading-tight"
-                      style={{ color: TEXT_WHITE }}
-                    >
+                  <motion.div {...MOTION_FADE_LEFT}>
+                    <h2 className="text-4xl sm:text-5xl font-bold mb-8 leading-tight" style={HEADING_WHITE_STYLE}>
                       Our consultants bring deep technical expertise and{' '}
-                      <span style={{ color: ACCENT_COLOR }}>production-grade execution</span>.
+                      <span style={ACCENT_STYLE}>production-grade execution</span>.
                     </h2>
 
                     {/* Cyan Divider */}
@@ -187,25 +206,16 @@ export function ContactPage() {
                     />
 
                     {/* Get in touch heading */}
-                    <h3
-                      className="text-3xl font-bold mb-6"
-                      style={{ color: TEXT_WHITE }}
-                    >
+                    <h3 className="text-3xl font-bold mb-6" style={HEADING_WHITE_STYLE}>
                       Get in touch with our GPU experts
                     </h3>
 
-                    <p
-                      className="text-lg mb-16"
-                      style={{ color: TEXT_MUTED }}
-                    >
+                    <p className="text-lg mb-16" style={MUTED_STYLE}>
                       We have CUDA consultants who will look at your needs and get back to you within two business days.
                     </p>
 
                     {/* Our Office Heading */}
-                    <h3
-                      className="text-3xl font-bold mb-6 mt-8"
-                      style={{ color: TEXT_WHITE }}
-                    >
+                    <h3 className="text-3xl font-bold mb-6 mt-8" style={HEADING_WHITE_STYLE}>
                       Our Office
                     </h3>
 
@@ -214,73 +224,33 @@ export function ContactPage() {
                       <div className="flex items-start gap-4" style={{ marginBottom: '28px' }}>
                         <span className="text-3xl">🇮🇳</span>
                         <div>
-                          <p
-                            className="text-lg leading-relaxed"
-                            style={{ color: TEXT_MUTED, marginBottom: '0' }}
-                          >
+                          <p className="text-lg leading-relaxed" style={{ ...MUTED_STYLE, marginBottom: '0' }}>
                             414, Satyam-2, Amba Business Park
                           </p>
-                          <p
-                            className="text-lg leading-relaxed"
-                            style={{ color: TEXT_MUTED, marginTop: '18px', marginBottom: '0' }}
-                          >
+                          <p className="text-lg leading-relaxed" style={{ ...MUTED_STYLE, marginTop: '18px', marginBottom: '0' }}>
                             ATPL, Adalaj, Gujarat, India
                           </p>
                         </div>
                       </div>
 
                       <div style={{ marginTop: '28px' }}>
-                        <div className="flex items-center gap-3" style={{ marginBottom: '16px' }}>
-                          <Mail className="w-6 h-6" style={{ color: ACCENT_COLOR }} />
-                          <a
-                            href="mailto:info@jashom.com"
-                            className="text-xl hover:underline transition-colors"
-                            style={{ color: TEXT_WHITE }}
-                          >
-                            info@jashom.com
-                          </a>
-                        </div>
-
-                        <div className="flex items-center gap-3">
-                          <Phone className="w-6 h-6" style={{ color: ACCENT_COLOR }} />
-                          <a
-                            href="tel:+919023906363"
-                            className="text-xl hover:underline transition-colors"
-                            style={{ color: TEXT_WHITE }}
-                          >
-                            +91 90239 06363
-                          </a>
-                        </div>
+                        <ContactLink href="mailto:info@jashom.com" icon={Mail}>info@jashom.com</ContactLink>
+                        <ContactLink href="tel:+919023906363" icon={Phone} last>+91 90239 06363</ContactLink>
                       </div>
                     </div>
 
-                    <p
-                      className="text-lg italic"
-                      style={{ color: TEXT_MUTED, marginTop: '24px' }}
-                    >
+                    <p className="text-lg italic" style={{ ...MUTED_STYLE, marginTop: '24px' }}>
                       Let's build something powerful together.
                     </p>
                   </motion.div>
 
                   {/* RIGHT SIDE - Glassmorphism Contact Form */}
-                  <motion.div
-                    initial={{ opacity: 0, x: 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    {/* Form Header */}
+                  <motion.div {...MOTION_FADE_RIGHT}>
                     <div className="mb-20">
-                      <h3
-                        className="text-3xl font-bold mb-4"
-                        style={{ color: TEXT_WHITE }}
-                      >
+                      <h3 className="text-3xl font-bold mb-4" style={HEADING_WHITE_STYLE}>
                         Get in touch
                       </h3>
-                      <p
-                        className="text-base"
-                        style={{ color: TEXT_MUTED }}
-                      >
+                      <p className="text-base" style={MUTED_STYLE}>
                         Our team will respond to you within 2 business days.
                       </p>
                     </div>
@@ -297,7 +267,7 @@ export function ContactPage() {
                           onFocus: () => setFocusedField(field.name),
                           onBlur: () => setFocusedField(null),
                           required: true,
-                          className: field.type === 'textarea' ? 'w-full border transition-all duration-300 resize-none' : 'w-full border transition-all duration-300',
+                          className: field.type === 'textarea' ? `${INPUT_CLASS_BASE} resize-none` : INPUT_CLASS_BASE,
                           style: inputStyle,
                         };
                         return (
@@ -325,19 +295,14 @@ export function ContactPage() {
                   </motion.div>
 
                 </div>
-              </div>
-            </div>
+            </SectionContent>
           </section>
 
           {/* SECTION 3 - GOOGLE MAP */}
-          <section style={{ padding: '100px 0' }}>
-            <div className="px-4 sm:px-6 lg:px-8">
-              <div className="max-w-7xl mx-auto">
+          <section style={SECTION_PADDING_100}>
+            <SectionContent>
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
+                  {...MOTION_FADE_UP}
                   className="overflow-hidden border"
                   style={MAP_CONTAINER_STYLE}
                 >
@@ -345,44 +310,27 @@ export function ContactPage() {
                     src="https://www.google.com/maps?q=414,+Satyam-2,+Amba+Business+Park,+ATPL,+Adalaj,+Gujarat,+India&output=embed"
                     width="100%"
                     height="100%"
-                    style={{
-                      border: 0,
-                      filter: 'invert(90%) hue-rotate(180deg) saturate(0.8) brightness(0.9)'
-                    }}
+                    style={MAP_IFRAME_STYLE}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Jashom Office Location"
                   />
                 </motion.div>
-              </div>
-            </div>
+            </SectionContent>
           </section>
 
           {/* SECTION 4 - FAQs */}
-          <section style={{ padding: '120px 0', background: SECTION_BG_DARK }}>
-            <div className="px-4 sm:px-6 lg:px-8">
-              <div className="max-w-7xl mx-auto">
+          <section style={{ ...SECTION_PADDING_120, background: SECTION_BG_DARK }}>
+            <SectionContent>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
 
                   {/* Left 40% - Heading */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="lg:col-span-4"
-                  >
-                    <p
-                      className="text-xs font-semibold tracking-wider mb-3 uppercase"
-                      style={{ color: TEXT_WHITE_60 }}
-                    >
+                  <motion.div {...MOTION_FADE_LEFT} className="lg:col-span-4">
+                    <p className="text-xs font-semibold tracking-wider mb-3 uppercase" style={FAQ_LABEL_STYLE}>
                       FAQs
                     </p>
-                    <h2
-                      className="text-3xl sm:text-4xl font-bold leading-tight"
-                      style={{ color: TEXT_WHITE }}
-                    >
+                    <h2 className="text-3xl sm:text-4xl font-bold leading-tight" style={HEADING_WHITE_STYLE}>
                       Frequently
                       <br />
                       Asked Questions
@@ -394,24 +342,19 @@ export function ContactPage() {
                     {faqsData.map((faq, index) => (
                       <motion.div
                         key={faq.question}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        {...MOTION_FAQ_ITEM}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                         className="rounded-xl border overflow-hidden"
                         style={FAQ_ITEM_STYLE}
                       >
                         <details className="group">
                           <summary className="flex items-center justify-between p-4 sm:p-5 cursor-pointer list-none">
-                            <h4
-                              className="font-semibold pr-3"
-                              style={{ color: TEXT_WHITE }}
-                            >
+                            <h4 className="font-semibold pr-3" style={HEADING_WHITE_STYLE}>
                               {faq.question}
                             </h4>
                             <svg
                               className="w-4 h-4 flex-shrink-0 transition-transform group-open:rotate-180"
-                              style={{ color: TEXT_WHITE_60 }}
+                              style={FAQ_LABEL_STYLE}
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -420,10 +363,7 @@ export function ContactPage() {
                             </svg>
                           </summary>
                           <div className="px-4 sm:px-5 pb-4 sm:pb-5">
-                            <p
-                              className="text-xs leading-relaxed"
-                              style={{ color: TEXT_WHITE_70 }}
-                            >
+                            <p className="text-xs leading-relaxed" style={FAQ_ANSWER_STYLE}>
                               {faq.answer}
                             </p>
                           </div>
@@ -433,8 +373,7 @@ export function ContactPage() {
                   </div>
 
                 </div>
-              </div>
-            </div>
+            </SectionContent>
           </section>
         </div>
       </div>

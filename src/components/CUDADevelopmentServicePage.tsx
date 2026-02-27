@@ -11,6 +11,30 @@ const BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba
 const BADGE_TESTIMONIAL = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.2)' } as const;
 const CHEVRON_DOWN_D = 'M19 9l-7 7-7-7';
 
+const ACCENT_COLOR = '#10B981';
+const TEXT_WHITE = '#FFFFFF';
+const TEXT_FAFAFA = '#FAFAFA';
+const TEXT_MUTED = '#9CA3AF';
+const TEXT_SUBTLE = '#6B7280';
+const TEXT_GRAY = '#9E9E9E';
+const OVERLAY_DARK = 'rgba(11, 15, 20, 0.4)';
+const HERO_OVERLAY_GRADIENT = 'linear-gradient(to right, rgba(11, 15, 20, 0.85) 0%, rgba(11, 15, 20, 0.75) 40%, rgba(11, 15, 20, 0.5) 70%, rgba(11, 15, 20, 0.3) 100%)';
+const HERO_BG_BASE = { backgroundSize: 'cover' as const, backgroundPosition: 'center top' as const, backgroundRepeat: 'no-repeat' as const };
+const OVERVIEW_BADGE = { background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)' } as const;
+const KEY_STAT_BOX = { background: BENEFIT_CARD_BG, border: '1px solid rgba(16, 185, 129, 0.2)' } as const;
+const IMAGE_SHADOW_ACCENT = { boxShadow: '0 20px 60px rgba(16, 185, 129, 0.3)' } as const;
+const CTA_HERO_STYLE = { background: ACCENT_COLOR, color: TEXT_WHITE, boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.4)' } as const;
+const FORM_GLOW_STYLE = { background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, transparent 60%)', filter: 'blur(60px)', opacity: 0.6 } as const;
+const FORM_CONTAINER_STYLE: React.CSSProperties = { background: 'rgba(17, 24, 39, 0.6)', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(14px)', padding: '48px 32px', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)' };
+const SUBMIT_BTN_STYLE = { background: 'linear-gradient(135deg, #10B981, #06B6D4)', border: '1px solid transparent', color: TEXT_WHITE, boxShadow: '0 4px 14px rgba(16, 185, 129, 0.25)', minWidth: '200px' } as const;
+const SUBMIT_BTN_HOVER = { boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)' } as const;
+const HEADING_TITLE_STYLE = { color: TEXT_FAFAFA, letterSpacing: '-0.025em', lineHeight: 1.2 } as const;
+const PROCESS_GRADIENT_BG = 'linear-gradient(180deg, #0B0F14 0%, #111827 50%, #0B0F14 100%)';
+const FORM_LAYOUT = { display: 'flex' as const, flexDirection: 'column' as const, gap: '28px' } as const;
+const FORM_GRID_GAP = { gap: '24px' } as const;
+const FORM_MAX_WIDTH = { maxWidth: '1100px', margin: '0 auto' } as const;
+const CHECK_ICON_BG = { backgroundColor: ACCENT_COLOR };
+
 const CHECK_PATH = 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z';
 const CheckIcon = ({ size = 'sm' }: { size?: 'sm' | 'lg' }) => (
   <svg className={size === 'lg' ? 'w-6 h-6 text-white' : 'w-5 h-5 text-white'} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -20,8 +44,8 @@ const CheckIcon = ({ size = 'sm' }: { size?: 'sm' | 'lg' }) => (
 
 const QuoteIcon = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
-    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
+    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
+    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
   </svg>
 );
 
@@ -102,6 +126,40 @@ const officeCardsData: { title: string; type: 'address' | 'email' | 'phone'; con
 ];
 const officeCardStyle = { background: 'rgba(17, 24, 39, 0.6)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(14px)' } as const;
 
+const OFFICE_ICON_SVG_CLASS = 'w-6 h-6';
+const OFFICE_ICON_SVG_PROPS = { fill: 'none' as const, viewBox: '0 0 24 24', stroke: 'currentColor' };
+function renderOfficeCardIcon(type: 'address' | 'email' | 'phone') {
+  if (type === 'address') {
+    return <img src="/images/inidan.flag.jpg" alt="India Flag" className="w-full h-full object-cover" />;
+  }
+  if (type === 'email') {
+    return (
+      <svg className={OFFICE_ICON_SVG_CLASS} style={{ color: ACCENT_COLOR }} {...OFFICE_ICON_SVG_PROPS}>
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    );
+  }
+  return (
+    <svg className={OFFICE_ICON_SVG_CLASS} style={{ color: ACCENT_COLOR }} {...OFFICE_ICON_SVG_PROPS}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+    </svg>
+  );
+}
+
+type FormFieldConfig = (typeof formFieldsConfig)[number];
+function renderCudaFormField(
+  field: FormFieldConfig,
+  formData: Record<FormFieldConfig['name'], string>,
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+) {
+  const id = `cuda-${field.name}`;
+  const base = { name: field.name, value: formData[field.name], onChange: handleChange, required: field.required, placeholder: field.placeholder };
+  if (field.type === 'textarea') {
+    return <textarea id={id} rows={field.rows ?? 4} className={`${formInputClass} resize-none`} style={formInputStyle} {...base} />;
+  }
+  return <input type={field.type} id={id} className={formInputClass} style={formInputStyle} {...base} />;
+}
+
 export function CUDADevelopmentServicePage() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -113,10 +171,7 @@ export function CUDADevelopmentServicePage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -134,33 +189,10 @@ export function CUDADevelopmentServicePage() {
       {/* Hero Section */}
       <section
         className="relative overflow-hidden"
-        style={{
-          minHeight: '100vh',
-          backgroundImage: 'url(/images/cuda.service.hero.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center top',
-          backgroundRepeat: 'no-repeat'
-        }}
+        style={{ minHeight: '100vh', backgroundImage: 'url(/images/cuda.service.hero.jpg)', ...HERO_BG_BASE }}
       >
-        {/* Brightness layer for background image */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'url(/images/cuda.service.hero.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center top',
-            backgroundRepeat: 'no-repeat',
-            filter: 'brightness(1.2)'
-          }}
-        ></div>
-
-        {/* Dark Gradient Overlay - Left to Right fade for readability */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to right, rgba(11, 15, 20, 0.85) 0%, rgba(11, 15, 20, 0.75) 40%, rgba(11, 15, 20, 0.5) 70%, rgba(11, 15, 20, 0.3) 100%)'
-          }}
-        ></div>
+        <div className="absolute inset-0" style={{ backgroundImage: 'url(/images/cuda.service.hero.jpg)', ...HERO_BG_BASE, filter: 'brightness(1.2)' }} />
+        <div className="absolute inset-0" style={{ background: HERO_OVERLAY_GRADIENT }} />
 
         {/* Content - Premium Spacing */}
         <div className="relative z-10 min-h-screen flex items-center">
@@ -203,11 +235,7 @@ export function CUDADevelopmentServicePage() {
               <a
                 href="/contact"
                 className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90 hover:scale-105"
-                style={{
-                  background: '#10B981',
-                  color: '#FFFFFF',
-                  boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.4)'
-                }}
+                style={CTA_HERO_STYLE}
               >
                 Get Free Consultation
               </a>
@@ -233,8 +261,8 @@ export function CUDADevelopmentServicePage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <div className="inline-block mb-4 px-4 py-2 rounded-full" style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
-              <p className="text-sm uppercase tracking-wider" style={{ color: '#10B981' }}>Overview</p>
+            <div className="inline-block mb-4 px-4 py-2 rounded-full" style={OVERVIEW_BADGE}>
+              <p className="text-sm uppercase tracking-wider" style={{ color: ACCENT_COLOR }}>Overview</p>
             </div>
             <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
               What CUDA Means for
@@ -263,13 +291,13 @@ export function CUDADevelopmentServicePage() {
 
                 {/* Key Benefits */}
                 <div className="grid grid-cols-2 gap-4 pt-4">
-                  <div className="rounded-lg p-4" style={{ background: 'rgba(16, 185, 129, 0.05)', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                    <div className="text-3xl font-bold mb-1" style={{ color: '#10B981' }}>100x</div>
-                    <div className="text-sm" style={{ color: '#9E9E9E' }}>Compute Throughput Increase</div>
+                  <div className="rounded-lg p-4" style={KEY_STAT_BOX}>
+                    <div className="text-3xl font-bold mb-1" style={{ color: ACCENT_COLOR }}>100x</div>
+                    <div className="text-sm" style={{ color: TEXT_GRAY }}>Compute Throughput Increase</div>
                   </div>
-                  <div className="rounded-lg p-4" style={{ background: 'rgba(16, 185, 129, 0.05)', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                    <div className="text-3xl font-bold mb-1" style={{ color: '#10B981' }}>Up to 50%</div>
-                    <div className="text-sm" style={{ color: '#9E9E9E' }}>Hardware Efficiency Optimization</div>
+                  <div className="rounded-lg p-4" style={KEY_STAT_BOX}>
+                    <div className="text-3xl font-bold mb-1" style={{ color: ACCENT_COLOR }}>Up to 50%</div>
+                    <div className="text-sm" style={{ color: TEXT_GRAY }}>Hardware Efficiency Optimization</div>
                   </div>
                 </div>
               </motion.div>
@@ -288,7 +316,7 @@ export function CUDADevelopmentServicePage() {
                   src="/images/cuda.developer.jpg"
                   alt="CUDA Development"
                   className="w-full h-auto rounded-2xl shadow-2xl"
-                  style={{ boxShadow: '0 20px 60px rgba(16, 185, 129, 0.3)' }}
+                  style={IMAGE_SHADOW_ACCENT}
                 />
               </motion.div>
             </div>
@@ -363,8 +391,8 @@ export function CUDADevelopmentServicePage() {
           }}
         ></div>
 
-        {/* Dark Overlay for text readability */}
-        <div className="absolute inset-0 z-0" style={{ background: 'rgba(11, 15, 20, 0.4)' }}></div>
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 z-0" style={{ background: OVERLAY_DARK }} />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
@@ -386,7 +414,7 @@ export function CUDADevelopmentServicePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
               {industryItems.map((label) => (
                 <div key={label} className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0 bg-[#10B981]">
+                  <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={CHECK_ICON_BG}>
                     <CheckIcon />
                   </div>
                   <span className="text-white text-base font-medium">{label}</span>
@@ -400,7 +428,7 @@ export function CUDADevelopmentServicePage() {
       <DividerLine />
 
       {/* Process Flow Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #0B0F14 0%, #111827 50%, #0B0F14 100%)' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: PROCESS_GRADIENT_BG }}>
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
@@ -549,7 +577,7 @@ export function CUDADevelopmentServicePage() {
                 className="flex items-start gap-6 border rounded-xl p-6"
                 style={{ borderColor: BORDER_SUBTLE }}
               >
-                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 bg-[#10B981]">
+                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={CHECK_ICON_BG}>
                   <CheckIcon size="lg" />
                 </div>
                 <div>
@@ -581,14 +609,14 @@ export function CUDADevelopmentServicePage() {
               className="inline-block px-6 py-2 rounded-full border mb-6"
               style={BADGE_TESTIMONIAL}
             >
-              <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>Client Testimonials</span>
+              <span style={{ color: ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Client Testimonials</span>
             </motion.div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={{ color: '#FAFAFA', letterSpacing: '-0.025em', lineHeight: 1.2 }}>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={HEADING_TITLE_STYLE}>
               Client Experiences
             </h2>
 
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: '#9CA3AF', lineHeight: 1.7 }}>
+            <p className="text-lg max-w-2xl mx-auto" style={{ color: TEXT_MUTED, lineHeight: 1.7 }}>
               Proven Impact Across Industries
             </p>
           </motion.div>
@@ -613,8 +641,8 @@ export function CUDADevelopmentServicePage() {
                   <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: BORDER_SUBTLE }}>
                     <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold text-white" style={{ background: t.avatarGradient }}>{t.initials}</div>
                     <div>
-                      <div className="text-[#FAFAFA] font-semibold text-[15px]">{t.role}</div>
-                      <div className="text-[#9CA3AF] text-[13px]">{t.company}</div>
+                      <div className="font-semibold text-[15px]" style={{ color: TEXT_FAFAFA }}>{t.role}</div>
+                      <div className="text-[13px]" style={{ color: TEXT_MUTED }}>{t.company}</div>
                     </div>
                   </div>
                 </div>
@@ -691,7 +719,7 @@ export function CUDADevelopmentServicePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
-              style={{ color: '#FAFAFA', letterSpacing: '-0.025em', lineHeight: 1.2 }}
+              style={HEADING_TITLE_STYLE}
             >
               Get Started with CUDA Development
             </motion.h2>
@@ -701,7 +729,7 @@ export function CUDADevelopmentServicePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-base sm:text-lg mb-4 leading-relaxed max-w-2xl mx-auto"
-              style={{ color: '#9CA3AF' }}
+              style={{ color: TEXT_MUTED }}
             >
               Fill out the form and our team will get back to you within 24 hours.
             </motion.p>
@@ -714,82 +742,25 @@ export function CUDADevelopmentServicePage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="relative"
-            style={{
-              maxWidth: '1100px',
-              margin: '0 auto'
-            }}
+            style={FORM_MAX_WIDTH}
           >
-            {/* Subtle radial glow behind form */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, transparent 60%)',
-                filter: 'blur(60px)',
-                opacity: 0.6
-              }}
-            />
-
-            <div
-              className="relative w-full"
-              style={{
-                background: 'rgba(17, 24, 39, 0.6)',
-                borderRadius: '20px',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                backdropFilter: 'blur(14px)',
-                padding: '48px 32px',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
-              }}
-            >
-              <form style={{ display: 'flex', flexDirection: 'column', gap: '28px' }} onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
+            <div className="absolute inset-0 pointer-events-none" style={FORM_GLOW_STYLE} />
+            <div className="relative w-full" style={FORM_CONTAINER_STYLE}>
+              <form style={FORM_LAYOUT} onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 md:grid-cols-2" style={FORM_GRID_GAP}>
                   {formFieldsConfig.map((field) => (
                     <div key={field.name} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
                       <label htmlFor={`cuda-${field.name}`} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
-                      {field.type === 'textarea' ? (
-                        <textarea
-                          id={`cuda-${field.name}`}
-                          name={field.name}
-                          value={formData[field.name]}
-                          onChange={handleChange}
-                          required={field.required}
-                          rows={field.rows ?? 4}
-                          className={`${formInputClass} resize-none`}
-                          style={formInputStyle}
-                          placeholder={field.placeholder}
-                        />
-                      ) : (
-                        <input
-                          type={field.type}
-                          id={`cuda-${field.name}`}
-                          name={field.name}
-                          value={formData[field.name]}
-                          onChange={handleChange}
-                          required={field.required}
-                          className={formInputClass}
-                          style={formInputStyle}
-                          placeholder={field.placeholder}
-                        />
-                      )}
+                      {renderCudaFormField(field, formData, handleChange)}
                     </div>
                   ))}
                 </div>
-
-                {/* Submit Button */}
                 <div className="flex justify-center sm:justify-start">
                   <motion.button
                     type="submit"
                     className="px-12 py-4 rounded-xl font-semibold text-base transition-all duration-300 cursor-pointer"
-                    style={{
-                      background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                      border: '1px solid transparent',
-                      color: '#FFFFFF',
-                      boxShadow: '0 4px 14px rgba(16, 185, 129, 0.25)',
-                      minWidth: '200px'
-                    }}
-                    whileHover={{
-                      y: -2,
-                      boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)'
-                    }}
+                    style={SUBMIT_BTN_STYLE}
+                    whileHover={{ y: -2, ...SUBMIT_BTN_HOVER }}
                     whileTap={{ scale: 0.98 }}
                   >
                     Send Message
@@ -808,7 +779,7 @@ export function CUDADevelopmentServicePage() {
             className="mt-16"
           >
             <div className="text-center mb-10">
-              <h3 className="text-2xl sm:text-3xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
+              <h3 className="text-2xl sm:text-3xl font-bold mb-3" style={{ color: TEXT_FAFAFA }}>
                 Our Office
               </h3>
             </div>
@@ -821,28 +792,18 @@ export function CUDADevelopmentServicePage() {
                   style={officeCardStyle}
                 >
                   <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden" style={OFFICE_ICON_BG}>
-                    {card.type === 'address' ? (
-                      <img src="/images/inidan.flag.jpg" alt="India Flag" className="w-full h-full object-cover" />
-                    ) : card.type === 'email' ? (
-                      <svg className="w-6 h-6 text-[#10B981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    ) : (
-                      <svg className="w-6 h-6 text-[#10B981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                    )}
+                    {renderOfficeCardIcon(card.type)}
                   </div>
-                  <h4 className="text-lg font-semibold mb-3" style={{ color: '#FAFAFA' }}>{card.title}</h4>
+                  <h4 className="text-lg font-semibold mb-3" style={{ color: TEXT_FAFAFA }}>{card.title}</h4>
                   {card.href ? (
                     <>
-                      <a href={card.href} className="text-sm inline-block text-[#10B981] hover:text-[#059669] transition-colors">
+                      <a href={card.href} className="text-sm inline-block hover:text-[#059669] transition-colors" style={{ color: ACCENT_COLOR }}>
                         {card.content}
                       </a>
-                      {card.subtitle && <p className="text-xs mt-3" style={{ color: '#6B7280' }}>{card.subtitle}</p>}
+                      {card.subtitle && <p className="text-xs mt-3" style={{ color: TEXT_SUBTLE }}>{card.subtitle}</p>}
                     </>
                   ) : (
-                    <p className="text-sm leading-relaxed" style={{ color: '#9CA3AF' }}>{card.content}</p>
+                    <p className="text-sm leading-relaxed" style={{ color: TEXT_MUTED }}>{card.content}</p>
                   )}
                 </div>
               ))}
