@@ -15,14 +15,26 @@ export interface Career {
   benefits: string[];
 }
 
+const LOCATION = { REMOTE: 'Remote', REMOTE_HYBRID: 'Remote / Hybrid' } as const;
+const TYPE = { FULL_TIME: 'Full-time' } as const;
+const DEPARTMENT = {
+  ENGINEERING: 'Engineering',
+  AI: 'AI',
+  INFRASTRUCTURE: 'Infrastructure',
+  DOCUMENTATION: 'Documentation',
+  PRODUCT: 'Product',
+} as const;
+
+function career(c: Omit<Career, 'type' | 'location'> & { type?: string; location?: string }): Career {
+  return { type: TYPE.FULL_TIME, location: LOCATION.REMOTE, ...c };
+}
+
 export const careers: Career[] = [
-  {
+  career({
     id: '1',
     slug: 'senior-cuda-developer',
     title: 'Senior CUDA Developer',
-    department: 'Engineering',
-    location: 'Remote',
-    type: 'Full-time',
+    department: DEPARTMENT.ENGINEERING,
     experience: '5+ years',
     openings: 2,
     postedDate: '11 February 2G',
@@ -45,15 +57,14 @@ export const careers: Career[] = [
       'Flexible remote work environment',
       'Professional development budget',
       'Health insurance and wellness programs'
-    ]
-  },
-  {
+    ],
+  }),
+  career({
     id: '2',
     slug: 'ai-ml-engineer',
     title: 'AI/ML Engineer',
-    department: 'AI',
-    location: 'Remote / Hybrid',
-    type: 'Full-time',
+    department: DEPARTMENT.AI,
+    location: LOCATION.REMOTE_HYBRID,
     experience: '3-5 years',
     openings: 3,
     postedDate: '09 February 2G',
@@ -76,15 +87,13 @@ export const careers: Career[] = [
       'Remote-first culture with flexible hours',
       'Annual learning and conference budget',
       'Comprehensive health benefits'
-    ]
-  },
-  {
+    ],
+  }),
+  career({
     id: '3',
     slug: 'devops-engineer',
     title: 'DevOps Engineer',
-    department: 'Infrastructure',
-    location: 'Remote',
-    type: 'Full-time',
+    department: DEPARTMENT.INFRASTRUCTURE,
     experience: '4-6 years',
     openings: 1,
     postedDate: '05 February 2G',
@@ -107,15 +116,13 @@ export const careers: Career[] = [
       'Fully remote position',
       'Latest tools and technologies',
       'Generous PTO and flexible schedule'
-    ]
-  },
-  {
+    ],
+  }),
+  career({
     id: '4',
     slug: 'frontend-developer-react',
     title: 'Frontend Developer (React)',
-    department: 'Engineering',
-    location: 'Remote',
-    type: 'Full-time',
+    department: DEPARTMENT.ENGINEERING,
     experience: '3-5 years',
     openings: 2,
     postedDate: '30 January 2G',
@@ -138,15 +145,13 @@ export const careers: Career[] = [
       'Remote work with flexible hours',
       'Professional growth opportunities',
       'Health and wellness benefits'
-    ]
-  },
-  {
+    ],
+  }),
+  career({
     id: '5',
     slug: 'technical-writer',
     title: 'Technical Writer',
-    department: 'Documentation',
-    location: 'Remote',
-    type: 'Full-time',
+    department: DEPARTMENT.DOCUMENTATION,
     experience: '2-4 years',
     openings: 1,
     postedDate: '20 January 2G',
@@ -169,15 +174,13 @@ export const careers: Career[] = [
       'Collaborative team environment',
       'Learning and development budget',
       'Comprehensive benefits package'
-    ]
-  },
-  {
+    ],
+  }),
+  career({
     id: '6',
     slug: 'product-manager',
     title: 'Product Manager',
-    department: 'Product',
-    location: 'Remote',
-    type: 'Full-time',
+    department: DEPARTMENT.PRODUCT,
     experience: '5+ years',
     openings: 1,
     postedDate: '15 January 2G',
@@ -200,15 +203,14 @@ export const careers: Career[] = [
       'Remote-first with flexible schedule',
       'Competitive salary and equity',
       'Comprehensive health benefits'
-    ]
-  }
+    ],
+  }),
 ];
 
 export function getCareerBySlug(slug: string): Career | undefined {
-  return careers.find(career => career.slug === slug);
+  return careers.find((c) => c.slug === slug);
 }
 
 export function getAllDepartments(): string[] {
-  const departments = careers.map(career => career.department);
-  return ['All', ...Array.from(new Set(departments))];
+  return ['All', ...Object.values(DEPARTMENT)];
 }

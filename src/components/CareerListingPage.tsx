@@ -5,6 +5,38 @@ import { useState } from 'react';
 import { careers, getAllDepartments } from '../data/careersData';
 import { MapPin, Clock, Users, ArrowRight } from 'lucide-react';
 
+const BENEFIT_CARD_STYLE = {
+  background: 'rgba(17, 24, 39, 0.4)' as const,
+  borderColor: 'rgba(16, 185, 129, 0.2)' as const,
+};
+const BENEFIT_ICON_BOX_STYLE = {
+  background: 'rgba(16, 185, 129, 0.15)' as const,
+  border: '1px solid rgba(16, 185, 129, 0.3)' as const,
+};
+
+const benefitsData = [
+  { title: 'FAST GROWING COMPANY', description: 'With our increasing growth and expansion every day, you can be an integral part of the progress.' },
+  { title: 'WORK WITH INDEPENDENCE', description: 'We give you the space and the freedom to implement your skills and expertise with trust and faith.' },
+  { title: 'CROSS DOMAIN EXPERTISE', description: 'You will get to sharpen your skills and pick up new ones while working with a team of experts from multiple domains.' },
+  { title: 'FUN WORK ENVIRONMENT', description: 'We believe work-life balance should always be good. The culture here is fun with a healthy work week and recreation activities.' },
+];
+
+const CHECKMARK_SVG = (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const careerContentSections: { title: string; key: 'responsibilities' | 'requirements' | 'benefits'; itemKey: string }[] = [
+  { title: 'Key Responsibilities', key: 'responsibilities', itemKey: 'resp' },
+  { title: 'Requirements', key: 'requirements', itemKey: 'req' },
+  { title: 'Benefits', key: 'benefits', itemKey: 'benefit' },
+];
+
+const LIST_ITEM_STYLE = { color: '#D1D5DB' as const, lineHeight: 1.6 };
+const BULLET_STYLE = { background: '#10B981' as const };
+const SECTION_TITLE_STYLE = { color: '#10B981' as const };
+
 export function CareerListingPage() {
   const [selectedDepartment, setSelectedDepartment] = useState('All');
   const departments = getAllDepartments();
@@ -109,145 +141,30 @@ export function CareerListingPage() {
 
           {/* Benefits Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Benefit 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-2xl p-8 border transition-all duration-300 hover:border-teal-500/50"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                borderColor: 'rgba(16, 185, 129, 0.2)'
-              }}
-            >
-              <div className="flex items-start gap-4">
-                <div 
-                  className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.15)',
-                    border: '1px solid rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+            {benefitsData.map((benefit, i) => (
+              <motion.div
+                key={benefit.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                className="rounded-2xl p-8 border transition-all duration-300 hover:border-teal-500/50"
+                style={BENEFIT_CARD_STYLE}
+              >
+                <div className="flex items-start gap-4">
+                  <div
+                    className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
+                    style={BENEFIT_ICON_BOX_STYLE}
+                  >
+                    {CHECKMARK_SVG}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>{benefit.title}</h3>
+                    <p className="text-base leading-relaxed" style={{ color: '#9CA3AF' }}>{benefit.description}</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                    FAST GROWING COMPANY
-                  </h3>
-                  <p className="text-base leading-relaxed" style={{ color: '#9CA3AF' }}>
-                    With our increasing growth and expansion every day, you can be an integral part of the progress.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Benefit 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="rounded-2xl p-8 border transition-all duration-300 hover:border-teal-500/50"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                borderColor: 'rgba(16, 185, 129, 0.2)'
-              }}
-            >
-              <div className="flex items-start gap-4">
-                <div 
-                  className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.15)',
-                    border: '1px solid rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                    WORK WITH INDEPENDENCE
-                  </h3>
-                  <p className="text-base leading-relaxed" style={{ color: '#9CA3AF' }}>
-                    We give you the space and the freedom to implement your skills and expertise with trust and faith.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Benefit 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="rounded-2xl p-8 border transition-all duration-300 hover:border-teal-500/50"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                borderColor: 'rgba(16, 185, 129, 0.2)'
-              }}
-            >
-              <div className="flex items-start gap-4">
-                <div 
-                  className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.15)',
-                    border: '1px solid rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                    CROSS DOMAIN EXPERTISE
-                  </h3>
-                  <p className="text-base leading-relaxed" style={{ color: '#9CA3AF' }}>
-                    You will get to sharpen your skills and pick up new ones while working with a team of experts from multiple domains.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Benefit 4 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="rounded-2xl p-8 border transition-all duration-300 hover:border-teal-500/50"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                borderColor: 'rgba(16, 185, 129, 0.2)'
-              }}
-            >
-              <div className="flex items-start gap-4">
-                <div 
-                  className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.15)',
-                    border: '1px solid rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                    FUN WORK ENVIRONMENT
-                  </h3>
-                  <p className="text-base leading-relaxed" style={{ color: '#9CA3AF' }}>
-                    We believe work-life balance should always be good. The culture here is fun with a healthy work week and recreation activities.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -401,80 +318,28 @@ export function CareerListingPage() {
 
                     {/* Content Sections */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                      {/* Key Responsibilities */}
-                      <div>
-                        <h4
-                          className="text-lg font-semibold mb-4"
-                          style={{ color: '#10B981' }}
-                        >
-                          Key Responsibilities
-                        </h4>
-                        <ul className="space-y-3">
-                          {career.responsibilities.slice(0, 4).map((item) => (
-                            <li
-                              key={`${career.id}-resp-${item}`}
-                              className="flex items-start gap-3 text-sm"
-                              style={{ color: '#D1D5DB', lineHeight: 1.6 }}
-                            >
-                              <span
-                                className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2"
-                                style={{ background: '#10B981' }}
-                              />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Requirements */}
-                      <div>
-                        <h4
-                          className="text-lg font-semibold mb-4"
-                          style={{ color: '#10B981' }}
-                        >
-                          Requirements
-                        </h4>
-                        <ul className="space-y-3">
-                          {career.requirements.slice(0, 4).map((item) => (
-                            <li
-                              key={`${career.id}-req-${item}`}
-                              className="flex items-start gap-3 text-sm"
-                              style={{ color: '#D1D5DB', lineHeight: 1.6 }}
-                            >
-                              <span
-                                className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2"
-                                style={{ background: '#10B981' }}
-                              />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Benefits */}
-                      <div>
-                        <h4
-                          className="text-lg font-semibold mb-4"
-                          style={{ color: '#10B981' }}
-                        >
-                          Benefits
-                        </h4>
-                        <ul className="space-y-3">
-                          {career.benefits.slice(0, 4).map((item) => (
-                            <li
-                              key={`${career.id}-benefit-${item}`}
-                              className="flex items-start gap-3 text-sm"
-                              style={{ color: '#D1D5DB', lineHeight: 1.6 }}
-                            >
-                              <span
-                                className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2"
-                                style={{ background: '#10B981' }}
-                              />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      {careerContentSections.map((section) => (
+                        <div key={section.key}>
+                          <h4 className="text-lg font-semibold mb-4" style={SECTION_TITLE_STYLE}>
+                            {section.title}
+                          </h4>
+                          <ul className="space-y-3">
+                            {career[section.key].slice(0, 4).map((item) => (
+                              <li
+                                key={`${career.id}-${section.itemKey}-${item}`}
+                                className="flex items-start gap-3 text-sm"
+                                style={LIST_ITEM_STYLE}
+                              >
+                                <span
+                                  className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2"
+                                  style={BULLET_STYLE}
+                                />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

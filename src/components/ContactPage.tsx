@@ -4,33 +4,30 @@ import { Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export function ContactPage() {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    company: '',
-    message: ''
-  });
+const INPUT_BASE_STYLE: React.CSSProperties = {
+  background: 'rgba(255, 255, 255, 0.05)',
+  color: '#FFFFFF',
+  borderRadius: '10px',
+  fontSize: '15px',
+  padding: '14px 18px',
+};
+const INPUT_FOCUSED = {
+  borderColor: '#10B981' as const,
+  boxShadow: '0 0 20px rgba(16, 185, 129, 0.4), inset 0 0 10px rgba(16, 185, 129, 0.1)',
+};
+const INPUT_BLUR = {
+  borderColor: 'rgba(255, 255, 255, 0.1)' as const,
+  boxShadow: 'none' as const,
+};
 
-  const [focusedField, setFocusedField] = useState<string | null>(null);
+const formFieldsConfig: { name: 'fullName' | 'email' | 'company' | 'message'; placeholder: string; type: 'text' | 'email' | 'textarea'; rows?: number }[] = [
+  { name: 'fullName', placeholder: 'Name', type: 'text' },
+  { name: 'email', placeholder: 'Business Email ID', type: 'email' },
+  { name: 'company', placeholder: 'Company Name', type: 'text' },
+  { name: 'message', placeholder: 'Message', type: 'textarea', rows: 5 },
+];
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Redirect to thank you page
-    navigate('/thank-you/');
-  };
-
-  const faqs = [
+const faqsData = [
     {
       question: 'Are you an end-to-end CUDA developer or just an advisor?',
       answer: 'We offer both. Depending on the level of engagement, our team can lead an architecture decision at a consulting level or execute all the way to CUDA development, kernel engineering, testing, and deployment.'
@@ -48,6 +45,30 @@ export function ContactPage() {
       answer: 'We develop a scalable GPU architecture that benefits from scaling up to workloads, orchestration of multiple GPUs, and an upgrade of the infrastructure without having to redesign larger systems.'
     }
   ];
+
+export function ContactPage() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    company: '',
+    message: ''
+  });
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    navigate('/thank-you/');
+  };
 
   return (
     <>
@@ -267,101 +288,30 @@ export function ContactPage() {
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
-                      {/* Full Name */}
-                      <div>
-                        <input
-                          type="text"
-                          name="fullName"
-                          placeholder="Name"
-                          value={formData.fullName}
-                          onChange={handleChange}
-                          onFocus={() => setFocusedField('fullName')}
-                          onBlur={() => setFocusedField(null)}
-                          required
-                          className="w-full border transition-all duration-300"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            borderColor: focusedField === 'fullName' ? '#10B981' : 'rgba(255, 255, 255, 0.1)',
-                            color: '#FFFFFF',
-                            borderRadius: '10px',
-                            fontSize: '15px',
-                            padding: '14px 18px',
-                            boxShadow: focusedField === 'fullName' ? '0 0 20px rgba(16, 185, 129, 0.4), inset 0 0 10px rgba(16, 185, 129, 0.1)' : 'none'
-                          }}
-                        />
-                      </div>
-
-                      {/* Business Email */}
-                      <div>
-                        <input
-                          type="email"
-                          name="email"
-                          placeholder="Business Email ID"
-                          value={formData.email}
-                          onChange={handleChange}
-                          onFocus={() => setFocusedField('email')}
-                          onBlur={() => setFocusedField(null)}
-                          required
-                          className="w-full border transition-all duration-300"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            borderColor: focusedField === 'email' ? '#10B981' : 'rgba(255, 255, 255, 0.1)',
-                            color: '#FFFFFF',
-                            borderRadius: '10px',
-                            fontSize: '15px',
-                            padding: '14px 18px',
-                            boxShadow: focusedField === 'email' ? '0 0 20px rgba(16, 185, 129, 0.4), inset 0 0 10px rgba(16, 185, 129, 0.1)' : 'none'
-                          }}
-                        />
-                      </div>
-
-                      {/* Company Name */}
-                      <div>
-                        <input
-                          type="text"
-                          name="company"
-                          placeholder="Company Name"
-                          value={formData.company}
-                          onChange={handleChange}
-                          onFocus={() => setFocusedField('company')}
-                          onBlur={() => setFocusedField(null)}
-                          required
-                          className="w-full border transition-all duration-300"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            borderColor: focusedField === 'company' ? '#10B981' : 'rgba(255, 255, 255, 0.1)',
-                            color: '#FFFFFF',
-                            borderRadius: '10px',
-                            fontSize: '15px',
-                            padding: '14px 18px',
-                            boxShadow: focusedField === 'company' ? '0 0 20px rgba(16, 185, 129, 0.4), inset 0 0 10px rgba(16, 185, 129, 0.1)' : 'none'
-                          }}
-                        />
-                      </div>
-
-                      {/* Message */}
-                      <div>
-                        <textarea
-                          name="message"
-                          placeholder="Message"
-                          value={formData.message}
-                          onChange={handleChange}
-                          onFocus={() => setFocusedField('message')}
-                          onBlur={() => setFocusedField(null)}
-                          required
-                          rows={5}
-                          className="w-full border transition-all duration-300 resize-none"
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            borderColor: focusedField === 'message' ? '#10B981' : 'rgba(255, 255, 255, 0.1)',
-                            color: '#FFFFFF',
-                            borderRadius: '10px',
-                            fontSize: '15px',
-                            padding: '14px 18px',
-                            boxShadow: focusedField === 'message' ? '0 0 20px rgba(16, 185, 129, 0.4), inset 0 0 10px rgba(16, 185, 129, 0.1)' : 'none'
-                          }}
-                        />
-                      </div>
+                      {formFieldsConfig.map((field) => {
+                        const isFocused = focusedField === field.name;
+                        const inputStyle = { ...INPUT_BASE_STYLE, ...(isFocused ? INPUT_FOCUSED : INPUT_BLUR) };
+                        const commonProps = {
+                          name: field.name,
+                          placeholder: field.placeholder,
+                          value: formData[field.name],
+                          onChange: handleChange,
+                          onFocus: () => setFocusedField(field.name),
+                          onBlur: () => setFocusedField(null),
+                          required: true,
+                          className: field.type === 'textarea' ? 'w-full border transition-all duration-300 resize-none' : 'w-full border transition-all duration-300',
+                          style: inputStyle,
+                        };
+                        return (
+                          <div key={field.name}>
+                            {field.type === 'textarea' ? (
+                              <textarea {...commonProps} rows={field.rows ?? 5} />
+                            ) : (
+                              <input {...commonProps} type={field.type} />
+                            )}
+                          </div>
+                        );
+                      })}
 
                       {/* Submit Button */}
                       <motion.button
@@ -455,7 +405,7 @@ export function ContactPage() {
 
                   {/* Right 60% - Accordion */}
                   <div className="lg:col-span-8 space-y-3">
-                    {faqs.map((faq, index) => (
+                    {faqsData.map((faq, index) => (
                       <motion.div
                         key={faq.question}
                         initial={{ opacity: 0, y: 20 }}
@@ -509,5 +459,5 @@ export function ContactPage() {
   );
 }
 
-
+export default ContactPage;
 

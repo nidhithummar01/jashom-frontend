@@ -1,8 +1,73 @@
 import { motion } from 'motion/react';
 import { Award, Zap, DollarSign, ArrowRight } from 'lucide-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SEO as Seo } from './SEO';
+
+const SECTION_BG = '#0B0F14';
+const BORDER_WHITE_10 = 'rgba(255, 255, 255, 0.1)';
+const STAT_ICON_BOX = 'w-14 h-14 rounded flex items-center justify-center flex-shrink-0';
+const STAT_ICON_BG = { background: '#10B981' };
+const DIVIDER_CLASS = 'hidden sm:block w-px h-16';
+const DIVIDER_STYLE = { background: '#555555' };
+
+const heroStatsData = [
+  { Icon: Award, title: '15 Days Risk-Free', subtitle: 'Trial' },
+  { Icon: Zap, title: '24x7 Technical', subtitle: 'Support' },
+  { Icon: DollarSign, title: 'On-Time', subtitle: 'Delivery' },
+];
+
+const expertiseData: { title: string; description: string; pathDs: string[] }[] = [
+  { title: 'Advanced Kernel Optimization', description: 'We optimize CUDA kernels by creating them to be more warp efficient and less divergent, and optimize instruction throughput. We have a stable implementation and quantifiable speed scalability with complicated workloads.', pathDs: ['M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z'] },
+  { title: 'Scalable Parallel Architecture', description: 'In order to achieve higher throughput, our engineers design GPU-oriented systems with maximum concurrency and optimization in the distribution of computational tasks among threads and streaming multiprocessors.', pathDs: ['M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10'] },
+  { title: 'Performance Profiling & Bottleneck Analysis', description: 'With the help of modern profiling tools, we will examine execution times, latency, and utilization of the compute to be able to identify areas of inefficiency and employ data-based optimization measures.', pathDs: ['M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'] },
+  { title: 'AI & Machine Learning Acceleration', description: 'We execute model training and inference pipelines at a faster pace by tuning CUDA implementations and better participation of the GPUs, and less computational intensity of large-scale AI tasks.', pathDs: ['M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'] },
+  { title: 'Efficient Memory Management', description: 'Shared, global, pinned, and unified memory usage is optimized by our CUDA developers to minimize the latency of data transfer and maximize the overall application performance.', pathDs: ['M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4'] },
+  { title: 'Multi-GPU & Distributed Computing', description: 'We support a multi-GPU execution platform with tuned communication patterns, which enable enterprises to use optimized communication patterns and scale applications with high compute intensity.', pathDs: ['M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z', 'M15 12a3 3 0 11-6 0 3 3 0 016 0z'] },
+];
+
+const hireStepsData = [
+  { title: 'Share Your Project Requirements', description: 'Characterize your type of workload and performance objectives, infrastructure, and the type of interaction you want so we can match the appropriate technical resources.' },
+  { title: 'Examine Certified Profile of Developers', description: 'We offer extensively vetted CUDA engineers who have skills that fit your whenever-needed computational and architectural requirements.' },
+  { title: 'Select Your Hiring Model', description: 'Select flexible staffing arrangements, such as full-time, part-time, and project hiring, depending on the scope and the timeline.' },
+  { title: 'Start Development Implementation', description: 'The CUDA developer of your choice is integrated with your working process and immediately begins to optimize and accelerate your application.' },
+];
+
+const EXPERTISE_ICON_BG = '#E3F2FD';
+const EXPERTISE_ICON_COLOR = '#2196F3';
+const STEP_CIRCLE_STYLE = { background: 'radial-gradient(circle, rgba(33, 150, 243, 0.2) 0%, rgba(33, 150, 243, 0.05) 70%)', border: '3px solid rgba(33, 150, 243, 0.3)' };
+const STEP_NUM_BG = { background: '#2196F3' };
+
+const whyHireCardsData: { title: string; description: string; src: string; alt: string; imageStyle?: React.CSSProperties }[] = [
+  { title: 'High-Quality Engineering Standards', description: 'Our developers observe the best practices of coding and performance to provide stable and maintainable solutions for the GPU.', src: '/images/cuda-quality-code.jpg.jpg', alt: 'Quality Code' },
+  { title: 'Strong Data Security & Confidentiality', description: 'Our business works under the broad NDAs and safe development procedures to maintain the delicate business logic and intellectual property.', src: '/images/cuda-nda.jpg.jpg', alt: 'NDA Agreement' },
+  { title: 'Proven GPU Development Experience', description: 'Our group has practical experience in the fields of AI, analytics, simulation, and high-performance computing.', src: '/images/cuda-verified.jpg.jpg', alt: 'Certified Developer' },
+  { title: 'Cost-Optimized Resource Allocation', description: 'Dependent employment platforms make sure that you only spend what is needed for your project.', src: '/images/cuda-cost.jpg.jpg', alt: 'Cost Reduction', imageStyle: { objectPosition: 'center 40%' } },
+  { title: 'Senior-Level Technical Expertise', description: 'Our CUDA engineers have a combination of architectural and practical experience with the implementation of the efficient use of GPUs.', src: '/images/cuda-experience.jpg.jpg', alt: 'High Experience Team' },
+  { title: 'Rapid Onboarding Process', description: 'We also make sure that we deploy resources as fast as possible, and this makes your project pick up without any unnecessary delays.', src: '/images/cuda-onboarding.jpg.jpg', alt: 'Quick Onboarding' },
+];
+
+const engagementModelsData = [
+  { title: 'Full-Time', description: 'Contract a CUDA developer to work on your long-term project of non-temporal GPU or AI acceleration.' },
+  { title: 'Part-Time', description: 'Outsource CUDA specialists on a part-time basis to maintain optimization, upgrades, or performance enhancements.' },
+  { title: 'Time & Material', description: 'Flexible hourly development of the scale with changing CUDA needs and optimization via iteration.' },
+  { title: 'Custom Model', description: 'Receive a customized staffing plan that is based on your technical, scheduling, and budget requirements.' },
+];
+
+const WHY_HIRE_CARD_IMG_STYLE = { borderRadius: '12px 12px 0 0' as const, boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)' };
+const WHY_HIRE_GRADIENT = 'linear-gradient(to bottom, transparent 60%, rgba(11, 15, 20, 0.4) 100%)';
+
+const whyChooseBenefitsData: { title: string; description: string; pathD?: string }[] = [
+  { title: 'High-Impact GPU Acceleration', description: 'We re-architect compute workflows to achieve the maximum amount of parallel performance, providing huge improvements in processing time on AI, analytics, and simulation workloads.', pathD: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z' },
+  { title: 'Enterprise-Ready AI Systems', description: 'We develop CUDA-based AI systems with a scalable, stable, and real-world production foundation, all the way up to architecture planning to deployment pipelines.', pathD: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z' },
+  { title: 'Secure Development Framework', description: 'To ensure protection of sensitive data and GPU infrastructure, we have strict security criteria, controlled access policies, and processes driven by compliance.', pathD: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
+  { title: 'Accelerated Deployment Cycles', description: 'Our streamlined development model is designed to be fast prototyping, highly optimizing and easy to move into production systems.' },
+  { title: 'Dedicated Technical Assistance', description: 'We maintain a long-term stability of the GPU in terms of performance and stability through constant monitoring, performance tuning, and troubleshooting by our experts.', pathD: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' },
+  { title: 'Performance-Oriented Cost Strategy', description: 'We maximize compute usage and assigning GPU resources to minimize infrastructure wastage and maximize investment.', pathD: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' },
+];
+
+const BENEFIT_CARD_STYLE = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)' };
+const BENEFIT_ICON_BOX_STYLE = { background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)' };
 
 export function HireCudaDeveloperPage() {
   const navigate = useNavigate();
@@ -134,39 +199,23 @@ export function HireCudaDeveloperPage() {
 
                   {/* Stats - Horizontal Layout with Dividers */}
                   <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-6 sm:gap-8 pt-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                        <Award className="w-7 h-7" style={{ color: '#FFFFFF' }} />
-                      </div>
-                      <div>
-                        <div style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '16px' }}>15 Days Risk-Free</div>
-                        <div style={{ color: '#B0B0B0', fontSize: '14px' }}>Trial</div>
-                      </div>
-                    </div>
-
-                    <div className="hidden sm:block w-px h-16" style={{ background: '#555555' }}></div>
-
-                    <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                        <Zap className="w-7 h-7" style={{ color: '#FFFFFF' }} />
-                      </div>
-                      <div>
-                        <div style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '16px' }}>24x7 Technical</div>
-                        <div style={{ color: '#B0B0B0', fontSize: '14px' }}>Support</div>
-                      </div>
-                    </div>
-
-                    <div className="hidden sm:block w-px h-16" style={{ background: '#555555' }}></div>
-
-                    <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                        <DollarSign className="w-7 h-7" style={{ color: '#FFFFFF' }} />
-                      </div>
-                      <div>
-                        <div style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '16px' }}>On-Time</div>
-                        <div style={{ color: '#B0B0B0', fontSize: '14px' }}>Delivery</div>
-                      </div>
-                    </div>
+                    {heroStatsData.map((stat, i) => {
+                      const IconComponent = stat.Icon;
+                      return (
+                        <React.Fragment key={stat.title}>
+                          {i > 0 && <div className={DIVIDER_CLASS} style={DIVIDER_STYLE} />}
+                          <div className="flex items-center gap-4">
+                            <div className={STAT_ICON_BOX} style={STAT_ICON_BG}>
+                              <IconComponent className="w-7 h-7" style={{ color: '#FFFFFF' }} />
+                            </div>
+                            <div>
+                              <div style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '16px' }}>{stat.title}</div>
+                              <div style={{ color: '#B0B0B0', fontSize: '14px' }}>{stat.subtitle}</div>
+                            </div>
+                          </div>
+                        </React.Fragment>
+                      );
+                    })}
                   </div>
                 </motion.div>
 
@@ -183,7 +232,7 @@ export function HireCudaDeveloperPage() {
 
               </div>
             </div>
-          </section >
+          </section>
 
           {/* Hire CUDA Developers Section - Before Why Choose */}
           <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
@@ -251,7 +300,7 @@ export function HireCudaDeveloperPage() {
           </section>
 
           {/* Our CUDA Engineers Expertise Section */}
-          < section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Heading */}
               <motion.div
@@ -268,170 +317,37 @@ export function HireCudaDeveloperPage() {
 
               {/* Expertise Grid - 2 columns */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                {/* Item 1 - GPU Kernel Optimization */}
-                <motion.div
-                  className="flex gap-4 border rounded-xl p-6"
-                  style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: '#E3F2FD' }}>
-                      <svg className="w-8 h-8" style={{ color: '#2196F3' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                      </svg>
+                {expertiseData.map((item, i) => (
+                  <motion.div
+                    key={item.title}
+                    className="flex gap-4 border rounded-xl p-6"
+                    style={{ borderColor: BORDER_WHITE_10 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                  >
+                    <div className="flex-shrink-0">
+                      <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: EXPERTISE_ICON_BG }}>
+                        <svg className="w-8 h-8" style={{ color: EXPERTISE_ICON_COLOR }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          {item.pathDs.map((d, j) => (
+                            <path key={j} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={d} />
+                          ))}
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold mb-2" style={{ color: '#FAFAFA' }}>
-                      Advanced Kernel Optimization
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      We optimize CUDA kernels by creating them to be more warp efficient and less divergent, and optimize instruction throughput. We have a stable implementation and quantifiable speed scalability with complicated workloads.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Item 2 - Parallel Computing Architecture */}
-                <motion.div
-                  className="flex gap-4 border rounded-xl p-6"
-                  style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: '#E3F2FD' }}>
-                      <svg className="w-8 h-8" style={{ color: '#2196F3' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                      </svg>
+                    <div>
+                      <h3 className="text-lg font-bold mb-2" style={{ color: '#FAFAFA' }}>{item.title}</h3>
+                      <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>{item.description}</p>
                     </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold mb-2" style={{ color: '#FAFAFA' }}>
-                      Scalable Parallel Architecture
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      In order to achieve higher throughput, our engineers design GPU-oriented systems with maximum concurrency and optimization in the distribution of computational tasks among threads and streaming multiprocessors.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Item 3 - Performance Profiling */}
-                <motion.div
-                  className="flex gap-4 border rounded-xl p-6"
-                  style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: '#E3F2FD' }}>
-                      <svg className="w-8 h-8" style={{ color: '#2196F3' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold mb-2" style={{ color: '#FAFAFA' }}>
-                      Performance Profiling & Bottleneck Analysis
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      With the help of modern profiling tools, we will examine execution times, latency, and utilization of the compute to be able to identify areas of inefficiency and employ data-based optimization measures.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Item 4 - AI/ML Acceleration */}
-                <motion.div
-                  className="flex gap-4 border rounded-xl p-6"
-                  style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: '#E3F2FD' }}>
-                      <svg className="w-8 h-8" style={{ color: '#2196F3' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold mb-2" style={{ color: '#FAFAFA' }}>
-                      AI & Machine Learning Acceleration
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      We execute model training and inference pipelines at a faster pace by tuning CUDA implementations and better participation of the GPUs, and less computational intensity of large-scale AI tasks.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Item 5 - Memory Management */}
-                <motion.div
-                  className="flex gap-4 border rounded-xl p-6"
-                  style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: '#E3F2FD' }}>
-                      <svg className="w-8 h-8" style={{ color: '#2196F3' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold mb-2" style={{ color: '#FAFAFA' }}>
-                      Efficient Memory Management
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      Shared, global, pinned, and unified memory usage is optimized by our CUDA developers to minimize the latency of data transfer and maximize the overall application performance.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Item 6 - Multi-GPU & Distributed Computing */}
-                <motion.div
-                  className="flex gap-4 border rounded-xl p-6"
-                  style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: '#E3F2FD' }}>
-                      <svg className="w-8 h-8" style={{ color: '#2196F3' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold mb-2" style={{ color: '#FAFAFA' }}>
-                      Multi-GPU & Distributed Computing
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      We support a multi-GPU execution platform with tuned communication patterns, which enable enterprises to use optimized communication patterns and scale applications with high compute intensity.
-                    </p>
-                  </div>
-                </motion.div>
-
+                  </motion.div>
+                ))}
               </div>
             </div>
-          </section >
+          </section>
 
           {/* How to Hire Section - 4 Steps */}
-          < section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Heading */}
               <motion.div
@@ -451,117 +367,32 @@ export function HireCudaDeveloperPage() {
 
               {/* 4 Steps Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
-
-                {/* Step 1 */}
-                <motion.div
-                  className="text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  <div className="relative inline-block mb-6">
-                    <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{
-                      background: 'radial-gradient(circle, rgba(33, 150, 243, 0.2) 0%, rgba(33, 150, 243, 0.05) 70%)',
-                      border: '3px solid rgba(33, 150, 243, 0.3)'
-                    }}>
-                      <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: '#2196F3' }}>
-                        <span className="text-2xl font-bold text-white">1</span>
+                {hireStepsData.map((step, i) => (
+                  <motion.div
+                    key={step.title}
+                    className="text-center"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                  >
+                    <div className="relative inline-block mb-6">
+                      <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={STEP_CIRCLE_STYLE}>
+                        <div className="w-14 h-14 rounded-full flex items-center justify-center" style={STEP_NUM_BG}>
+                          <span className="text-2xl font-bold text-white">{i + 1}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                    Share Your Project Requirements
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                    Characterize your type of workload and performance objectives, infrastructure, and the type of interaction you want so we can match the appropriate technical resources.
-                  </p>
-                </motion.div>
-
-                {/* Step 2 */}
-                <motion.div
-                  className="text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <div className="relative inline-block mb-6">
-                    <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{
-                      background: 'radial-gradient(circle, rgba(33, 150, 243, 0.2) 0%, rgba(33, 150, 243, 0.05) 70%)',
-                      border: '3px solid rgba(33, 150, 243, 0.3)'
-                    }}>
-                      <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: '#2196F3' }}>
-                        <span className="text-2xl font-bold text-white">2</span>
-                      </div>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                    Examine Certified Profile of Developers
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                    We offer extensively vetted CUDA engineers who have skills that fit your whenever-needed computational and architectural requirements.
-                  </p>
-                </motion.div>
-
-                {/* Step 3 */}
-                <motion.div
-                  className="text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  <div className="relative inline-block mb-6">
-                    <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{
-                      background: 'radial-gradient(circle, rgba(33, 150, 243, 0.2) 0%, rgba(33, 150, 243, 0.05) 70%)',
-                      border: '3px solid rgba(33, 150, 243, 0.3)'
-                    }}>
-                      <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: '#2196F3' }}>
-                        <span className="text-2xl font-bold text-white">3</span>
-                      </div>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                    Select Your Hiring Model
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                    Select flexible staffing arrangements, such as full-time, part-time, and project hiring, depending on the scope and the timeline.
-                  </p>
-                </motion.div>
-
-                {/* Step 4 */}
-                <motion.div
-                  className="text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                  <div className="relative inline-block mb-6">
-                    <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{
-                      background: 'radial-gradient(circle, rgba(33, 150, 243, 0.2) 0%, rgba(33, 150, 243, 0.05) 70%)',
-                      border: '3px solid rgba(33, 150, 243, 0.3)'
-                    }}>
-                      <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: '#2196F3' }}>
-                        <span className="text-2xl font-bold text-white">4</span>
-                      </div>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                    Start Development Implementation
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                    The CUDA developer of your choice is integrated with your working process and immediately begins to optimize and accelerate your application.
-                  </p>
-                </motion.div>
-
+                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>{step.title}</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>{step.description}</p>
+                  </motion.div>
+                ))}
               </div>
             </div>
-          </section >
+          </section>
 
           {/* Why Hire CUDA Engineers Section - 6 Cards with Images */}
-          < section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Heading */}
               <motion.div
@@ -581,242 +412,37 @@ export function HireCudaDeveloperPage() {
 
               {/* 6 Cards Grid - 3 columns */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-
-                {/* Card 1 - High-Quality Engineering Standards */}
-                <motion.div
-                  className="rounded-2xl overflow-hidden group border"
-                  style={{ background: '#0B0F14', borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  {/* Image Container with Enhanced Styling */}
-                  <div className="relative w-full overflow-hidden" style={{ height: '260px' }}>
-                    <img
-                      src="/images/cuda-quality-code.jpg.jpg"
-                      alt="Quality Code"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      style={{
-                        borderRadius: '12px 12px 0 0',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
-                      }}
-                    />
-                    {/* Subtle gradient overlay */}
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(to bottom, transparent 60%, rgba(11, 15, 20, 0.4) 100%)'
-                      }}
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                      High-Quality Engineering Standards
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      Our developers observe the best practices of coding and performance to provide stable and maintainable solutions for the GPU.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Card 2 - Strong Data Security & Confidentiality */}
-                <motion.div
-                  className="rounded-2xl overflow-hidden group border"
-                  style={{ background: '#0B0F14', borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  {/* Image Container with Enhanced Styling */}
-                  <div className="relative w-full overflow-hidden" style={{ height: '260px' }}>
-                    <img
-                      src="/images/cuda-nda.jpg.jpg"
-                      alt="NDA Agreement"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      style={{
-                        borderRadius: '12px 12px 0 0',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
-                      }}
-                    />
-                    {/* Subtle gradient overlay */}
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(to bottom, transparent 60%, rgba(11, 15, 20, 0.4) 100%)'
-                      }}
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                      Strong Data Security & Confidentiality
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      Our business works under the broad NDAs and safe development procedures to maintain the delicate business logic and intellectual property.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Card 3 - Proven GPU Development Experience */}
-                <motion.div
-                  className="rounded-2xl overflow-hidden group border"
-                  style={{ background: '#0B0F14', borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  {/* Image Container with Enhanced Styling */}
-                  <div className="relative w-full overflow-hidden" style={{ height: '260px' }}>
-                    <img
-                      src="/images/cuda-verified.jpg.jpg"
-                      alt="Certified Developer"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      style={{
-                        borderRadius: '12px 12px 0 0',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
-                      }}
-                    />
-                    {/* Subtle gradient overlay */}
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(to bottom, transparent 60%, rgba(11, 15, 20, 0.4) 100%)'
-                      }}
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                      Proven GPU Development Experience
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      Our group has practical experience in the fields of AI, analytics, simulation, and high-performance computing.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Card 4 - Cost-Optimized Resource Allocation */}
-                <motion.div
-                  className="rounded-2xl overflow-hidden group border"
-                  style={{ background: '#0B0F14', borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                  {/* Image Container with Enhanced Styling */}
-                  <div className="relative w-full overflow-hidden" style={{ height: '260px' }}>
-                    <img
-                      src="/images/cuda-cost.jpg.jpg"
-                      alt="Cost Reduction"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      style={{
-                        objectPosition: 'center 40%',
-                        borderRadius: '12px 12px 0 0',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
-                      }}
-                    />
-                    {/* Subtle gradient overlay */}
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(to bottom, transparent 60%, rgba(11, 15, 20, 0.4) 100%)'
-                      }}
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                      Cost-Optimized Resource Allocation
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      Dependent employment platforms make sure that you only spend what is needed for your project.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Card 5 - Senior-Level Technical Expertise */}
-                <motion.div
-                  className="rounded-2xl overflow-hidden group border"
-                  style={{ background: '#0B0F14', borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                >
-                  {/* Image Container with Enhanced Styling */}
-                  <div className="relative w-full overflow-hidden" style={{ height: '260px' }}>
-                    <img
-                      src="/images/cuda-experience.jpg.jpg"
-                      alt="High Experience Team"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      style={{
-                        borderRadius: '12px 12px 0 0',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
-                      }}
-                    />
-                    {/* Subtle gradient overlay */}
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(to bottom, transparent 60%, rgba(11, 15, 20, 0.4) 100%)'
-                      }}
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                      Senior-Level Technical Expertise
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      Our CUDA engineers have a combination of architectural and practical experience with the implementation of the efficient use of GPUs.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Card 6 - Rapid Onboarding Process */}
-                <motion.div
-                  className="rounded-2xl overflow-hidden group border"
-                  style={{ background: '#0B0F14', borderColor: 'rgba(255, 255, 255, 0.1)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
-                >
-                  {/* Image Container with Enhanced Styling */}
-                  <div className="relative w-full overflow-hidden" style={{ height: '260px' }}>
-                    <img
-                      src="/images/cuda-onboarding.jpg.jpg"
-                      alt="Quick Onboarding"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      style={{
-                        borderRadius: '12px 12px 0 0',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
-                      }}
-                    />
-                    {/* Subtle gradient overlay */}
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(to bottom, transparent 60%, rgba(11, 15, 20, 0.4) 100%)'
-                      }}
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>
-                      Rapid Onboarding Process
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>
-                      We also make sure that we deploy resources as fast as possible, and this makes your project pick up without any unnecessary delays.
-                    </p>
-                  </div>
-                </motion.div>
-
+                {whyHireCardsData.map((card, i) => (
+                  <motion.div
+                    key={card.title}
+                    className="rounded-2xl overflow-hidden group border"
+                    style={{ background: SECTION_BG, borderColor: BORDER_WHITE_10 }}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                  >
+                    <div className="relative w-full overflow-hidden" style={{ height: '260px' }}>
+                      <img
+                        src={card.src}
+                        alt={card.alt}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        style={{ ...WHY_HIRE_CARD_IMG_STYLE, ...card.imageStyle }}
+                      />
+                      <div className="absolute inset-0 pointer-events-none" style={{ background: WHY_HIRE_GRADIENT }} />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>{card.title}</h3>
+                      <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>{card.description}</p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </div>
-          </section >
+          </section>
 
           {/* Our Engagement Models Section */}
-          < section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Heading */}
               <motion.div
@@ -836,81 +462,26 @@ export function HireCudaDeveloperPage() {
 
               {/* 4 Cards Grid - 2x2 */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                {/* Card 1 - Full-time */}
-                <motion.div
-                  className="rounded-2xl p-8"
-                  style={{ background: 'rgba(16, 185, 129, 0.05)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  <h3 className="text-3xl font-bold mb-4" style={{ color: '#FFFFFF' }}>
-                    Full-Time
-                  </h3>
-                  <p className="text-base leading-relaxed" style={{ color: '#B0B0B0' }}>
-                    Contract a CUDA developer to work on your long-term project of non-temporal GPU or AI acceleration.
-                  </p>
-                </motion.div>
-
-                {/* Card 2 - Part-time */}
-                <motion.div
-                  className="rounded-2xl p-8"
-                  style={{ background: 'rgba(16, 185, 129, 0.05)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <h3 className="text-3xl font-bold mb-4" style={{ color: '#FFFFFF' }}>
-                    Part-Time
-                  </h3>
-                  <p className="text-base leading-relaxed" style={{ color: '#B0B0B0' }}>
-                    Outsource CUDA specialists on a part-time basis to maintain optimization, upgrades, or performance enhancements.
-                  </p>
-                </motion.div>
-
-                {/* Card 3 - Time & Material */}
-                <motion.div
-                  className="rounded-2xl p-8"
-                  style={{ background: 'rgba(16, 185, 129, 0.05)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  <h3 className="text-3xl font-bold mb-4" style={{ color: '#FFFFFF' }}>
-                    Time & Material
-                  </h3>
-                  <p className="text-base leading-relaxed" style={{ color: '#B0B0B0' }}>
-                    Flexible hourly development of the scale with changing CUDA needs and optimization via iteration.
-                  </p>
-                </motion.div>
-
-                {/* Card 4 - Custom Model */}
-                <motion.div
-                  className="rounded-2xl p-8"
-                  style={{ background: 'rgba(16, 185, 129, 0.05)' }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                  <h3 className="text-3xl font-bold mb-4" style={{ color: '#FFFFFF' }}>
-                    Custom Model
-                  </h3>
-                  <p className="text-base leading-relaxed" style={{ color: '#B0B0B0' }}>
-                    Receive a customized staffing plan that is based on your technical, scheduling, and budget requirements.
-                  </p>
-                </motion.div>
-
+                {engagementModelsData.map((model, i) => (
+                  <motion.div
+                    key={model.title}
+                    className="rounded-2xl p-8"
+                    style={{ background: 'rgba(16, 185, 129, 0.05)' }}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                  >
+                    <h3 className="text-3xl font-bold mb-4" style={{ color: '#FFFFFF' }}>{model.title}</h3>
+                    <p className="text-base leading-relaxed" style={{ color: '#B0B0B0' }}>{model.description}</p>
+                  </motion.div>
+                ))}
               </div>
             </div>
-          </section >
+          </section>
 
           {/* CTA Section with Background Image */}
-          < section
+          <section
             className="relative px-4 sm:px-6 lg:px-8 overflow-hidden flex items-center"
             style={{
               minHeight: '400px',
@@ -918,7 +489,7 @@ export function HireCudaDeveloperPage() {
             }}
           >
             {/* Background Image */}
-            < div className="absolute inset-0" >
+            <div className="absolute inset-0" >
               <img
                 src="/images/cuda-cta-bg.jpg.jpg"
                 alt="CUDA Background"
@@ -929,15 +500,15 @@ export function HireCudaDeveloperPage() {
                   minHeight: '400px'
                 }}
               />
-            </div >
+            </div>
 
             {/* Lighter Gradient Overlay for better image visibility */}
-            < div
+            <div
               className="absolute inset-0"
               style={{
                 background: 'linear-gradient(90deg, rgba(11, 15, 20, 0.75) 0%, rgba(11, 15, 20, 0.4) 60%, rgba(11, 15, 20, 0.2) 100%)'
               }}
-            ></div >
+            ></div>
 
             <div className="max-w-7xl mx-auto relative z-10 py-20 w-full">
               <motion.div
@@ -971,10 +542,10 @@ export function HireCudaDeveloperPage() {
                 </a>
               </motion.div>
             </div>
-          </section >
+          </section>
 
           {/* Why Jashom Section */}
-          < section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Header */}
               <motion.div
@@ -993,172 +564,37 @@ export function HireCudaDeveloperPage() {
 
               {/* Benefits Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                {/* Benefit 1 - High-Impact GPU Acceleration */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'rgba(16, 185, 129, 0.1)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <svg className="w-8 h-8" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                      </svg>
+                {whyChooseBenefitsData.map((benefit, i) => (
+                  <motion.div
+                    key={benefit.title}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                    className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
+                    style={BENEFIT_CARD_STYLE}
+                  >
+                    <div className="relative z-10">
+                      <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={BENEFIT_ICON_BOX_STYLE}>
+                        {benefit.pathD ? (
+                          <svg className="w-8 h-8" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={benefit.pathD} />
+                          </svg>
+                        ) : (
+                          <Zap className="w-8 h-8" style={{ color: '#10B981' }} />
+                        )}
+                      </div>
+                      <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>{benefit.title}</h3>
+                      <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>{benefit.description}</p>
                     </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>High-Impact GPU Acceleration</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      We re-architect compute workflows to achieve the maximum amount of parallel performance, providing huge improvements in processing time on AI, analytics, and simulation workloads.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Benefit 2 - Enterprise-Ready AI Systems */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'rgba(16, 185, 129, 0.1)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <svg className="w-8 h-8" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>Enterprise-Ready AI Systems</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      We develop CUDA-based AI systems with a scalable, stable, and real-world production foundation, all the way up to architecture planning to deployment pipelines.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Benefit 3 - Secure Development Framework */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'rgba(16, 185, 129, 0.1)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <svg className="w-8 h-8" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>Secure Development Framework</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      To ensure protection of sensitive data and GPU infrastructure, we have strict security criteria, controlled access policies, and processes driven by compliance.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Benefit 4 - Accelerated Deployment Cycles */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'rgba(16, 185, 129, 0.1)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <Zap className="w-8 h-8" style={{ color: '#10B981' }} />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>Accelerated Deployment Cycles</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      Our streamlined development model is designed to be fast prototyping, highly optimizing and easy to move into production systems.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Benefit 5 - Dedicated Technical Assistance */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'rgba(16, 185, 129, 0.1)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <svg className="w-8 h-8" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>Dedicated Technical Assistance</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      We maintain a long-term stability of the GPU in terms of performance and stability through constant monitoring, performance tuning, and troubleshooting by our experts.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Benefit 6 - Performance-Oriented Cost Strategy */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'rgba(16, 185, 129, 0.1)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <svg className="w-8 h-8" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>Performance-Oriented Cost Strategy</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      We maximize compute usage and assigning GPU resources to minimize infrastructure wastage and maximize investment.
-                    </p>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                ))}
               </div>
             </div>
-          </section >
+          </section>
 
           {/* Reviews Section - We Are Trusted By Businesses Across the Globe */}
-          < section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Heading */}
               <motion.div
@@ -1492,9 +928,9 @@ export function HireCudaDeveloperPage() {
 
               </div>
             </div>
-          </section >
+          </section>
           {/* Related Services Section */}
-          < section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Header */}
               <motion.div
@@ -1578,10 +1014,10 @@ export function HireCudaDeveloperPage() {
 
               </div>
             </div>
-          </section >
+          </section>
 
           {/* Q&A / FAQ Section - Home page style, border retained on items */}
-          < section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Header - Centered (like Home page) */}
               <motion.div
@@ -1804,10 +1240,10 @@ export function HireCudaDeveloperPage() {
 
               </div>
             </div>
-          </section >
+          </section>
 
           {/* Contact Form Section */}
-          < section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
             <div className="max-w-5xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
@@ -2036,7 +1472,7 @@ export function HireCudaDeveloperPage() {
 
               </div>
             </div>
-          </section >
+          </section>
 
         </div>
       </div>

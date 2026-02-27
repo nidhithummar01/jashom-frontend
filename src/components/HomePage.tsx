@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { SEO as Seo } from './SEO';
 import { AnimatedCounter } from './AnimatedCounter';
 import { useEffect, useRef, useState } from 'react';
-import { getLatestInsights } from '../data/insightsData';
+import { getBlogs } from '../api/blogs';
+import type { Blog } from '../api/blogs';
 // COMMENTED OUT - Services temporarily hidden from UI but preserved in codebase
 // import { ServicesSlider } from './ServicesSlider';
 import {
@@ -19,6 +20,55 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
+
+const SECTION_BG = '#0B0F14';
+const BORDER_SUBTLE = 'rgba(255, 255, 255, 0.08)';
+
+const QuoteIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
+    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
+  </svg>
+);
+
+const whatWeDoData = [
+  { title: 'GPU Optimization', description: 'We provide dedicated GPU Optimization Services aimed at the maximum use of the compute efficiency. Our model will guarantee optimization in the use of hardware, the reduction of operational expenses, and coherent high-performance scale.', colorKey: 'emerald' as const },
+  { title: 'CUDA Development', description: 'Our CUDA Development Services assist companies in developing high-performance parallel applications to suit their workloads with high demand. Our built-in kernel development-based team of CUDA Developers provides your apps with complete utilization of NVIDIA architecture.', colorKey: 'violet' as const },
+];
+
+const servicesProvideData = [
+  { title: 'GPU Optimization Service', description: 'We optimize AI and compute workloads with the help of advanced GPU optimization, performance, efficiency, and hardware usage.', href: '/gpu-optimization-service/', Icon: Cpu, colorKey: 'emerald' as const, buttonStyle: { background: '#10B981', color: '#FFFFFF' } },
+  { title: 'CUDA Development Service', description: 'Hire skilled CUDA developers to create and optimize parallel advanced applications that meet your requirements.', href: '/cuda-development-service/', Icon: Zap, colorKey: 'violet' as const, buttonStyle: { background: 'linear-gradient(135deg, #7C3AED, #06B6D4)', color: '#FFFFFF' } },
+];
+
+const trustedLogosData = [
+  { src: '/logos/nvidia.png', alt: 'NVIDIA', className: 'h-10 sm:h-12 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300' },
+  { src: '/logos/aws.png', alt: 'AWS', className: 'h-10 sm:h-12 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300' },
+  { src: '/logos/goggle cloud.png', alt: 'Google Cloud', className: 'h-10 sm:h-12 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300' },
+  { src: '/logos/microsoft-azure.png', alt: 'Microsoft Azure', className: 'h-12 sm:h-14 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300' },
+];
+
+const trustedMetricsData = [
+  { value: '$20bn', description: 'worth investment portfolios managed', from: 'from-blue-500/10', to: 'to-blue-600/5', border: 'border-blue-500/20', hoverBorder: 'hover:border-blue-400/40', valueGradient: 'from-blue-400 to-blue-200' },
+  { value: '10x', description: 'faster pharmaceutical market analytics', from: 'from-purple-500/10', to: 'to-purple-600/5', border: 'border-purple-500/20', hoverBorder: 'hover:border-purple-400/40', valueGradient: 'from-purple-400 to-purple-200' },
+  { value: '20M+', description: 'customers enjoying AI-powered shopping', from: 'from-blue-500/10', to: 'to-cyan-600/5', border: 'border-cyan-500/20', hoverBorder: 'hover:border-cyan-400/40', valueGradient: 'from-cyan-400 to-cyan-200' },
+  { value: '$50K', description: 'saved annually with DevOps', from: 'from-green-500/10', to: 'to-green-600/5', border: 'border-green-500/20', hoverBorder: 'hover:border-green-400/40', valueGradient: 'from-green-400 to-green-200' },
+];
+
+const testimonialsData = [
+  { quote: '"Jashom\'s GPU optimization reduced our inference latency by 73%. The team\'s expertise in CUDA programming is unmatched."', initials: 'DC', name: 'David Chen', role: 'VP Engineering, Apex AI', avatarGradient: 'linear-gradient(135deg, #10B981, #06B6D4)' },
+  { quote: '"The AI automation solutions delivered by Jashom transformed our workflow. We achieved 5x faster processing with their custom ML pipeline."', initials: 'MR', name: 'Maria Rodriguez', role: 'CTO, DataFlow Systems', avatarGradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)' },
+  { quote: '"Outstanding DevSecOps implementation. Jashom\'s team integrated security seamlessly into our CI/CD pipeline without compromising speed."', initials: 'EW', name: 'Emily Watson', role: 'Head of Security, TechCorp', avatarGradient: 'linear-gradient(135deg, #10B981, #34D399)' },
+];
+
+const benefitsData = [
+  { title: '10x GPU Performance Improvement', description: 'Architecture-sensitive tuning methods are used by us to reap the best out of NVIDIA GPUs, providing physical acceleration to AI applications.', Icon: Cpu },
+  { title: 'Production-Grade AI Systems', description: 'Develop scalable systems that are designed with a focus on reliability, monitoring, and long-term performance.', Icon: Brain },
+  { title: 'Enterprise-Level Security', description: 'Our operations are enforced under stringent security measures, compliance, and data protection models in order to secure essential workloads.', Icon: Shield },
+  { title: 'Rapid Implementation Cycles', description: 'We satisfy the timeline requirements of projects through organized processes, which allow us to roll out faster and maintain the quality of performance.', Icon: Zap },
+  { title: 'Dedicated Technical Support', description: 'Our experts have continued optimization, surveillance, and expert services that ensure that the system operates continuously.', Icon: Users },
+  { title: 'Cost-Efficient Scaling', description: 'Our frameworks for designing GPU systems consider the demand of performance with functional efficiency to ensure the highest ROI in the long-term.', Icon: TrendingUp },
+];
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -44,11 +94,26 @@ const staggerItem = {
   }
 };
 
+function formatBlogDate(iso: string | null): string {
+  if (!iso) return '';
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
 export function HomePage() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
+  const [latestBlogs, setLatestBlogs] = useState<Blog[]>([]);
+  const [blogsLoading, setBlogsLoading] = useState(true);
+  const [blogsError, setBlogsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    getBlogs({ status: 'published', limit: 3 })
+      .then(setLatestBlogs)
+      .catch((e) => setBlogsError(e.message))
+      .finally(() => setBlogsLoading(false));
+  }, []);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -206,9 +271,9 @@ export function HomePage() {
       />
 
       <div className="home">
-        <div className="min-h-screen" style={{ width: '100%', overflow: 'hidden', background: '#0B0F14' }}>
+        <div className="min-h-screen" style={{ width: '100%', overflow: 'hidden', background: SECTION_BG }}>
           {/* Hero Section - Full Screen Edge-to-Edge */}
-          <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden" style={{ margin: 0, padding: 0, background: '#0B0F14' }}>
+          <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden" style={{ margin: 0, padding: 0, background: SECTION_BG }}>
             {/* Video Background - Full Screen Coverage */}
             <video
               ref={videoRef}
@@ -360,45 +425,30 @@ export function HomePage() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                {/* GPU Optimization */}
-                <motion.div
-                  className="space-y-4 max-w-xl p-8 rounded-2xl transition-all duration-300"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%)',
-                    border: '1px solid rgba(16, 185, 129, 0.1)',
-                    backdropFilter: 'blur(10px)'
-                  }}
-                  whileHover={{
-                    scale: 1.02,
-                    boxShadow: '0 20px 60px rgba(16, 185, 129, 0.2)',
-                    borderColor: 'rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <h3 className="text-xl sm:text-2xl font-bold" style={{ color: '#10B981', fontFamily: 'Inter, sans-serif', letterSpacing: '-0.02em' }}>GPU Optimization</h3>
-                  <p className="text-base sm:text-lg leading-loose" style={{ color: '#B0B0B0', fontFamily: 'Inter, sans-serif', lineHeight: 1.8 }}>
-                    We provide dedicated GPU Optimization Services aimed at the maximum use of the compute efficiency. Our model will guarantee optimization in the use of hardware, the reduction of operational expenses, and coherent high-performance scale.
-                  </p>
-                </motion.div>
-
-                {/* CUDA Development */}
-                <motion.div
-                  className="space-y-4 max-w-xl p-8 rounded-2xl transition-all duration-300"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(124, 58, 237, 0.02) 100%)',
-                    border: '1px solid rgba(124, 58, 237, 0.1)',
-                    backdropFilter: 'blur(10px)'
-                  }}
-                  whileHover={{
-                    scale: 1.02,
-                    boxShadow: '0 20px 60px rgba(124, 58, 237, 0.2)',
-                    borderColor: 'rgba(124, 58, 237, 0.3)'
-                  }}
-                >
-                  <h3 className="text-xl sm:text-2xl font-bold" style={{ color: '#7C3AED', fontFamily: 'Inter, sans-serif', letterSpacing: '-0.02em' }}>CUDA Development</h3>
-                  <p className="text-base sm:text-lg leading-loose" style={{ color: '#B0B0B0', fontFamily: 'Inter, sans-serif', lineHeight: 1.8 }}>
-                    Our CUDA Development Services assist companies in developing high-performance parallel applications to suit their workloads with high demand. Our built-in kernel development-based team of CUDA Developers provides your apps with complete utilization of NVIDIA architecture.
-                  </p>
-                </motion.div>
+                {whatWeDoData.map((item) => {
+                  const isEmerald = item.colorKey === 'emerald';
+                  const rgb = isEmerald ? '16, 185, 129' : '124, 58, 237';
+                  const color = isEmerald ? '#10B981' : '#7C3AED';
+                  return (
+                    <motion.div
+                      key={item.title}
+                      className="space-y-4 max-w-xl p-8 rounded-2xl transition-all duration-300"
+                      style={{
+                        background: `linear-gradient(135deg, rgba(${rgb}, 0.05) 0%, rgba(${rgb}, 0.02) 100%)`,
+                        border: `1px solid rgba(${rgb}, 0.1)`,
+                        backdropFilter: 'blur(10px)'
+                      }}
+                      whileHover={{
+                        scale: 1.02,
+                        boxShadow: `0 20px 60px rgba(${rgb}, 0.2)`,
+                        borderColor: `rgba(${rgb}, 0.3)`
+                      }}
+                    >
+                      <h3 className="text-xl sm:text-2xl font-bold" style={{ color, fontFamily: 'Inter, sans-serif', letterSpacing: '-0.02em' }}>{item.title}</h3>
+                      <p className="text-base sm:text-lg leading-loose" style={{ color: '#B0B0B0', fontFamily: 'Inter, sans-serif', lineHeight: 1.8 }}>{item.description}</p>
+                    </motion.div>
+                  );
+                })}
               </motion.div>
             </div>
           </section>
@@ -429,93 +479,34 @@ export function HomePage() {
 
               {/* Service Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-6xl mx-auto">
-
-                {/* GPU Optimization Service Card */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  className="rounded-2xl p-6 transition-all duration-300 group relative w-full flex flex-col"
-                  style={{
-                    background: 'rgba(30, 41, 59, 0.6)',
-                    border: '1px solid rgba(16, 185, 129, 0.2)',
-                    backdropFilter: 'blur(10px)'
-                  }}
-                >
-                  {/* Icon */}
-                  <div className="w-12 h-12 rounded-xl mb-6 flex items-center justify-center"
-                    style={{
-                      background: 'rgba(16, 185, 129, 0.15)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}
-                  >
-                    <Cpu className="w-6 h-6" style={{ color: '#10B981' }} />
-                  </div>
-
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#10B981' }}>
-                    GPU Optimization Service
-                  </h3>
-                  <p className="text-base mb-6 leading-relaxed" style={{ color: '#9CA3AF' }}>
-                    We optimize AI and compute workloads with the help of advanced GPU optimization, performance, efficiency, and hardware usage.
-                  </p>
-                  <div className="w-full mt-auto text-right">
-                  <a
-                    href="/gpu-optimization-service/"
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-[#059669] hover:-translate-y-0.5"
-                    style={{
-                      background: '#10B981',
-                      color: '#FFFFFF'
-                    }}
-                  >
-                    Explore Service →
-                  </a>
-                  </div>
-                </motion.div>
-
-                {/* CUDA Development Service Card */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="rounded-2xl p-6 transition-all duration-300 group relative w-full flex flex-col"
-                  style={{
-                    background: 'rgba(30, 41, 59, 0.6)',
-                    border: '1px solid rgba(124, 58, 237, 0.2)',
-                    backdropFilter: 'blur(10px)'
-                  }}
-                >
-                  {/* Icon */}
-                  <div className="w-12 h-12 rounded-xl mb-6 flex items-center justify-center"
-                    style={{
-                      background: 'rgba(124, 58, 237, 0.15)',
-                      border: '1px solid rgba(124, 58, 237, 0.3)'
-                    }}
-                  >
-                    <Zap className="w-6 h-6" style={{ color: '#7C3AED' }} />
-                  </div>
-
-                  <h3 className="text-xl font-bold mb-3" style={{ color: '#7C3AED' }}>
-                    CUDA Development Service
-                  </h3>
-                  <p className="text-base mb-6 leading-relaxed" style={{ color: '#9CA3AF' }}>
-                    Hire skilled CUDA developers to create and optimize parallel advanced applications that meet your requirements.
-                  </p>
-                  <div className="w-full mt-auto text-right">
-                  <a
-                    href="/cuda-development-service/"
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5"
-                    style={{
-                      background: 'linear-gradient(135deg, #7C3AED, #06B6D4)',
-                      color: '#FFFFFF'
-                    }}
-                  >
-                    Explore Service →
-                  </a>
-                  </div>
-                </motion.div>
-
+                {servicesProvideData.map((item, i) => {
+                  const isEmerald = item.colorKey === 'emerald';
+                  const rgb = isEmerald ? '16, 185, 129' : '124, 58, 237';
+                  const color = isEmerald ? '#10B981' : '#7C3AED';
+                  const Icon = item.Icon;
+                  return (
+                    <motion.div
+                      key={item.title}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                      className="rounded-2xl p-6 transition-all duration-300 group relative w-full flex flex-col"
+                      style={{ background: 'rgba(30, 41, 59, 0.6)', border: `1px solid rgba(${rgb}, 0.2)`, backdropFilter: 'blur(10px)' }}
+                    >
+                      <div className="w-12 h-12 rounded-xl mb-6 flex items-center justify-center" style={{ background: `rgba(${rgb}, 0.15)`, border: `1px solid rgba(${rgb}, 0.3)` }}>
+                        <Icon className="w-6 h-6" style={{ color }} />
+                      </div>
+                      <h3 className="text-xl font-bold mb-3" style={{ color }}>{item.title}</h3>
+                      <p className="text-base mb-6 leading-relaxed" style={{ color: '#9CA3AF' }}>{item.description}</p>
+                      <div className="w-full mt-auto text-right">
+                        <a href={item.href} className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5" style={item.buttonStyle}>
+                          Explore Service →
+                        </a>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -560,50 +551,16 @@ export function HomePage() {
                 >
                   {/* 2x2 Logo Grid - Clean and transparent */}
                   <div className="grid grid-cols-2 gap-8 sm:gap-10 md:gap-12">
-                    <motion.div
-                      className="flex items-center justify-center p-4"
-                      whileHover={{ scale: 1.1, y: -5 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <img
-                        src="/logos/nvidia.png"
-                        alt="NVIDIA"
-                        className="h-10 sm:h-12 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300"
-                      />
-                    </motion.div>
-                    <motion.div
-                      className="flex items-center justify-center p-4"
-                      whileHover={{ scale: 1.1, y: -5 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <img
-                        src="/logos/aws.png"
-                        alt="AWS"
-                        className="h-10 sm:h-12 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300"
-                      />
-                    </motion.div>
-                    <motion.div
-                      className="flex items-center justify-center p-4"
-                      whileHover={{ scale: 1.1, y: -5 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <img
-                        src="/logos/goggle cloud.png"
-                        alt="Google Cloud"
-                        className="h-10 sm:h-12 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300"
-                      />
-                    </motion.div>
-                    <motion.div
-                      className="flex items-center justify-center p-4"
-                      whileHover={{ scale: 1.1, y: -5 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <img
-                        src="/logos/microsoft-azure.png"
-                        alt="Microsoft Azure"
-                        className="h-12 sm:h-14 w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300"
-                      />
-                    </motion.div>
+                    {trustedLogosData.map((logo) => (
+                      <motion.div
+                        key={logo.alt}
+                        className="flex items-center justify-center p-4"
+                        whileHover={{ scale: 1.1, y: -5 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <img src={logo.src} alt={logo.alt} className={logo.className} />
+                      </motion.div>
+                    ))}
                   </div>
                 </motion.div>
 
@@ -622,49 +579,16 @@ export function HomePage() {
 
                   {/* Metrics Grid - 2 columns on larger screens */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
-                    {/* Metric 1 */}
-                    <motion.div
-                      className="space-y-2 p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300"
-                      whileHover={{ scale: 1.02, y: -3 }}
-                    >
-                      <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-blue-200 bg-clip-text text-transparent">$20bn</div>
-                      <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-                        worth investment portfolios managed
-                      </p>
-                    </motion.div>
-
-                    {/* Metric 2 */}
-                    <motion.div
-                      className="space-y-2 p-4 rounded-xl bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 hover:border-purple-400/40 transition-all duration-300"
-                      whileHover={{ scale: 1.02, y: -3 }}
-                    >
-                      <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-400 to-purple-200 bg-clip-text text-transparent">10x</div>
-                      <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-                        faster pharmaceutical market analytics
-                      </p>
-                    </motion.div>
-
-                    {/* Metric 3 */}
-                    <motion.div
-                      className="space-y-2 p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-600/5 border border-cyan-500/20 hover:border-cyan-400/40 transition-all duration-300"
-                      whileHover={{ scale: 1.02, y: -3 }}
-                    >
-                      <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-200 bg-clip-text text-transparent">20M+</div>
-                      <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-                        customers enjoying AI-powered shopping
-                      </p>
-                    </motion.div>
-
-                    {/* Metric 4 */}
-                    <motion.div
-                      className="space-y-2 p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/20 hover:border-green-400/40 transition-all duration-300"
-                      whileHover={{ scale: 1.02, y: -3 }}
-                    >
-                      <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-green-400 to-green-200 bg-clip-text text-transparent">$50K</div>
-                      <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-                        saved annually with DevOps
-                      </p>
-                    </motion.div>
+                    {trustedMetricsData.map((m) => (
+                      <motion.div
+                        key={m.value}
+                        className={`space-y-2 p-4 rounded-xl bg-gradient-to-br ${m.from} ${m.to} border ${m.border} ${m.hoverBorder} transition-all duration-300`}
+                        whileHover={{ scale: 1.02, y: -3 }}
+                      >
+                        <div className={`text-3xl sm:text-4xl font-bold bg-gradient-to-r ${m.valueGradient} bg-clip-text text-transparent`}>{m.value}</div>
+                        <p className="text-white/70 text-sm sm:text-base leading-relaxed">{m.description}</p>
+                      </motion.div>
+                    ))}
                   </div>
                 </motion.div>
               </div>
@@ -865,7 +789,7 @@ export function HomePage() {
           </section>
 
           {/* Premium Minimal Testimonials Section */}
-          <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: '#0B0F14' }}>
+          <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: SECTION_BG }}>
             <div className="max-w-7xl mx-auto">
 
               {/* Section Header - Centered */}
@@ -897,157 +821,28 @@ export function HomePage() {
 
               {/* Testimonials Grid - 3 Columns */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-
-                {/* Testimonial 1 */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  className="group"
-                >
-                  <div
-                    className="h-full p-8 rounded-2xl border transition-all duration-300"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.02)',
-                      borderColor: 'rgba(255, 255, 255, 0.08)',
-                      backdropFilter: 'blur(10px)'
-                    }}
+                {testimonialsData.map((t, i) => (
+                  <motion.div
+                    key={t.name}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                    className="group"
                   >
-                    {/* Quote Icon */}
-                    <div className="mb-4">
-                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
-                        <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
-                      </svg>
-                    </div>
-
-                    {/* Testimonial Text */}
-                    <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>
-                      "Jashom's GPU optimization reduced our inference latency by 73%. The team's expertise in CUDA programming is unmatched."
-                    </p>
-
-                    {/* Author Info */}
-                    <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}>
-                      <div className="w-12 h-12 rounded-full flex-shrink-0" style={{
-                        background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '14px',
-                        fontWeight: 700,
-                        color: '#FFF'
-                      }}>
-                        DC
-                      </div>
-                      <div>
-                        <div style={{ color: '#FAFAFA', fontWeight: 600, fontSize: '15px' }}>David Chen</div>
-                        <div style={{ color: '#9CA3AF', fontSize: '13px' }}>VP Engineering, Apex AI</div>
+                    <div className="h-full p-8 rounded-2xl border transition-all duration-300" style={{ background: 'rgba(255, 255, 255, 0.02)', borderColor: BORDER_SUBTLE, backdropFilter: 'blur(10px)' }}>
+                      <div className="mb-4"><QuoteIcon /></div>
+                      <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>{t.quote}</p>
+                      <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: BORDER_SUBTLE }}>
+                        <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold text-white" style={{ background: t.avatarGradient }}>{t.initials}</div>
+                        <div>
+                          <div className="text-[#FAFAFA] font-semibold text-[15px]">{t.name}</div>
+                          <div className="text-[#9CA3AF] text-[13px]">{t.role}</div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-
-                {/* Testimonial 2 */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="group"
-                >
-                  <div
-                    className="h-full p-8 rounded-2xl border transition-all duration-300"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.02)',
-                      borderColor: 'rgba(255, 255, 255, 0.08)',
-                      backdropFilter: 'blur(10px)'
-                    }}
-                  >
-                    {/* Quote Icon */}
-                    <div className="mb-4">
-                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
-                        <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
-                      </svg>
-                    </div>
-
-                    {/* Testimonial Text */}
-                    <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>
-                      "The AI automation solutions delivered by Jashom transformed our workflow. We achieved 5x faster processing with their custom ML pipeline."
-                    </p>
-
-                    {/* Author Info */}
-                    <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}>
-                      <div className="w-12 h-12 rounded-full flex-shrink-0" style={{
-                        background: 'linear-gradient(135deg, #8B5CF6, #A78BFA)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '14px',
-                        fontWeight: 700,
-                        color: '#FFF'
-                      }}>
-                        MR
-                      </div>
-                      <div>
-                        <div style={{ color: '#FAFAFA', fontWeight: 600, fontSize: '15px' }}>Maria Rodriguez</div>
-                        <div style={{ color: '#9CA3AF', fontSize: '13px' }}>CTO, DataFlow Systems</div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Testimonial 3 */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  className="group"
-                >
-                  <div
-                    className="h-full p-8 rounded-2xl border transition-all duration-300"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.02)',
-                      borderColor: 'rgba(255, 255, 255, 0.08)',
-                      backdropFilter: 'blur(10px)'
-                    }}
-                  >
-                    {/* Quote Icon */}
-                    <div className="mb-4">
-                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
-                        <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
-                      </svg>
-                    </div>
-
-                    {/* Testimonial Text */}
-                    <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>
-                      "Outstanding DevSecOps implementation. Jashom's team integrated security seamlessly into our CI/CD pipeline without compromising speed."
-                    </p>
-
-                    {/* Author Info */}
-                    <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}>
-                      <div className="w-12 h-12 rounded-full flex-shrink-0" style={{
-                        background: 'linear-gradient(135deg, #10B981, #34D399)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '14px',
-                        fontWeight: 700,
-                        color: '#FFF'
-                      }}>
-                        EW
-                      </div>
-                      <div>
-                        <div style={{ color: '#FAFAFA', fontWeight: 600, fontSize: '15px' }}>Emily Watson</div>
-                        <div style={{ color: '#9CA3AF', fontSize: '13px' }}>Head of Security, TechCorp</div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-
+                  </motion.div>
+                ))}
               </div>
             </div>
           </section>
@@ -1090,155 +885,33 @@ export function HomePage() {
                 whileInView="show"
                 viewport={{ once: true }}
               >
-                {/* Benefit 1 - GPU Expertise */}
-                <motion.div
-                  variants={staggerItem}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
-                    borderColor: 'rgba(16, 185, 129, 0.2)',
-                    backdropFilter: 'blur(8px)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <Cpu className="w-8 h-8" style={{ color: '#10B981' }} />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>10x GPU Performance Improvement</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      Architecture-sensitive tuning methods are used by us to reap the best out of NVIDIA GPUs, providing physical acceleration to AI applications.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Benefit 2 - AI Engineering */}
-                <motion.div
-                  variants={staggerItem}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
-                    borderColor: 'rgba(16, 185, 129, 0.2)',
-                    backdropFilter: 'blur(8px)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <Brain className="w-8 h-8" style={{ color: '#10B981' }} />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>Production-Grade AI Systems</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      Develop scalable systems that are designed with a focus on reliability, monitoring, and long-term performance.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Benefit 3 - Enterprise Security */}
-                <motion.div
-                  variants={staggerItem}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
-                    borderColor: 'rgba(16, 185, 129, 0.2)',
-                    backdropFilter: 'blur(8px)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <Shield className="w-8 h-8" style={{ color: '#10B981' }} />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>Enterprise-Level Security</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      Our operations are enforced under stringent security measures, compliance, and data protection models in order to secure essential workloads.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Benefit 4 - Fast Deployment */}
-                <motion.div
-                  variants={staggerItem}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
-                    borderColor: 'rgba(16, 185, 129, 0.2)',
-                    backdropFilter: 'blur(8px)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <Zap className="w-8 h-8" style={{ color: '#10B981' }} />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>Rapid Implementation Cycles</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      We satisfy the timeline requirements of projects through organized processes, which allow us to roll out faster and maintain the quality of performance.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Benefit 5 - 24/7 Support */}
-                <motion.div
-                  variants={staggerItem}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
-                    borderColor: 'rgba(16, 185, 129, 0.2)',
-                    backdropFilter: 'blur(8px)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <Users className="w-8 h-8" style={{ color: '#10B981' }} />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>Dedicated Technical Support</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      Our experts have continued optimization, surveillance, and expert services that ensure that the system operates continuously.
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Benefit 6 - Cost Optimization */}
-                <motion.div
-                  variants={staggerItem}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
-                    borderColor: 'rgba(16, 185, 129, 0.2)',
-                    backdropFilter: 'blur(8px)'
-                  }}
-                >
-                  <div className="relative z-10">
-                    <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
-                      background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)'
-                    }}>
-                      <TrendingUp className="w-8 h-8" style={{ color: '#10B981' }} />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>Cost-Efficient Scaling</h3>
-                    <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>
-                      Our frameworks for designing GPU systems consider the demand of performance with functional efficiency to ensure the highest ROI in the long-term.
-                    </p>
-                  </div>
-                </motion.div>
+                {benefitsData.map((item) => {
+                  const Icon = item.Icon;
+                  return (
+                    <motion.div
+                      key={item.title}
+                      variants={staggerItem}
+                      whileHover={{ y: -10, scale: 1.02 }}
+                      className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
+                        borderColor: 'rgba(16, 185, 129, 0.2)',
+                        backdropFilter: 'blur(8px)'
+                      }}
+                    >
+                      <div className="relative z-10">
+                        <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={{
+                          background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)',
+                          border: '1px solid rgba(16, 185, 129, 0.3)'
+                        }}>
+                          <Icon className="w-8 h-8" style={{ color: '#10B981' }} />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>{item.title}</h3>
+                        <p className="leading-relaxed" style={{ color: '#9E9E9E', lineHeight: 1.8 }}>{item.description}</p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </motion.div>
 
               {/* Bottom CTA */}
@@ -1304,96 +977,130 @@ export function HomePage() {
                 </div>
               </motion.div>
 
-              {/* Blog Cards Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                {getLatestInsights(3).map((blog, index) => (
-                  <motion.div
-                    key={blog.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.15, duration: 0.5 }}
-                    className="group"
-                  >
-                    <Link to={blog.link} className="block h-full">
-                      <div
-                        className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-[1.02]"
-                        style={{
-                          background: '#111827',
-                          border: '1px solid rgba(255, 255, 255, 0.08)'
-                        }}
-                      >
-                        {/* Image Section */}
-                        <div className="relative h-48 overflow-hidden" style={{ background: '#1E293B' }}>
-                          <div
-                            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                            style={{
-                              backgroundImage: `url(${blog.image})`,
-                              opacity: 0.4
-                            }}
-                          />
-                          {/* Gradient overlay */}
-                          <div className="absolute inset-0" style={{
-                            background: 'linear-gradient(180deg, rgba(17, 24, 39, 0) 0%, rgba(17, 24, 39, 1) 100%)'
-                          }} />
-
-                          {/* Category Badge */}
-                          <div className="absolute top-4 left-4">
-                            <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={{
-                              background: 'rgba(16, 185, 129, 0.15)',
-                              color: '#10B981',
-                              border: '1px solid rgba(16, 185, 129, 0.3)',
-                              backdropFilter: 'blur(8px)'
-                            }}>
-                              {blog.category}
-                            </div>
-                          </div>
+              {/* Blog Cards Grid - from API */}
+              {blogsLoading && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  {[1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      className="h-full rounded-2xl overflow-hidden animate-pulse"
+                      style={{ background: '#111827', border: '1px solid rgba(255, 255, 255, 0.08)' }}
+                    >
+                      <div className="h-48 bg-[#1E293B]" />
+                      <div className="p-6 space-y-3">
+                        <div className="h-5 bg-[#1E293B] rounded w-3/4" />
+                        <div className="h-4 bg-[#1E293B] rounded w-full" />
+                        <div className="h-4 bg-[#1E293B] rounded w-2/3" />
+                        <div className="flex gap-4 mt-4">
+                          <div className="h-3 bg-[#1E293B] rounded w-20" />
+                          <div className="h-3 bg-[#1E293B] rounded w-16" />
                         </div>
-
-                        {/* Content Section */}
-                        <div className="p-6">
-                          <h3 className="text-lg font-bold mb-3 line-clamp-2 transition-colors duration-240 group-hover:text-[#10B981]" style={{
-                            color: '#FAFAFA',
-                            lineHeight: 1.4
-                          }}>
-                            {blog.title}
-                          </h3>
-
-                          <p className="text-sm mb-4 line-clamp-2" style={{
-                            color: '#9CA3AF',
-                            lineHeight: 1.6
-                          }}>
-                            {blog.description}
-                          </p>
-
-                          {/* Meta Info */}
-                          <div className="flex items-center gap-4 mb-4 text-xs" style={{ color: '#6B7280' }}>
-                            <div className="flex items-center gap-1.5">
-                              <Calendar className="w-3.5 h-3.5" />
-                              <span>{blog.date}</span>
-                            </div>
-                            <div className="flex items-center gap-1.5">
-                              <Clock className="w-3.5 h-3.5" />
-                              <span>{blog.readTime}</span>
-                            </div>
-                          </div>
-
-                          {/* Read More Link */}
-                          <div className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-240" style={{ color: '#10B981' }}>
-                            <span>Read More</span>
-                            <ArrowRight className="w-4 h-4 transition-transform duration-240 group-hover:translate-x-1" />
-                          </div>
-                        </div>
-
-                        {/* Hover Overlay */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
-                          background: 'linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%)'
-                        }} />
                       </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {blogsError && (
+                <div className="text-center py-12 mb-8" style={{ color: '#9CA3AF' }}>
+                  Unable to load latest blogs. Try again later.
+                </div>
+              )}
+              {!blogsLoading && !blogsError && latestBlogs.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  {latestBlogs.map((blog, index) => (
+                    <motion.div
+                      key={blog.id}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.15, duration: 0.5 }}
+                      className="group"
+                    >
+                      <Link to={`/blogs/${blog.slug}/`} className="block h-full">
+                        <div
+                          className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-[1.02]"
+                          style={{
+                            background: '#111827',
+                            border: '1px solid rgba(255, 255, 255, 0.08)'
+                          }}
+                        >
+                          {/* Image Section */}
+                          <div className="relative h-48 overflow-hidden" style={{ background: '#1E293B' }}>
+                            <div
+                              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                              style={{
+                                backgroundImage: blog.featured_image_url ? `url(${blog.featured_image_url})` : 'none',
+                                opacity: blog.featured_image_url ? 0.4 : 0
+                              }}
+                            />
+                            {/* Gradient overlay */}
+                            <div className="absolute inset-0" style={{
+                              background: 'linear-gradient(180deg, rgba(17, 24, 39, 0) 0%, rgba(17, 24, 39, 1) 100%)'
+                            }} />
+
+                            {/* Category Badge */}
+                            <div className="absolute top-4 left-4">
+                              <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={{
+                                background: 'rgba(16, 185, 129, 0.15)',
+                                color: '#10B981',
+                                border: '1px solid rgba(16, 185, 129, 0.3)',
+                                backdropFilter: 'blur(8px)'
+                              }}>
+                                Blog
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Content Section */}
+                          <div className="p-6">
+                            <h3 className="text-lg font-bold mb-3 line-clamp-2 transition-colors duration-240 group-hover:text-[#10B981]" style={{
+                              color: '#FAFAFA',
+                              lineHeight: 1.4
+                            }}>
+                              {blog.title}
+                            </h3>
+
+                            <p className="text-sm mb-4 line-clamp-2" style={{
+                              color: '#9CA3AF',
+                              lineHeight: 1.6
+                            }}>
+                              {blog.excerpt ?? ''}
+                            </p>
+
+                            {/* Meta Info */}
+                            <div className="flex items-center gap-4 mb-4 text-xs" style={{ color: '#6B7280' }}>
+                              <div className="flex items-center gap-1.5">
+                                <Calendar className="w-3.5 h-3.5" />
+                                <span>{formatBlogDate(blog.published_at)}</span>
+                              </div>
+                              <div className="flex items-center gap-1.5">
+                                <Clock className="w-3.5 h-3.5" />
+                                <span>— min read</span>
+                              </div>
+                            </div>
+
+                            {/* Read More Link */}
+                            <div className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-240" style={{ color: '#10B981' }}>
+                              <span>Read More</span>
+                              <ArrowRight className="w-4 h-4 transition-transform duration-240 group-hover:translate-x-1" />
+                            </div>
+                          </div>
+
+                          {/* Hover Overlay */}
+                          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
+                            background: 'linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%)'
+                          }} />
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+              {!blogsLoading && !blogsError && latestBlogs.length === 0 && (
+                <div className="text-center py-12 mb-8" style={{ color: '#9CA3AF' }}>
+                  No blogs yet.
+                </div>
+              )}
 
               {/* View All Button - below cards */}
               <motion.div

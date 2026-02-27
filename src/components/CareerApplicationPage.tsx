@@ -4,6 +4,35 @@ import { SEO as Seo } from './SEO';
 import { useState } from 'react';
 import { CheckCircle, Upload, ArrowLeft, ArrowRight } from 'lucide-react';
 
+const INPUT_STYLE: React.CSSProperties = {
+  background: 'rgba(17, 24, 39, 0.8)',
+  borderColor: 'rgba(16, 185, 129, 0.3)',
+  color: '#FAFAFA',
+};
+const LABEL_CLASS = 'block text-sm font-semibold mb-3';
+const LABEL_STYLE = { color: '#FAFAFA' as const };
+const REQUIRED_SPAN = <span style={{ color: '#EF4444' }}>*</span>;
+const INPUT_CLASS = 'w-full px-5 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all';
+
+const formFieldsConfig: { name: 'fullName' | 'email' | 'phone' | 'linkedIn' | 'message'; label: string; placeholder: string; type: 'text' | 'email' | 'tel' | 'url' | 'textarea'; required: boolean; rows?: number }[] = [
+  { name: 'fullName', label: 'Full Name', placeholder: 'John Doe', type: 'text', required: true },
+  { name: 'email', label: 'Email Address', placeholder: 'john.doe@example.com', type: 'email', required: true },
+  { name: 'phone', label: 'Phone Number', placeholder: '+1 (555) 000-0000', type: 'tel', required: true },
+  { name: 'linkedIn', label: 'LinkedIn Profile URL', placeholder: 'https://linkedin.com/in/johndoe', type: 'url', required: false },
+  { name: 'message', label: 'Cover Letter / Message', placeholder: "Tell us why you're a great fit for this role...", type: 'textarea', required: false, rows: 6 },
+];
+
+const stepsData = [
+  { number: 1, title: 'Review', description: 'Our team reviews your application within 5-7 business days' },
+  { number: 2, title: 'Interview', description: 'Qualified candidates are invited for an interview' },
+  { number: 3, title: 'Offer', description: 'Successful candidates receive an offer to join our team' },
+];
+
+const STEP_CIRCLE_STYLE: React.CSSProperties = {
+  background: 'rgba(16, 185, 129, 0.15)',
+  border: '2px solid rgba(16, 185, 129, 0.3)',
+};
+
 export function CareerApplicationPage() {
   const [searchParams] = useSearchParams();
   const jobRole = searchParams.get('role') ?? '';
@@ -197,125 +226,47 @@ export function CareerApplicationPage() {
             }}
           >
             <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Full Name */}
-              <div>
-                <label
-                  htmlFor="fullName"
-                  className="block text-sm font-semibold mb-3"
-                  style={{ color: '#FAFAFA' }}
-                >
-                  Full Name <span style={{ color: '#EF4444' }}>*</span>
-                </label>
-                <input
-                  type="text"
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  required
-                  placeholder="John Doe"
-                  className="w-full px-5 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all"
-                  style={{
-                    background: 'rgba(17, 24, 39, 0.8)',
-                    borderColor: 'rgba(16, 185, 129, 0.3)',
-                    color: '#FAFAFA'
-                  }}
-                />
-              </div>
-
-              {/* Email */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-semibold mb-3"
-                  style={{ color: '#FAFAFA' }}
-                >
-                  Email Address <span style={{ color: '#EF4444' }}>*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  placeholder="john.doe@example.com"
-                  className="w-full px-5 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all"
-                  style={{
-                    background: 'rgba(17, 24, 39, 0.8)',
-                    borderColor: 'rgba(16, 185, 129, 0.3)',
-                    color: '#FAFAFA'
-                  }}
-                />
-              </div>
-
-              {/* Phone */}
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-semibold mb-3"
-                  style={{ color: '#FAFAFA' }}
-                >
-                  Phone Number <span style={{ color: '#EF4444' }}>*</span>
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  placeholder="+1 (555) 000-0000"
-                  className="w-full px-5 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all"
-                  style={{
-                    background: 'rgba(17, 24, 39, 0.8)',
-                    borderColor: 'rgba(16, 185, 129, 0.3)',
-                    color: '#FAFAFA'
-                  }}
-                />
-              </div>
-
-              {/* LinkedIn URL */}
-              <div>
-                <label
-                  htmlFor="linkedIn"
-                  className="block text-sm font-semibold mb-3"
-                  style={{ color: '#FAFAFA' }}
-                >
-                  LinkedIn Profile URL
-                </label>
-                <input
-                  type="url"
-                  id="linkedIn"
-                  name="linkedIn"
-                  value={formData.linkedIn}
-                  onChange={handleChange}
-                  placeholder="https://linkedin.com/in/johndoe"
-                  className="w-full px-5 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all"
-                  style={{
-                    background: 'rgba(17, 24, 39, 0.8)',
-                    borderColor: 'rgba(16, 185, 129, 0.3)',
-                    color: '#FAFAFA'
-                  }}
-                />
-              </div>
+              {formFieldsConfig.map((field) => (
+                <div key={field.name}>
+                  <label htmlFor={field.name} className={LABEL_CLASS} style={LABEL_STYLE}>
+                    {field.label} {field.required ? REQUIRED_SPAN : null}
+                  </label>
+                  {field.type === 'textarea' ? (
+                    <textarea
+                      id={field.name}
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleChange}
+                      required={field.required}
+                      placeholder={field.placeholder}
+                      rows={field.rows ?? 6}
+                      className={`${INPUT_CLASS} resize-none`}
+                      style={INPUT_STYLE}
+                    />
+                  ) : (
+                    <input
+                      type={field.type}
+                      id={field.name}
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={handleChange}
+                      required={field.required}
+                      placeholder={field.placeholder}
+                      className={INPUT_CLASS}
+                      style={INPUT_STYLE}
+                    />
+                  )}
+                </div>
+              ))}
 
               {/* Resume Upload */}
               <div>
-                <label
-                  htmlFor="resume"
-                  className="block text-sm font-semibold mb-3"
-                  style={{ color: '#FAFAFA' }}
-                >
-                  Resume/CV <span style={{ color: '#EF4444' }}>*</span>
+                <label htmlFor="resume" className={LABEL_CLASS} style={LABEL_STYLE}>
+                  Resume/CV {REQUIRED_SPAN}
                 </label>
                 <label
                   className="flex items-center justify-center w-full px-5 py-6 rounded-xl border-2 border-dashed cursor-pointer transition-all hover:border-opacity-60"
-                  style={{
-                    background: 'rgba(17, 24, 39, 0.8)',
-                    borderColor: 'rgba(16, 185, 129, 0.3)',
-                    color: '#9CA3AF'
-                  }}
+                  style={{ ...INPUT_STYLE, color: '#9CA3AF' }}
                 >
                   <input
                     type="file"
@@ -344,31 +295,6 @@ export function CareerApplicationPage() {
                     )}
                   </div>
                 </label>
-              </div>
-
-              {/* Message */}
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-semibold mb-3"
-                  style={{ color: '#FAFAFA' }}
-                >
-                  Cover Letter / Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={6}
-                  placeholder="Tell us why you're a great fit for this role..."
-                  className="w-full px-5 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all resize-none"
-                  style={{
-                    background: 'rgba(17, 24, 39, 0.8)',
-                    borderColor: 'rgba(16, 185, 129, 0.3)',
-                    color: '#FAFAFA'
-                  }}
-                />
               </div>
 
               {/* Divider */}
@@ -429,59 +355,18 @@ export function CareerApplicationPage() {
               Here's what you can expect after submitting your application
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-              <div>
-                <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.15)',
-                    border: '2px solid rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <span className="text-2xl font-bold" style={{ color: '#10B981' }}>1</span>
+              {stepsData.map((step) => (
+                <div key={step.number}>
+                  <div
+                    className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
+                    style={STEP_CIRCLE_STYLE}
+                  >
+                    <span className="text-2xl font-bold" style={{ color: '#10B981' }}>{step.number}</span>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3" style={{ color: '#FAFAFA' }}>{step.title}</h3>
+                  <p className="text-base leading-relaxed" style={{ color: '#9CA3AF' }}>{step.description}</p>
                 </div>
-                <h3 className="text-xl font-semibold mb-3" style={{ color: '#FAFAFA' }}>
-                  Review
-                </h3>
-                <p className="text-base leading-relaxed" style={{ color: '#9CA3AF' }}>
-                  Our team reviews your application within 5-7 business days
-                </p>
-              </div>
-
-              <div>
-                <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.15)',
-                    border: '2px solid rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <span className="text-2xl font-bold" style={{ color: '#10B981' }}>2</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-3" style={{ color: '#FAFAFA' }}>
-                  Interview
-                </h3>
-                <p className="text-base leading-relaxed" style={{ color: '#9CA3AF' }}>
-                  Qualified candidates are invited for an interview
-                </p>
-              </div>
-
-              <div>
-                <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.15)',
-                    border: '2px solid rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  <span className="text-2xl font-bold" style={{ color: '#10B981' }}>3</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-3" style={{ color: '#FAFAFA' }}>
-                  Offer
-                </h3>
-                <p className="text-base leading-relaxed" style={{ color: '#9CA3AF' }}>
-                  Successful candidates receive an offer to join our team
-                </p>
-              </div>
+              ))}
             </div>
           </motion.div>
         </div>

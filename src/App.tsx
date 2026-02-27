@@ -13,7 +13,7 @@ const CapabilityMatrixPage = lazy(() => import('./components/CapabilityMatrixPag
 const PortfolioPage = lazy(() => import('./components/PortfolioPage').then(module => ({ default: module.PortfolioPage })));
 const BlogsPage = lazy(() => import('./components/BlogsPage').then(module => ({ default: module.BlogsPage })));
 const BlogDetailPage = lazy(() => import('./components/BlogDetailPage').then(module => ({ default: module.BlogDetailPage })));
-const ContactPage = lazy(() => import('./components/ContactPage').then(module => ({ default: module.ContactPage })));
+const ContactPage = lazy(() => import('./components/ContactPage'));
 const BrochurePage = lazy(() => import('./components/BrochurePage').then(module => ({ default: module.BrochurePage })));
 
 // Lazy load portfolio project pages
@@ -144,8 +144,19 @@ function AnimatedRoutes() {
 
 export default function App() {
   useEffect(() => {
-    // Load Tawk.to chat widget. SRI (integrity) is intentionally not used: the script is
-    // hosted and updated by Tawk.to; a fixed hash would break when they deploy changes.
+    /*
+     * Tawk.to chat widget — loads the official script from embed.tawk.to.
+     *
+     * Security: Subresource Integrity (SRI) is intentionally not used.
+     * - The script is hosted and updated by Tawk.to; a fixed integrity hash would
+     *   break whenever they deploy changes, which is frequent for chat widgets.
+     * - This is an accepted trade-off for third-party widgets: we load only from
+     *   the vendor's official HTTPS URL (embed.tawk.to). Safe because:
+     *   (1) Script source is fixed and vendor-controlled, not user input.
+     *   (2) Delivered over HTTPS from a known domain.
+     *   (3) Omitting SRI for vendor-hosted, frequently updated scripts is a
+     *       common and documented pattern when the vendor controls the asset.
+     */
     const Tawk_API: any = (window as any).Tawk_API ?? {};
     const Tawk_LoadStart = new Date();
     (window as any).Tawk_API = Tawk_API;

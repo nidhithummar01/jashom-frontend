@@ -3,6 +3,86 @@ import { SEO as Seo } from './SEO';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const SECTION_BG = '#0B0F14';
+const CARD_BG_LIGHT = '#f5f5f5';
+const BORDER_SUBTLE = 'rgba(255, 255, 255, 0.08)';
+const BENEFIT_CARD_BG = 'rgba(16, 185, 129, 0.05)';
+
+const CheckIcon = () => (
+  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+const CheckIconLarge = () => (
+  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+const QuoteIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
+    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
+  </svg>
+);
+const DividerLine = () => (
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+  </div>
+);
+
+const servicesData = [
+  { title: 'CUDA\nOptimization', description: 'We optimize the underlying kernel execution, better shared memory assignment, and also readjust thread block settings to optimize performance. The services of our CUDA Development are aimed at removing the warp divergence and the latency in the NVIDIA GPU architecture.' },
+  { title: 'AI/ML\nAcceleration', description: 'Optimize the equilibrium of both the speed of model training and inference via optimized batch operations and the control of accessing memory. We optimize compute to reduce training time and improve predictive performance.' },
+  { title: 'Performance\nProfiling', description: 'We identify the areas of inefficiency in the execution flow and memory transfers into increasingly sophisticated profiling frameworks. The benefits of detailed benchmarking are accuracy in making optimization decisions and quantifiable performance improvements.' },
+];
+const industryItems = ['AI & Machine Learning', 'Scientific Computing', 'Data Analytics', 'Rendering & Graphics'];
+const processSteps = [
+  { title: 'Assessment', description: 'Assess existing GPU architecture, load, and establish specific optimization objectives.', gradient: 'from-blue-500 to-blue-500', shadow: 'shadow-blue-500/50', pathD: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2' },
+  { title: 'Analysis', description: 'Gather real-time monitoring information and spot performance issues and performance bottlenecks.', gradient: 'from-purple-500 to-pink-500', shadow: 'shadow-purple-500/50', pathD: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4' },
+  { title: 'Kernel Optimization', description: 'Refine CUDA kernels and improve parallel execution balance.', gradient: 'from-blue-500 to-blue-500', shadow: 'shadow-cyan-500/50', pathD: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' },
+  { title: 'Tuning', description: 'Expenses in runtime parameters and memory allocation, better throughput.', gradient: 'from-pink-500 to-rose-500', shadow: 'shadow-pink-500/50', pathD: 'M13 10V3L4 14h7v7l9-11h-7z' },
+  { title: 'Testing', description: 'Authenticate gains with validation checkpoints.', gradient: 'from-indigo-500 to-purple-500', shadow: 'shadow-indigo-500/50', pathD: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
+  { title: 'Deployment', description: 'Employ workloads that are optimized, monitored, and improved.', gradient: 'from-green-500 to-emerald-500', shadow: 'shadow-green-500/50', pathD: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z' },
+];
+const benefitsData = [
+  { title: 'Faster\nProcessing\nSpeed', description: 'Fasten hardened compute tasks with an ideal use of parallelization and data movement. With decreased processing time, there will be shorter experimentation times and shorter delivery times.', borderColor: 'rgba(16, 185, 129, 0.35)' },
+  { title: 'Lower Costs of\nInfrastructure', description: 'Optimize the use of GPUs in order to reduce costs on clouds and hardware. Harmful efficiency brings a decrease in over-provisioning and enhanced resource allocation.', borderColor: 'rgba(6, 182, 212, 0.35)' },
+  { title: 'Improved\nScalability', description: 'Processes more data and intricate programs with no drop in performance or increased proportional cost.', borderColor: 'rgba(139, 92, 246, 0.35)' },
+  { title: 'Enhanced\nModel\nPerformance', description: 'Improve the performance of AI models training and inference with optimal CUDA execution paths.', borderColor: 'rgba(236, 72, 153, 0.35)' },
+  { title: 'Competitive\nAdvantage', description: 'Become better computers to hasten innovation and become more powerful in data-based markets.', borderColor: 'rgba(251, 146, 60, 0.35)' },
+  { title: 'Energy\nEfficiency', description: 'Minimize energy use by optimizing the use of GPUs, which helps on the sustainability agenda and limits the cost of running the operations.', borderColor: 'rgba(52, 211, 153, 0.35)' },
+];
+const whyChooseItems = [
+  { title: 'Advanced Parallel Computing Expertise', description: 'Our experts have extensive expertise in CUDA implementation, tuning of the GPU architecture, and high-performance parallel systems. This is done at low-level kernel optimization all the way up to optimizing an entire NVIDIA GPU, and we work to squeeze the highest performance out of every tier of your computing system.' },
+  { title: 'Results Backed by Data', description: 'We value quantitative difference. Each interaction is predetermined by profiling information, systematic testing, and efficiency metrics showing evident acceleration, competitive advantages, and enhanced hardware use.' },
+  { title: 'Optimization Built Around Your Workload', description: 'No generic templates. We will create application-specific GPU optimization that will respond to your application and run a discussion, infrastructure configuration, as well as scalability needs by making the performance consistently enhanced on a long-term basis.' },
+];
+const testimonialsData = [
+  { quote: '"Their graphics processing optimization experience minimized our processing latency. The CUDA execution benefits were fast and quantifiable."', initials: 'AM', name: 'Arjun Mehta', role: 'Director of Engineering, NovaAI Labs', avatarGradient: 'linear-gradient(135deg, #10B981, #06B6D4)' },
+  { quote: '"Our AI training pipeline became significantly faster after their optimization work. Clear performance gains with reduced infrastructure strain."', initials: 'SA', name: 'Sofia Alvarez', role: 'CTO, Quantix Systems', avatarGradient: 'linear-gradient(135deg, #10B981, #06B6D4)' },
+  { quote: '"We hired their CUDA developers for complex optimization tasks. The results were stable, scalable, and production-ready."', initials: 'DB', name: 'Daniel Brooks', role: 'Chief Operating Officer, CoreTech Solutions', avatarGradient: 'linear-gradient(135deg, #10B981, #06B6D4)' },
+];
+const faqData = [
+  { q: 'How long does a GPU optimization project typically take?', a: 'The timelines of projects are based on the complexity of the workload, the level of infrastructure, and the objectives of the performance. Enterprise environments take most optimization engagements between a few weeks and a few months.' },
+  { q: 'Can you optimize legacy CUDA codebases?', a: 'Yes. We test current CUDA implementations, determine architectural waste, and cull kernels to optimize memory access characteristics, parallel execution ratio, and total performance.' },
+  { q: 'What metrics do you use to measure optimization success?', a: 'We assess the use of GPUs, the performance, the ability to use memory, the decrease in latency, the efficiency of the scalability, and the savings in costs using structured profiling and benchmarking techniques.' },
+  { q: 'Do optimized workloads remain stable in production?', a: 'Absolutely. All optimizations are tested, regressed, and monitored during deployment to make sure that the performance improvements will be maintained in the field.' },
+];
+const aiModelsData = [
+  { name: 'GPT-4o', src: '/images/AI Models exeperty/gpt-4o.jpg.jpg', alt: 'GPT-4o' },
+  { name: 'Llama 3', src: '/images/AI Models exeperty/llama-3.jpg.webp', alt: 'Llama 3' },
+  { name: 'PaLM 2', src: '/images/AI Models exeperty/palm-2.jpg.webp', alt: 'PaLM 2' },
+  { name: 'Stability AI', src: '/images/AI Models exeperty/stability-ai.jpg.webp', alt: 'Stability AI' },
+  { name: 'Google Gemini', src: '/images/AI Models exeperty/google-gemini.jpg.webp', alt: 'Google Gemini' },
+  { name: 'Vicuna', src: '/images/AI Models exeperty/vicuna.jpg.webp', alt: 'Vicuna' },
+  { name: 'Mistral', src: '/images/AI Models exeperty/mistral.jpg.webp', alt: 'Mistral' },
+  { name: 'Claude', src: '/images/AI Models exeperty/claude.jpg.webp', alt: 'Claude' },
+];
+
+const formInputClass = 'w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all';
+const formInputStyle = { background: 'rgba(255, 255, 255, 0.06)', borderColor: 'rgba(255, 255, 255, 0.1)' } as const;
+const officeCardStyle = { background: 'rgba(17, 24, 39, 0.6)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(14px)' } as const;
+
 export function GPUOptimizationServicePage() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -25,7 +105,7 @@ export function GPUOptimizationServicePage() {
     navigate('/thank-you/');
   };
   return (
-    <div className="min-h-screen" style={{ background: '#0B0F14' }}>
+    <div className="min-h-screen" style={{ background: SECTION_BG }}>
       <Seo
         title="NVIDIA GPU Optimization Services | Optimize NVIDIA GPU Performance"
         description="Improve speed and efficiency with expert NVIDIA GPU optimization services. We help businesses optimize NVIDIA GPU performance for AI, HPC, and data-intensive applications."
@@ -118,7 +198,7 @@ export function GPUOptimizationServicePage() {
       </section>
 
       {/* Overview Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: SECTION_BG }}>
         {/* Decorative background elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
@@ -200,7 +280,7 @@ export function GPUOptimizationServicePage() {
       <div className="premium-divider" />
 
       {/* Services Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
         <div className="max-w-7xl mx-auto">
           {/* Section title - full width centered */}
           <motion.div
@@ -231,62 +311,20 @@ export function GPUOptimizationServicePage() {
 
           {/* Service Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Card 1 - CUDA Optimization */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-2xl p-8"
-              style={{ background: '#f5f5f5' }}
-            >
-              <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>
-                CUDA
-                <br />
-                Optimization
-              </h3>
-              <p className="text-base leading-relaxed" style={{ color: '#666666' }}>
-                We optimize the underlying kernel execution, better shared memory assignment, and also readjust thread block settings to optimize performance. The services of our CUDA Development are aimed at removing the warp divergence and the latency in the NVIDIA GPU architecture.
-              </p>
-            </motion.div>
-
-            {/* Card 2 - AI/ML Acceleration */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="rounded-2xl p-8"
-              style={{ background: '#f5f5f5' }}
-            >
-              <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>
-                AI/ML
-                <br />
-                Acceleration
-              </h3>
-              <p className="text-base leading-relaxed" style={{ color: '#666666' }}>
-                Optimize the equilibrium of both the speed of model training and inference via optimized batch operations and the control of accessing memory. We optimize compute to reduce training time and improve predictive performance.
-              </p>
-            </motion.div>
-
-            {/* Card 3 - Performance Profiling */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="rounded-2xl p-8"
-              style={{ background: '#f5f5f5' }}
-            >
-              <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>
-                Performance
-                <br />
-                Profiling
-              </h3>
-              <p className="text-base leading-relaxed" style={{ color: '#666666' }}>
-                We identify the areas of inefficiency in the execution flow and memory transfers into increasingly sophisticated profiling frameworks. The benefits of detailed benchmarking are accuracy in making optimization decisions and quantifiable performance improvements.
-              </p>
-            </motion.div>
+            {servicesData.map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                className="rounded-2xl p-8"
+                style={{ background: CARD_BG_LIGHT }}
+              >
+                <h3 className="text-2xl font-bold mb-4 whitespace-pre-line" style={{ color: '#000000' }}>{item.title}</h3>
+                <p className="text-base leading-relaxed" style={{ color: '#666666' }}>{item.description}</p>
+              </motion.div>
+            ))}
           </div>
 
           {/* Get in Touch Button */}
@@ -312,7 +350,7 @@ export function GPUOptimizationServicePage() {
       </section>
 
       {/* Industry-Specific Services Section */}
-      <section className="px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14', paddingTop: '100px', paddingBottom: '100px' }}>
+      <section className="px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG, paddingTop: '100px', paddingBottom: '100px' }}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left Column - Text Content */}
@@ -333,41 +371,14 @@ export function GPUOptimizationServicePage() {
 
               {/* Industry List - 2x2 Grid */}
               <div className="grid grid-cols-2 gap-8 max-w-2xl">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                {industryItems.map((label) => (
+                  <div key={label} className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
+                      <CheckIcon />
+                    </div>
+                    <span className="text-white text-base">{label}</span>
                   </div>
-                  <span className="text-white text-base">AI & Machine Learning</span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <span className="text-white text-base">Scientific Computing</span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <span className="text-white text-base">Data Analytics</span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <span className="text-white text-base">Rendering & Graphics</span>
-                </div>
+                ))}
               </div>
             </motion.div>
 
@@ -395,10 +406,7 @@ export function GPUOptimizationServicePage() {
         </div>
       </section>
 
-      {/* Divider Line Above Process */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-      </div>
+      <DividerLine />
 
       {/* Process Flow Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #0B0F14 0%, #111827 50%, #0B0F14 100%)' }}>
@@ -430,133 +438,28 @@ export function GPUOptimizationServicePage() {
 
           {/* Process Steps - Centered Transparent Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
-
-            {/* Step 1 - Assessment */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
+            {processSteps.map((step, i) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 * (i + 1) }}
+                className="text-center group"
+              >
+                <div className="flex flex-col items-center">
+                  <div className="relative mb-6">
+                    <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${step.gradient} flex items-center justify-center shadow-lg ${step.shadow} group-hover:scale-110 transition-transform duration-300`}>
+                      <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={step.pathD} />
+                      </svg>
+                    </div>
                   </div>
+                  <h3 className="text-2xl font-bold text-white mb-6">{step.title}</h3>
+                  <p className="text-white/60 leading-relaxed">{step.description}</p>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-6">Assessment</h3>
-                <p className="text-white/60 leading-relaxed">Assess existing GPU architecture, load, and establish specific optimization objectives.</p>
-              </div>
-            </motion.div>
-
-            {/* Step 2 - Analysis */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-6">Analysis</h3>
-                <p className="text-white/60 leading-relaxed">Gather real-time monitoring information and spot performance issues and performance bottlenecks.</p>
-              </div>
-            </motion.div>
-
-            {/* Step 3 - Kernel Optimization */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-6">Kernel Optimization</h3>
-                <p className="text-white/60 leading-relaxed">Refine CUDA kernels and improve parallel execution balance.</p>
-              </div>
-            </motion.div>
-
-            {/* Step 4 - Tuning */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center shadow-lg shadow-pink-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-6">Tuning</h3>
-                <p className="text-white/60 leading-relaxed">Expenses in runtime parameters and memory allocation, better throughput.</p>
-              </div>
-            </motion.div>
-
-            {/* Step 5 - Testing */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-6">Testing</h3>
-                <p className="text-white/60 leading-relaxed">Authenticate gains with validation checkpoints.</p>
-              </div>
-            </motion.div>
-
-            {/* Step 6 - Deployment */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-green-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-6">Deployment</h3>
-                <p className="text-white/60 leading-relaxed">Employ workloads that are optimized, monitored, and improved.</p>
-              </div>
-            </motion.div>
-
+              </motion.div>
+            ))}
           </div>
 
           {/* Bottom CTA */}
@@ -645,13 +548,10 @@ export function GPUOptimizationServicePage() {
         </div>
       </section>
 
-      {/* Divider Line Below Process */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-      </div>
+      <DividerLine />
 
       {/* Business Benefits Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
         <div className="max-w-7xl mx-auto">
           {/* Section Heading */}
           <motion.div
@@ -670,134 +570,28 @@ export function GPUOptimizationServicePage() {
 
           {/* Benefits Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1 - Faster Processing Speed */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Faster
-                <br />
-                Processing
-                <br />
-                Speed
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                Fasten hardened compute tasks with an ideal use of parallelization and data movement. With decreased processing time, there will be shorter experimentation times and shorter delivery times.
-              </p>
-            </motion.div>
-
-            {/* Card 2 - Lower Costs of Infrastructure */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(6, 182, 212, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Lower Costs of
-                <br />
-                Infrastructure
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                Optimize the use of GPUs in order to reduce costs on clouds and hardware. Harmful efficiency brings a decrease in over-provisioning and enhanced resource allocation.
-              </p>
-            </motion.div>
-
-            {/* Card 3 - Improved Scalability */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(139, 92, 246, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Improved
-                <br />
-                Scalability
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                Processes more data and intricate programs with no drop in performance or increased proportional cost.
-              </p>
-            </motion.div>
-
-            {/* Card 4 - Enhanced Model Performance */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(236, 72, 153, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Enhanced
-                <br />
-                Model
-                <br />
-                Performance
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                Improve the performance of AI models training and inference with optimal CUDA execution paths.
-              </p>
-            </motion.div>
-
-            {/* Card 5 - Competitive Advantage */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(251, 146, 60, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Competitive
-                <br />
-                Advantage
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                Become better computers to hasten innovation and become more powerful in data-based markets.
-              </p>
-            </motion.div>
-
-            {/* Card 6 - Energy Efficiency */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(52, 211, 153, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Energy
-                <br />
-                Efficiency
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                Minimize energy use by optimizing the use of GPUs, which helps on the sustainability agenda and limits the cost of running the operations.
-              </p>
-            </motion.div>
+            {benefitsData.map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                className="rounded-xl p-8 border transition-all duration-300"
+                style={{ background: BENEFIT_CARD_BG, borderColor: item.borderColor }}
+              >
+                <h3 className="text-2xl font-bold text-white mb-4 leading-tight whitespace-pre-line">{item.title}</h3>
+                <p className="text-white/70 text-base leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Divider Line Below Benefits */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-      </div>
+      <DividerLine />
 
       {/* AI Models We Have Expertise In Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
         <div className="max-w-7xl mx-auto">
           {/* Section Heading */}
           <motion.div
@@ -814,358 +608,62 @@ export function GPUOptimizationServicePage() {
 
           {/* AI Models Grid - 4 columns, 2 rows */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-
-            {/* Model 1 - GPT-4o */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-            >
-              <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
-                <img
-                  src="/images/AI Models exeperty/gpt-4o.jpg.jpg"
-                  alt="GPT-4o"
-                  className="object-contain transition-transform duration-300"
-                  style={{ maxHeight: '72px', maxWidth: '100%' }}
-                />
-              </div>
-              <h3
-                className="text-base font-semibold"
-                style={{
-                  color: '#FAFAFA',
-                  letterSpacing: '0.02em'
-                }}
+            {aiModelsData.map((model, i) => (
+              <motion.div
+                key={model.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
+                style={{ background: 'rgba(17, 24, 39, 0.4)', backdropFilter: 'blur(10px)', border: '1px solid rgba(16, 185, 129, 0.1)' }}
               >
-                GPT-4o
-              </h3>
-            </motion.div>
-
-            {/* Model 2 - Llama 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-            >
-              <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
-                <img
-                  src="/images/AI Models exeperty/llama-3.jpg.webp"
-                  alt="Llama 3"
-                  className="object-contain transition-transform duration-300"
-                  style={{ maxHeight: '72px', maxWidth: '100%' }}
-                />
-              </div>
-              <h3
-                className="text-base font-semibold"
-                style={{
-                  color: '#FAFAFA',
-                  letterSpacing: '0.02em'
-                }}
-              >
-                Llama 3
-              </h3>
-            </motion.div>
-
-            {/* Model 3 - PaLM 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-            >
-              <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
-                <img
-                  src="/images/AI Models exeperty/palm-2.jpg.webp"
-                  alt="PaLM 2"
-                  className="object-contain transition-transform duration-300"
-                  style={{ maxHeight: '72px', maxWidth: '100%' }}
-                />
-              </div>
-              <h3
-                className="text-base font-semibold"
-                style={{
-                  color: '#FAFAFA',
-                  letterSpacing: '0.02em'
-                }}
-              >
-                PaLM 2
-              </h3>
-            </motion.div>
-
-            {/* Model 4 - Stability AI */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-            >
-              <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
-                <img
-                  src="/images/AI Models exeperty/stability-ai.jpg.webp"
-                  alt="Stability AI"
-                  className="object-contain transition-transform duration-300"
-                  style={{ maxHeight: '72px', maxWidth: '100%' }}
-                />
-              </div>
-              <h3
-                className="text-base font-semibold"
-                style={{
-                  color: '#FAFAFA',
-                  letterSpacing: '0.02em'
-                }}
-              >
-                Stability AI
-              </h3>
-            </motion.div>
-
-            {/* Model 5 - Google Gemini */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-            >
-              <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
-                <img
-                  src="/images/AI Models exeperty/google-gemini.jpg.webp"
-                  alt="Google Gemini"
-                  className="object-contain transition-transform duration-300"
-                  style={{ maxHeight: '72px', maxWidth: '100%' }}
-                />
-              </div>
-              <h3
-                className="text-base font-semibold"
-                style={{
-                  color: '#FAFAFA',
-                  letterSpacing: '0.02em'
-                }}
-              >
-                Google Gemini
-              </h3>
-            </motion.div>
-
-            {/* Model 6 - Vicuna */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-            >
-              <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
-                <img
-                  src="/images/AI Models exeperty/vicuna.jpg.webp"
-                  alt="Vicuna"
-                  className="object-contain transition-transform duration-300"
-                  style={{ maxHeight: '72px', maxWidth: '100%' }}
-                />
-              </div>
-              <h3
-                className="text-base font-semibold"
-                style={{
-                  color: '#FAFAFA',
-                  letterSpacing: '0.02em'
-                }}
-              >
-                Vicuna
-              </h3>
-            </motion.div>
-
-            {/* Model 7 - Mistral */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.7 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-            >
-              <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
-                <img
-                  src="/images/AI Models exeperty/mistral.jpg.webp"
-                  alt="Mistral"
-                  className="object-contain transition-transform duration-300"
-                  style={{ maxHeight: '72px', maxWidth: '100%' }}
-                />
-              </div>
-              <h3
-                className="text-base font-semibold"
-                style={{
-                  color: '#FAFAFA',
-                  letterSpacing: '0.02em'
-                }}
-              >
-                Mistral
-              </h3>
-            </motion.div>
-
-            {/* Model 8 - Claude */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-              className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
-              style={{
-                background: 'rgba(17, 24, 39, 0.4)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(16, 185, 129, 0.1)'
-              }}
-            >
-              <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
-                <img
-                  src="/images/AI Models exeperty/claude.jpg.webp"
-                  alt="Claude"
-                  className="object-contain transition-transform duration-300"
-                  style={{ maxHeight: '72px', maxWidth: '100%' }}
-                />
-              </div>
-              <h3
-                className="text-base font-semibold"
-                style={{
-                  color: '#FAFAFA',
-                  letterSpacing: '0.02em'
-                }}
-              >
-                Claude
-              </h3>
-            </motion.div>
-
+                <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
+                  <img src={model.src} alt={model.alt} className="object-contain transition-transform duration-300" style={{ maxHeight: '72px', maxWidth: '100%' }} />
+                </div>
+                <h3 className="text-base font-semibold" style={{ color: '#FAFAFA', letterSpacing: '0.02em' }}>{model.name}</h3>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Why Choose Section */}
-      <section className="px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14', paddingTop: '100px', paddingBottom: '100px' }}>
+      <section className="px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG, paddingTop: '100px', paddingBottom: '100px' }}>
         <div className="max-w-7xl mx-auto">
-          {/* Section Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            style={{ marginBottom: '60px' }}
-          >
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ marginBottom: '60px' }}>
             <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
               Why Choose Us for
               <br />
               GPU Optimization?
             </h2>
           </motion.div>
-
-          {/* Benefits List */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            {/* Benefit 1 - Advanced Parallel Computing Expertise */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="flex items-start gap-6 rounded-xl p-6 border transition-all duration-300"
-              style={{ borderColor: 'rgba(16, 185, 129, 0.3)' }}
-            >
-              <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white" style={{ marginBottom: '16px' }}>Advanced Parallel Computing Expertise</h3>
-                <p className="text-white/70 text-base leading-relaxed max-w-4xl">
-                  Our experts have extensive expertise in CUDA implementation, tuning of the GPU architecture, and high-performance parallel systems. This is done at low-level kernel optimization all the way up to optimizing an entire NVIDIA GPU, and we work to squeeze the highest performance out of every tier of your computing system.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Benefit 2 - Results Backed by Data */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex items-start gap-6 rounded-xl p-6 border transition-all duration-300"
-              style={{ borderColor: 'rgba(16, 185, 129, 0.3)' }}
-            >
-              <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white" style={{ marginBottom: '16px' }}>Results Backed by Data</h3>
-                <p className="text-white/70 text-base leading-relaxed max-w-4xl">
-                  We value quantitative difference. Each interaction is predetermined by profiling information, systematic testing, and efficiency metrics showing evident acceleration, competitive advantages, and enhanced hardware use.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Benefit 3 - Optimization Built Around Your Workload */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex items-start gap-6 rounded-xl p-6 border transition-all duration-300"
-              style={{ borderColor: 'rgba(16, 185, 129, 0.3)' }}
-            >
-              <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white" style={{ marginBottom: '16px' }}>Optimization Built Around Your Workload</h3>
-                <p className="text-white/70 text-base leading-relaxed max-w-4xl">
-                  No generic templates. We will create application-specific GPU optimization that will respond to your application and run a discussion, infrastructure configuration, as well as scalability needs by making the performance consistently enhanced on a long-term basis.
-                </p>
-              </div>
-            </motion.div>
+          <div className="flex flex-col gap-6">
+            {whyChooseItems.map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                className="flex items-start gap-6 rounded-xl p-6 border transition-all duration-300"
+                style={{ borderColor: 'rgba(16, 185, 129, 0.3)' }}
+              >
+                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
+                  <CheckIconLarge />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
+                  <p className="text-white/70 text-base leading-relaxed max-w-4xl">{item.description}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* What Our Clients Say Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <motion.div
@@ -1200,173 +698,38 @@ export function GPUOptimizationServicePage() {
 
           {/* Testimonials Grid - 3 Columns */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-
-            {/* Testimonial 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="group"
-            >
-              <div
-                className="h-full p-8 rounded-2xl border transition-all duration-300"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  borderColor: 'rgba(255, 255, 255, 0.08)',
-                  backdropFilter: 'blur(10px)'
-                }}
+            {testimonialsData.map((t, i) => (
+              <motion.div
+                key={t.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                className="group"
               >
-                {/* Quote Icon */}
-                <div className="mb-4">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
-                    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
-                  </svg>
-                </div>
-
-                {/* Testimonial Text */}
-                <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>
-                  "Their graphics processing optimization experience minimized our processing latency. The CUDA execution benefits were fast and quantifiable."
-                </p>
-
-                {/* Author Info */}
-                <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}>
-                  <div className="w-12 h-12 rounded-full flex-shrink-0" style={{
-                    background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '14px',
-                    fontWeight: 700,
-                    color: '#FFF'
-                  }}>
-                    AM
-                  </div>
-                  <div>
-                    <div style={{ color: '#FAFAFA', fontWeight: 600, fontSize: '15px' }}>Arjun Mehta</div>
-                    <div style={{ color: '#9CA3AF', fontSize: '13px' }}>Director of Engineering, NovaAI Labs</div>
+                <div className="h-full p-8 rounded-2xl border transition-all duration-300" style={{ background: 'rgba(255, 255, 255, 0.02)', borderColor: BORDER_SUBTLE, backdropFilter: 'blur(10px)' }}>
+                  <div className="mb-4"><QuoteIcon /></div>
+                  <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>{t.quote}</p>
+                  <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: BORDER_SUBTLE }}>
+                    <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold text-white" style={{ background: t.avatarGradient }}>{t.initials}</div>
+                    <div>
+                      <div className="text-[#FAFAFA] font-semibold text-[15px]">{t.name}</div>
+                      <div className="text-[#9CA3AF] text-[13px]">{t.role}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-
-            {/* Testimonial 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="group"
-            >
-              <div
-                className="h-full p-8 rounded-2xl border transition-all duration-300"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  borderColor: 'rgba(255, 255, 255, 0.08)',
-                  backdropFilter: 'blur(10px)'
-                }}
-              >
-                {/* Quote Icon */}
-                <div className="mb-4">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
-                    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
-                  </svg>
-                </div>
-
-                {/* Testimonial Text */}
-                <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>
-                  "Our AI training pipeline became significantly faster after their optimization work. Clear performance gains with reduced infrastructure strain."
-                </p>
-
-                {/* Author Info */}
-                <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}>
-                  <div className="w-12 h-12 rounded-full flex-shrink-0" style={{
-                    background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '14px',
-                    fontWeight: 700,
-                    color: '#FFF'
-                  }}>
-                    SA
-                  </div>
-                  <div>
-                    <div style={{ color: '#FAFAFA', fontWeight: 600, fontSize: '15px' }}>Sofia Alvarez</div>
-                    <div style={{ color: '#9CA3AF', fontSize: '13px' }}>CTO, Quantix Systems</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Testimonial 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="group"
-            >
-              <div
-                className="h-full p-8 rounded-2xl border transition-all duration-300"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  borderColor: 'rgba(255, 255, 255, 0.08)',
-                  backdropFilter: 'blur(10px)'
-                }}
-              >
-                {/* Quote Icon */}
-                <div className="mb-4">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
-                    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
-                  </svg>
-                </div>
-
-                {/* Testimonial Text */}
-                <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>
-                  "We hired their CUDA developers for complex optimization tasks. The results were stable, scalable, and production-ready."
-                </p>
-
-                {/* Author Info */}
-                <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}>
-                  <div className="w-12 h-12 rounded-full flex-shrink-0" style={{
-                    background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '14px',
-                    fontWeight: 700,
-                    color: '#FFF'
-                  }}>
-                    DB
-                  </div>
-                  <div>
-                    <div style={{ color: '#FAFAFA', fontWeight: 600, fontSize: '15px' }}>Daniel Brooks</div>
-                    <div style={{ color: '#9CA3AF', fontSize: '13px' }}>Chief Operating Officer, CoreTech Solutions</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-            {/* Left Column - Title */}
             <div className="lg:col-span-4">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
                 <p className="text-white/60 text-sm mb-4 uppercase tracking-wider">FAQs</p>
                 <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
                   Frequently
@@ -1375,132 +738,30 @@ export function GPUOptimizationServicePage() {
                 </h2>
               </motion.div>
             </div>
-
-            {/* Right Column - FAQ Items */}
             <div className="lg:col-span-8 space-y-4">
-              {/* FAQ 1 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="rounded-2xl border border-white/10 overflow-hidden"
-                style={{ background: '#0B0F14' }}
-              >
-                <details className="group">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      How long does a GPU optimization project typically take?
-                    </h3>
-                    <svg
-                      className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <div className="px-6 pt-2 pb-8">
-                    <p className="text-white/70 text-base leading-relaxed">
-                      The timelines of projects are based on the complexity of the workload, the level of infrastructure, and the objectives of the performance. Enterprise environments take most optimization engagements between a few weeks and a few months.
-                    </p>
-                  </div>
-                </details>
-              </motion.div>
-
-              {/* FAQ 2 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="rounded-2xl border border-white/10 overflow-hidden"
-                style={{ background: '#0B0F14' }}
-              >
-                <details className="group">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      Can you optimize legacy CUDA codebases?
-                    </h3>
-                    <svg
-                      className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <div className="px-6 pt-2 pb-8">
-                    <p className="text-white/70 text-base leading-relaxed">
-                      Yes. We test current CUDA implementations, determine architectural waste, and cull kernels to optimize memory access characteristics, parallel execution ratio, and total performance.
-                    </p>
-                  </div>
-                </details>
-              </motion.div>
-
-              {/* FAQ 3 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="rounded-2xl border border-white/10 overflow-hidden"
-                style={{ background: '#0B0F14' }}
-              >
-                <details className="group">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      What metrics do you use to measure optimization success?
-                    </h3>
-                    <svg
-                      className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <div className="px-6 pt-2 pb-8">
-                    <p className="text-white/70 text-base leading-relaxed">
-                      We assess the use of GPUs, the performance, the ability to use memory, the decrease in latency, the efficiency of the scalability, and the savings in costs using structured profiling and benchmarking techniques.
-                    </p>
-                  </div>
-                </details>
-              </motion.div>
-
-              {/* FAQ 4 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="rounded-2xl border border-white/10 overflow-hidden"
-                style={{ background: '#0B0F14' }}
-              >
-                <details className="group">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      Do optimized workloads remain stable in production?
-                    </h3>
-                    <svg
-                      className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <div className="px-6 pt-2 pb-8">
-                    <p className="text-white/70 text-base leading-relaxed">
-                      Absolutely. All optimizations are tested, regressed, and monitored during deployment to make sure that the performance improvements will be maintained in the field.
-                    </p>
-                  </div>
-                </details>
-              </motion.div>
+              {faqData.map((item, i) => (
+                <motion.div
+                  key={item.q}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
+                  className="rounded-2xl border border-white/10 overflow-hidden"
+                  style={{ background: SECTION_BG }}
+                >
+                  <details className="group">
+                    <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                      <h3 className="text-lg font-semibold text-white pr-4">{item.q}</h3>
+                      <svg className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </summary>
+                    <div className="px-6 pt-2 pb-8">
+                      <p className="text-white/70 text-base leading-relaxed">{item.a}</p>
+                    </div>
+                  </details>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
@@ -1594,11 +855,8 @@ export function GPUOptimizationServicePage() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
-                        style={{
-                          background: 'rgba(255, 255, 255, 0.06)',
-                          borderColor: 'rgba(255, 255, 255, 0.1)'
-                        }}
+                        className={formInputClass}
+                        style={formInputStyle}
                         placeholder="John Doe"
                       />
                     </div>
@@ -1612,11 +870,8 @@ export function GPUOptimizationServicePage() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
-                        style={{
-                          background: 'rgba(255, 255, 255, 0.06)',
-                          borderColor: 'rgba(255, 255, 255, 0.1)'
-                        }}
+                        className={formInputClass}
+                        style={formInputStyle}
                         placeholder="john@company.com"
                       />
                     </div>
@@ -1632,11 +887,8 @@ export function GPUOptimizationServicePage() {
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
-                        style={{
-                          background: 'rgba(255, 255, 255, 0.06)',
-                          borderColor: 'rgba(255, 255, 255, 0.1)'
-                        }}
+                        className={formInputClass}
+                        style={formInputStyle}
                         placeholder="Your Company"
                       />
                     </div>
@@ -1649,11 +901,8 @@ export function GPUOptimizationServicePage() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all"
-                        style={{
-                          background: 'rgba(255, 255, 255, 0.06)',
-                          borderColor: 'rgba(255, 255, 255, 0.1)'
-                        }}
+                        className={formInputClass}
+                        style={formInputStyle}
                         placeholder="+1 (555) 000-0000"
                       />
                     </div>
@@ -1669,11 +918,8 @@ export function GPUOptimizationServicePage() {
                       onChange={handleChange}
                       required
                       rows={4}
-                      className="w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all resize-none"
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.06)',
-                        borderColor: 'rgba(255, 255, 255, 0.1)'
-                      }}
+                      className={`${formInputClass} resize-none`}
+                      style={formInputStyle}
                       placeholder="Tell us about your GPU optimization needs..."
                     />
                   </div>
@@ -1721,11 +967,7 @@ export function GPUOptimizationServicePage() {
                 {/* Address */}
                 <div
                   className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105"
-                  style={{
-                    background: 'rgba(17, 24, 39, 0.6)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    backdropFilter: 'blur(14px)'
-                  }}
+                  style={officeCardStyle}
                 >
                   <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden" style={{ background: 'rgba(16, 185, 129, 0.15)' }}>
                     <img
@@ -1745,25 +987,15 @@ export function GPUOptimizationServicePage() {
                 {/* Email */}
                 <div
                   className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105"
-                  style={{
-                    background: 'rgba(17, 24, 39, 0.6)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    backdropFilter: 'blur(14px)'
-                  }}
+                  style={officeCardStyle}
                 >
                   <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: 'rgba(16, 185, 129, 0.15)' }}>
-                    <svg className="w-6 h-6" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-6 h-6 text-[#10B981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
                   <h4 className="text-lg font-semibold mb-3" style={{ color: '#FAFAFA' }}>Email</h4>
-                  <a
-                    href="mailto:info@jashom.com"
-                    className="text-sm transition-colors inline-block"
-                    style={{ color: '#10B981' }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = '#059669'}
-                    onMouseLeave={(e) => e.currentTarget.style.color = '#10B981'}
-                  >
+                  <a href="mailto:info@jashom.com" className="text-sm inline-block text-[#10B981] hover:text-[#059669] transition-colors">
                     info@jashom.com
                   </a>
                   <p className="text-xs mt-3" style={{ color: '#6B7280' }}>
@@ -1774,25 +1006,15 @@ export function GPUOptimizationServicePage() {
                 {/* Phone */}
                 <div
                   className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105"
-                  style={{
-                    background: 'rgba(17, 24, 39, 0.6)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    backdropFilter: 'blur(14px)'
-                  }}
+                  style={officeCardStyle}
                 >
                   <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: 'rgba(16, 185, 129, 0.15)' }}>
-                    <svg className="w-6 h-6" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-6 h-6 text-[#10B981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                   </div>
                   <h4 className="text-lg font-semibold mb-3" style={{ color: '#FAFAFA' }}>Phone</h4>
-                  <a
-                    href="tel:+919023906363"
-                    className="text-sm transition-colors inline-block"
-                    style={{ color: '#10B981' }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = '#059669'}
-                    onMouseLeave={(e) => e.currentTarget.style.color = '#10B981'}
-                  >
+                  <a href="tel:+919023906363" className="text-sm inline-block text-[#10B981] hover:text-[#059669] transition-colors">
                     +91 90239 06363
                   </a>
                   <p className="text-xs mt-3" style={{ color: '#6B7280' }}>

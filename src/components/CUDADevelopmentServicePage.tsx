@@ -3,6 +3,88 @@ import { SEO } from './SEO';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const SECTION_BG = '#0B0F14';
+const CARD_BG_LIGHT = '#f5f5f5';
+const BORDER_SUBTLE = 'rgba(255, 255, 255, 0.08)';
+const BENEFIT_CARD_BG = 'rgba(16, 185, 129, 0.05)';
+
+const CheckIcon = () => (
+  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+
+const CheckIconLarge = () => (
+  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+
+const QuoteIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
+    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
+  </svg>
+);
+
+const DividerLine = () => (
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+  </div>
+);
+
+const servicesData = [
+  { title: 'Custom Parallel\nAlgorithm Design', description: 'To maintain long-term computational performance, we build workload-specific parallel plans, compromising thread allocation, the use of memory hierarchy, and synchronization.' },
+  { title: 'GPU Acceleration for\nExisting Systems', description: 'With little disturbance, legacy applications are reformed to run on the GPU. We control the optimization of data transfer, API correspondence, and validation to production readiness.' },
+  { title: 'End-to-End Performance\nArchitecture', description: 'Since we do initial modeling, benchmark validation, and hardening against deployment, we manage all the steps of the CUDA implementation with precision-driven engineering requirements.' },
+];
+
+const industryItems = [
+  'Artificial Intelligence Model Training & Inference Systems',
+  'Super-Accurate Scientific Research Platforms',
+  'Risk Engines and Algorithms Trading',
+  'Instant Media Rendering and Analysis',
+];
+
+const processSteps = [
+  { title: 'Computational Profiling', description: 'We measure execution patterns, memory loads, and bottlenecks in order to come up with realistic acceleration targets.', gradient: 'from-blue-500 to-blue-500', shadow: 'shadow-blue-500/50', pathD: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
+  { title: 'Parallel Systems Blueprint', description: 'Models known as thread hierarchy, shared memory models, and workload partitioning are designed for models that are ideal to execute using the GPUs.', gradient: 'from-purple-500 to-pink-500', shadow: 'shadow-purple-500/50', pathD: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z' },
+  { title: 'CUDA Core Development', description: 'The high-occupancy kernels are also designed to provide the predictability of throughput when operating at peak loading.', gradient: 'from-blue-500 to-blue-500', shadow: 'shadow-cyan-500/50', pathD: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' },
+  { title: 'Bottleneck Elimination & Benchmarking', description: 'The profiling tools reveal the areas of inefficiency so that they can be refined to achieve continuous and reliable performance improvements.', gradient: 'from-pink-500 to-rose-500', shadow: 'shadow-pink-500/50', pathD: 'M13 10V3L4 14h7v7l9-11h-7z' },
+  { title: 'Application Integration', description: 'GPU modules are integrated into your software ecosystem with clean interfaces and continuity.', gradient: 'from-indigo-500 to-purple-500', shadow: 'shadow-indigo-500/50', pathD: 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z' },
+  { title: 'Production Optimization', description: 'Scalability is guaranteed during post-deployment analysis, based on the changing workloads and multi-GPUs.', gradient: 'from-green-500 to-emerald-500', shadow: 'shadow-green-500/50', pathD: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z' },
+];
+
+const benefitsData = [
+  { title: 'Accelerated\nComputational\nPerformance', description: 'CUDA allows parallel computation of thousands of Cores on the GPU, which saves a lot of processing time when dealing with complex workloads, like AI training, simulations, and applications of large data analytics.', borderColor: 'rgba(16, 185, 129, 0.35)' },
+  { title: 'Improved\nInfrastructure\nEfficiency', description: 'By moving more intensive workloads off of CPU and onto the GPUs, the organizations are able to handle larger data volumes with reduced hardware resources to enhance performance-per-watt and infrastructure ROI.', borderColor: 'rgba(6, 182, 212, 0.35)' },
+  { title: 'Enhanced\nCompetitive\nPositioning', description: 'A rapid computational speed can be more useful in fast experimentation, real-time analysis, and sophisticated modeling, which will enable companies to innovate faster and have a high level of technological superiority in their industry.', borderColor: 'rgba(139, 92, 246, 0.35)' },
+  { title: 'Scalable\nHigh-Performance\nArchitecture', description: 'The architecture of CUDA-based systems is built so that it can be used in both multi-GPU architectures and high-performance clusters, both in terms of throughput and reliability, as data requirements and computing complexity rise.', borderColor: 'rgba(236, 72, 153, 0.35)' },
+  { title: 'Future-Ready\nTechnology\nInvestment', description: 'Adopting CUDA aligns your infrastructure with evolving GPU advancements, ensuring compatibility with emerging AI frameworks, deep learning models, and next-generation computational workloads.', borderColor: 'rgba(251, 146, 60, 0.35)' },
+  { title: 'Reduced\nDevelopment\nCycles', description: 'The performance in terms of optimization of GPU acceleration reduces the time of implementation in testing and in the process of iteration, whereby development teams can quickly rise above their experimental levels and proceed with their production processes more efficiently.', borderColor: 'rgba(52, 211, 153, 0.35)' },
+];
+
+const whyChooseItems = [
+  { title: 'Advanced Parallel Computing Expertise', description: 'Our engineers have extensive practical experience in CUDA programming and in the design of large-scale parallel architecture, as well as in the management of the GPU memory. We build production-ready acceleration frameworks that prioritize execution stability, optimal resource utilization, and sustained high-throughput performance across demanding computational environments.' },
+  { title: 'Quantifiable Performance Improvements', description: 'All CUDA implementations have advanced profiling, benchmarking, and performance analysis. We quantify the reduction of latency, throughput improvement as well as resource efficiency to make sure that optimization outcomes are realistic, evidence-based, and consistent with clearly established performance goals.' },
+  { title: 'Workload-Specific Optimization Strategy', description: "We do not just make some arbitrary acceleration, but instead analyze the patterns of execution of your application, data dependencies, and scaling needs. This enables us to design CUDA solutions that are highly targeted to optimally match workload behaviour and provide predictable and orderable computational benefits." },
+];
+
+const testimonialsData = [
+  { quote: '"GPU acceleration significantly enhanced our data processing framework, reducing execution cycles under high-load scenarios."', initials: 'DE', role: 'Director of Engineering', company: 'AI Platform', avatarGradient: 'linear-gradient(135deg, #10B981, #06B6D4)' },
+  { quote: '"Our migration to CUDA-based execution improved analytical throughput without expanding infrastructure costs."', initials: 'CT', role: 'Chief Technology Officer', company: 'Technology Company', avatarGradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)' },
+  { quote: '"The architectural redesign delivered predictable performance scaling across multiple GPU nodes."', initials: 'HS', role: 'Head of Systems Engineering', company: 'Engineering Company', avatarGradient: 'linear-gradient(135deg, #10B981, #34D399)' },
+];
+
+const faqData = [
+  { q: 'How do I know if my application is suitable for CUDA acceleration?', a: 'Applications whose operations are frequently repeated in numbers, process large datasets, matrix calculations, or can be performed in parallel are good candidates. Performing profiling measurements helps us identify whether there are any performance improvements that can be realized and achieved through the use of GPU acceleration.' },
+  { q: 'Can CUDA be integrated into an existing production system?', a: 'Yes. We refactor and modularize elements such that there is no disruption to other business operations, and a full system rebuild is not necessary to add the acceleration of a graphics card to your existing architecture.' },
+  { q: 'What is the difference between CPU optimization and CUDA optimization?', a: 'CPU optimization enhances the ability to run sequence-related tasks, whereas CUDA optimization rearranges workloads to execute them in a massively parallel fashion across the armies of cores in GPUs, which is much more efficient at providing high throughput in tasks of high compute intensity.' },
+  { q: 'Do you support multi-GPU and cluster-based deployments?', a: 'Absolutely. Our CUDA architectures are optimized to be scaled to multi-GPU and high-performance cluster environments, such that the performance remains consistent as the level of computational requirements rises.' },
+  { q: 'How do you measure performance improvement in CUDA projects?', a: 'Before and after optimization, we measure the reduction of execution time, the increased memory efficiency, and scalability through profiling tools, benchmarking frameworks, and throughput analysis.' },
+  { q: 'Is ongoing CUDA performance tuning necessary?', a: 'Yes. With the changing workloads, periodical profiling and optimization will ensure the efficiency is maintained and avoid any bottlenecks, keeping the utilization of the GPUs optimal over time.' },
+];
+
 export function CUDADevelopmentServicePage() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -27,7 +109,7 @@ export function CUDADevelopmentServicePage() {
     navigate('/thank-you/');
   };
   return (
-    <div className="min-h-screen" style={{ background: '#0B0F14' }}>
+    <div className="min-h-screen" style={{ background: SECTION_BG }}>
       <SEO
         title="CUDA Development Services | Expert CUDA Developers for GPU Computing"
         description="Hire experienced CUDA developers to build high-performance GPU applications. Jashom delivers scalable CUDA development solutions for AI, deep learning, and parallel computing."
@@ -120,7 +202,7 @@ export function CUDADevelopmentServicePage() {
       </section>
 
       {/* Overview Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: SECTION_BG }}>
         {/* Decorative background elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
@@ -203,7 +285,7 @@ export function CUDADevelopmentServicePage() {
       <div className="premium-divider" />
 
       {/* Services Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
         <div className="max-w-7xl mx-auto">
           {/* Section title - full width centered */}
           <motion.div
@@ -234,73 +316,26 @@ export function CUDADevelopmentServicePage() {
 
           {/* Service Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Card 1 - Custom Parallel Algorithm Design */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-2xl p-8"
-              style={{ background: '#f5f5f5' }}
-            >
-              <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>
-                Custom Parallel
-                <br />
-                Algorithm Design
-              </h3>
-              <p className="text-base leading-relaxed" style={{ color: '#666666' }}>
-                To maintain long-term computational performance, we build workload-specific parallel plans, compromising thread allocation, the use of memory hierarchy, and synchronization.
-              </p>
-            </motion.div>
-
-            {/* Card 2 - GPU Acceleration for Existing Systems */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="rounded-2xl p-8"
-              style={{ background: '#f5f5f5' }}
-            >
-              <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>
-                GPU Acceleration for
-                <br />
-                Existing Systems
-              </h3>
-              <p className="text-base leading-relaxed" style={{ color: '#666666' }}>
-                With little disturbance, legacy applications are reformed to run on the GPU. We control the optimization of data transfer, API correspondence, and validation to production readiness.
-              </p>
-            </motion.div>
-
-            {/* Card 3 - End-to-End Performance Architecture */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="rounded-2xl p-8"
-              style={{ background: '#f5f5f5' }}
-            >
-              <h3 className="text-2xl font-bold mb-4" style={{ color: '#000000' }}>
-                End-to-End Performance
-                <br />
-                Architecture
-              </h3>
-              <p className="text-base leading-relaxed" style={{ color: '#666666' }}>
-                Since we do initial modeling, benchmark validation, and hardening against deployment, we manage all the steps of the CUDA implementation with precision-driven engineering requirements.
-              </p>
-            </motion.div>
+            {servicesData.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                className="rounded-2xl p-8"
+                style={{ background: CARD_BG_LIGHT }}
+              >
+                <h3 className="text-2xl font-bold mb-4 text-black whitespace-pre-line">{item.title}</h3>
+                <p className="text-base leading-relaxed text-[#666666]">{item.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Industry-Specific Services Section */}
-      <section
-        className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
-        style={{
-          background: '#0B0F14'
-        }}
-      >
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: SECTION_BG }}>
         {/* Brightness layer for background image */}
         <div 
           className="absolute inset-0 z-0"
@@ -334,50 +369,20 @@ export function CUDADevelopmentServicePage() {
 
             {/* Industry List - 2 columns */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+              {industryItems.map((label) => (
+                <div key={label} className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0 bg-[#10B981]">
+                    <CheckIcon />
+                  </div>
+                  <span className="text-white text-base font-medium">{label}</span>
                 </div>
-                <span className="text-white text-base font-medium">Artificial Intelligence Model Training & Inference Systems</span>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <span className="text-white text-base font-medium">Super-Accurate Scientific Research Platforms</span>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <span className="text-white text-base font-medium">Risk Engines and Algorithms Trading</span>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <span className="text-white text-base font-medium">Instant Media Rendering and Analysis</span>
-              </div>
+              ))}
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Divider Line Above Process */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-      </div>
+      <DividerLine />
 
       {/* Process Flow Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #0B0F14 0%, #111827 50%, #0B0F14 100%)' }}>
@@ -412,133 +417,28 @@ export function CUDADevelopmentServicePage() {
 
           {/* Process Steps - Centered Transparent Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
-
-            {/* Step 1 - Computational Profiling */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
+            {processSteps.map((step, index) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 * (index + 1) }}
+                className="text-center group"
+              >
+                <div className="flex flex-col items-center">
+                  <div className="relative mb-6">
+                    <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${step.gradient} flex items-center justify-center shadow-lg ${step.shadow} group-hover:scale-110 transition-transform duration-300`}>
+                      <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={step.pathD} />
+                      </svg>
+                    </div>
                   </div>
+                  <h3 className="text-2xl font-bold text-white mb-6">{step.title}</h3>
+                  <p className="text-white/60 leading-relaxed">{step.description}</p>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-6">Computational Profiling</h3>
-                <p className="text-white/60 leading-relaxed">We measure execution patterns, memory loads, and bottlenecks in order to come up with realistic acceleration targets.</p>
-              </div>
-            </motion.div>
-
-            {/* Step 2 - Parallel Systems Blueprint */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-6">Parallel Systems Blueprint</h3>
-                <p className="text-white/60 leading-relaxed">Models known as thread hierarchy, shared memory models, and workload partitioning are designed for models that are ideal to execute using the GPUs.</p>
-              </div>
-            </motion.div>
-
-            {/* Step 3 - CUDA Core Development */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-6">CUDA Core Development</h3>
-                <p className="text-white/60 leading-relaxed">The high-occupancy kernels are also designed to provide the predictability of throughput when operating at peak loading.</p>
-              </div>
-            </motion.div>
-
-            {/* Step 4 - Bottleneck Elimination & Benchmarking */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center shadow-lg shadow-pink-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-6">Bottleneck Elimination & Benchmarking</h3>
-                <p className="text-white/60 leading-relaxed">The profiling tools reveal the areas of inefficiency so that they can be refined to achieve continuous and reliable performance improvements.</p>
-              </div>
-            </motion.div>
-
-            {/* Step 5 - Application Integration */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-6">Application Integration</h3>
-                <p className="text-white/60 leading-relaxed">GPU modules are integrated into your software ecosystem with clean interfaces and continuity.</p>
-              </div>
-            </motion.div>
-
-            {/* Step 6 - Production Optimization */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-center group"
-            >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-6">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-green-500/50 group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                    </svg>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-6">Production Optimization</h3>
-                <p className="text-white/60 leading-relaxed">Scalability is guaranteed during post-deployment analysis, based on the changing workloads and multi-GPUs.</p>
-              </div>
-            </motion.div>
-
+              </motion.div>
+            ))}
           </div>
 
           {/* Bottom CTA */}
@@ -562,13 +462,10 @@ export function CUDADevelopmentServicePage() {
         </div>
       </section>
 
-      {/* Divider Line Below Process */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-      </div>
+      <DividerLine />
 
       {/* Business Benefits Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
         <div className="max-w-7xl mx-auto">
           {/* Section Heading */}
           <motion.div
@@ -587,142 +484,28 @@ export function CUDADevelopmentServicePage() {
 
           {/* Benefits Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1 - Accelerated Computational Performance */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Accelerated
-                <br />
-                Computational
-                <br />
-                Performance
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                CUDA allows parallel computation of thousands of Cores on the GPU, which saves a lot of processing time when dealing with complex workloads, like AI training, simulations, and applications of large data analytics.
-              </p>
-            </motion.div>
-
-            {/* Card 2 - Improved Infrastructure Efficiency */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(6, 182, 212, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Improved
-                <br />
-                Infrastructure
-                <br />
-                Efficiency
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                By moving more intensive workloads off of CPU and onto the GPUs, the organizations are able to handle larger data volumes with reduced hardware resources to enhance performance-per-watt and infrastructure ROI.
-              </p>
-            </motion.div>
-
-            {/* Card 3 - Enhanced Competitive Positioning */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(139, 92, 246, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Enhanced
-                <br />
-                Competitive
-                <br />
-                Positioning
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                A rapid computational speed can be more useful in fast experimentation, real-time analysis, and sophisticated modeling, which will enable companies to innovate faster and have a high level of technological superiority in their industry.
-              </p>
-            </motion.div>
-
-            {/* Card 4 - Scalable High-Performance Architecture */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(236, 72, 153, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Scalable
-                <br />
-                High-Performance
-                <br />
-                Architecture
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                The architecture of CUDA-based systems is built so that it can be used in both multi-GPU architectures and high-performance clusters, both in terms of throughput and reliability, as data requirements and computing complexity rise.
-              </p>
-            </motion.div>
-
-            {/* Card 5 - Future-Ready Technology Investment */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(251, 146, 60, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Future-Ready
-                <br />
-                Technology
-                <br />
-                Investment
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                Adopting CUDA aligns your infrastructure with evolving GPU advancements, ensuring compatibility with emerging AI frameworks, deep learning models, and next-generation computational workloads.
-              </p>
-            </motion.div>
-
-            {/* Card 6 - Reduced Development Cycles */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="rounded-xl p-8 border transition-all duration-300"
-              style={{ background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(52, 211, 153, 0.35)' }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4 leading-tight">
-                Reduced
-                <br />
-                Development
-                <br />
-                Cycles
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                The performance in terms of optimization of GPU acceleration reduces the time of implementation in testing and in the process of iteration, whereby development teams can quickly rise above their experimental levels and proceed with their production processes more efficiently.
-              </p>
-            </motion.div>
+            {benefitsData.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                className="rounded-xl p-8 border transition-all duration-300"
+                style={{ background: BENEFIT_CARD_BG, borderColor: item.borderColor }}
+              >
+                <h3 className="text-2xl font-bold text-white mb-4 leading-tight whitespace-pre-line">{item.title}</h3>
+                <p className="text-white/70 text-base leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Divider Line Below Benefits */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-      </div>
+      <DividerLine />
 
       {/* Why Choose Section */}
-      <section className="px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14', paddingTop: '100px', paddingBottom: '100px' }}>
+      <section className="px-4 sm:px-6 lg:px-8 py-[100px]" style={{ background: SECTION_BG }}>
         <div className="max-w-7xl mx-auto">
           {/* Section Heading */}
           <motion.div
@@ -741,77 +524,31 @@ export function CUDADevelopmentServicePage() {
 
           {/* Benefits List */}
           <div className="flex flex-col gap-6">
-            {/* Benefit 1 - Advanced Parallel Computing Expertise */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="flex items-start gap-6 border rounded-xl p-6"
-              style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}
-            >
-              <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white" style={{ marginBottom: '16px' }}>Advanced Parallel Computing Expertise</h3>
-                <p className="text-white/70 text-base leading-relaxed max-w-4xl">
-                  Our engineers have extensive practical experience in CUDA programming and in the design of large-scale parallel architecture, as well as in the management of the GPU memory. We build production-ready acceleration frameworks that prioritize execution stability, optimal resource utilization, and sustained high-throughput performance across demanding computational environments.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Benefit 2 - Quantifiable Performance Improvements */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex items-start gap-6 border rounded-xl p-6"
-              style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}
-            >
-              <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white" style={{ marginBottom: '16px' }}>Quantifiable Performance Improvements</h3>
-                <p className="text-white/70 text-base leading-relaxed max-w-4xl">
-                  All CUDA implementations have advanced profiling, benchmarking, and performance analysis. We quantify the reduction of latency, throughput improvement as well as resource efficiency to make sure that optimization outcomes are realistic, evidence-based, and consistent with clearly established performance goals.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Benefit 3 - Workload-Specific Optimization Strategy */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex items-start gap-6 border rounded-xl p-6"
-              style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}
-            >
-              <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={{ background: '#10B981' }}>
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-white" style={{ marginBottom: '16px' }}>Workload-Specific Optimization Strategy</h3>
-                <p className="text-white/70 text-base leading-relaxed max-w-4xl">
-                  We do not just make some arbitrary acceleration, but instead analyze the patterns of execution of your application, data dependencies, and scaling needs. This enables us to design CUDA solutions that are highly targeted to optimally match workload behaviour and provide predictable and orderable computational benefits.
-                </p>
-              </div>
-            </motion.div>
+            {whyChooseItems.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                className="flex items-start gap-6 border rounded-xl p-6"
+                style={{ borderColor: BORDER_SUBTLE }}
+              >
+                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0 bg-[#10B981]">
+                  <CheckIconLarge />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
+                  <p className="text-white/70 text-base leading-relaxed max-w-4xl">{item.description}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* What Our Clients Say Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <motion.div
@@ -846,163 +583,37 @@ export function CUDADevelopmentServicePage() {
 
           {/* Testimonials Grid - 3 Columns */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-
-            {/* Testimonial 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="group"
-            >
-              <div
-                className="h-full p-8 rounded-2xl border transition-all duration-300"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  borderColor: 'rgba(255, 255, 255, 0.08)',
-                  backdropFilter: 'blur(10px)'
-                }}
+            {testimonialsData.map((t, index) => (
+              <motion.div
+                key={t.initials}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                className="group"
               >
-                {/* Quote Icon */}
-                <div className="mb-4">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
-                    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
-                  </svg>
-                </div>
-
-                {/* Testimonial Text */}
-                <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>
-                  "GPU acceleration significantly enhanced our data processing framework, reducing execution cycles under high-load scenarios."
-                </p>
-
-                {/* Author Info */}
-                <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}>
-                  <div className="w-12 h-12 rounded-full flex-shrink-0" style={{
-                    background: 'linear-gradient(135deg, #10B981, #06B6D4)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '14px',
-                    fontWeight: 700,
-                    color: '#FFF'
-                  }}>
-                    DE
-                  </div>
-                  <div>
-                    <div style={{ color: '#FAFAFA', fontWeight: 600, fontSize: '15px' }}>Director of Engineering</div>
-                    <div style={{ color: '#9CA3AF', fontSize: '13px' }}>AI Platform</div>
+                <div
+                  className="h-full p-8 rounded-2xl border transition-all duration-300 bg-white/[0.02] backdrop-blur-[10px]"
+                  style={{ borderColor: BORDER_SUBTLE }}
+                >
+                  <div className="mb-4"><QuoteIcon /></div>
+                  <p className="text-base mb-8 text-[#D1D5DB] leading-[1.8]">{t.quote}</p>
+                  <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: BORDER_SUBTLE }}>
+                    <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold text-white" style={{ background: t.avatarGradient }}>{t.initials}</div>
+                    <div>
+                      <div className="text-[#FAFAFA] font-semibold text-[15px]">{t.role}</div>
+                      <div className="text-[#9CA3AF] text-[13px]">{t.company}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-
-            {/* Testimonial 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="group"
-            >
-              <div
-                className="h-full p-8 rounded-2xl border transition-all duration-300"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  borderColor: 'rgba(255, 255, 255, 0.08)',
-                  backdropFilter: 'blur(10px)'
-                }}
-              >
-                {/* Quote Icon */}
-                <div className="mb-4">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
-                    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
-                  </svg>
-                </div>
-
-                {/* Testimonial Text */}
-                <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>
-                  "Our migration to CUDA-based execution improved analytical throughput without expanding infrastructure costs."
-                </p>
-
-                {/* Author Info */}
-                <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}>
-                  <div className="w-12 h-12 rounded-full flex-shrink-0" style={{
-                    background: 'linear-gradient(135deg, #8B5CF6, #A78BFA)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '14px',
-                    fontWeight: 700,
-                    color: '#FFF'
-                  }}>
-                    CT
-                  </div>
-                  <div>
-                    <div style={{ color: '#FAFAFA', fontWeight: 600, fontSize: '15px' }}>Chief Technology Officer</div>
-                    <div style={{ color: '#9CA3AF', fontSize: '13px' }}>Technology Company</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Testimonial 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="group"
-            >
-              <div
-                className="h-full p-8 rounded-2xl border transition-all duration-300"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  borderColor: 'rgba(255, 255, 255, 0.08)',
-                  backdropFilter: 'blur(10px)'
-                }}
-              >
-                {/* Quote Icon */}
-                <div className="mb-4">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill="#10B981" opacity="0.3" />
-                    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill="#10B981" opacity="0.3" />
-                  </svg>
-                </div>
-
-                {/* Testimonial Text */}
-                <p className="text-base mb-8" style={{ color: '#D1D5DB', lineHeight: 1.8 }}>
-                  "The architectural redesign delivered predictable performance scaling across multiple GPU nodes."
-                </p>
-
-                {/* Author Info */}
-                <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.08)' }}>
-                  <div className="w-12 h-12 rounded-full flex-shrink-0" style={{
-                    background: 'linear-gradient(135deg, #10B981, #34D399)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '14px',
-                    fontWeight: 700,
-                    color: '#FFF'
-                  }}>
-                    HS
-                  </div>
-                  <div>
-                    <div style={{ color: '#FAFAFA', fontWeight: 600, fontSize: '15px' }}>Head of Systems Engineering</div>
-                    <div style={{ color: '#9CA3AF', fontSize: '13px' }}>Engineering Company</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG }}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             {/* Left Column - Title */}
@@ -1024,191 +635,29 @@ export function CUDADevelopmentServicePage() {
 
             {/* Right Column - FAQ Items */}
             <div className="lg:col-span-8 space-y-4">
-              {/* FAQ 1 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="rounded-2xl border border-white/10 overflow-hidden"
-                style={{ background: '#0B0F14' }}
-              >
-                <details className="group">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      How do I know if my application is suitable for CUDA acceleration?
-                    </h3>
-                    <svg
-                      className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <div className="px-6 pt-2 pb-8">
-                    <p className="text-white/70 text-base leading-relaxed">
-                      Applications whose operations are frequently repeated in numbers, process large datasets, matrix calculations, or can be performed in parallel are good candidates. Performing profiling measurements helps us identify whether there are any performance improvements that can be realized and achieved through the use of GPU acceleration.
-                    </p>
-                  </div>
-                </details>
-              </motion.div>
-
-              {/* FAQ 2 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="rounded-2xl border border-white/10 overflow-hidden"
-                style={{ background: '#0B0F14' }}
-              >
-                <details className="group">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      Can CUDA be integrated into an existing production system?
-                    </h3>
-                    <svg
-                      className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <div className="px-6 pt-2 pb-8">
-                    <p className="text-white/70 text-base leading-relaxed">
-                      Yes. We refactor and modularize elements such that there is no disruption to other business operations, and a full system rebuild is not necessary to add the acceleration of a graphics card to your existing architecture.
-                    </p>
-                  </div>
-                </details>
-              </motion.div>
-
-              {/* FAQ 3 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="rounded-2xl border border-white/10 overflow-hidden"
-                style={{ background: '#0B0F14' }}
-              >
-                <details className="group">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      What is the difference between CPU optimization and CUDA optimization?
-                    </h3>
-                    <svg
-                      className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <div className="px-6 pt-2 pb-8">
-                    <p className="text-white/70 text-base leading-relaxed">
-                      CPU optimization enhances the ability to run sequence-related tasks, whereas CUDA optimization rearranges workloads to execute them in a massively parallel fashion across the armies of cores in GPUs, which is much more efficient at providing high throughput in tasks of high compute intensity.
-                    </p>
-                  </div>
-                </details>
-              </motion.div>
-
-              {/* FAQ 4 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="rounded-2xl border border-white/10 overflow-hidden"
-                style={{ background: '#0B0F14' }}
-              >
-                <details className="group">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      Do you support multi-GPU and cluster-based deployments?
-                    </h3>
-                    <svg
-                      className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <div className="px-6 pt-2 pb-8">
-                    <p className="text-white/70 text-base leading-relaxed">
-                      Absolutely. Our CUDA architectures are optimized to be scaled to multi-GPU and high-performance cluster environments, such that the performance remains consistent as the level of computational requirements rises.
-                    </p>
-                  </div>
-                </details>
-              </motion.div>
-
-              {/* FAQ 5 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="rounded-2xl border border-white/10 overflow-hidden"
-                style={{ background: '#0B0F14' }}
-              >
-                <details className="group">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      How do you measure performance improvement in CUDA projects?
-                    </h3>
-                    <svg
-                      className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <div className="px-6 pt-2 pb-8">
-                    <p className="text-white/70 text-base leading-relaxed">
-                      Before and after optimization, we measure the reduction of execution time, the increased memory efficiency, and scalability through profiling tools, benchmarking frameworks, and throughput analysis.
-                    </p>
-                  </div>
-                </details>
-              </motion.div>
-
-              {/* FAQ 6 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="rounded-2xl border border-white/10 overflow-hidden"
-                style={{ background: '#0B0F14' }}
-              >
-                <details className="group">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      Is ongoing CUDA performance tuning necessary?
-                    </h3>
-                    <svg
-                      className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <div className="px-6 pt-2 pb-8">
-                    <p className="text-white/70 text-base leading-relaxed">
-                      Yes. With the changing workloads, periodical profiling and optimization will ensure the efficiency is maintained and avoid any bottlenecks, keeping the utilization of the GPUs optimal over time.
-                    </p>
-                  </div>
-                </details>
-              </motion.div>
+              {faqData.map((item, index) => (
+                <motion.div
+                  key={item.q}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                  className="rounded-2xl border border-white/10 overflow-hidden"
+                  style={{ background: SECTION_BG }}
+                >
+                  <details className="group">
+                    <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                      <h3 className="text-lg font-semibold text-white pr-4">{item.q}</h3>
+                      <svg className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </summary>
+                    <div className="px-6 pt-2 pb-8">
+                      <p className="text-white/70 text-base leading-relaxed">{item.a}</p>
+                    </div>
+                  </details>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>

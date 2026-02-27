@@ -35,14 +35,98 @@ function getGridColsClass(count: number): string {
   return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
 }
 
-function CardSectionLabel({ label, children }: Readonly<{ label: string; children: React.ReactNode }>) {
+const LABEL_CLASS = 'text-[#d1d5db] text-xs font-medium';
+
+function CardSectionLabel({ label, children, variant = 'default' }: Readonly<{ label: string; children: React.ReactNode; variant?: 'default' | 'compact' }>) {
+  const isCompact = variant === 'compact';
   return (
     <div>
-      <div className="flex items-center gap-2 mb-1.5">
-        <div className="w-2 h-2 rounded-full bg-[#ffffff]" />
-        <span className="text-[#d1d5db] text-xs font-medium">{label}</span>
+      <div className={`flex items-center gap-2 ${isCompact ? 'mb-1' : 'mb-1.5'}`}>
+        <div className={`rounded-full bg-[#ffffff] ${isCompact ? 'w-1.5 h-1.5' : 'w-2 h-2'}`} />
+        <span className={LABEL_CLASS}>{label}</span>
       </div>
       {children}
+    </div>
+  );
+}
+
+function CardFooter({ study, className }: Readonly<{ study: CaseStudy; className?: string }>) {
+  return (
+    <div className={`border-t border-white/10 flex flex-row flex-wrap items-center justify-between ${className ?? 'mt-4 pt-4 gap-3'}`}>
+      {study.link ? (
+        <CaseStudyLink href={study.link} isInternal={study.link.startsWith('/')}>
+          View Full Case Study
+        </CaseStudyLink>
+      ) : null}
+      {study.liveUrl ? (
+        <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" className={LIVE_LINK_CLASS}>
+          <span>Visit Live Platform</span>
+          <ArrowRight className="w-3 h-3" />
+        </a>
+      ) : null}
+    </div>
+  );
+}
+
+const TAG_BASE_CLASS = 'inline-flex items-center bg-[#ffffff]/12 border border-[#ffffff]/25 text-[#e5e7eb] text-xs';
+
+function TagsList({
+  study,
+  tagClassName,
+  contentPl = 'pl-3.5',
+  techLabelClass = 'mt-1.5 mb-1'
+}: Readonly<{ study: CaseStudy; tagClassName: string; contentPl?: string; techLabelClass?: string }>) {
+  return (
+    <>
+      <p className={`text-[#9ca3af] text-xs font-medium ${techLabelClass} ${contentPl}`}>Technologies used</p>
+      <div className={`flex flex-wrap gap-1.5 ${contentPl}`}>
+        {study.tags.map((tag) => (
+          <span key={`${study.link}-${tag}`} className={`${TAG_BASE_CLASS} ${tagClassName}`}>
+            {tag}
+          </span>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function ImpactList({
+  study,
+  maxItems = 3,
+  listClassName = 'space-y-1.5 pl-4',
+  iconSize = 'w-4 h-4',
+  listIconSize = 'w-3.5 h-3.5',
+  itemClassName
+}: Readonly<{
+  study: CaseStudy;
+  maxItems?: number;
+  listClassName?: string;
+  iconSize?: string;
+  listIconSize?: string;
+  itemClassName?: string;
+}>) {
+  const items = study.impact.slice(0, maxItems);
+  return (
+    <div>
+      <div className={`flex items-center gap-2 ${maxItems === 2 ? 'mb-1' : 'mb-1.5'}`}>
+        <TrendingUp className={`${iconSize} text-[#d1d5db]`} />
+        <span className={LABEL_CLASS}>Impact & Results</span>
+      </div>
+      <ul className={listClassName}>
+        {items.map((item, impactIndex) => (
+          <motion.li
+            key={`${study.link}-impact-${item}`}
+            className="flex items-start gap-2 text-white text-xs"
+            initial={{ opacity: 0, x: 10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: impactIndex * 0.05 }}
+          >
+            <CheckCircle2 className={`${listIconSize} text-[#ffffff] flex-shrink-0 mt-0.5`} />
+            <span className={itemClassName}>{item}</span>
+          </motion.li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -51,6 +135,9 @@ const groupedProjects = PORTFOLIO_CATEGORIES.map((category) => ({
   category,
   projects: CASE_STUDIES.filter((study: CaseStudy) => study.category === category)
 }));
+
+const CONTENT_PL_COMPACT = 'pl-3.5';
+const CONTENT_PL_DEFAULT = 'pl-4';
 
 function CardWithImage({ study }: Readonly<{ study: CaseStudy }>) {
   return (
@@ -66,66 +153,23 @@ function CardWithImage({ study }: Readonly<{ study: CaseStudy }>) {
         </div>
         <h3 className="mb-2 text-white text-base font-semibold">{study.title}</h3>
         <div className="space-y-2 flex-1">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#ffffff]" />
-              <span className="text-[#d1d5db] text-xs font-medium">Challenge</span>
-            </div>
-            <p className="text-white/70 text-xs pl-3.5 leading-relaxed line-clamp-2">{study.challenge}</p>
-          </div>
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#ffffff]" />
-              <span className="text-[#d1d5db] text-xs font-medium">Solution</span>
-            </div>
-            <p className="text-white/70 text-xs pl-3.5 leading-relaxed line-clamp-2">{study.solution}</p>
-            <p className="text-[#9ca3af] text-xs font-medium mt-1.5 mb-1 pl-3.5">Technologies used</p>
-            <div className="flex flex-wrap gap-1.5 pl-3.5">
-              {study.tags.map((tag) => (
-                <span
-                  key={`${study.link}-${tag}`}
-                  className="inline-flex items-center px-2 py-0.5 rounded bg-[#ffffff]/12 border border-[#ffffff]/25 text-[#e5e7eb] text-xs"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <TrendingUp className="w-3.5 h-3.5 text-[#d1d5db]" />
-              <span className="text-[#d1d5db] text-xs font-medium">Impact & Results</span>
-            </div>
-            <ul className="space-y-1 pl-3.5">
-              {study.impact.slice(0, 2).map((item, impactIndex) => (
-                <motion.li
-                  key={`${study.link}-impact-${item}`}
-                  className="flex items-start gap-2 text-white text-xs"
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: impactIndex * 0.05 }}
-                >
-                  <CheckCircle2 className="w-3 h-3 text-[#ffffff] flex-shrink-0 mt-0.5" />
-                  <span className="line-clamp-1">{item}</span>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
+          <CardSectionLabel label="Challenge" variant="compact">
+            <p className={`text-white/70 text-xs leading-relaxed line-clamp-2 ${CONTENT_PL_COMPACT}`}>{study.challenge}</p>
+          </CardSectionLabel>
+          <CardSectionLabel label="Solution" variant="compact">
+            <p className={`text-white/70 text-xs leading-relaxed line-clamp-2 ${CONTENT_PL_COMPACT}`}>{study.solution}</p>
+            <TagsList study={study} tagClassName="px-2 py-0.5 rounded" contentPl={CONTENT_PL_COMPACT} />
+          </CardSectionLabel>
+          <ImpactList
+            study={study}
+            maxItems={2}
+            listClassName="space-y-1 pl-3.5"
+            iconSize="w-3.5 h-3.5"
+            listIconSize="w-3 h-3"
+            itemClassName="line-clamp-1"
+          />
         </div>
-        <div className="mt-3 pt-3 border-t border-white/10 flex flex-row flex-wrap items-center justify-between gap-x-6 gap-y-2">
-          {study.link ? (
-            <CaseStudyLink href={study.link} isInternal={study.link.startsWith('/')}>
-              View Full Case Study
-            </CaseStudyLink>
-          ) : null}
-          {study.liveUrl ? (
-            <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" className={LIVE_LINK_CLASS}>
-              <span>Visit Live Platform</span>
-              <ArrowRight className="w-3 h-3" />
-            </a>
-          ) : null}
-        </div>
+        <CardFooter study={study} className="mt-3 pt-3 gap-x-6 gap-y-2" />
       </div>
     </GlassCard>
   );
@@ -142,57 +186,15 @@ function CardDefault({ study }: Readonly<{ study: CaseStudy }>) {
         <h3 className="mb-3 text-white font-semibold">{study.title}</h3>
         <div className="space-y-3 flex-1">
           <CardSectionLabel label="Challenge">
-            <p className="text-white/70 text-xs pl-4 leading-relaxed line-clamp-3">{study.challenge}</p>
+            <p className={`text-white/70 text-xs leading-relaxed line-clamp-3 ${CONTENT_PL_DEFAULT}`}>{study.challenge}</p>
           </CardSectionLabel>
           <CardSectionLabel label="Solution">
-            <p className="text-white/70 text-xs pl-4 leading-relaxed line-clamp-3">{study.solution}</p>
-            <p className="text-[#9ca3af] text-xs font-medium mt-2 mb-1.5 pl-4">Technologies used</p>
-            <div className="flex flex-wrap gap-1.5 pl-4">
-              {study.tags.map((tag) => (
-                <span
-                  key={`${study.link}-${tag}`}
-                  className="inline-flex items-center px-2 py-1 rounded-md bg-[#ffffff]/12 border border-[#ffffff]/25 text-[#e5e7eb] text-xs font-medium"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+            <p className={`text-white/70 text-xs leading-relaxed line-clamp-3 ${CONTENT_PL_DEFAULT}`}>{study.solution}</p>
+            <TagsList study={study} tagClassName="px-2 py-1 rounded-md font-medium" contentPl={CONTENT_PL_DEFAULT} techLabelClass="mt-2 mb-1.5" />
           </CardSectionLabel>
-          <div>
-            <div className="flex items-center gap-2 mb-1.5">
-              <TrendingUp className="w-4 h-4 text-[#d1d5db]" />
-              <span className="text-[#d1d5db] text-xs font-medium">Impact & Results</span>
-            </div>
-            <ul className="space-y-1.5 pl-4">
-              {study.impact.slice(0, 3).map((item, impactIndex) => (
-                <motion.li
-                  key={`${study.link}-impact-${item}`}
-                  className="flex items-start gap-2 text-white text-xs"
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: impactIndex * 0.05 }}
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#ffffff] flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
+          <ImpactList study={study} />
         </div>
-        <div className="mt-4 pt-4 border-t border-white/10 flex flex-row flex-wrap items-center justify-between gap-3">
-          {study.link ? (
-            <CaseStudyLink href={study.link} isInternal={study.link.startsWith('/')}>
-              View Full Case Study
-            </CaseStudyLink>
-          ) : null}
-          {study.liveUrl ? (
-            <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" className={LIVE_LINK_CLASS}>
-              <span>Visit Live Platform</span>
-              <ArrowRight className="w-3 h-3" />
-            </a>
-          ) : null}
-        </div>
+        <CardFooter study={study} />
       </div>
     </GlassCard>
   );
