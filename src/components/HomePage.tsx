@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SEO as Seo } from './SEO';
 import { AnimatedCounter } from './AnimatedCounter';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getBlogs } from '../api/blogs';
 import type { Blog } from '../api/blogs';
 // COMMENTED OUT - Services temporarily hidden from UI but preserved in codebase
@@ -20,170 +20,50 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
-
-const SECTION_BG = '#0B0F14';
-const BORDER_SUBTLE = 'rgba(255, 255, 255, 0.08)';
-const BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba(16, 185, 129, 0.25)' } as const;
-const BADGE_TESTIMONIAL = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.2)' } as const;
-
-const ACCENT_COLOR = '#10B981';
-const VIOLET_COLOR = '#7C3AED';
-const TEXT_WHITE = '#FFFFFF';
-const TEXT_FAFAFA = '#FAFAFA';
-const TEXT_MUTED = '#9CA3AF';
-const TEXT_GRAY = '#9E9E9E';
-const TEXT_QUOTE = '#D1D5DB';
-const TEXT_SUBTLE = '#6B7280';
-const PORTFOLIO_IMG = '/images/portfolio';
-const img = (file: string) => `${PORTFOLIO_IMG}/${file}`;
-const GRADIENT_EMERALD_CYAN = 'linear-gradient(135deg, #10B981, #06B6D4)';
-const CTA_GRADIENT_STYLE = { background: GRADIENT_EMERALD_CYAN, borderColor: 'transparent', color: TEXT_WHITE, boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)' } as const;
-const HEADING_TITLE_STYLE = { color: TEXT_FAFAFA, letterSpacing: '-0.025em', lineHeight: 1.2 } as const;
-const FORM_LAYOUT = { display: 'flex' as const, flexDirection: 'column' as const, gap: '28px' } as const;
-const FORM_GRID_GAP = { gap: '24px' } as const;
-const FORM_MAX_WIDTH = { maxWidth: '1100px', margin: '0 auto' } as const;
-const SUBMIT_BTN_HOVER = { boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)' } as const;
-const GRADIENT_TEXT_STYLE = { background: GRADIENT_EMERALD_CYAN, WebkitBackgroundClip: 'text' as const, WebkitTextFillColor: 'transparent' as const };
-const BENEFIT_CARD_STYLE = { background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)', borderColor: 'rgba(16, 185, 129, 0.2)', backdropFilter: 'blur(8px)' } as const;
-const BENEFIT_ICON_BOX = { background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)', border: '1px solid rgba(16, 185, 129, 0.3)' } as const;
-const BLOG_CARD_BG = '#111827';
-const BLOG_CARD_BORDER = '1px solid rgba(255, 255, 255, 0.08)';
-const BLOG_BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.15)', color: ACCENT_COLOR, border: '1px solid rgba(16, 185, 129, 0.3)', backdropFilter: 'blur(8px)' } as const;
-const VIEW_ALL_BTN_STYLE = { background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.35)', color: TEXT_FAFAFA } as const;
-const formInputClass = 'w-full px-4 py-3 rounded-xl border text-white placeholder-white/40 focus:border-[#10B981]/50 focus:outline-none focus:ring-1 focus:ring-[#10B981]/30 transition-all';
-const formInputStyle = { background: 'rgba(255, 255, 255, 0.06)', borderColor: 'rgba(255, 255, 255, 0.1)' } as const;
-const formContainerStyle = {
-  background: 'rgba(17, 24, 39, 0.6)',
-  borderRadius: '20px',
-  border: '1px solid rgba(255, 255, 255, 0.08)',
-  backdropFilter: 'blur(14px)',
-  padding: '48px 32px',
-  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
-} as const;
-const formGlowStyle = {
-  background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, transparent 60%)',
-  filter: 'blur(60px)',
-  opacity: 0.6
-} as const;
-const submitButtonStyle = {
-  background: GRADIENT_EMERALD_CYAN,
-  border: '1px solid transparent',
-  color: '#FFFFFF',
-  boxShadow: '0 4px 14px rgba(16, 185, 129, 0.25)'
-} as const;
-const LOGO_BASE_CLASS = 'w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300';
-
-const homeContactFormFields: {
-  id: string;
-  name: string;
-  label: string;
-  type: 'text' | 'email' | 'tel' | 'textarea' | 'select';
-  placeholder?: string;
-  required?: boolean;
-  rows?: number;
-  options?: { value: string; label: string }[];
-}[] = [
-  { id: 'home-contact-name', name: 'name', label: 'Name *', type: 'text', placeholder: 'John Doe', required: true },
-  { id: 'home-contact-email', name: 'email', label: 'Email *', type: 'email', placeholder: 'john@company.com', required: true },
-  { id: 'home-contact-company', name: 'company', label: 'Company', type: 'text', placeholder: 'Your Company' },
-  { id: 'home-contact-phone', name: 'phone', label: 'Phone', type: 'tel', placeholder: '+1 (555) 000-0000' },
-  {
-    id: 'home-contact-service',
-    name: 'service',
-    label: 'Service Interest',
-    type: 'select',
-    options: [
-      { value: '', label: 'Select a service' },
-      { value: 'gpu-optimization', label: 'GPU Optimization Service' },
-      { value: 'cuda-development', label: 'CUDA Development Service' },
-      { value: 'ai-ml', label: 'AI/ML Development' },
-      { value: 'consulting', label: 'AI Consulting' },
-    ],
-  },
-  { id: 'home-contact-message', name: 'message', label: 'Message *', type: 'textarea', placeholder: 'Tell us about your project...', required: true, rows: 4 },
-];
-
-function renderFormField(field: (typeof homeContactFormFields)[number]) {
-  if (field.type === 'select') {
-    return (
-      <select id={field.id} name={field.name} className={formInputClass} style={formInputStyle}>
-        {field.options?.map((opt) => (
-          <option key={opt.value} value={opt.value} className="bg-[#1A1A1A]">{opt.label}</option>
-        ))}
-      </select>
-    );
-  }
-  if (field.type === 'textarea') {
-    return (
-      <textarea
-        id={field.id}
-        name={field.name}
-        required={field.required}
-        rows={field.rows ?? 4}
-        className={`${formInputClass} resize-none`}
-        style={formInputStyle}
-        placeholder={field.placeholder}
-      />
-    );
-  }
-  return (
-    <input
-      id={field.id}
-      type={field.type}
-      name={field.name}
-      required={field.required}
-      className={formInputClass}
-      style={formInputStyle}
-      placeholder={field.placeholder}
-    />
-  );
-}
-
-const QuoteIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <path d="M10 18C10 15.7909 11.7909 14 14 14V10C9.58172 10 6 13.5817 6 18C6 20.2091 7.79086 22 10 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
-    <path d="M22 18C22 15.7909 23.7909 14 26 14V10C21.5817 10 18 13.5817 18 18C18 20.2091 19.7909 22 22 22V18Z" fill={ACCENT_COLOR} opacity="0.3" />
-  </svg>
-);
-
-const whatWeDoData = [
-  { title: 'GPU Optimization', description: 'We provide dedicated GPU Optimization Services aimed at the maximum use of the compute efficiency. Our model will guarantee optimization in the use of hardware, the reduction of operational expenses, and coherent high-performance scale.', colorKey: 'emerald' as const },
-  { title: 'CUDA Development', description: 'Our CUDA Development Services assist companies in developing high-performance parallel applications to suit their workloads with high demand. Our built-in kernel development-based team of CUDA Developers provides your apps with complete utilization of NVIDIA architecture.', colorKey: 'violet' as const },
-];
-
-const servicesProvideData = [
-  { title: 'GPU Optimization Service', description: 'We optimize AI and compute workloads with the help of advanced GPU optimization, performance, efficiency, and hardware usage.', href: '/gpu-optimization-service/', Icon: Cpu, colorKey: 'emerald' as const, buttonStyle: { background: ACCENT_COLOR, color: TEXT_WHITE } },
-  { title: 'CUDA Development Service', description: 'Hire skilled CUDA developers to create and optimize parallel advanced applications that meet your requirements.', href: '/cuda-development-service/', Icon: Zap, colorKey: 'violet' as const, buttonStyle: { background: 'linear-gradient(135deg, #7C3AED, #06B6D4)', color: TEXT_WHITE } },
-];
-
-const trustedLogosData = [
-  { src: '/logos/nvidia.png', alt: 'NVIDIA', className: `h-10 sm:h-12 ${LOGO_BASE_CLASS}` },
-  { src: '/logos/aws.png', alt: 'AWS', className: `h-10 sm:h-12 ${LOGO_BASE_CLASS}` },
-  { src: '/logos/goggle cloud.png', alt: 'Google Cloud', className: `h-10 sm:h-12 ${LOGO_BASE_CLASS}` },
-  { src: '/logos/microsoft-azure.png', alt: 'Microsoft Azure', className: `h-12 sm:h-14 ${LOGO_BASE_CLASS}` },
-];
-
-const trustedMetricsData = [
-  { value: '$20bn', description: 'worth investment portfolios managed', from: 'from-blue-500/10', to: 'to-blue-600/5', border: 'border-blue-500/20', hoverBorder: 'hover:border-blue-400/40', valueGradient: 'from-blue-400 to-blue-200' },
-  { value: '10x', description: 'faster pharmaceutical market analytics', from: 'from-purple-500/10', to: 'to-purple-600/5', border: 'border-purple-500/20', hoverBorder: 'hover:border-purple-400/40', valueGradient: 'from-purple-400 to-purple-200' },
-  { value: '20M+', description: 'customers enjoying AI-powered shopping', from: 'from-blue-500/10', to: 'to-cyan-600/5', border: 'border-cyan-500/20', hoverBorder: 'hover:border-cyan-400/40', valueGradient: 'from-cyan-400 to-cyan-200' },
-  { value: '$50K', description: 'saved annually with DevOps', from: 'from-green-500/10', to: 'to-green-600/5', border: 'border-green-500/20', hoverBorder: 'hover:border-green-400/40', valueGradient: 'from-green-400 to-green-200' },
-];
-
-const testimonialsData = [
-  { quote: '"Jashom\'s GPU optimization reduced our inference latency by 73%. The team\'s expertise in CUDA programming is unmatched."', initials: 'DC', name: 'David Chen', role: 'VP Engineering, Apex AI', avatarGradient: GRADIENT_EMERALD_CYAN },
-  { quote: '"The AI automation solutions delivered by Jashom transformed our workflow. We achieved 5x faster processing with their custom ML pipeline."', initials: 'MR', name: 'Maria Rodriguez', role: 'CTO, DataFlow Systems', avatarGradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)' },
-  { quote: '"Outstanding DevSecOps implementation. Jashom\'s team integrated security seamlessly into our CI/CD pipeline without compromising speed."', initials: 'EW', name: 'Emily Watson', role: 'Head of Security, TechCorp', avatarGradient: 'linear-gradient(135deg, #10B981, #34D399)' },
-];
-
-const benefitsData = [
-  { title: '10x GPU Performance Improvement', description: 'Architecture-sensitive tuning methods are used by us to reap the best out of NVIDIA GPUs, providing physical acceleration to AI applications.', Icon: Cpu },
-  { title: 'Production-Grade AI Systems', description: 'Develop scalable systems that are designed with a focus on reliability, monitoring, and long-term performance.', Icon: Brain },
-  { title: 'Enterprise-Level Security', description: 'Our operations are enforced under stringent security measures, compliance, and data protection models in order to secure essential workloads.', Icon: Shield },
-  { title: 'Rapid Implementation Cycles', description: 'We satisfy the timeline requirements of projects through organized processes, which allow us to roll out faster and maintain the quality of performance.', Icon: Zap },
-  { title: 'Dedicated Technical Support', description: 'Our experts have continued optimization, surveillance, and expert services that ensure that the system operates continuously.', Icon: Users },
-  { title: 'Cost-Efficient Scaling', description: 'Our frameworks for designing GPU systems consider the demand of performance with functional efficiency to ensure the highest ROI in the long-term.', Icon: TrendingUp },
-];
+import {
+  ACCENT_COLOR,
+  BADGE_STYLE,
+  BADGE_TESTIMONIAL,
+  BORDER_SUBTLE,
+  FORM_GRID_GAP,
+  FORM_LAYOUT,
+  FORM_MAX_WIDTH,
+  FORM_CONTAINER_STYLE,
+  FORM_GLOW_STYLE,
+  GRADIENT_TEXT_STYLE,
+  HEADING_TITLE_STYLE,
+  SECTION_BG,
+  SUBMIT_BTN_HOVER,
+  SUBMIT_BTN_STYLE,
+  TEXT_FAFAFA,
+  TEXT_GRAY,
+  TEXT_MUTED,
+  TEXT_QUOTE,
+  TEXT_SUBTLE,
+  TEXT_WHITE,
+} from '../constants/theme';
+import { QuoteIcon, renderServiceFormField } from './ServicePageShared';
+import {
+  BENEFIT_CARD_STYLE,
+  BENEFIT_ICON_BOX,
+  BLOG_BADGE_STYLE,
+  BLOG_CARD_BG,
+  BLOG_CARD_BORDER,
+  CTA_GRADIENT_STYLE,
+  HomeContactFormData,
+  LOGO_BASE_CLASS,
+  VIEW_ALL_BTN_STYLE,
+  VIOLET_COLOR,
+  benefitsData,
+  homeContactFormFields,
+  portfolioProjects,
+  servicesProvideData,
+  statsData,
+  testimonialsData,
+  trustedLogosData,
+  trustedMetricsData,
+  whatWeDoData,
+} from './HomePage/data';
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -222,6 +102,14 @@ export function HomePage() {
   const [latestBlogs, setLatestBlogs] = useState<Blog[]>([]);
   const [blogsLoading, setBlogsLoading] = useState(true);
   const [blogsError, setBlogsError] = useState<string | null>(null);
+  const [formData, setFormData] = useState<HomeContactFormData>({
+    name: '',
+    email: '',
+    company: '',
+    phone: '',
+    service: '',
+    message: '',
+  });
 
   useEffect(() => {
     getBlogs({ status: 'published', limit: 3 })
@@ -235,107 +123,9 @@ export function HomePage() {
     // Navigate to thank you page
     navigate('/thank-you/');
   };
-
-  const portfolioProjects = [
-    {
-      title: 'BoostReferral - SaaS Platform',
-      industry: 'SaaS',
-      challenge: 'Businesses needed an automated solution to manage referral programs',
-      solution: 'Comprehensive referral management platform with analytics',
-      impact: ['Automated referral management', '99.9% platform uptime', 'Scalable SaaS architecture'],
-      tags: ['SaaS Platform', 'Analytics', 'Automation'],
-      image: img('boostreferral.jpg'),
-      link: '/projects/boostreferral',
-      liveUrl: 'https://www.boostreferral.com'
-    },
-    {
-      title: 'ProjectSphere - Project Management Platform',
-      industry: 'SaaS',
-      challenge: 'Organizations need comprehensive project management tools',
-      solution: 'Complete project management platform with real-time collaboration',
-      impact: ['45% team efficiency', '30% faster delivery', '85% user adoption'],
-      tags: ['Project Management', 'Collaboration', 'Analytics'],
-      image: img('projectsphere.jpg'),
-      link: '/projects/projectsphere'
-    },
-    {
-      title: 'EnviroPulse - Environmental Monitoring',
-      industry: 'Environmental Tech',
-      challenge: 'Real-time monitoring across multiple zones needed',
-      solution: 'IoT sensors with advanced analytics for environmental monitoring',
-      impact: ['35% reduction in incidents', 'Real-time monitoring', 'Multi-zone tracking'],
-      tags: ['IoT', 'Real-time Data', 'Analytics'],
-      image: img('enviropulse.jpg'),
-      link: '/projects/enviropulse',
-      liveUrl: 'https://enviropulse.jashom.com'
-    },
-    {
-      title: 'GreenSphere - ESG Platform',
-      industry: 'ESG Platform',
-      challenge: 'ESG metrics tracking and reporting challenges',
-      solution: 'Comprehensive ESG tracking and reporting platform',
-      impact: ['23% carbon reduction', '65% reporting efficiency', 'Automated reporting'],
-      tags: ['ESG', 'Sustainability', 'Reporting'],
-      image: img('greensphere.jpg'),
-      link: '/projects/greensphere',
-      liveUrl: 'https://greenesg.jashom.com/'
-    },
-    {
-      title: 'EcoBot AI - Sustainability Assistant',
-      industry: 'AI Platform',
-      challenge: 'Organizations struggle with environmental regulations',
-      solution: 'AI-powered sustainability assistant with instant responses',
-      impact: ['40% reduced compliance issues', '60% better decisions', 'Instant responses'],
-      tags: ['AI', 'NLP', 'Sustainability'],
-      image: img('ecobot-ai.jpg'),
-      link: '/projects/ecobot-ai',
-      liveUrl: 'https://ecoai.jashom.com/dashboard'
-    },
-    {
-      title: 'Jashom Health - Hospital System',
-      industry: 'Healthcare',
-      challenge: 'Multi-location healthcare with HIPAA compliance needed',
-      solution: 'Comprehensive hospital management with real-time monitoring',
-      impact: ['99.9% uptime', '40% reduced overhead', '100% HIPAA compliance'],
-      tags: ['HIPAA', 'Healthcare', 'Real-time'],
-      image: img('jashom-health.jpg'),
-      link: '/projects/jashom-health',
-      liveUrl: 'https://jashomhealth.jashom.com'
-    },
-    {
-      title: 'Jashom Healthcare - Interoperability',
-      industry: 'Healthcare',
-      challenge: 'Healthcare systems in silos needed integration',
-      solution: 'Seamless interoperability with HL7/FHIR protocols',
-      impact: ['99.9% uptime', '35% reduced duplicates', '50+ partners integrated'],
-      tags: ['HL7', 'FHIR', 'Integration'],
-      image: img('jashom-healthcare.jpg'),
-      link: '/projects/jashom-healthcare',
-      liveUrl: 'https://jashomhealthcare.jashom.com'
-    },
-    {
-      title: 'Jashom ICU Connect - Remote Monitoring',
-      industry: 'Remote ICU',
-      challenge: 'Rural hospitals lack access to specialist care',
-      solution: 'Remote monitoring platform bridging rural hospitals and specialists',
-      impact: ['40% reduced transfers', '15+ hospitals connected', '<30s response time'],
-      tags: ['Remote Monitoring', 'Vital Signs', 'Collaboration'],
-      image: img('jashom-icu-connect.jpg'),
-      link: '/projects/jashom-icu-connect',
-      liveUrl: 'https://jashomhealthcareplus.jashom.com'
-    },
-    {
-      title: 'RAG.LU - AI Knowledge Platform',
-      industry: 'AI Platform',
-      challenge: 'Intelligent knowledge management needed',
-      solution: 'RAG technology for knowledge management',
-      impact: ['93% accuracy', '10x faster processing', 'AI transformation'],
-      tags: ['RAG', 'AI', 'Knowledge Management'],
-      image: img('rag-lu.ai.png'),
-      link: '/projects/rag-lu',
-      liveUrl: 'https://rag.lu'
-    }
-  ];
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   const totalSlides = portfolioProjects.length;
   const maxSlide = totalSlides - cardsPerView;
@@ -709,12 +499,7 @@ export function HomePage() {
           <section className="py-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-                {[
-                  { value: '500+', label: 'Projects Delivered' },
-                  { value: '98%', label: 'Client Satisfaction' },
-                  { value: '10x', label: 'Performance Gain' },
-                  { value: '24/7', label: 'Support Available' }
-                ].map((stat, index) => (
+                {statsData.map((stat, index) => (
                   <AnimatedCounter
                     key={stat.label}
                     value={stat.value}
@@ -1249,15 +1034,15 @@ export function HomePage() {
                 className="relative"
                 style={FORM_MAX_WIDTH}
               >
-                <div className="absolute inset-0 pointer-events-none" style={formGlowStyle} />
+                <div className="absolute inset-0 pointer-events-none" style={FORM_GLOW_STYLE} />
 
-                <div className="relative w-full" style={formContainerStyle}>
+                <div className="relative w-full" style={FORM_CONTAINER_STYLE}>
                   <form onSubmit={handleFormSubmit} style={FORM_LAYOUT}>
                     <div className="grid grid-cols-1 md:grid-cols-2" style={FORM_GRID_GAP}>
                       {homeContactFormFields.map((field) => (
-                        <div key={field.id} className={field.type === 'select' || field.type === 'textarea' ? 'md:col-span-2' : ''}>
-                          <label htmlFor={field.id} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
-                          {renderFormField(field)}
+                        <div key={field.name} className={field.type === 'select' || field.type === 'textarea' ? 'md:col-span-2' : ''}>
+                          <label htmlFor={`home-contact-${field.name}`} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
+                          {renderServiceFormField('home-contact', field, formData, handleFormChange)}
                         </div>
                       ))}
                     </div>
@@ -1267,7 +1052,7 @@ export function HomePage() {
                       <motion.button
                         type="submit"
                         className="px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer"
-                        style={submitButtonStyle}
+                        style={SUBMIT_BTN_STYLE}
                         whileHover={{ y: -2, ...SUBMIT_BTN_HOVER }}
                         whileTap={{ scale: 0.98 }}
                       >

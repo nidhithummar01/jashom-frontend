@@ -1,7 +1,7 @@
 import type { CaseStudyInput } from './caseStudiesConfig';
 import { CATEGORY, img, projectStudy, portfolioStudy } from './caseStudiesConfig';
 
-export const RAW_STUDIES: CaseStudyInput[] = [
+const RAW_STUDIES: CaseStudyInput[] = [
   projectStudy('boostreferral', {
     title: 'BoostReferral - SaaS Platform',
     industry: 'SaaS',
@@ -129,3 +129,5 @@ export const RAW_STUDIES: CaseStudyInput[] = [
     tags: ['GPU Optimization', 'CUDA Acceleration', 'Energy Efficiency', 'AI Performance', 'Multi-GPU Scaling'],
   }),
 ];
+
+export { RAW_STUDIES };
