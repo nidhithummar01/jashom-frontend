@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { SEO as Seo } from './SEO';
+import { SEO } from './SEO';
 import { AnimatedCounter } from './AnimatedCounter';
 import { useEffect, useRef, useState } from 'react';
 import { getBlogs } from '../api/blogs';
@@ -76,7 +76,7 @@ export function HomePage() {
 
   return (
     <>
-      <Seo
+      <SEO
         title="GPU Optimization Services & CUDA Development Company | Jashom"
         description="Jashom provides advanced GPU optimization, CUDA development, and high-performance computing solutions to accelerate AI, simulation, and enterprise workloads efficiently"
         keywords="GPU optimization, CUDA development, high-performance computing, AI acceleration, GPU consulting, CUDA experts"

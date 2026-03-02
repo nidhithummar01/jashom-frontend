@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { HomeContactFormData } from './HomePage/data';
+import type { HomeContactFormData, ServiceFormField } from './homeContactTypes';
 import {
   ACCENT_COLOR,
   CHECK_PATH,
@@ -11,6 +11,8 @@ import {
   formInputStyle,
 } from '../constants/theme';
 
+type FormFieldChangeTarget = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+
 const INITIAL_SERVICE_FORM = { name: '', email: '', company: '', phone: '', message: '' };
 const INITIAL_HOME_FORM: HomeContactFormData = { name: '', email: '', company: '', phone: '', service: '', message: '' };
 
@@ -18,7 +20,7 @@ const INITIAL_HOME_FORM: HomeContactFormData = { name: '', email: '', company: '
 export function useServicePageForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(INITIAL_SERVICE_FORM);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<FormFieldChangeTarget>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const handleSubmit = (e: React.FormEvent) => {
@@ -36,7 +38,7 @@ export function useHomeContactForm() {
     e.preventDefault();
     navigate('/thank-you/');
   };
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleFormChange = (e: React.ChangeEvent<FormFieldChangeTarget>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   return { formData, handleFormSubmit, handleFormChange };
@@ -83,21 +85,13 @@ export function renderOfficeCardIcon(type: 'address' | 'email' | 'phone') {
   );
 }
 
-export type ServiceFormField<Name extends string> = {
-  name: Name;
-  label: string;
-  type: 'text' | 'email' | 'tel' | 'textarea' | 'select';
-  placeholder: string;
-  required?: boolean;
-  rows?: number;
-  options?: { value: string; label: string }[];
-};
+export type { ServiceFormField } from './homeContactTypes';
 
 export function renderServiceFormField<Name extends string>(
   idPrefix: string,
-  field: ServiceFormField<Name>,
+  field: ServiceFormField<Name>,  
   formData: Record<Name, string>,
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void
+  handleChange: (e: React.ChangeEvent<FormFieldChangeTarget>) => void
 ) {
   const id = `${idPrefix}-${field.name}`;
   const base = {

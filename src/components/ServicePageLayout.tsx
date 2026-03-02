@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { SEO } from './SEO';
+import { SEO as Seo } from './SEO';
 import * as Theme from '../constants/theme';
 import { CheckIcon, DividerLine, QuoteIcon, renderOfficeCardIcon, renderServiceFormField, useServicePageForm } from './ServicePageShared';
 import { SERVICE_PAGE_CONTENT, type ServicePageVariant } from './servicePageContent';
@@ -26,7 +26,7 @@ export function createServicePage(data: ServicePageData, variant: ServicePageVar
   };
 }
 
-export function ServicePageLayout({ data, variant }: Props) {
+export function ServicePageLayout({ data, variant }: Readonly<Props>) {
   const c = SERVICE_PAGE_CONTENT[variant];
   const { formData, handleChange, handleSubmit } = useServicePageForm();
   const heroBgStyle = c.heroImageStyle === 'top' ? Theme.HERO_BG_TOP : Theme.HERO_BG_CENTER;
@@ -34,7 +34,7 @@ export function ServicePageLayout({ data, variant }: Props) {
 
   return (
     <div className="min-h-screen" style={{ background: Theme.SECTION_BG }}>
-      <SEO title={c.seo.title} description={c.seo.description} keywords={c.seo.keywords} />
+      <Seo title={c.seo.title} description={c.seo.description} keywords={c.seo.keywords} />
 
       <section
         className="relative overflow-hidden"
@@ -71,8 +71,8 @@ export function ServicePageLayout({ data, variant }: Props) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
               <motion.div {...Theme.MOTION_FADE_UP_20} className="space-y-6">
-                {c.overviewParagraphs.map((p, i) => (
-                  <p key={i} className="text-white/70 text-base leading-relaxed">{p}</p>
+                {c.overviewParagraphs.map((p) => (
+                  <p key={p} className="text-white/70 text-base leading-relaxed">{p}</p>
                 ))}
                 <div className="grid grid-cols-2 gap-4 pt-4">
                   <div className="rounded-lg p-4" style={Theme.KEY_STAT_BOX}>

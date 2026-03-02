@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useParams, Link } from 'react-router-dom';
-import { SEO as Seo } from './SEO';
+import { SEO } from './SEO';
 import { Calendar } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getBlogBySlug } from '../api/blogs';
@@ -102,7 +102,7 @@ export function BlogDetailPage() {
 
   return (
     <div className="min-h-screen" style={{ background: '#0B0F14' }}>
-      <Seo
+      <SEO
         title={`${blog.title} | Jashom Blog`}
         description={blog.excerpt ?? blog.title}
         keywords={blog.tags ?? 'blog'}

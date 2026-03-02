@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
-import { SEO as Seo } from './SEO';
+import { SEO } from './SEO';
 import { Briefcase, Users, TrendingUp, Heart, Clock, MapPin, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 
@@ -61,7 +61,7 @@ export function CareersPage() {
   };
   return (
     <div className="min-h-screen" style={{ background: '#0B0F14' }}>
-      <Seo
+      <SEO
         title="Careers at Jashom | Join Our Team"
         description="Join the team to create digital products that the world has never seen before! Explore career opportunities at Jashom."
         keywords="careers, jobs, AI jobs, CUDA developer jobs, software engineer jobs, remote jobs"

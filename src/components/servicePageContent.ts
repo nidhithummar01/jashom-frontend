@@ -23,7 +23,7 @@ export const SERVICE_PAGE_CONTENT = {
     servicesIntro: 'From kernel design to system integration, we deliver full-stack CUDA development that meets the most demanding performance and scalability requirements.',
     industryTitle: 'Accelerating Compute-Intensive\nIndustries',
     industryIntro: 'We design CUDA-driven solutions to industries whose speed of processing has a direct consequence on the results of their operation.',
-    industryImage: null as null,
+    industryImage: null,
     processTitleMain: 'Structured CUDA ',
     processTitleGradient: 'Implementation Process',
     processSubtitle: 'A Six-Phase GPU Engineering Model',
@@ -50,7 +50,7 @@ export const SERVICE_PAGE_CONTENT = {
     heroTitle: 'GPU Optimization Services',
     heroSubtitle: 'We provide advanced GPU Optimization Services, used to maximize your computing infrastructure to full performance. Our team optimizes workload patterns, execution pipes, and parallel processing to remove bottlenecks.',
     overviewTitle: 'What is GPU\nOptimization?',
-    overviewSubtitle: null as null,
+    overviewSubtitle: null,
     overviewParagraphs: [
       'GPU optimization is a performance engineering science that aims at making the best use of throughput in a parallel computing system. It requires workload profiling, CUDA kernel restructuring, thread synchronization optimization, and efficient use of memory access to deliver consistent high-performance execution on modern hardware.',
       'Training time can also be minimized by optimized workloads on GPUs, infrastructure waste is minimized, and AI, scientific simulations, and data analytics apps are able to achieve higher compute densities. The result is accelerated processing, optimal use of hardware for compute-intensive processes, and cost-sustainability.',

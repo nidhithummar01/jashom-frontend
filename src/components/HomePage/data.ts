@@ -1,12 +1,11 @@
 import { Brain, Cpu, Shield, TrendingUp, Users, Zap } from 'lucide-react';
-import type { ServiceFormField } from '../ServicePageShared';
+import type { HomeContactFormData, HomeContactFieldName, ServiceFormField } from '../homeContactTypes';
 import { img } from '../portfolio/caseStudiesConfig';
 import { ACCENT_COLOR, GRADIENT_EMERALD_CYAN, TEXT_FAFAFA, TEXT_WHITE } from '../../constants/theme';
 
 const LOGO_BASE_CLASS = 'w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300';
-type HomeContactFieldName = 'name' | 'email' | 'company' | 'phone' | 'service' | 'message';
 
-export type HomeContactFormData = Record<HomeContactFieldName, string>;
+export type { HomeContactFormData };
 
 /** Single export to avoid Sonar duplicated-lines from multiple const declarations. */
 export const homePageData = {
