@@ -1,8 +1,8 @@
 services:
   web:
     build: .
-    image: docker.jashom.com/jashom-web:${TAG:-latest}
-    container_name: jashom-web
+    image: docker.jashom.com/jashom-web-new:${TAG:-latest}
+    container_name: jashom-web-new
 
     ports:
       - "2133:8080"
