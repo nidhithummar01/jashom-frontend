@@ -65,5 +65,9 @@ export const MOTION_FADE_UP_20 = { initial: { opacity: 0, y: 20 }, whileInView: 
 export const MOTION_FADE_UP_30 = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.5 } } as const;
 export const MOTION_FADE_SCALE = { initial: { opacity: 0, scale: 0.95 }, whileInView: { opacity: 1, scale: 1 }, viewport: { once: true }, transition: { duration: 0.6 } } as const;
 
+/** Stagger animation variants for lists (HomePage, TeamPage, etc.) */
+export const STAGGER_CONTAINER = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.3 } } } as const;
+export const STAGGER_ITEM = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 100, damping: 10 } } } as const;
+
 export const OFFICE_ICON_SVG_CLASS = 'w-6 h-6';
 export const OFFICE_ICON_SVG_PROPS = { fill: 'none' as const, viewBox: '0 0 24 24', stroke: 'currentColor' as const } as const;

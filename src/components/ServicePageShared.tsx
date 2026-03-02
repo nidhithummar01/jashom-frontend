@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import type { HomeContactFormData } from './HomePage/data';
 import {
   ACCENT_COLOR,
   CHECK_PATH,
@@ -11,6 +12,7 @@ import {
 } from '../constants/theme';
 
 const INITIAL_SERVICE_FORM = { name: '', email: '', company: '', phone: '', message: '' };
+const INITIAL_HOME_FORM: HomeContactFormData = { name: '', email: '', company: '', phone: '', service: '', message: '' };
 
 /** Shared form state and handlers for CUDA/GPU service pages to avoid duplicated const/handlers. */
 export function useServicePageForm() {
@@ -24,6 +26,20 @@ export function useServicePageForm() {
     navigate('/thank-you/');
   };
   return { formData, handleChange, handleSubmit };
+}
+
+/** Home contact form state and handlers to avoid duplicated const in HomePage. */
+export function useHomeContactForm() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState<HomeContactFormData>(INITIAL_HOME_FORM);
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate('/thank-you/');
+  };
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  return { formData, handleFormSubmit, handleFormChange };
 }
 
 export function CheckIcon({ size = 'sm' }: Readonly<{ size?: 'sm' | 'lg' }>) {

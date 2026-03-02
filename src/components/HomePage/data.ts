@@ -127,3 +127,8 @@ export const homePageData = {
     { title: 'RAG.LU - AI Knowledge Platform', industry: 'AI Platform', challenge: 'Intelligent knowledge management needed', solution: 'RAG technology for knowledge management', impact: ['93% accuracy', '10x faster processing', 'AI transformation'], tags: ['RAG', 'AI', 'Knowledge Management'], image: img('rag-lu.ai.png'), link: '/projects/rag-lu', liveUrl: 'https://rag.lu' },
   ],
 };
+
+export function formatBlogDate(iso: string | null): string {
+  if (!iso) return '';
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
