@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
 import { useParams, Link } from 'react-router-dom';
 import { SEO as Seo } from './SEO';
-import { Calendar } from 'lucide-react';
+import { Calendar, User, Share2, ArrowRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { getBlogBySlug } from '../api/blogs';
+import { getBlogBySlug, getBlogs } from '../api/blogs';
 import type { Blog, BlogContentSection } from '../api/blogs';
 
 function formatDate(iso: string | null): string {
@@ -19,6 +19,7 @@ function slugifyId(title: string, index: number): string {
 export function BlogDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const [blog, setBlog] = useState<Blog | null>(null);
+  const [relatedBlogs, setRelatedBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState('');
@@ -37,6 +38,13 @@ export function BlogDetailPage() {
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, [slug]);
+
+  useEffect(() => {
+    if (!blog?.slug) return;
+    getBlogs({ status: 'published', limit: 5 })
+      .then((list) => setRelatedBlogs(list.filter((b) => b.slug !== blog.slug).slice(0, 3)))
+      .catch(() => setRelatedBlogs([]));
+  }, [blog?.slug]);
 
   const sections: { id: string; title: string }[] =
     blog?.content_sections
@@ -168,16 +176,17 @@ export function BlogDetailPage() {
       </section>
 
       {/* Content */}
-      <section style={{ paddingTop: '100px', paddingBottom: '100px' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 24px' }}>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <section className="blog-detail-content-section">
+        <div className="blog-detail-container">
+          <div className="blog-detail-grid">
+            {/* Main article */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="lg:col-span-8"
+              transition={{ duration: 0.6 }}
+              className="blog-detail-main"
             >
-              <article style={{ color: '#D1D5DB' }}>
+              <article className="blog-detail-article">
                 {(blog.content_sections ?? []).map((sec: BlogContentSection, i: number) => (
                   <BlogSection
                     key={slugifyId(sec.title ?? 'section', i)}
@@ -189,76 +198,110 @@ export function BlogDetailPage() {
               </article>
             </motion.div>
 
-            {sections.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="hidden lg:block lg:col-span-4"
-              >
-                <div style={{ position: 'sticky', top: '120px' }}>
-                  <div
-                    style={{
-                      background: 'rgba(17, 24, 39, 0.6)',
-                      border: '1px solid rgba(16, 185, 129, 0.2)',
-                      borderRadius: '16px',
-                      padding: '24px',
-                      backdropFilter: 'blur(10px)',
-                    }}
-                  >
-                    <h3
-                      style={{
-                        color: '#FFFFFF',
-                        fontSize: '1.125rem',
-                        fontWeight: 600,
-                        marginBottom: '20px',
-                        paddingBottom: '12px',
-                        borderBottom: '1px solid rgba(16, 185, 129, 0.2)',
-                      }}
-                    >
-                      Table of Contents
-                    </h3>
-                    <nav>
+            {/* Right sidebar - always visible on desktop */}
+            <motion.aside
+              initial={{ opacity: 0, x: 16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="blog-detail-sidebar"
+            >
+              <div className="blog-detail-sidebar-sticky">
+                {sections.length > 0 && (
+                  <div className="blog-sidebar-card">
+                    <h3 className="blog-sidebar-title">On this page</h3>
+                    <nav className="blog-toc">
                       {sections.map((item) => (
                         <button
                           key={item.id}
+                          type="button"
                           onClick={() => scrollToSection(item.id)}
-                          style={{
-                            display: 'block',
-                            width: '100%',
-                            textAlign: 'left',
-                            padding: '10px 16px',
-                            marginBottom: '8px',
-                            borderRadius: '8px',
-                            border: 'none',
-                            background: activeSection === item.id ? 'rgba(16, 185, 129, 0.15)' : 'transparent',
-                            color: activeSection === item.id ? '#10B981' : '#9CA3AF',
-                            fontSize: '0.9375rem',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            borderLeft: activeSection === item.id ? '3px solid #10B981' : '3px solid transparent',
-                          }}
-                          onMouseEnter={(e) => {
-                            if (activeSection !== item.id) {
-                              e.currentTarget.style.background = 'rgba(16, 185, 129, 0.05)';
-                              e.currentTarget.style.color = '#D1D5DB';
-                            }
-                          }}
-                          onMouseLeave={(e) => {
-                            if (activeSection !== item.id) {
-                              e.currentTarget.style.background = 'transparent';
-                              e.currentTarget.style.color = '#9CA3AF';
-                            }
-                          }}
+                          className={`blog-toc-item ${activeSection === item.id ? 'blog-toc-item--active' : ''}`}
                         >
                           {item.title}
                         </button>
                       ))}
                     </nav>
                   </div>
+                )}
+
+                {blog.author_name && (
+                  <div className="blog-sidebar-card">
+                    <h3 className="blog-sidebar-title">Author</h3>
+                    <div className="blog-author-card">
+                      <div className="blog-author-avatar">
+                        <User className="blog-author-icon" />
+                      </div>
+                      <span className="blog-author-name">{blog.author_name}</span>
+                    </div>
+                  </div>
+                )}
+
+                <div className="blog-sidebar-card">
+                  <h3 className="blog-sidebar-title">Share</h3>
+                  <div className="blog-share-buttons">
+                    <a
+                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="blog-share-btn"
+                      aria-label="Share on X"
+                    >
+                      <Share2 className="blog-share-icon" />
+                      <span>X / Twitter</span>
+                    </a>
+                    <a
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="blog-share-btn"
+                      aria-label="Share on LinkedIn"
+                    >
+                      <Share2 className="blog-share-icon" />
+                      <span>LinkedIn</span>
+                    </a>
+                    <button
+                      type="button"
+                      className="blog-share-btn"
+                      onClick={() => {
+                        if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                          navigator.clipboard.writeText(typeof window !== 'undefined' ? window.location.href : '');
+                        }
+                      }}
+                      aria-label="Copy link"
+                    >
+                      <Share2 className="blog-share-icon" />
+                      <span>Copy link</span>
+                    </button>
+                  </div>
                 </div>
-              </motion.div>
-            )}
+
+                {relatedBlogs.length > 0 && (
+                  <div className="blog-sidebar-card">
+                    <h3 className="blog-sidebar-title">Related reads</h3>
+                    <ul className="blog-related-list">
+                      {relatedBlogs.map((b) => (
+                        <li key={b.id}>
+                          <Link to={`/blogs/${b.slug}`} className="blog-related-link">
+                            <span className="blog-related-title">{b.title}</span>
+                            <ArrowRight className="blog-related-arrow" />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link to="/blogs/" className="blog-sidebar-all">
+                      View all posts
+                    </Link>
+                  </div>
+                )}
+
+                <div className="blog-sidebar-card blog-sidebar-cta">
+                  <p className="blog-sidebar-cta-text">Need help with AI or GPU acceleration?</p>
+                  <Link to="/contact/" className="blog-sidebar-cta-btn">
+                    Get in touch
+                  </Link>
+                </div>
+              </div>
+            </motion.aside>
           </div>
         </div>
       </section>
@@ -298,28 +341,149 @@ export function BlogDetailPage() {
       </section>
 
       <style>{`
-        /* Hero: min height + extra top space so content sits below navbar */
         .blog-detail-hero { min-height: 420px; padding-top: 13rem; }
         @media (max-width: 768px) { .blog-detail-hero { min-height: 360px; padding-top: 11rem; } }
-        /* Section images: fixed width and height for all blog images from backend */
+
+        .blog-detail-content-section { padding-top: 5rem; padding-bottom: 5rem; }
+        .blog-detail-container { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; }
+        @media (min-width: 1024px) {
+          .blog-detail-grid { display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: start; }
+        }
+        .blog-detail-main { min-width: 0; }
+        .blog-detail-article { color: #D1D5DB; max-width: 1200px; }
+
+        .blog-detail-sidebar { display: none; }
+        @media (min-width: 1024px) {
+          .blog-detail-sidebar { display: block; }
+          .blog-detail-sidebar-sticky { position: sticky; top: 7rem; }
+        }
+
+        .blog-sidebar-card {
+          background: rgba(17, 24, 39, 0.7);
+          border: 1px solid rgba(75, 85, 99, 0.4);
+          border-radius: 14px;
+          padding: 1.35rem 1.25rem;
+          margin-bottom: 1.25rem;
+          backdrop-filter: blur(8px);
+        }
+        .blog-sidebar-title {
+          color: #fff;
+          font-size: 0.8125rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          margin: 0 0 1rem 0;
+          padding-bottom: 0.65rem;
+          border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+        }
+        .blog-toc { display: flex; flex-direction: column; gap: 0.25rem; }
+        .blog-toc-item {
+          display: block;
+          width: 100%;
+          text-align: left;
+          padding: 0.5rem 0.75rem;
+          border-radius: 8px;
+          border: none;
+          background: transparent;
+          color: #9CA3AF;
+          font-size: 0.9375rem;
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s;
+          border-left: 3px solid transparent;
+        }
+        .blog-toc-item:hover { background: rgba(16, 185, 129, 0.08); color: #D1D5DB; }
+        .blog-toc-item--active { background: rgba(16, 185, 129, 0.12); color: #10B981; border-left-color: #10B981; }
+
+        .blog-author-card { display: flex; align-items: center; gap: 0.75rem; }
+        .blog-author-avatar {
+          width: 44px; height: 44px;
+          border-radius: 50%;
+          background: rgba(16, 185, 129, 0.2);
+          display: flex; align-items: center; justify-content: center;
+        }
+        .blog-author-icon { width: 22px; height: 22px; color: #10B981; }
+        .blog-author-name { color: #E5E7EB; font-weight: 500; font-size: 0.9375rem; }
+
+        .blog-share-buttons { display: flex; flex-direction: column; gap: 0.5rem; }
+        .blog-share-btn {
+          display: inline-flex; align-items: center; gap: 0.5rem;
+          padding: 0.5rem 0.75rem;
+          border-radius: 8px;
+          background: rgba(55, 65, 81, 0.5);
+          color: #D1D5DB;
+          font-size: 0.875rem;
+          text-decoration: none;
+          border: none;
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s;
+        }
+        .blog-share-btn:hover { background: rgba(16, 185, 129, 0.15); color: #10B981; }
+        .blog-share-icon { width: 16px; height: 16px; flex-shrink: 0; }
+
+        .blog-related-list { list-style: none; margin: 0; padding: 0; }
+        .blog-related-list li { margin-bottom: 0.5rem; }
+        .blog-related-link {
+          display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+          padding: 0.6rem 0.75rem;
+          border-radius: 8px;
+          color: #D1D5DB;
+          text-decoration: none;
+          font-size: 0.9375rem;
+          transition: background 0.2s, color 0.2s;
+        }
+        .blog-related-link:hover { background: rgba(16, 185, 129, 0.08); color: #10B981; }
+        .blog-related-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .blog-related-arrow { width: 16px; height: 16px; flex-shrink: 0; color: #10B981; }
+        .blog-sidebar-all {
+          display: inline-block; margin-top: 0.75rem;
+          font-size: 0.875rem; color: #10B981; text-decoration: none;
+          font-weight: 500;
+        }
+        .blog-sidebar-all:hover { text-decoration: underline; }
+
+        .blog-sidebar-cta {
+          background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.06) 100%);
+          border-color: rgba(16, 185, 129, 0.3);
+        }
+        .blog-sidebar-cta-text { color: #D1D5DB; font-size: 0.9375rem; margin: 0 0 0.75rem 0; line-height: 1.5; }
+        .blog-sidebar-cta-btn {
+          display: inline-block;
+          padding: 0.5rem 1rem;
+          border-radius: 8px;
+          background: #10B981;
+          color: #000;
+          font-size: 0.875rem; font-weight: 600;
+          text-decoration: none;
+          transition: opacity 0.2s, transform 0.2s;
+        }
+        .blog-sidebar-cta-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        .blog-detail-section-images { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+        /* API/admin images: full-width large square (1080×1080 / 1400×1400), no column squeeze */
         .blog-detail-img {
-          width: 560px;
-          max-width: 100%;
-          height: 360px;
+          display: block;
+          width: 100%;
+          min-width: 400px;
+          max-width: 1080px;
+          height: auto;
+          aspect-ratio: 1 / 1;
           object-fit: cover;
           border-radius: 16px;
           box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
-          display: block;
         }
-        @media (max-width: 768px) {
-          .blog-detail-img { width: 100%; height: 260px; }
-        }
+        @media (min-width: 900px) { .blog-detail-img { max-width: 1200px; } }
+        @media (min-width: 1200px) { .blog-detail-img { max-width: 1400px; } }
         .blog-section-content h2 { color: #FFFFFF; font-size: 2.25rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; padding-left: 20px; border-left: 4px solid #10B981; }
         .blog-section-content h3 { color: #FFFFFF; font-size: 1.75rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
         .blog-section-content p { color: #D1D5DB; line-height: 1.8; margin-bottom: 1.25rem; font-size: 1.0625rem; }
         .blog-section-content ul { list-style-type: disc; padding-left: 2rem; margin-bottom: 1.25rem; }
         .blog-section-content li { color: #D1D5DB; margin-bottom: 0.5rem; line-height: 1.8; }
-        .blog-section-content strong { color: #10B981; font-weight: 600; }
+        article .blog-section-content strong,
+        article .blog-section-content b,
+        .blog-section-content strong,
+        .blog-section-content b,
+        .blog-section-content span[style*="font-weight: bold"],
+        .blog-section-content span[style*="font-weight:bold"] { color: #FFFFFF !important; font-weight: 600 !important; }
       `}</style>
     </div>
   );
@@ -358,18 +522,16 @@ function BlogSection({
           {section.title}
         </h2>
       )}
-      <div className={hasImages ? 'grid grid-cols-1 md:grid-cols-2 gap-8 items-start' : ''}>
-        <div>
-          {section.content && (
-            <div
-              className="blog-section-content"
-              dangerouslySetInnerHTML={{ __html: section.content }}
-              style={{ lineHeight: 1.8, color: '#D1D5DB' }}
-            />
-          )}
-        </div>
+      <div className={hasImages ? 'blog-section-with-images' : ''}>
+        {section.content && (
+          <div
+            className="blog-section-content"
+            dangerouslySetInnerHTML={{ __html: section.content }}
+            style={{ lineHeight: 1.8, color: '#D1D5DB' }}
+          />
+        )}
         {hasImages && section.images && (
-          <div className="space-y-4 blog-detail-section-images">
+          <div className="blog-detail-section-images">
             {section.images.map((img) => (
               <img
                 key={`${img.url}-${img.alt ?? ''}`}

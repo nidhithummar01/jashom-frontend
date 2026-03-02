@@ -26,7 +26,8 @@ export function SEO({
   if (pathname !== '/' && !pathname.endsWith('/')) {
     pathname = `${pathname}/`;
   }
-  
+
+  // Self-referencing canonical URL for this page (used when canonical prop is not provided)
   const currentUrl = `${baseUrl}${pathname}`;
   // Convert relative ogImage path to absolute URL
   const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${baseUrl}${ogImage}`;
@@ -54,8 +55,9 @@ export function SEO({
     updateMetaTag('name', 'twitter:image', ogImageUrl);
     updateMetaTag('name', 'twitter:site', '@neoteq');
 
-    // Canonical URL
-    updateLinkTag('canonical', canonical || currentUrl);
+    // Self-referencing canonical on every page (canonical prop overrides when provided, e.g. from blog API)
+    const canonicalHref = (typeof canonical === 'string' && canonical.trim() !== '') ? canonical : currentUrl;
+    updateLinkTag('canonical', canonicalHref);
 
     // Structured Data - Organization
     updateStructuredData('organization', {

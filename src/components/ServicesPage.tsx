@@ -5,32 +5,32 @@ import { ArrowRight } from 'lucide-react';
 export function ServicesPage() {
   // AI Services
   const aiServices = [
-    { title: 'AI GPU Optimization & Attestation', path: '/services/ai-gpu-optimization' },
-    { title: 'RAG Applications', path: '/services/rag-applications' },
-    { title: 'AI Agentic Systems (N8N automation)', path: '/services/ai-agentic-systems' },
-    { title: 'AI Integration & Workflow Automation', path: '/services/ai-automation' }
+    { title: 'AI GPU Optimization & Attestation', path: '/services/ai-gpu-optimization/' },
+    { title: 'RAG Applications', path: '/services/rag-applications/' },
+    { title: 'AI Agentic Systems (N8N automation)', path: '/services/ai-agentic-systems/' },
+    { title: 'AI Integration & Workflow Automation', path: '/services/ai-automation/' }
   ];
 
   // Cybersecurity
   const securityServices = [
-    { title: 'Cybersecurity', path: '/services/cyber-security' },
-    { title: 'VAPT', path: '/services/vapt' },
-    { title: 'Compliance & Risk', path: '/services/compliance-risk' }
+    { title: 'Cybersecurity', path: '/services/cyber-security/' },
+    { title: 'VAPT', path: '/services/vapt/' },
+    { title: 'Compliance & Risk', path: '/services/compliance-risk/' }
   ];
 
   // Cloud & DevOps Engineering
   const cloudDevOpsServices = [
-    { title: 'DevOps & DevSecOps', path: '/services/devops-devsecops' },
-    { title: 'Cloud Computing', path: '/services/devops-cloud' },
-    { title: 'Edge Computing', path: '/services/edge-computing' },
-    { title: 'CI/CD Automation', path: '/services/cicd-automation' }
+    { title: 'DevOps & DevSecOps', path: '/services/devops-devsecops/' },
+    { title: 'Cloud Computing', path: '/services/devops-cloud/' },
+    { title: 'Edge Computing', path: '/services/edge-computing/' },
+    { title: 'CI/CD Automation', path: '/services/cicd-automation/' }
   ];
 
   // Product Engineering
   const productServices = [
-    { title: 'Product Engineering (Full-Stack Development)', path: '/services/product-engineering' },
-    { title: 'Custom Development', path: '/services/custom-development' },
-    { title: 'Micro-SaaS Development', path: '/services/micro-saas' }
+    { title: 'Product Engineering (Full-Stack Development)', path: '/services/product-engineering/' },
+    { title: 'Custom Development', path: '/services/custom-development/' },
+    { title: 'Micro-SaaS Development', path: '/services/micro-saas/' }
   ];
 
 

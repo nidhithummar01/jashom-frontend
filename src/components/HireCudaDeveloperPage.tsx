@@ -225,7 +225,7 @@ export function HireCudaDeveloperPage() {
                     </div>
                     <div className="flex-none sm:ml-3 w-full sm:w-[250px] sm:min-w-[250px]">
                       <a
-                        href="/contact"
+                        href="/contact/"
                         className="inline-flex items-center justify-center px-6 rounded-xl font-semibold text-sm leading-snug transition-all duration-300 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] w-full text-center"
                         style={{
                           background: '#10B981',
@@ -306,7 +306,7 @@ export function HireCudaDeveloperPage() {
 
                     <div className="pt-4">
                       <a
-                        href="/contact"
+                        href="/contact/"
                         className="inline-flex items-center justify-center w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border-2 text-center text-sm sm:text-base font-semibold transition-all duration-300 hover:bg-orange-500 hover:text-white cursor-pointer"
                         style={{
                           background: 'transparent',

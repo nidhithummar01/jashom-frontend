@@ -35,49 +35,49 @@ export function SolutionsPage() {
     {
       icon: Heart,
       title: 'HealthTech',
-      path: '/solutions/healthtech',
+      path: '/solutions/healthtech/',
       description: 'Empower healthcare providers with AI-driven insights, predictive analytics, and automated workflows.',
       features: ['AI-Powered Diagnostics', 'Predictive Care', 'EHR Automation', 'Virtual Assistants']
     },
     {
       icon: Package,
       title: 'Supply Chain',
-      path: '/solutions/supply-chain',
+      path: '/solutions/supply-chain/',
       description: 'Optimize, automate, and forecast your supply chain with AI-powered precision.',
       features: ['Demand Forecasting', 'Route Optimization', 'Warehouse Automation', 'Digital Twins']
     },
     {
       icon: TrendingUp,
       title: 'FinTech',
-      path: '/solutions/fintech',
+      path: '/solutions/fintech/',
       description: 'Accelerate financial innovation with secure, intelligent, and scalable AI systems.',
       features: ['Fraud Detection', 'Credit Underwriting', 'Compliance & KYC', 'Robo-Advisors']
     },
     {
       icon: Leaf,
       title: 'EnvironmentTech',
-      path: '/solutions/environmenttech',
+      path: '/solutions/environmenttech/',
       description: 'Use AI to monitor, predict, and protect the environment for sustainable decision-making.',
       features: ['Carbon Analysis', 'Climate Prediction', 'Energy Management', 'Waste Automation']
     },
     {
       icon: Scale,
       title: 'Legal & Tax',
-      path: '/solutions/legal-and-tax',
+      path: '/solutions/legal-and-tax/',
       description: 'Transform legal and tax workflows with AI assistants and automated document processing.',
       features: ['Contract Review', 'Tax Compliance', 'Legal Research', 'Document Extraction']
     },
     {
       icon: ShoppingCart,
       title: 'RetailTech',
-      path: '/solutions/retail-tech',
+      path: '/solutions/retail-tech/',
       description: 'Reimagine retail with AI-driven personalization, automation, and predictive intelligence.',
       features: ['Personalization', 'Sales Forecasting', 'Computer Vision', 'Store Analytics']
     },
     {
       icon: UtensilsCrossed,
       title: 'FoodTech',
-      path: '/solutions/foodtech',
+      path: '/solutions/foodtech/',
       description: 'Modernize food operations with AI systems that improve safety, quality, and production.',
       features: ['Quality Detection', 'Yield Optimization', 'Traceability', 'Demand Forecasting']
     }

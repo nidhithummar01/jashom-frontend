@@ -237,35 +237,35 @@ export function Navigation() {
         {
           label: 'AI Services',
           subItems: [
-            { path: '/services/ai-gpu-optimization', label: 'AI GPU Optimization & Attestation' },
-            { path: '/services/rag-applications', label: 'RAG Applications' },
-            { path: '/services/ai-agentic-systems', label: 'AI Agentic Systems' },
-            { path: '/services/ai-automation', label: 'AI Integration & Workflow Automation' }
+            { path: '/services/ai-gpu-optimization/', label: 'AI GPU Optimization & Attestation' },
+            { path: '/services/rag-applications/', label: 'RAG Applications' },
+            { path: '/services/ai-agentic-systems/', label: 'AI Agentic Systems' },
+            { path: '/services/ai-automation/', label: 'AI Integration & Workflow Automation' }
           ]
         },
         {
           label: 'Cybersecurity',
           subItems: [
-            { path: '/services/cyber-security', label: 'Cybersecurity' },
-            { path: '/services/vapt', label: 'VAPT' },
-            { path: '/services/compliance-risk', label: 'Compliance & Risk' }
+            { path: '/services/cyber-security/', label: 'Cybersecurity' },
+            { path: '/services/vapt/', label: 'VAPT' },
+            { path: '/services/compliance-risk/', label: 'Compliance & Risk' }
           ]
         },
         {
           label: 'Cloud & DevOps Engineering',
           subItems: [
-            { path: '/services/devops-devsecops', label: 'DevOps & DevSecOps' },
-            { path: '/services/devops-cloud', label: 'Cloud Computing' },
-            { path: '/services/edge-computing', label: 'Edge Computing' },
-            { path: '/services/cicd-automation', label: 'CI/CD Automation' }
+            { path: '/services/devops-devsecops/', label: 'DevOps & DevSecOps' },
+            { path: '/services/devops-cloud/', label: 'Cloud Computing' },
+            { path: '/services/edge-computing/', label: 'Edge Computing' },
+            { path: '/services/cicd-automation/', label: 'CI/CD Automation' }
           ]
         },
         {
           label: 'Product Engineering',
           subItems: [
-            { path: '/services/product-engineering', label: 'Product Engineering' },
-            { path: '/services/custom-development', label: 'Custom Development' },
-            { path: '/services/micro-saas', label: 'SaaS Development' }
+            { path: '/services/product-engineering/', label: 'Product Engineering' },
+            { path: '/services/custom-development/', label: 'Custom Development' },
+            { path: '/services/micro-saas/', label: 'SaaS Development' }
           ]
         }
       ]
@@ -276,13 +276,13 @@ export function Navigation() {
     {
       label: 'Solutions',
       dropdown: [
-        { path: '/solutions/healthtech', label: 'HealthTech' },
-        { path: '/solutions/supply-chain', label: 'Supply Chain' },
-        { path: '/solutions/fintech', label: 'FinTech' },
-        { path: '/solutions/environmenttech', label: 'EnvironmentTech' },
-        { path: '/solutions/legal-and-tax', label: 'Legal & Tax' },
-        { path: '/solutions/retail-tech', label: 'RetailTech' },
-        { path: '/solutions/foodtech', label: 'FoodTech' }
+        { path: '/solutions/healthtech/', label: 'HealthTech' },
+        { path: '/solutions/supply-chain/', label: 'Supply Chain' },
+        { path: '/solutions/fintech/', label: 'FinTech' },
+        { path: '/solutions/environmenttech/', label: 'EnvironmentTech' },
+        { path: '/solutions/legal-and-tax/', label: 'Legal & Tax' },
+        { path: '/solutions/retail-tech/', label: 'RetailTech' },
+        { path: '/solutions/foodtech/', label: 'FoodTech' }
       ]
     },
     */
@@ -291,12 +291,12 @@ export function Navigation() {
     {
       label: 'AI for Industry',
       dropdown: [
-        { path: '/ai-for-industry/sales', label: 'AI for Sales' },
-        { path: '/ai-for-industry/legal', label: 'AI for Legal' },
-        { path: '/ai-for-industry/accounting', label: 'AI for Accounting' },
-        { path: '/ai-for-industry/healthcare', label: 'AI for Healthcare' },
-        { path: '/ai-for-industry/marketing', label: 'AI for Marketing' },
-        { path: '/ai-for-industry/rnd', label: 'AI for R&D' }
+        { path: '/ai-for-industry/sales/', label: 'AI for Sales' },
+        { path: '/ai-for-industry/legal/', label: 'AI for Legal' },
+        { path: '/ai-for-industry/accounting/', label: 'AI for Accounting' },
+        { path: '/ai-for-industry/healthcare/', label: 'AI for Healthcare' },
+        { path: '/ai-for-industry/marketing/', label: 'AI for Marketing' },
+        { path: '/ai-for-industry/rnd/', label: 'AI for R&D' }
       ]
     },
     */

@@ -47,7 +47,7 @@ export function ServicePageLayout({ data, variant }: Readonly<Props>) {
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-left" style={{ maxWidth: '620px' }}>
               <h1 className="font-bold text-white leading-tight" style={Theme.HERO_H1_STYLE}>{c.heroTitle}</h1>
               <p className="text-white/90" style={Theme.HERO_P_STYLE}>{c.heroSubtitle}</p>
-              <a href="/contact" className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90 hover:scale-105" style={Theme.CTA_HERO_STYLE}>
+              <a href="/contact/" className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90 hover:scale-105" style={Theme.CTA_HERO_STYLE}>
                 Get Free Consultation
               </a>
             </motion.div>
@@ -114,7 +114,7 @@ export function ServicePageLayout({ data, variant }: Readonly<Props>) {
             ))}
           </div>
           <motion.div {...Theme.MOTION_FADE_UP_20} transition={{ duration: 0.6, delay: 0.4 }} className="flex justify-center mt-16 pt-8">
-            <a href="/contact" className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90" style={Theme.CTA_SIMPLE}>
+            <a href="/contact/" className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90" style={Theme.CTA_SIMPLE}>
               Get in Touch With Us
             </a>
           </motion.div>

@@ -2282,3 +2282,33 @@
     opacity: .5;
   }
 }
+
+/* Blog detail: force bold text to white (admin rich text bold was showing green) */
+.blog-section-content strong,
+.blog-section-content b,
+.blog-section-content span[style*="font-weight: bold"],
+.blog-section-content span[style*="font-weight:bold"] {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* About Us page: consistent section alignment and spacing */
+.about-page-container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+@media (min-width: 640px) {
+  .about-page-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+@media (min-width: 1024px) {
+  .about-page-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}

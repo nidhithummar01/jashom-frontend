@@ -711,7 +711,7 @@ export function HomePage() {
                 viewport={{ once: true }}
               >
                 <Link
-                  to="/contact"
+                  to="/contact/"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)]"
                   style={homePageData.CTA_GRADIENT_STYLE}
                 >
@@ -799,33 +799,36 @@ export function HomePage() {
                     >
                       <Link to={`/blogs/${blog.slug}/`} className="block h-full" style={{ ['--accent' as string]: Theme.ACCENT_COLOR } as React.CSSProperties}>
                         <div
-                          className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-[1.02]"
-                          style={{ background: homePageData.BLOG_CARD_BG, border: homePageData.BLOG_CARD_BORDER }}
+                          className="relative h-full min-h-[320px] rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-[1.02] flex flex-col"
+                          style={{
+                            background: blog.featured_image_url ? undefined : homePageData.BLOG_CARD_BG,
+                            border: homePageData.BLOG_CARD_BORDER,
+                            ...(blog.featured_image_url ? {
+                              backgroundImage: `url(${blog.featured_image_url})`,
+                              backgroundSize: 'cover',
+                              backgroundPosition: 'center',
+                            } : {})
+                          }}
                         >
-                          {/* Image Section */}
-                          <div className="relative h-48 overflow-hidden" style={{ background: '#1E293B' }}>
-                            <div
-                              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                              style={{
-                                backgroundImage: blog.featured_image_url ? `url(${blog.featured_image_url})` : 'none',
-                                opacity: blog.featured_image_url ? 0.4 : 0
-                              }}
-                            />
-                            {/* Gradient overlay */}
-                            <div className="absolute inset-0" style={{
-                              background: 'linear-gradient(180deg, rgba(17, 24, 39, 0) 0%, rgba(17, 24, 39, 1) 100%)'
-                            }} />
+                          {/* Dark overlay so text is readable (hero/detail image as full card BG) */}
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              background: blog.featured_image_url
+                                ? 'linear-gradient(180deg, rgba(11, 15, 20, 0.7) 0%, rgba(11, 15, 20, 0.88) 50%, rgba(11, 15, 20, 0.96) 100%)'
+                                : 'none'
+                            }}
+                          />
 
-                            {/* Category Badge */}
-                            <div className="absolute top-4 left-4">
-                              <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={homePageData.BLOG_BADGE_STYLE}>
-                                Blog
-                              </div>
+                          {/* Category Badge */}
+                          <div className="absolute top-4 left-4 z-10">
+                            <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={homePageData.BLOG_BADGE_STYLE}>
+                              Blog
                             </div>
                           </div>
 
-                          {/* Content Section */}
-                          <div className="p-6">
+                          {/* Content Section - on top of overlay */}
+                          <div className="relative z-10 flex flex-col flex-1 p-6 pt-14">
                             <h3 className="text-lg font-bold mb-3 line-clamp-2 transition-colors duration-240 group-hover:text-[var(--accent)]" style={{
                               color: Theme.TEXT_FAFAFA,
                               lineHeight: 1.4

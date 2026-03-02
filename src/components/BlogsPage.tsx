@@ -273,7 +273,7 @@ export function BlogsPage() {
             </p>
             
             <Link
-              to="/contact"
+              to="/contact/"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#10B981] to-[#06B6D4] shadow-[0_8px_32px_rgba(16,185,129,0.4)] hover:from-[#059669] hover:to-[#0891B2] hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)] hover:-translate-y-0.5"
             >
               <span>Contact Us</span>

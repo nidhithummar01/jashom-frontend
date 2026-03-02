@@ -142,7 +142,7 @@ export function CareersPage() {
 
               {/* CTA Button */}
               <Link
-                to="/careers/openings"
+                to="/careers/openings/"
                 className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90 hover:scale-105 cursor-pointer"
                 style={{
                   background: '#10B981',
@@ -634,7 +634,7 @@ export function CareersPage() {
               We're always looking for talented individuals. Send us your resume and let's talk about how you can contribute to our mission.
             </p>
             <a
-              href="/contact"
+              href="/contact/"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#10B981] to-[#06B6D4] shadow-[0_8px_32px_rgba(16,185,129,0.4)] hover:from-[#059669] hover:to-[#0891B2] hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)] hover:-translate-y-0.5"
             >
               <span>Get In Touch</span>

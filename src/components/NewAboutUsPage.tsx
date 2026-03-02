@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import { 
@@ -31,8 +31,16 @@ const staggerItem = {
   }
 };
 
+function useCanonicalUrl() {
+  const location = useLocation();
+  const base = (import.meta.env.VITE_SITE_URL ?? (typeof window !== 'undefined' ? window.location.origin : '')).replace(/\/$/, '');
+  const path = location.pathname !== '/' && !location.pathname.endsWith('/') ? `${location.pathname}/` : location.pathname;
+  return `${base}${path}`;
+}
+
 export function NewAboutUsPage() {
   const navigate = useNavigate();
+  const canonicalUrl = useCanonicalUrl();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -67,6 +75,7 @@ export function NewAboutUsPage() {
           name="description"
           content="Learn about Jashom - a technology-driven company specializing in GPU optimization, CUDA development, and AI solutions. Building epic digital solutions with cutting-edge technology."
         />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
       <div className="min-h-screen bg-black overflow-x-hidden">
@@ -89,9 +98,9 @@ export function NewAboutUsPage() {
             }}
           ></div>
 
-          {/* Content - Premium Spacing */}
+          {/* Content - aligned with section container */}
           <div className="relative z-10 flex items-center overflow-x-hidden">
-            <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full" style={{ paddingTop: '140px', paddingBottom: '80px', maxWidth: '100%' }}>
+            <div className="about-page-container w-full" style={{ paddingTop: '140px', paddingBottom: '80px' }}>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -130,15 +139,15 @@ export function NewAboutUsPage() {
           </div>
         </section>
 
-        {/* About Section - "We Create Software Solutions" */}
+        {/* About Section - aligned with hero */}
         <section 
-          className="py-20 px-4 sm:px-6 lg:px-8"
+          className="py-16 sm:py-20 lg:py-24"
           style={{
             background: 'linear-gradient(180deg, #0B0F14 0%, #0F1419 100%)'
           }}
         >
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+          <div className="about-page-container">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 lg:gap-16 items-center">
               {/* Left Side - Title and Content */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -212,9 +221,9 @@ export function NewAboutUsPage() {
           </div>
         </section>
 
-        {/* Stats Section - Bento Grid Style */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
-          <div className="max-w-7xl mx-auto">
+        {/* Stats Section - same container alignment */}
+        <section className="py-16 sm:py-20 lg:py-24 bg-black">
+          <div className="about-page-container">
             <motion.div
               variants={staggerContainer}
               initial="hidden"
@@ -441,63 +450,68 @@ export function NewAboutUsPage() {
           </div>
         </section>
 
-        {/* Vision & Mission Section */}
+        {/* Vision & Mission - one row, two cards side by side */}
         <section 
-          className="py-20 px-4 sm:px-6 lg:px-8"
+          className="py-20 sm:py-24 lg:py-32"
           style={{
             background: 'linear-gradient(180deg, #0B0F14 0%, #000000 100%)'
           }}
         >
-          <div className="max-w-7xl mx-auto space-y-16">
-            {/* Vision */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-            >
-              <div>
-                <p className="text-sm mb-4" style={{ color: '#9CA3AF' }}>We Think in Compute Power</p>
-                <h2 className="text-4xl sm:text-5xl font-bold" style={{ color: '#FAFAFA' }}>
+          <div className="about-page-container">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+              {/* Vision Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="group relative rounded-2xl px-8 py-10 sm:px-10 sm:py-12 lg:px-12 lg:py-14 h-full flex flex-col"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(16, 185, 129, 0.2)',
+                  boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2)'
+                }}
+              >
+                <div className="absolute top-0 left-8 sm:left-10 lg:left-12 w-12 h-0.5 rounded-full" style={{ background: 'linear-gradient(90deg, #10B981, transparent)' }} />
+                <p className="text-sm font-medium mb-3" style={{ color: '#10B981' }}>We Think in Compute Power</p>
+                <h2 className="text-3xl sm:text-4xl font-bold mb-5" style={{ color: '#FAFAFA' }}>
                   Vision
                 </h2>
-              </div>
-              <div>
-                <p className="text-lg leading-relaxed" style={{ color: '#D1D5DB' }}>
+                <p className="text-base leading-relaxed flex-1" style={{ color: '#D1D5DB' }}>
                   To promote the use of GPU computing in the world by designing efficient, scalable and future-compatible CUDA architectures.
                 </p>
-              </div>
-            </motion.div>
+              </motion.div>
 
-            {/* Divider */}
-            <div className="border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
-
-            {/* Mission */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-            >
-              <div>
-                <p className="text-sm mb-4" style={{ color: '#9CA3AF' }}>We Bring Impact</p>
-                <h2 className="text-4xl sm:text-5xl font-bold" style={{ color: '#FAFAFA' }}>
+              {/* Mission Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="group relative rounded-2xl px-8 py-10 sm:px-10 sm:py-12 lg:px-12 lg:py-14 h-full flex flex-col"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(16, 185, 129, 0.2)',
+                  boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2)'
+                }}
+              >
+                <div className="absolute top-0 left-8 sm:left-10 lg:left-12 w-12 h-0.5 rounded-full" style={{ background: 'linear-gradient(90deg, #10B981, transparent)' }} />
+                <p className="text-sm font-medium mb-3" style={{ color: '#10B981' }}>We Bring Impact</p>
+                <h2 className="text-3xl sm:text-4xl font-bold mb-5" style={{ color: '#FAFAFA' }}>
                   Mission
                 </h2>
-              </div>
-              <div>
-                <p className="text-lg leading-relaxed" style={{ color: '#D1D5DB' }}>
+                <p className="text-base leading-relaxed flex-1" style={{ color: '#D1D5DB' }}>
                   To help organizations unlock maximum computational performance through precision-driven GPU optimization and parallel engineering expertise.
                 </p>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
         </section>
 
-        {/* Brand Values Section - Side by Side 50/50 */}
+        {/* Brand Values Section - same left/right space as rest of page */}
         <section className="py-0 bg-black pb-20">
-          <div className="w-full">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 min-h-[600px]">
+          <div className="about-page-container">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 min-h-[600px] rounded-2xl overflow-hidden">
               {/* Left Side - Image and CTA (50%) */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -611,8 +625,8 @@ export function NewAboutUsPage() {
         </section>
 
         {/* Divider Section - Add Space */}
-        <section className="py-16 bg-black">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-12 lg:py-16 bg-black">
+          <div className="about-page-container">
             <div className="border-t border-white/10"></div>
           </div>
         </section>
@@ -620,12 +634,12 @@ export function NewAboutUsPage() {
         {/* Contact Form Section - 50/50 Split */}
         <section 
           id="contact-form"
-          className="py-20"
+          className="py-16 sm:py-20 lg:py-24"
           style={{
             background: 'linear-gradient(180deg, #000000 0%, #0B0F14 100%)'
           }}
         >
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="about-page-container">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
               {/* Left Side - Contact Info & Office Details (50%) */}
               <motion.div
