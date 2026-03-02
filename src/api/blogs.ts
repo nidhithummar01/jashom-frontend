@@ -45,8 +45,12 @@ async function api<T>(path: string): Promise<T> {
   const pathStr = path.startsWith('/') ? path : '/' + path;
   const url = base + pathStr;
   const res = await fetch(url);
+  const text = await res.text();
   if (!res.ok) throw new Error(res.statusText ?? 'Request failed');
-  return res.json();
+  if (!text.trim().startsWith('[') && !text.trim().startsWith('{')) {
+    throw new Error('Blog API returned an unexpected response. Check VITE_API_URL and that the backend is serving JSON at this URL.');
+  }
+  return JSON.parse(text) as T;
 }
 
 /** Fetch published blogs (for list/cards). */
