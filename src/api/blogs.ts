@@ -1,20 +1,26 @@
 /**
  * Blog API client.
- * Option A (no CORS): Use same-origin proxy. Set VITE_USE_API_PROXY=true and proxy /api → backend on your server.
- * Option B: Set VITE_API_URL=https://backend.jashom.com and allow that origin in backend CORS.
+ * Option A (no CORS): VITE_USE_API_PROXY=true and proxy /api → backend.
+ * Option B: VITE_API_URL=<backend URL> and CORS on backend.
+ * When running on a live host (not localhost), we use backend URL from env or fallback so requests don't hit the frontend origin.
  */
-const PRODUCTION_API_BASE = 'https://backend.jashom.com';
 const API_PROXY_PREFIX = '/api';
 
-const getBaseUrl = (): string => {
+function getBaseUrl(): string {
   if (import.meta.env.VITE_USE_API_PROXY === 'true') {
     return typeof window !== 'undefined' ? window.location.origin + API_PROXY_PREFIX : API_PROXY_PREFIX;
   }
   const url = import.meta.env.VITE_API_URL;
   if (url) return String(url).replace(/\/$/, '');
-  if (import.meta.env.PROD) return PRODUCTION_API_BASE;
+  const isLive = typeof window !== 'undefined' && !/localhost|127\.0\.0\.1/.test(window.location.origin);
+  if (import.meta.env.PROD || isLive) {
+    if (!url && typeof window !== 'undefined') {
+      console.warn('Set VITE_API_URL in your build env so DevOps can change the backend domain without code changes.');
+    }
+    return (url ? String(url) : 'https://backend.jashom.com').replace(/\/$/, '');
+  }
   return typeof window !== 'undefined' ? window.location.origin : '';
-};
+}
 
 export interface BlogSectionImage {
   url: string;
