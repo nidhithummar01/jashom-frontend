@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { SEO } from './SEO';
+import { SEO as Seo } from './SEO';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { getBlogs } from '../api/blogs';
 import type { Blog } from '../api/blogs';
@@ -26,7 +26,7 @@ export function BlogsPage() {
 
   return (
     <div className="min-h-screen" style={{ background: '#0B0F14' }}>
-      <SEO
+      <Seo
         title="Blog | Jashom - AI & GPU Optimization Expertise"
         description="Explore the latest blog posts, case studies, and news from Jashom. Stay informed about AI, GPU optimization, CUDA development, and enterprise technology trends."
         keywords="AI blog, GPU optimization, CUDA development, case studies, technology news, machine learning, enterprise AI"

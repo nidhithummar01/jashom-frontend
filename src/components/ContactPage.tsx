@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { SEO } from './SEO';
+import { SEO as Seo } from './SEO';
 import { Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -137,7 +137,7 @@ export function ContactPage() {
 
   return (
     <>
-      <SEO
+      <Seo
         title="Contact Jashom | GPU & CUDA Development Consultation"
         description="Get in touch with Jashom for expert GPU optimization and CUDA development services. Contact our team to discuss your performance challenges and project requirements"
         keywords="contact Jashom, GPU consultation, CUDA development inquiry, AI consulting"

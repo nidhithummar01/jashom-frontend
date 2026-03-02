@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { SEO } from './SEO';
+import { SEO as Seo } from './SEO';
 import { useState } from 'react';
 import { careers, getAllDepartments } from '../data/careersData';
 import { MapPin, Clock, Users, ArrowRight } from 'lucide-react';
@@ -69,7 +69,7 @@ export function CareerListingPage() {
 
   return (
     <div className="min-h-screen" style={{ background: SECTION_BG.black }}>
-      <SEO
+      <Seo
         title="Job Openings at Jashom | Explore Opportunities"
         description="Explore current job openings at Jashom. Join our team of innovators building the future of AI and GPU computing."
         keywords="job openings, careers, AI jobs, CUDA developer jobs, machine learning jobs, remote jobs"

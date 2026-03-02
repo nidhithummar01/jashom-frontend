@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { SEO } from './SEO';
+import { SEO as Seo } from './SEO';
 import { useState } from 'react';
 import { CheckCircle, Upload, ArrowLeft, ArrowRight } from 'lucide-react';
 
@@ -91,7 +91,7 @@ export function CareerApplicationPage() {
   if (submitted) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4" style={{ background: SECTION_BG }}>
-        <SEO
+        <Seo
           title="Application Submitted | Jashom Careers"
           description="Your job application has been successfully submitted."
         />
@@ -161,7 +161,7 @@ export function CareerApplicationPage() {
 
   return (
     <div className="min-h-screen" style={{ background: SECTION_BG }}>
-      <SEO
+      <Seo
         title={`Apply for ${jobRole ?? 'Position'} | Jashom Careers`}
         description="Submit your application to join the Jashom team."
         keywords="job application, career application, apply for job"
