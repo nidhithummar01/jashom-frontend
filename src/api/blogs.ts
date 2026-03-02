@@ -1,12 +1,18 @@
 /**
- * Blog API client. Base URL from .env only (VITE_API_URL). No hardcoded URLs.
- * Set VITE_API_URL in .env locally and in your deployment build environment for live.
+ * Blog API client.
+ * Option A (no CORS): Use same-origin proxy. Set VITE_USE_API_PROXY=true and proxy /api → backend on your server.
+ * Option B: Set VITE_API_URL=https://backend.jashom.com and allow that origin in backend CORS.
  */
+const PRODUCTION_API_BASE = 'https://backend.jashom.com';
+const API_PROXY_PREFIX = '/api';
 
 const getBaseUrl = (): string => {
+  if (import.meta.env.VITE_USE_API_PROXY === 'true') {
+    return typeof window !== 'undefined' ? window.location.origin + API_PROXY_PREFIX : API_PROXY_PREFIX;
+  }
   const url = import.meta.env.VITE_API_URL;
   if (url) return String(url).replace(/\/$/, '');
-  console.warn('VITE_API_URL is not set. Using same origin. Set VITE_API_URL in .env (and in deployment env) for the blog API.');
+  if (import.meta.env.PROD) return PRODUCTION_API_BASE;
   return typeof window !== 'undefined' ? window.location.origin : '';
 };
 

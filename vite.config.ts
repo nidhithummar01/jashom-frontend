@@ -33,6 +33,13 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    proxy: {
+      '/api': {
+        target: process.env.VITE_API_URL || 'https://backend.jashom.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   },
   // Optimize dependencies
   optimizeDeps: {

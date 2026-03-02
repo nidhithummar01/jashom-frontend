@@ -134,14 +134,16 @@ docker-compose up
 
 ## Environment Configuration
 
-The project uses Vite for environment variables. Create a `.env` file in the root (see `.env.example`).
+The project uses Vite for environment variables. Create a `.env` file in the root.
 
-| Variable        | Description |
-|----------------|-------------|
-| `VITE_API_URL` | Backend API base URL for blog data (no trailing slash). |
+| Variable | Description |
+|----------|-------------|
+| `VITE_API_URL` | Backend API base URL (no trailing slash), e.g. `https://backend.jashom.com`. Used when not using the proxy option. |
+| `VITE_USE_API_PROXY` | Set to `true` to use **same-origin proxy (no CORS)**. The app will request `/api/v1/admin/blogs`; your server must proxy `/api` to `https://backend.jashom.com`. |
 
-- **Local development**: If unset, the app uses `http://localhost:5000` so you can run the API locally.
-- **Deployment**: **Set `VITE_API_URL` in your build environment** (e.g. Vercel → Project Settings → Environment Variables, or Netlify env). Use your production API URL (e.g. `https://backend.jashom.com`). If this is not set at build time, the deployed site may try to call `localhost:5000` and blog requests will fail.
+**Option A – Proxy (no CORS):** Set `VITE_USE_API_PROXY=true` and configure your live server (e.g. nginx) to proxy `/api` to `https://backend.jashom.com`. The browser only talks to your domain, so the backend does not need CORS.
+
+**Option B – Direct API:** Set `VITE_API_URL=https://backend.jashom.com` and allow your frontend origin in the backend’s CORS settings.
 
 ## Color System
 
