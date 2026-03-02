@@ -1,9 +1,8 @@
 import type { CaseStudyInput } from './caseStudiesConfig';
 import { CATEGORY, img, projectStudy, portfolioStudy } from './caseStudiesConfig';
 
-/** Single export to avoid Sonar duplicated-lines from const + export pattern. */
-export const portfolioRawData = {
-  rawStudies: [
+/** Raw case study inputs; consumed by caseStudiesData.ts. Single export to avoid Sonar duplication. */
+export const rawStudies: CaseStudyInput[] = [
   projectStudy('boostreferral', {
     title: 'BoostReferral - SaaS Platform',
     industry: 'SaaS',
@@ -130,5 +129,4 @@ export const portfolioRawData = {
     impact: ['Up to 82.3% energy reduction on specific AI workloads', 'Zero accuracy loss while optimizing energy consumption', 'Real-time power monitoring with NVML-based energy sampling', 'Multi-GPU scaling proven across multiple A100/H100 GPUs', 'Significant power consumption savings for data centers'],
     tags: ['GPU Optimization', 'CUDA Acceleration', 'Energy Efficiency', 'AI Performance', 'Multi-GPU Scaling'],
   }),
-] as CaseStudyInput[],
-};
+];

@@ -1,4 +1,3 @@
-import type { LucideIcon } from 'lucide-react';
 import { Brain, Cpu, Shield, TrendingUp, Users, Zap } from 'lucide-react';
 import type { ServiceFormField } from '../ServicePageShared';
 import { img } from '../portfolio/caseStudiesConfig';

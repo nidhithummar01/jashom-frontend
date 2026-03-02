@@ -18,25 +18,7 @@ import * as Theme from '../constants/theme';
 import { QuoteIcon, renderServiceFormField } from './ServicePageShared';
 import { homePageData, type HomeContactFormData } from './HomePage/data';
 
-const {
-  BENEFIT_CARD_STYLE,
-  BENEFIT_ICON_BOX,
-  BLOG_BADGE_STYLE,
-  BLOG_CARD_BG,
-  BLOG_CARD_BORDER,
-  CTA_GRADIENT_STYLE,
-  VIEW_ALL_BTN_STYLE,
-  VIOLET_COLOR,
-  benefitsData,
-  homeContactFormFields,
-  portfolioProjects,
-  servicesProvideData,
-  statsData,
-  testimonialsData,
-  trustedLogosData,
-  trustedMetricsData,
-  whatWeDoData,
-} = homePageData;
+const data = homePageData;
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -100,7 +82,7 @@ export function HomePage() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const totalSlides = portfolioProjects.length;
+  const totalSlides = data.portfolioProjects.length;
   const maxSlide = totalSlides - cardsPerView;
 
   useEffect(() => {
@@ -209,7 +191,7 @@ export function HomePage() {
                   transition={{ delay: 0.3 }}
                 >
                   Powering High-Performance AI with <span style={{
-                    background: `linear-gradient(135deg, ${Theme.ACCENT_COLOR} 0%, ${VIOLET_COLOR} 50%, #06B6D4 100%)`,
+                    background: `linear-gradient(135deg, ${Theme.ACCENT_COLOR} 0%, ${data.VIOLET_COLOR} 50%, #06B6D4 100%)`,
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -240,7 +222,7 @@ export function HomePage() {
                   <Link
                     to="/contact/"
                     className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)]"
-                    style={CTA_GRADIENT_STYLE}
+                    style={data.CTA_GRADIENT_STYLE}
                   >
                     Start Your AI Transformation
                   </Link>
@@ -298,10 +280,10 @@ export function HomePage() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                {whatWeDoData.map((item) => {
+                {data.whatWeDoData.map((item) => {
                   const isEmerald = item.colorKey === 'emerald';
                   const rgb = isEmerald ? '16, 185, 129' : '124, 58, 237';
-                  const color = isEmerald ? Theme.ACCENT_COLOR : VIOLET_COLOR;
+                  const color = isEmerald ? Theme.ACCENT_COLOR : data.VIOLET_COLOR;
                   return (
                     <motion.div
                       key={item.title}
@@ -352,10 +334,10 @@ export function HomePage() {
 
               {/* Service Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-6xl mx-auto">
-                {servicesProvideData.map((item, i) => {
+                {data.servicesProvideData.map((item, i) => {
                   const isEmerald = item.colorKey === 'emerald';
                   const rgb = isEmerald ? '16, 185, 129' : '124, 58, 237';
-                  const color = isEmerald ? Theme.ACCENT_COLOR : VIOLET_COLOR;
+                  const color = isEmerald ? Theme.ACCENT_COLOR : data.VIOLET_COLOR;
                   const Icon = item.Icon;
                   return (
                     <motion.div
@@ -424,7 +406,7 @@ export function HomePage() {
                 >
                   {/* 2x2 Logo Grid - Clean and transparent */}
                   <div className="grid grid-cols-2 gap-8 sm:gap-10 md:gap-12">
-                    {trustedLogosData.map((logo) => (
+                    {data.trustedLogosData.map((logo) => (
                       <motion.div
                         key={logo.alt}
                         className="flex items-center justify-center p-4"
@@ -452,7 +434,7 @@ export function HomePage() {
 
                   {/* Metrics Grid - 2 columns on larger screens */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
-                    {trustedMetricsData.map((m) => (
+                    {data.trustedMetricsData.map((m) => (
                       <motion.div
                         key={m.value}
                         className={`space-y-2 p-4 rounded-xl bg-gradient-to-br ${m.from} ${m.to} border ${m.border} ${m.hoverBorder} transition-all duration-300`}
@@ -472,7 +454,7 @@ export function HomePage() {
           <section className="py-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-                {statsData.map((stat, index) => (
+                {data.statsData.map((stat, index) => (
                   <AnimatedCounter
                     key={stat.label}
                     value={stat.value}
@@ -543,7 +525,7 @@ export function HomePage() {
                       transform: `translateX(-${currentSlide * (100 / cardsPerView + (cardsPerView === 1 ? 0 : 24 / cardsPerView))}%)`
                     }}
                   >
-                    {portfolioProjects.map((project) => (
+                    {data.portfolioProjects.map((project) => (
                       <div
                         key={project.link}
                         className="flex-shrink-0"
@@ -686,7 +668,7 @@ export function HomePage() {
 
               {/* Testimonials Grid - 3 Columns */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                {testimonialsData.map((t, i) => (
+                {data.testimonialsData.map((t, i) => (
                   <motion.div
                     key={t.name}
                     initial={{ opacity: 0, y: 30 }}
@@ -713,7 +695,7 @@ export function HomePage() {
           </section>
 
           {/* Why Jashom - Benefits Section */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${BLOG_CARD_BG} 0%, ${Theme.SECTION_BG} 100%)` }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${data.BLOG_CARD_BG} 0%, ${Theme.SECTION_BG} 100%)` }}>
             {/* Subtle background glow */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
@@ -747,7 +729,7 @@ export function HomePage() {
                 whileInView="show"
                 viewport={{ once: true }}
               >
-                {benefitsData.map((item) => {
+                {data.benefitsData.map((item) => {
                   const Icon = item.Icon;
                   return (
                     <motion.div
@@ -755,10 +737,10 @@ export function HomePage() {
                       variants={staggerItem}
                       whileHover={{ y: -10, scale: 1.02 }}
                       className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
-                      style={BENEFIT_CARD_STYLE}
+                      style={data.BENEFIT_CARD_STYLE}
                     >
                       <div className="relative z-10">
-                        <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={BENEFIT_ICON_BOX}>
+                        <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={data.BENEFIT_ICON_BOX}>
                           <Icon className="w-8 h-8" style={{ color: Theme.ACCENT_COLOR }} />
                         </div>
                         <h3 className="text-xl font-bold mb-3" style={{ color: Theme.TEXT_FAFAFA }}>{item.title}</h3>
@@ -779,7 +761,7 @@ export function HomePage() {
                 <Link
                   to="/contact"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)]"
-                  style={CTA_GRADIENT_STYLE}
+                  style={data.CTA_GRADIENT_STYLE}
                 >
                   <span>Start Your AI Transformation</span>
                   <ArrowRight className="w-4 h-4" />
@@ -831,7 +813,7 @@ export function HomePage() {
                     <div
                       key={i}
                       className="h-full rounded-2xl overflow-hidden animate-pulse"
-                      style={{ background: BLOG_CARD_BG, border: BLOG_CARD_BORDER }}
+                      style={{ background: data.BLOG_CARD_BG, border: data.BLOG_CARD_BORDER }}
                     >
                       <div className="h-48 bg-[#1E293B]" />
                       <div className="p-6 space-y-3">
@@ -866,7 +848,7 @@ export function HomePage() {
                       <Link to={`/blogs/${blog.slug}/`} className="block h-full" style={{ ['--accent' as string]: Theme.ACCENT_COLOR } as React.CSSProperties}>
                         <div
                           className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-[1.02]"
-                          style={{ background: BLOG_CARD_BG, border: BLOG_CARD_BORDER }}
+                          style={{ background: data.BLOG_CARD_BG, border: data.BLOG_CARD_BORDER }}
                         >
                           {/* Image Section */}
                           <div className="relative h-48 overflow-hidden" style={{ background: '#1E293B' }}>
@@ -884,7 +866,7 @@ export function HomePage() {
 
                             {/* Category Badge */}
                             <div className="absolute top-4 left-4">
-                              <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={BLOG_BADGE_STYLE}>
+                              <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={data.BLOG_BADGE_STYLE}>
                                 Blog
                               </div>
                             </div>
@@ -951,7 +933,7 @@ export function HomePage() {
                 <Link
                   to="/blogs/"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-240 hover:bg-[rgba(16,185,129,0.18)] hover:border-[rgba(16,185,129,0.5)] hover:-translate-y-0.5"
-                  style={VIEW_ALL_BTN_STYLE}
+                  style={data.VIEW_ALL_BTN_STYLE}
                 >
                   <span>View All</span>
                   <ArrowRight className="w-4 h-4" />
@@ -964,7 +946,7 @@ export function HomePage() {
           <div className="premium-divider" />
 
           {/* Contact Form Section - Premium Layout */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${Theme.SECTION_BG} 0%, ${BLOG_CARD_BG} 100%)` }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${Theme.SECTION_BG} 0%, ${data.BLOG_CARD_BG} 100%)` }}>
             <div className="max-w-7xl mx-auto">
               {/* Header */}
               <motion.div
@@ -1012,7 +994,7 @@ export function HomePage() {
                 <div className="relative w-full" style={Theme.FORM_CONTAINER_STYLE}>
                   <form onSubmit={handleFormSubmit} style={Theme.FORM_LAYOUT}>
                     <div className="grid grid-cols-1 md:grid-cols-2" style={Theme.FORM_GRID_GAP}>
-                      {homeContactFormFields.map((field) => (
+                      {data.homeContactFormFields.map((field) => (
                         <div key={field.name} className={field.type === 'select' || field.type === 'textarea' ? 'md:col-span-2' : ''}>
                           <label htmlFor={`home-contact-${field.name}`} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
                           {renderServiceFormField('home-contact', field, formData, handleFormChange)}

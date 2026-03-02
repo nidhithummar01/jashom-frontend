@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ACCENT_COLOR,
   CHECK_PATH,
@@ -8,6 +9,22 @@ import {
   formInputClass,
   formInputStyle,
 } from '../constants/theme';
+
+const INITIAL_SERVICE_FORM = { name: '', email: '', company: '', phone: '', message: '' };
+
+/** Shared form state and handlers for CUDA/GPU service pages to avoid duplicated const/handlers. */
+export function useServicePageForm() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState(INITIAL_SERVICE_FORM);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate('/thank-you/');
+  };
+  return { formData, handleChange, handleSubmit };
+}
 
 export function CheckIcon({ size = 'sm' }: Readonly<{ size?: 'sm' | 'lg' }>) {
   return (

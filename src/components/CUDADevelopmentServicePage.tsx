@@ -1,43 +1,14 @@
 import { motion } from 'motion/react';
 import { SEO } from './SEO';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import * as Theme from '../constants/theme';
 import { cudaDevelopmentPageData } from './CUDADevelopmentServicePage/data';
+import { CheckIcon, DividerLine, QuoteIcon, renderOfficeCardIcon, renderServiceFormField, useServicePageForm } from './ServicePageShared';
 
-const {
-  servicesData,
-  industryItems,
-  processSteps,
-  benefitsData,
-  whyChooseItems,
-  testimonialsData,
-  faqData,
-  formFieldsConfig,
-  officeCardsData,
-} = cudaDevelopmentPageData;
-import { CheckIcon, DividerLine, QuoteIcon, renderOfficeCardIcon, renderServiceFormField } from './ServicePageShared';
-
+const data = cudaDevelopmentPageData;
 const CUDA_HERO_IMAGE = '/images/cuda.service.hero.jpg';
 
 export function CUDADevelopmentServicePage() {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    message: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate('/thank-you/');
-  };
+  const { formData, handleChange, handleSubmit } = useServicePageForm();
   return (
     <div className="min-h-screen" style={{ background: Theme.SECTION_BG }}>
       <SEO
@@ -197,7 +168,7 @@ export function CUDADevelopmentServicePage() {
 
           {/* Service Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {servicesData.map((item, index) => (
+            {data.servicesData.map((item, index) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 30 }}
@@ -250,7 +221,7 @@ export function CUDADevelopmentServicePage() {
 
             {/* Industry List - 2 columns */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-              {industryItems.map((label) => (
+              {data.industryItems.map((label) => (
                 <div key={label} className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={Theme.CHECK_ICON_BG}>
                     <CheckIcon />
@@ -296,7 +267,7 @@ export function CUDADevelopmentServicePage() {
 
           {/* Process Steps - Centered Transparent Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
-            {processSteps.map((step, index) => (
+            {data.processSteps.map((step, index) => (
               <motion.div
                 key={step.title}
                 initial={{ opacity: 0, y: 50 }}
@@ -363,7 +334,7 @@ export function CUDADevelopmentServicePage() {
 
           {/* Benefits Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {benefitsData.map((item, index) => (
+            {data.benefitsData.map((item, index) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 30 }}
@@ -403,7 +374,7 @@ export function CUDADevelopmentServicePage() {
 
           {/* Benefits List */}
           <div className="flex flex-col gap-6">
-            {whyChooseItems.map((item, index) => (
+            {data.whyChooseItems.map((item, index) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -459,7 +430,7 @@ export function CUDADevelopmentServicePage() {
 
           {/* Testimonials Grid - 3 Columns */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {testimonialsData.map((t, index) => (
+            {data.testimonialsData.map((t, index) => (
               <motion.div
                 key={t.initials}
                 initial={{ opacity: 0, y: 30 }}
@@ -511,7 +482,7 @@ export function CUDADevelopmentServicePage() {
 
             {/* Right Column - FAQ Items */}
             <div className="lg:col-span-8 space-y-4">
-              {faqData.map((item, index) => (
+              {data.faqData.map((item, index) => (
                 <motion.div
                   key={item.q}
                   initial={{ opacity: 0, y: 20 }}
@@ -584,7 +555,7 @@ export function CUDADevelopmentServicePage() {
             <div className="relative w-full" style={Theme.FORM_CONTAINER_STYLE}>
               <form style={Theme.FORM_LAYOUT} onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2" style={Theme.FORM_GRID_GAP}>
-                  {formFieldsConfig.map((field) => (
+                  {data.formFieldsConfig.map((field) => (
                     <div key={field.name} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
                       <label htmlFor={`cuda-${field.name}`} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
                         {renderServiceFormField('cuda', field, formData, handleChange)}
@@ -621,7 +592,7 @@ export function CUDADevelopmentServicePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {officeCardsData.map((card) => (
+              {data.officeCardsData.map((card) => (
                 <div
                   key={card.title}
                   className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105"

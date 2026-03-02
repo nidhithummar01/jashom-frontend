@@ -1,42 +1,13 @@
 import { motion } from 'motion/react';
 import { SEO as Seo } from './SEO';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import * as Theme from '../constants/theme';
 import { gpuOptimizationPageData } from './GPUOptimizationServicePage/data';
+import { CheckIcon, DividerLine, QuoteIcon, renderOfficeCardIcon, renderServiceFormField, useServicePageForm } from './ServicePageShared';
 
-const {
-  servicesData,
-  industryItems,
-  processSteps,
-  benefitsData,
-  whyChooseItems,
-  testimonialsData,
-  faqData,
-  aiModelsData,
-  formFieldsConfig,
-  officeCardsData,
-} = gpuOptimizationPageData;
-import { CheckIcon, DividerLine, QuoteIcon, renderOfficeCardIcon, renderServiceFormField } from './ServicePageShared';
+const data = gpuOptimizationPageData;
 
 export function GPUOptimizationServicePage() {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    message: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate('/thank-you/');
-  };
+  const { formData, handleChange, handleSubmit } = useServicePageForm();
   return (
     <div className="min-h-screen" style={{ background: Theme.SECTION_BG }}>
       <Seo
@@ -159,7 +130,7 @@ export function GPUOptimizationServicePage() {
 
           {/* Service Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {servicesData.map((item, i) => (
+            {data.servicesData.map((item, i) => (
               <motion.div
                 key={item.title}
                 {...Theme.MOTION_FADE_UP_30}
@@ -201,7 +172,7 @@ export function GPUOptimizationServicePage() {
 
               {/* Industry List - 2x2 Grid */}
               <div className="grid grid-cols-2 gap-8 max-w-2xl">
-                {industryItems.map((label) => (
+                {data.industryItems.map((label) => (
                   <div key={label} className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={Theme.CHECK_ICON_BG}>
                       <CheckIcon />
@@ -249,7 +220,7 @@ export function GPUOptimizationServicePage() {
 
           {/* Process Steps - Centered Transparent Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
-            {processSteps.map((step, i) => (
+            {data.processSteps.map((step, i) => (
               <motion.div
                 key={step.title}
                 initial={{ opacity: 0, y: 50 }}
@@ -359,7 +330,7 @@ export function GPUOptimizationServicePage() {
 
           {/* Benefits Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {benefitsData.map((item, i) => (
+            {data.benefitsData.map((item, i) => (
               <motion.div
                 key={item.title}
                 {...Theme.MOTION_FADE_UP_30}
@@ -388,7 +359,7 @@ export function GPUOptimizationServicePage() {
 
           {/* AI Models Grid - 4 columns, 2 rows */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {aiModelsData.map((model, i) => (
+            {data.aiModelsData.map((model, i) => (
               <motion.div
                 key={model.name}
                 {...Theme.MOTION_FADE_UP_30}
@@ -417,7 +388,7 @@ export function GPUOptimizationServicePage() {
             </h2>
           </motion.div>
           <div className="flex flex-col gap-6">
-            {whyChooseItems.map((item, i) => (
+            {data.whyChooseItems.map((item, i) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -466,7 +437,7 @@ export function GPUOptimizationServicePage() {
 
           {/* Testimonials Grid - 3 Columns */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {testimonialsData.map((t, i) => (
+            {data.testimonialsData.map((t, i) => (
               <motion.div
                 key={t.name}
                 {...Theme.MOTION_FADE_UP_30}
@@ -505,7 +476,7 @@ export function GPUOptimizationServicePage() {
               </motion.div>
             </div>
             <div className="lg:col-span-8 space-y-4">
-              {faqData.map((item, i) => (
+              {data.faqData.map((item, i) => (
                 <motion.div
                   key={item.q}
                   initial={{ opacity: 0, y: 20 }}
@@ -567,7 +538,7 @@ export function GPUOptimizationServicePage() {
               <div className="relative w-full" style={Theme.FORM_CONTAINER_STYLE}>
                 <form style={Theme.FORM_LAYOUT} onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 md:grid-cols-2" style={Theme.FORM_GRID_GAP}>
-                    {formFieldsConfig.map((field) => (
+                    {data.formFieldsConfig.map((field) => (
                       <div key={field.name} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
                         <label htmlFor={`gpuopt-${field.name}`} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
                         {renderServiceFormField('gpuopt', field, formData, handleChange)}
@@ -597,7 +568,7 @@ export function GPUOptimizationServicePage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {officeCardsData.map((card) => (
+                {data.officeCardsData.map((card) => (
                   <div
                     key={card.title}
                     className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105"
