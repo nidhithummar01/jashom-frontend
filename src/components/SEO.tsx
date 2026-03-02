@@ -19,8 +19,8 @@ export function SEO({
   ogType = 'website'
 }: SEOProps) {
   const location = useLocation();
-  const baseUrl = 'https://jashom-website-2-0.vercel.app';
-  
+  const baseUrl = (import.meta.env.VITE_SITE_URL ?? (typeof window !== 'undefined' ? window.location.origin : '')).replace(/\/$/, '');
+
   // Ensure pathname has trailing slash (except for root)
   let pathname = location.pathname;
   if (pathname !== '/' && !pathname.endsWith('/')) {
