@@ -134,12 +134,14 @@ docker-compose up
 
 ## Environment Configuration
 
-The project uses Vite for environment variables. Create a `.env` file in the root directory:
+The project uses Vite for environment variables. Create a `.env` file in the root (see `.env.example`).
 
-```env
-# Add your environment variables here
-VITE_API_URL=your_api_url
-```
+| Variable        | Description |
+|----------------|-------------|
+| `VITE_API_URL` | Backend API base URL for blog data (no trailing slash). |
+
+- **Local development**: If unset, the app uses `http://localhost:5000` so you can run the API locally.
+- **Deployment**: **Set `VITE_API_URL` in your build environment** (e.g. Vercel → Project Settings → Environment Variables, or Netlify env). Use your production API URL (e.g. `https://backend.jashom.com`). If this is not set at build time, the deployed site may try to call `localhost:5000` and blog requests will fail.
 
 ## Color System
 

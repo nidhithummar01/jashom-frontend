@@ -1,14 +1,13 @@
 /**
- * Blog API client. Base URL from env (VITE_API_URL) — no hardcoded URLs.
+ * Blog API client. Base URL from .env only (VITE_API_URL). No hardcoded URLs.
+ * Set VITE_API_URL in .env locally and in your deployment build environment for live.
  */
 
 const getBaseUrl = (): string => {
   const url = import.meta.env.VITE_API_URL;
-  if (!url) {
-    console.warn('VITE_API_URL is not set. Using http://localhost:5000 as fallback.');
-    return 'http://localhost:5000';
-  }
-  return String(url).replace(/\/$/, '');
+  if (url) return String(url).replace(/\/$/, '');
+  console.warn('VITE_API_URL is not set. Using same origin. Set VITE_API_URL in .env (and in deployment env) for the blog API.');
+  return typeof window !== 'undefined' ? window.location.origin : '';
 };
 
 export interface BlogSectionImage {
