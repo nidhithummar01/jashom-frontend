@@ -2,59 +2,10 @@ import { motion } from 'motion/react';
 import { SEO as Seo } from './SEO';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  SECTION_BG,
-  CARD_BG_LIGHT,
-  BORDER_SUBTLE,
-  BENEFIT_CARD_BG,
-  ACCENT_COLOR,
-  TEXT_WHITE,
-  TEXT_FAFAFA,
-  TEXT_MUTED,
-  TEXT_SUBTLE,
-  TEXT_GRAY,
-  TEXT_QUOTE,
-  CARD_DESC_GRAY,
-  BADGE_STYLE,
-  BADGE_TESTIMONIAL,
-  HERO_OVERLAY_GRADIENT,
-  HERO_BG_CENTER,
-  OVERVIEW_BADGE,
-  KEY_STAT_BOX,
-  IMAGE_SHADOW_ACCENT,
-  IMAGE_SHADOW_ACCENT_ALT,
-  CTA_HERO_STYLE,
-  CTA_SIMPLE,
-  PROCESS_GRADIENT_BG,
-  FORM_GRADIENT_BG,
-  FORM_GLOW_STYLE,
-  FORM_CONTAINER_STYLE,
-  SUBMIT_BTN_STYLE,
-  SUBMIT_BTN_HOVER,
-  HEADING_TITLE_STYLE,
-  FORM_LAYOUT,
-  FORM_GRID_GAP,
-  FORM_MAX_WIDTH,
-  CHECK_ICON_BG,
-  WHY_CHOOSE_BORDER,
-  AI_MODEL_CARD_STYLE,
-  GRADIENT_TEXT_STYLE,
-  OFFICE_ICON_BG,
-  officeCardStyle,
-  CHEVRON_DOWN_D,
-  HERO_BG_IMAGE,
-  HERO_H1_STYLE,
-  HERO_P_STYLE,
-  HERO_CONTENT_PADDING,
-  SECTION_CLASS,
-  SECTION_CONTAINER,
-  CTA_SECTION_BG,
-  TESTIMONIAL_CARD_STYLE,
-  MOTION_FADE_UP_20,
-  MOTION_FADE_UP_30,
-  MOTION_FADE_SCALE,
-} from '../constants/theme';
-import {
+import * as Theme from '../constants/theme';
+import { gpuOptimizationPageData } from './GPUOptimizationServicePage/data';
+
+const {
   servicesData,
   industryItems,
   processSteps,
@@ -65,7 +16,7 @@ import {
   aiModelsData,
   formFieldsConfig,
   officeCardsData,
-} from './GPUOptimizationServicePage/data';
+} = gpuOptimizationPageData;
 import { CheckIcon, DividerLine, QuoteIcon, renderOfficeCardIcon, renderServiceFormField } from './ServicePageShared';
 
 export function GPUOptimizationServicePage() {
@@ -87,7 +38,7 @@ export function GPUOptimizationServicePage() {
     navigate('/thank-you/');
   };
   return (
-    <div className="min-h-screen" style={{ background: SECTION_BG }}>
+    <div className="min-h-screen" style={{ background: Theme.SECTION_BG }}>
       <Seo
         title="NVIDIA GPU Optimization Services | Optimize NVIDIA GPU Performance"
         description="Improve speed and efficiency with expert NVIDIA GPU optimization services. We help businesses optimize NVIDIA GPU performance for AI, HPC, and data-intensive applications."
@@ -97,12 +48,12 @@ export function GPUOptimizationServicePage() {
       {/* Hero Section with Background Image */}
       <section
         className="relative overflow-hidden"
-        style={{ minHeight: '100vh', backgroundImage: `url(${HERO_BG_IMAGE})`, ...HERO_BG_CENTER }}
+        style={{ minHeight: '100vh', backgroundImage: `url(${Theme.HERO_BG_IMAGE})`, ...Theme.HERO_BG_CENTER }}
       >
-        <div className="absolute inset-0" style={{ backgroundImage: `url(${HERO_BG_IMAGE})`, ...HERO_BG_CENTER, filter: 'brightness(1.3)' }} />
-        <div className="absolute inset-0" style={{ background: HERO_OVERLAY_GRADIENT }} />
+        <div className="absolute inset-0" style={{ backgroundImage: `url(${Theme.HERO_BG_IMAGE})`, ...Theme.HERO_BG_CENTER, filter: 'brightness(1.3)' }} />
+        <div className="absolute inset-0" style={{ background: Theme.HERO_OVERLAY_GRADIENT }} />
         <div className="relative z-10 min-h-screen flex items-center">
-          <div className={`${SECTION_CONTAINER} px-6 sm:px-8 lg:px-12 w-full`} style={HERO_CONTENT_PADDING}>
+          <div className={`${Theme.SECTION_CONTAINER} px-6 sm:px-8 lg:px-12 w-full`} style={Theme.HERO_CONTENT_PADDING}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -110,10 +61,10 @@ export function GPUOptimizationServicePage() {
               className="text-left"
               style={{ maxWidth: '620px' }}
             >
-              <h1 className="font-bold text-white leading-tight" style={HERO_H1_STYLE}>
+              <h1 className="font-bold text-white leading-tight" style={Theme.HERO_H1_STYLE}>
                 GPU Optimization Services
               </h1>
-              <p className="text-white/90" style={HERO_P_STYLE}>
+              <p className="text-white/90" style={Theme.HERO_P_STYLE}>
                 We provide advanced GPU Optimization Services, used to maximize your computing infrastructure to full performance. Our team optimizes workload patterns, execution pipes, and parallel processing to remove bottlenecks.
               </p>
 
@@ -121,7 +72,7 @@ export function GPUOptimizationServicePage() {
               <a
                 href="/contact"
                 className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90 hover:scale-105"
-                style={CTA_HERO_STYLE}
+                style={Theme.CTA_HERO_STYLE}
               >
                 Get Free Consultation
               </a>
@@ -131,15 +82,15 @@ export function GPUOptimizationServicePage() {
       </section>
 
       {/* Overview Section */}
-      <section className={`${SECTION_CLASS} relative overflow-hidden`} style={{ background: SECTION_BG }}>
+      <section className={`${Theme.SECTION_CLASS} relative overflow-hidden`} style={{ background: Theme.SECTION_BG }}>
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl" />
           <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl" />
         </div>
-        <div className={`${SECTION_CONTAINER} relative z-10`}>
-          <motion.div {...MOTION_FADE_UP_20} className="text-center mb-12">
-            <div className="inline-block mb-4 px-4 py-2 rounded-full" style={OVERVIEW_BADGE}>
-              <p className="text-sm uppercase tracking-wider" style={{ color: ACCENT_COLOR }}>Overview</p>
+        <div className={`${Theme.SECTION_CONTAINER} relative z-10`}>
+          <motion.div {...Theme.MOTION_FADE_UP_20} className="text-center mb-12">
+            <div className="inline-block mb-4 px-4 py-2 rounded-full" style={Theme.OVERVIEW_BADGE}>
+              <p className="text-sm uppercase tracking-wider" style={{ color: Theme.ACCENT_COLOR }}>Overview</p>
             </div>
             <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
               What is GPU
@@ -150,7 +101,7 @@ export function GPUOptimizationServicePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
-              <motion.div {...MOTION_FADE_UP_20} className="space-y-6">
+              <motion.div {...Theme.MOTION_FADE_UP_20} className="space-y-6">
                 <p className="text-white/70 text-base leading-relaxed">
                   GPU optimization is a performance engineering science that aims at making the best use of throughput in a parallel computing system. It requires workload profiling, CUDA kernel restructuring, thread synchronization optimization, and efficient use of memory access to deliver consistent high-performance execution on modern hardware.
                 </p>
@@ -160,25 +111,25 @@ export function GPUOptimizationServicePage() {
 
                 {/* Key Benefits */}
                 <div className="grid grid-cols-2 gap-4 pt-4">
-                  <div className="rounded-lg p-4" style={KEY_STAT_BOX}>
-                    <div className="text-3xl font-bold mb-1" style={{ color: ACCENT_COLOR }}>10x</div>
-                    <div className="text-sm" style={{ color: TEXT_GRAY }}>Faster Execution</div>
+                  <div className="rounded-lg p-4" style={Theme.KEY_STAT_BOX}>
+                    <div className="text-3xl font-bold mb-1" style={{ color: Theme.ACCENT_COLOR }}>10x</div>
+                    <div className="text-sm" style={{ color: Theme.TEXT_GRAY }}>Faster Execution</div>
                   </div>
-                  <div className="rounded-lg p-4" style={KEY_STAT_BOX}>
-                    <div className="text-3xl font-bold mb-1" style={{ color: ACCENT_COLOR }}>40%</div>
-                    <div className="text-sm" style={{ color: TEXT_GRAY }}>Reduced Compute Costs</div>
+                  <div className="rounded-lg p-4" style={Theme.KEY_STAT_BOX}>
+                    <div className="text-3xl font-bold mb-1" style={{ color: Theme.ACCENT_COLOR }}>40%</div>
+                    <div className="text-sm" style={{ color: Theme.TEXT_GRAY }}>Reduced Compute Costs</div>
                   </div>
                 </div>
               </motion.div>
             </div>
 
             <div>
-              <motion.div {...MOTION_FADE_SCALE} transition={{ duration: 0.6, delay: 0.4 }} className="relative">
+              <motion.div {...Theme.MOTION_FADE_SCALE} transition={{ duration: 0.6, delay: 0.4 }} className="relative">
                 <img
                   src="/images/gpu.optimization.jpg"
                   alt="GPU Optimization"
                   className="w-full h-auto rounded-2xl shadow-2xl"
-                  style={IMAGE_SHADOW_ACCENT}
+                  style={Theme.IMAGE_SHADOW_ACCENT}
                 />
               </motion.div>
             </div>
@@ -190,9 +141,9 @@ export function GPUOptimizationServicePage() {
       <div className="premium-divider" />
 
       {/* Services Section */}
-      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
-        <div className={SECTION_CONTAINER}>
-          <motion.div {...MOTION_FADE_UP_20} className="text-center mb-8">
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.SECTION_BG }}>
+        <div className={Theme.SECTION_CONTAINER}>
+          <motion.div {...Theme.MOTION_FADE_UP_20} className="text-center mb-8">
             <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
               Optimize Performance That
               <br />
@@ -200,7 +151,7 @@ export function GPUOptimizationServicePage() {
             </h2>
           </motion.div>
 
-          <motion.div {...MOTION_FADE_UP_20} transition={{ duration: 0.6, delay: 0.2 }} className="max-w-3xl mx-auto text-center mb-16">
+          <motion.div {...Theme.MOTION_FADE_UP_20} transition={{ duration: 0.6, delay: 0.2 }} className="max-w-3xl mx-auto text-center mb-16">
             <p className="text-white/70 text-base leading-relaxed">
               Our engineers integrate CUDA Development Services with profound architectural experience to increase the use of a GPU on a wide range of workloads.
             </p>
@@ -211,22 +162,22 @@ export function GPUOptimizationServicePage() {
             {servicesData.map((item, i) => (
               <motion.div
                 key={item.title}
-                {...MOTION_FADE_UP_30}
+                {...Theme.MOTION_FADE_UP_30}
                 transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
                 className="rounded-2xl p-8"
-                style={{ background: CARD_BG_LIGHT }}
+                style={{ background: Theme.CARD_BG_LIGHT }}
               >
                 <h3 className="text-2xl font-bold mb-4 whitespace-pre-line" style={{ color: '#000000' }}>{item.title}</h3>
-                <p className="text-base leading-relaxed" style={{ color: CARD_DESC_GRAY }}>{item.description}</p>
+                <p className="text-base leading-relaxed" style={{ color: Theme.CARD_DESC_GRAY }}>{item.description}</p>
               </motion.div>
             ))}
           </div>
 
-          <motion.div {...MOTION_FADE_UP_20} transition={{ duration: 0.6, delay: 0.4 }} className="flex justify-center mt-16 pt-8">
+          <motion.div {...Theme.MOTION_FADE_UP_20} transition={{ duration: 0.6, delay: 0.4 }} className="flex justify-center mt-16 pt-8">
             <a
               href="/contact"
               className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90"
-              style={CTA_SIMPLE}
+              style={Theme.CTA_SIMPLE}
             >
               Get in Touch With Us
             </a>
@@ -235,10 +186,10 @@ export function GPUOptimizationServicePage() {
       </section>
 
       {/* Industry-Specific Services Section */}
-      <section className="px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG, paddingTop: '100px', paddingBottom: '100px' }}>
-        <div className={SECTION_CONTAINER}>
+      <section className="px-4 sm:px-6 lg:px-8" style={{ background: Theme.SECTION_BG, paddingTop: '100px', paddingBottom: '100px' }}>
+        <div className={Theme.SECTION_CONTAINER}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <motion.div {...MOTION_FADE_UP_20}>
+            <motion.div {...Theme.MOTION_FADE_UP_20}>
               <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight" style={{ marginBottom: '16px' }}>
                 Industry-Focused GPU
                 <br />
@@ -252,7 +203,7 @@ export function GPUOptimizationServicePage() {
               <div className="grid grid-cols-2 gap-8 max-w-2xl">
                 {industryItems.map((label) => (
                   <div key={label} className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={CHECK_ICON_BG}>
+                    <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={Theme.CHECK_ICON_BG}>
                       <CheckIcon />
                     </div>
                     <span className="text-white text-base">{label}</span>
@@ -261,13 +212,13 @@ export function GPUOptimizationServicePage() {
               </div>
             </motion.div>
 
-            <motion.div {...MOTION_FADE_SCALE} transition={{ duration: 0.6, delay: 0.3 }} className="relative">
+            <motion.div {...Theme.MOTION_FADE_SCALE} transition={{ duration: 0.6, delay: 0.3 }} className="relative">
               <div className="relative overflow-hidden rounded-2xl">
                 <img
                   src="/images/gpu.service1.png"
                   alt="Industry-Specific GPU Solutions"
                   className="w-full h-auto object-cover"
-                  style={IMAGE_SHADOW_ACCENT_ALT}
+                  style={Theme.IMAGE_SHADOW_ACCENT_ALT}
                 />
               </div>
             </motion.div>
@@ -278,13 +229,13 @@ export function GPUOptimizationServicePage() {
       <DividerLine />
 
       {/* Process Flow Section */}
-      <section className={`${SECTION_CLASS} relative overflow-hidden`} style={{ background: PROCESS_GRADIENT_BG }}>
+      <section className={`${Theme.SECTION_CLASS} relative overflow-hidden`} style={{ background: Theme.PROCESS_GRADIENT_BG }}>
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
         </div>
-        <div className={`${SECTION_CONTAINER} relative z-10`}>
-          <motion.div {...MOTION_FADE_UP_20} className="text-center mb-32">
+        <div className={`${Theme.SECTION_CONTAINER} relative z-10`}>
+          <motion.div {...Theme.MOTION_FADE_UP_20} className="text-center mb-32">
             <div className="inline-block mb-4 px-6 py-2 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-sm">
               <span className="text-blue-400 font-semibold text-sm">OUR PROCESS</span>
             </div>
@@ -322,7 +273,7 @@ export function GPUOptimizationServicePage() {
             ))}
           </div>
 
-          <motion.div {...MOTION_FADE_UP_20} transition={{ duration: 0.6, delay: 0.7 }} className="text-center mt-16">
+          <motion.div {...Theme.MOTION_FADE_UP_20} transition={{ duration: 0.6, delay: 0.7 }} className="text-center mt-16">
             <a
               href="/contact/"
               className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/60 hover:scale-105"
@@ -337,9 +288,9 @@ export function GPUOptimizationServicePage() {
       </section>
 
       {/* CTA Section - Need a Custom AI Development Partner? */}
-      <section className={SECTION_CLASS} style={{ background: CTA_SECTION_BG }}>
-        <div className={SECTION_CONTAINER}>
-          <motion.div {...MOTION_FADE_UP_20} className="relative rounded-2xl overflow-hidden group"
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.CTA_SECTION_BG }}>
+        <div className={Theme.SECTION_CONTAINER}>
+          <motion.div {...Theme.MOTION_FADE_UP_20} className="relative rounded-2xl overflow-hidden group"
             style={{
               maxHeight: '500px',
               borderRadius: '24px',
@@ -374,7 +325,7 @@ export function GPUOptimizationServicePage() {
             {/* Content Overlay */}
             <div className="relative z-10 py-20 px-8 sm:px-12 lg:px-16">
               <div className="max-w-3xl">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight" style={{ color: TEXT_WHITE }}>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight" style={{ color: Theme.TEXT_WHITE }}>
                   Need a Custom AI Development Partner?
                 </h2>
                 <p className="text-base sm:text-lg mb-8 leading-relaxed" style={{ color: '#E5E5E5' }}>
@@ -383,7 +334,7 @@ export function GPUOptimizationServicePage() {
                 <a
                   href="/contact/"
                   className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90"
-                  style={CTA_SIMPLE}
+                  style={Theme.CTA_SIMPLE}
                 >
                   Let's talk about Your Project
                 </a>
@@ -396,9 +347,9 @@ export function GPUOptimizationServicePage() {
       <DividerLine />
 
       {/* Business Benefits Section */}
-      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
-        <div className={SECTION_CONTAINER}>
-          <motion.div {...MOTION_FADE_UP_20} className="text-center mb-16">
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.SECTION_BG }}>
+        <div className={Theme.SECTION_CONTAINER}>
+          <motion.div {...Theme.MOTION_FADE_UP_20} className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">
               Business Benefits of
               <br />
@@ -411,10 +362,10 @@ export function GPUOptimizationServicePage() {
             {benefitsData.map((item, i) => (
               <motion.div
                 key={item.title}
-                {...MOTION_FADE_UP_30}
+                {...Theme.MOTION_FADE_UP_30}
                 transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
                 className="rounded-xl p-8 border transition-all duration-300"
-                style={{ background: BENEFIT_CARD_BG, borderColor: item.borderColor }}
+                style={{ background: Theme.BENEFIT_CARD_BG, borderColor: item.borderColor }}
               >
                 <h3 className="text-2xl font-bold text-white mb-4 leading-tight whitespace-pre-line">{item.title}</h3>
                 <p className="text-white/70 text-base leading-relaxed">{item.description}</p>
@@ -427,10 +378,10 @@ export function GPUOptimizationServicePage() {
       <DividerLine />
 
       {/* AI Models We Have Expertise In Section */}
-      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
-        <div className={SECTION_CONTAINER}>
-          <motion.div {...MOTION_FADE_UP_20} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold leading-tight" style={{ color: TEXT_FAFAFA }}>
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.SECTION_BG }}>
+        <div className={Theme.SECTION_CONTAINER}>
+          <motion.div {...Theme.MOTION_FADE_UP_20} className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold leading-tight" style={{ color: Theme.TEXT_FAFAFA }}>
               AI Models We Have Expertise In
             </h2>
           </motion.div>
@@ -440,15 +391,15 @@ export function GPUOptimizationServicePage() {
             {aiModelsData.map((model, i) => (
               <motion.div
                 key={model.name}
-                {...MOTION_FADE_UP_30}
+                {...Theme.MOTION_FADE_UP_30}
                 transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
                 className="rounded-2xl p-6 flex flex-col items-center justify-center text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
-                style={AI_MODEL_CARD_STYLE}
+                style={Theme.AI_MODEL_CARD_STYLE}
               >
                 <div className="mb-4 flex items-center justify-center" style={{ height: '72px' }}>
                   <img src={model.src} alt={model.alt} className="object-contain transition-transform duration-300" style={{ maxHeight: '72px', maxWidth: '100%' }} />
                 </div>
-                <h3 className="text-base font-semibold" style={{ color: TEXT_FAFAFA, letterSpacing: '0.02em' }}>{model.name}</h3>
+                <h3 className="text-base font-semibold" style={{ color: Theme.TEXT_FAFAFA, letterSpacing: '0.02em' }}>{model.name}</h3>
               </motion.div>
             ))}
           </div>
@@ -456,9 +407,9 @@ export function GPUOptimizationServicePage() {
       </section>
 
       {/* Why Choose Section */}
-      <section className="px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG, paddingTop: '100px', paddingBottom: '100px' }}>
-        <div className={SECTION_CONTAINER}>
-          <motion.div {...MOTION_FADE_UP_20} style={{ marginBottom: '60px' }}>
+      <section className="px-4 sm:px-6 lg:px-8" style={{ background: Theme.SECTION_BG, paddingTop: '100px', paddingBottom: '100px' }}>
+        <div className={Theme.SECTION_CONTAINER}>
+          <motion.div {...Theme.MOTION_FADE_UP_20} style={{ marginBottom: '60px' }}>
             <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
               Why Choose Us for
               <br />
@@ -474,9 +425,9 @@ export function GPUOptimizationServicePage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
                 className="flex items-start gap-6 rounded-xl p-6 border transition-all duration-300"
-                style={WHY_CHOOSE_BORDER}
+                style={Theme.WHY_CHOOSE_BORDER}
               >
-                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={CHECK_ICON_BG}>
+                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={Theme.CHECK_ICON_BG}>
                   <CheckIcon size="lg" />
                 </div>
                 <div>
@@ -490,25 +441,25 @@ export function GPUOptimizationServicePage() {
       </section>
 
       {/* What Our Clients Say Section */}
-      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
-        <div className={SECTION_CONTAINER}>
-          <motion.div {...MOTION_FADE_UP_20} className="text-center mb-16">
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.SECTION_BG }}>
+        <div className={Theme.SECTION_CONTAINER}>
+          <motion.div {...Theme.MOTION_FADE_UP_20} className="text-center mb-16">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
               className="inline-block px-6 py-2 rounded-full border mb-6"
-              style={BADGE_TESTIMONIAL}
+              style={Theme.BADGE_TESTIMONIAL}
             >
-              <span style={{ color: ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Client Testimonials</span>
+              <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Client Testimonials</span>
             </motion.div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={HEADING_TITLE_STYLE}>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={Theme.HEADING_TITLE_STYLE}>
               What Our Clients Say
             </h2>
 
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: TEXT_MUTED, lineHeight: 1.7 }}>
+            <p className="text-lg max-w-2xl mx-auto" style={{ color: Theme.TEXT_MUTED, lineHeight: 1.7 }}>
               Trusted by forward-thinking organizations to deliver high-performance GPU and CUDA solutions.
             </p>
           </motion.div>
@@ -518,18 +469,18 @@ export function GPUOptimizationServicePage() {
             {testimonialsData.map((t, i) => (
               <motion.div
                 key={t.name}
-                {...MOTION_FADE_UP_30}
+                {...Theme.MOTION_FADE_UP_30}
                 transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
                 className="group"
               >
-                <div className="h-full p-8 rounded-2xl border transition-all duration-300" style={TESTIMONIAL_CARD_STYLE}>
+                <div className="h-full p-8 rounded-2xl border transition-all duration-300" style={Theme.TESTIMONIAL_CARD_STYLE}>
                   <div className="mb-4"><QuoteIcon /></div>
-                  <p className="text-base mb-8" style={{ color: TEXT_QUOTE, lineHeight: 1.8 }}>{t.quote}</p>
-                  <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: BORDER_SUBTLE }}>
+                  <p className="text-base mb-8" style={{ color: Theme.TEXT_QUOTE, lineHeight: 1.8 }}>{t.quote}</p>
+                  <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: Theme.BORDER_SUBTLE }}>
                     <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold text-white" style={{ background: t.avatarGradient }}>{t.initials}</div>
                     <div>
-                      <div className="font-semibold text-[15px]" style={{ color: TEXT_FAFAFA }}>{t.name}</div>
-                      <div className="text-[13px]" style={{ color: TEXT_MUTED }}>{t.role}</div>
+                      <div className="font-semibold text-[15px]" style={{ color: Theme.TEXT_FAFAFA }}>{t.name}</div>
+                      <div className="text-[13px]" style={{ color: Theme.TEXT_MUTED }}>{t.role}</div>
                     </div>
                   </div>
                 </div>
@@ -540,11 +491,11 @@ export function GPUOptimizationServicePage() {
       </section>
 
       {/* FAQ Section */}
-      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
-        <div className={SECTION_CONTAINER}>
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.SECTION_BG }}>
+        <div className={Theme.SECTION_CONTAINER}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             <div className="lg:col-span-4">
-              <motion.div {...MOTION_FADE_UP_20}>
+              <motion.div {...Theme.MOTION_FADE_UP_20}>
                 <p className="text-white/60 text-sm mb-4 uppercase tracking-wider">FAQs</p>
                 <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
                   Frequently
@@ -562,13 +513,13 @@ export function GPUOptimizationServicePage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
                   className="rounded-2xl border border-white/10 overflow-hidden"
-                  style={{ background: SECTION_BG }}
+                  style={{ background: Theme.SECTION_BG }}
                 >
                   <details className="group">
                     <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
                       <h3 className="text-lg font-semibold text-white pr-4">{item.q}</h3>
                       <svg className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={CHEVRON_DOWN_D} />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={Theme.CHEVRON_DOWN_D} />
                       </svg>
                     </summary>
                     <div className="px-6 pt-2 pb-8">
@@ -582,40 +533,40 @@ export function GPUOptimizationServicePage() {
         </div>
       </section>
 
-      <div className={`${SECTION_CONTAINER} px-4 sm:px-6 lg:px-8 pb-20`}>
-        <section className="py-20 relative overflow-hidden" style={{ background: FORM_GRADIENT_BG }}>
-          <div className={SECTION_CONTAINER}>
-            <motion.div className="text-center mb-12" {...MOTION_FADE_UP_20}>
+      <div className={`${Theme.SECTION_CONTAINER} px-4 sm:px-6 lg:px-8 pb-20`}>
+        <section className="py-20 relative overflow-hidden" style={{ background: Theme.FORM_GRADIENT_BG }}>
+          <div className={Theme.SECTION_CONTAINER}>
+            <motion.div className="text-center mb-12" {...Theme.MOTION_FADE_UP_20}>
               <motion.div
                 className="inline-block mb-6 px-4 py-2 rounded-full border"
-                style={BADGE_STYLE}
+                style={Theme.BADGE_STYLE}
               >
-                <span style={{ color: ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Get In Touch</span>
+                <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Get In Touch</span>
               </motion.div>
 
               <h2
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight"
-                style={{ color: TEXT_FAFAFA, letterSpacing: '-0.025em' }}
+                style={{ color: Theme.TEXT_FAFAFA, letterSpacing: '-0.025em' }}
               >
                 Get Started with{' '}
-                <span style={GRADIENT_TEXT_STYLE}>
+                <span style={Theme.GRADIENT_TEXT_STYLE}>
                   GPU Optimization
                 </span>
               </h2>
 
               <p
                 className="text-base sm:text-lg mb-4 leading-relaxed max-w-2xl mx-auto"
-                style={{ color: TEXT_MUTED }}
+                style={{ color: Theme.TEXT_MUTED }}
               >
                 Fill out the form and our team will get back to you within 24 hours.
               </p>
             </motion.div>
 
-            <motion.div {...MOTION_FADE_UP_20} className="relative" style={FORM_MAX_WIDTH}>
-              <div className="absolute inset-0 pointer-events-none" style={FORM_GLOW_STYLE} />
-              <div className="relative w-full" style={FORM_CONTAINER_STYLE}>
-                <form style={FORM_LAYOUT} onSubmit={handleSubmit}>
-                  <div className="grid grid-cols-1 md:grid-cols-2" style={FORM_GRID_GAP}>
+            <motion.div {...Theme.MOTION_FADE_UP_20} className="relative" style={Theme.FORM_MAX_WIDTH}>
+              <div className="absolute inset-0 pointer-events-none" style={Theme.FORM_GLOW_STYLE} />
+              <div className="relative w-full" style={Theme.FORM_CONTAINER_STYLE}>
+                <form style={Theme.FORM_LAYOUT} onSubmit={handleSubmit}>
+                  <div className="grid grid-cols-1 md:grid-cols-2" style={Theme.FORM_GRID_GAP}>
                     {formFieldsConfig.map((field) => (
                       <div key={field.name} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
                         <label htmlFor={`gpuopt-${field.name}`} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
@@ -627,8 +578,8 @@ export function GPUOptimizationServicePage() {
                     <motion.button
                       type="submit"
                       className="px-12 py-4 rounded-xl font-semibold text-base transition-all duration-300 cursor-pointer"
-                      style={SUBMIT_BTN_STYLE}
-                      whileHover={{ y: -2, ...SUBMIT_BTN_HOVER }}
+                      style={Theme.SUBMIT_BTN_STYLE}
+                      whileHover={{ y: -2, ...Theme.SUBMIT_BTN_HOVER }}
                       whileTap={{ scale: 0.98 }}
                     >
                       Send Message
@@ -638,9 +589,9 @@ export function GPUOptimizationServicePage() {
               </div>
             </motion.div>
 
-            <motion.div {...MOTION_FADE_UP_20} transition={{ duration: 0.6, delay: 0.2 }} className="mt-16 max-w-4xl mx-auto">
+            <motion.div {...Theme.MOTION_FADE_UP_20} transition={{ duration: 0.6, delay: 0.2 }} className="mt-16 max-w-4xl mx-auto">
               <div className="text-center mb-8">
-                <h3 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: TEXT_FAFAFA }}>
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: Theme.TEXT_FAFAFA }}>
                   Our Office
                 </h3>
               </div>
@@ -650,18 +601,18 @@ export function GPUOptimizationServicePage() {
                   <div
                     key={card.title}
                     className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105"
-                    style={officeCardStyle}
+                    style={Theme.officeCardStyle}
                   >
-                    <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden" style={OFFICE_ICON_BG}>
+                    <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden" style={Theme.OFFICE_ICON_BG}>
                       {renderOfficeCardIcon(card.type)}
                     </div>
-                    <h4 className="text-lg font-semibold mb-3" style={{ color: TEXT_FAFAFA }}>{card.title}</h4>
+                    <h4 className="text-lg font-semibold mb-3" style={{ color: Theme.TEXT_FAFAFA }}>{card.title}</h4>
                     {card.href ? (
-                      <a href={card.href} className="text-sm inline-block hover:text-[#059669] transition-colors" style={{ color: ACCENT_COLOR }}>{card.content}</a>
+                      <a href={card.href} className="text-sm inline-block hover:text-[#059669] transition-colors" style={{ color: Theme.ACCENT_COLOR }}>{card.content}</a>
                     ) : (
-                      <p className="text-sm leading-relaxed" style={{ color: TEXT_MUTED, whiteSpace: 'pre-line' }}>{card.content}</p>
+                      <p className="text-sm leading-relaxed" style={{ color: Theme.TEXT_MUTED, whiteSpace: 'pre-line' }}>{card.content}</p>
                     )}
-                    {card.subtitle && <p className="text-xs mt-3" style={{ color: TEXT_SUBTLE }}>{card.subtitle}</p>}
+                    {card.subtitle && <p className="text-xs mt-3" style={{ color: Theme.TEXT_SUBTLE }}>{card.subtitle}</p>}
                   </div>
                 ))}
               </div>

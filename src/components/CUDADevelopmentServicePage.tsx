@@ -2,44 +2,10 @@ import { motion } from 'motion/react';
 import { SEO } from './SEO';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  SECTION_BG,
-  CARD_BG_LIGHT,
-  BORDER_SUBTLE,
-  BENEFIT_CARD_BG,
-  ACCENT_COLOR,
-  TEXT_FAFAFA,
-  TEXT_MUTED,
-  TEXT_SUBTLE,
-  TEXT_GRAY,
-  HERO_OVERLAY_GRADIENT,
-  HERO_BG_TOP,
-  OVERVIEW_BADGE,
-  KEY_STAT_BOX,
-  IMAGE_SHADOW_ACCENT,
-  CTA_HERO_STYLE,
-  FORM_GLOW_STYLE,
-  FORM_CONTAINER_STYLE,
-  SUBMIT_BTN_STYLE,
-  SUBMIT_BTN_HOVER,
-  HEADING_TITLE_STYLE,
-  PROCESS_GRADIENT_BG,
-  FORM_LAYOUT,
-  FORM_GRID_GAP,
-  FORM_MAX_WIDTH,
-  CHECK_ICON_BG,
-  CHEVRON_DOWN_D,
-  HERO_H1_STYLE,
-  HERO_P_STYLE,
-  HERO_CONTENT_PADDING,
-  SECTION_CLASS,
-  SECTION_CONTAINER,
-  OFFICE_ICON_BG,
-  officeCardStyle,
-  OVERLAY_DARK,
-  BADGE_TESTIMONIAL,
-} from '../constants/theme';
-import {
+import * as Theme from '../constants/theme';
+import { cudaDevelopmentPageData } from './CUDADevelopmentServicePage/data';
+
+const {
   servicesData,
   industryItems,
   processSteps,
@@ -49,7 +15,7 @@ import {
   faqData,
   formFieldsConfig,
   officeCardsData,
-} from './CUDADevelopmentServicePage/data';
+} = cudaDevelopmentPageData;
 import { CheckIcon, DividerLine, QuoteIcon, renderOfficeCardIcon, renderServiceFormField } from './ServicePageShared';
 
 const CUDA_HERO_IMAGE = '/images/cuda.service.hero.jpg';
@@ -73,7 +39,7 @@ export function CUDADevelopmentServicePage() {
     navigate('/thank-you/');
   };
   return (
-    <div className="min-h-screen" style={{ background: SECTION_BG }}>
+    <div className="min-h-screen" style={{ background: Theme.SECTION_BG }}>
       <SEO
         title="CUDA Development Services | Expert CUDA Developers for GPU Computing"
         description="Hire experienced CUDA developers to build high-performance GPU applications. Jashom delivers scalable CUDA development solutions for AI, deep learning, and parallel computing."
@@ -83,14 +49,14 @@ export function CUDADevelopmentServicePage() {
       {/* Hero Section */}
       <section
         className="relative overflow-hidden"
-        style={{ minHeight: '100vh', backgroundImage: `url(${CUDA_HERO_IMAGE})`, ...HERO_BG_TOP }}
+        style={{ minHeight: '100vh', backgroundImage: `url(${CUDA_HERO_IMAGE})`, ...Theme.HERO_BG_TOP }}
       >
-        <div className="absolute inset-0" style={{ backgroundImage: `url(${CUDA_HERO_IMAGE})`, ...HERO_BG_TOP, filter: 'brightness(1.2)' }} />
-        <div className="absolute inset-0" style={{ background: HERO_OVERLAY_GRADIENT }} />
+        <div className="absolute inset-0" style={{ backgroundImage: `url(${CUDA_HERO_IMAGE})`, ...Theme.HERO_BG_TOP, filter: 'brightness(1.2)' }} />
+        <div className="absolute inset-0" style={{ background: Theme.HERO_OVERLAY_GRADIENT }} />
 
         {/* Content - Premium Spacing */}
         <div className="relative z-10 min-h-screen flex items-center">
-          <div className={`${SECTION_CONTAINER} px-6 sm:px-8 lg:px-12 w-full`} style={HERO_CONTENT_PADDING}>
+          <div className={`${Theme.SECTION_CONTAINER} px-6 sm:px-8 lg:px-12 w-full`} style={Theme.HERO_CONTENT_PADDING}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -98,10 +64,10 @@ export function CUDADevelopmentServicePage() {
               className="text-left"
               style={{ maxWidth: '620px' }}
             >
-              <h1 className="font-bold text-white leading-tight" style={HERO_H1_STYLE}>
+              <h1 className="font-bold text-white leading-tight" style={Theme.HERO_H1_STYLE}>
                 Custom CUDA Development for Advanced GPU Computing
               </h1>
-              <p className="text-white/90" style={HERO_P_STYLE}>
+              <p className="text-white/90" style={Theme.HERO_P_STYLE}>
                 Revolutionize computational pressure to run scalable performance using master CUDA engineering. Our architectures are built and deployed in the form of GPU-native, which opens the door to the efficiency of parallel processing of the AI systems, simulations, and data-intensive programs.
               </p>
 
@@ -109,7 +75,7 @@ export function CUDADevelopmentServicePage() {
               <a
                 href="/contact"
                 className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90 hover:scale-105"
-                style={CTA_HERO_STYLE}
+                style={Theme.CTA_HERO_STYLE}
               >
                 Get Free Consultation
               </a>
@@ -119,12 +85,12 @@ export function CUDADevelopmentServicePage() {
       </section>
 
       {/* Overview Section */}
-      <section className={`${SECTION_CLASS} relative overflow-hidden`} style={{ background: SECTION_BG }}>
+      <section className={`${Theme.SECTION_CLASS} relative overflow-hidden`} style={{ background: Theme.SECTION_BG }}>
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
           <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
         </div>
-        <div className={`${SECTION_CONTAINER} relative z-10`}>
+        <div className={`${Theme.SECTION_CONTAINER} relative z-10`}>
           {/* Section title - full width centered */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -133,8 +99,8 @@ export function CUDADevelopmentServicePage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <div className="inline-block mb-4 px-4 py-2 rounded-full" style={OVERVIEW_BADGE}>
-              <p className="text-sm uppercase tracking-wider" style={{ color: ACCENT_COLOR }}>Overview</p>
+            <div className="inline-block mb-4 px-4 py-2 rounded-full" style={Theme.OVERVIEW_BADGE}>
+              <p className="text-sm uppercase tracking-wider" style={{ color: Theme.ACCENT_COLOR }}>Overview</p>
             </div>
             <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
               What CUDA Means for
@@ -163,13 +129,13 @@ export function CUDADevelopmentServicePage() {
 
                 {/* Key Benefits */}
                 <div className="grid grid-cols-2 gap-4 pt-4">
-                  <div className="rounded-lg p-4" style={KEY_STAT_BOX}>
-                    <div className="text-3xl font-bold mb-1" style={{ color: ACCENT_COLOR }}>100x</div>
-                    <div className="text-sm" style={{ color: TEXT_GRAY }}>Compute Throughput Increase</div>
+                  <div className="rounded-lg p-4" style={Theme.KEY_STAT_BOX}>
+                    <div className="text-3xl font-bold mb-1" style={{ color: Theme.ACCENT_COLOR }}>100x</div>
+                    <div className="text-sm" style={{ color: Theme.TEXT_GRAY }}>Compute Throughput Increase</div>
                   </div>
-                  <div className="rounded-lg p-4" style={KEY_STAT_BOX}>
-                    <div className="text-3xl font-bold mb-1" style={{ color: ACCENT_COLOR }}>Up to 50%</div>
-                    <div className="text-sm" style={{ color: TEXT_GRAY }}>Hardware Efficiency Optimization</div>
+                  <div className="rounded-lg p-4" style={Theme.KEY_STAT_BOX}>
+                    <div className="text-3xl font-bold mb-1" style={{ color: Theme.ACCENT_COLOR }}>Up to 50%</div>
+                    <div className="text-sm" style={{ color: Theme.TEXT_GRAY }}>Hardware Efficiency Optimization</div>
                   </div>
                 </div>
               </motion.div>
@@ -188,7 +154,7 @@ export function CUDADevelopmentServicePage() {
                   src="/images/cuda.developer.jpg"
                   alt="CUDA Development"
                   className="w-full h-auto rounded-2xl shadow-2xl"
-                  style={IMAGE_SHADOW_ACCENT}
+                  style={Theme.IMAGE_SHADOW_ACCENT}
                 />
               </motion.div>
             </div>
@@ -200,8 +166,8 @@ export function CUDADevelopmentServicePage() {
       <div className="premium-divider" />
 
       {/* Services Section */}
-      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
-        <div className={SECTION_CONTAINER}>
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.SECTION_BG }}>
+        <div className={Theme.SECTION_CONTAINER}>
           {/* Section title - full width centered */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -239,7 +205,7 @@ export function CUDADevelopmentServicePage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
                 className="rounded-2xl p-8"
-                style={{ background: CARD_BG_LIGHT }}
+                style={{ background: Theme.CARD_BG_LIGHT }}
               >
                 <h3 className="text-2xl font-bold mb-4 text-black whitespace-pre-line">{item.title}</h3>
                 <p className="text-base leading-relaxed text-[#666666]">{item.description}</p>
@@ -250,7 +216,7 @@ export function CUDADevelopmentServicePage() {
       </section>
 
       {/* Industry-Specific Services Section */}
-      <section className={`${SECTION_CLASS} relative overflow-hidden`} style={{ background: SECTION_BG }}>
+      <section className={`${Theme.SECTION_CLASS} relative overflow-hidden`} style={{ background: Theme.SECTION_BG }}>
         {/* Brightness layer for background image */}
         <div 
           className="absolute inset-0 z-0"
@@ -264,9 +230,9 @@ export function CUDADevelopmentServicePage() {
         ></div>
 
         {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 z-0" style={{ background: OVERLAY_DARK }} />
+        <div className="absolute inset-0 z-0" style={{ background: Theme.OVERLAY_DARK }} />
 
-        <div className={`${SECTION_CONTAINER} relative z-10`}>
+        <div className={`${Theme.SECTION_CONTAINER} relative z-10`}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -286,7 +252,7 @@ export function CUDADevelopmentServicePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
               {industryItems.map((label) => (
                 <div key={label} className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={CHECK_ICON_BG}>
+                  <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style={Theme.CHECK_ICON_BG}>
                     <CheckIcon />
                   </div>
                   <span className="text-white text-base font-medium">{label}</span>
@@ -300,12 +266,12 @@ export function CUDADevelopmentServicePage() {
       <DividerLine />
 
       {/* Process Flow Section */}
-      <section className={`${SECTION_CLASS} relative overflow-hidden`} style={{ background: PROCESS_GRADIENT_BG }}>
+      <section className={`${Theme.SECTION_CLASS} relative overflow-hidden`} style={{ background: Theme.PROCESS_GRADIENT_BG }}>
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
-        <div className={`${SECTION_CONTAINER} relative z-10`}>
+        <div className={`${Theme.SECTION_CONTAINER} relative z-10`}>
           {/* Section Heading */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -378,8 +344,8 @@ export function CUDADevelopmentServicePage() {
       <DividerLine />
 
       {/* Business Benefits Section */}
-      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
-        <div className={SECTION_CONTAINER}>
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.SECTION_BG }}>
+        <div className={Theme.SECTION_CONTAINER}>
           {/* Section Heading */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -405,7 +371,7 @@ export function CUDADevelopmentServicePage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
                 className="rounded-xl p-8 border transition-all duration-300"
-                style={{ background: BENEFIT_CARD_BG, borderColor: item.borderColor }}
+                style={{ background: Theme.BENEFIT_CARD_BG, borderColor: item.borderColor }}
               >
                 <h3 className="text-2xl font-bold text-white mb-4 leading-tight whitespace-pre-line">{item.title}</h3>
                 <p className="text-white/70 text-base leading-relaxed">{item.description}</p>
@@ -418,8 +384,8 @@ export function CUDADevelopmentServicePage() {
       <DividerLine />
 
       {/* Why Choose Section */}
-      <section className="px-4 sm:px-6 lg:px-8 py-[100px]" style={{ background: SECTION_BG }}>
-        <div className={SECTION_CONTAINER}>
+      <section className="px-4 sm:px-6 lg:px-8 py-[100px]" style={{ background: Theme.SECTION_BG }}>
+        <div className={Theme.SECTION_CONTAINER}>
           {/* Section Heading */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -445,9 +411,9 @@ export function CUDADevelopmentServicePage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
                 className="flex items-start gap-6 border rounded-xl p-6"
-                style={{ borderColor: BORDER_SUBTLE }}
+                style={{ borderColor: Theme.BORDER_SUBTLE }}
               >
-                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={CHECK_ICON_BG}>
+                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0" style={Theme.CHECK_ICON_BG}>
                   <CheckIcon size="lg" />
                 </div>
                 <div>
@@ -461,8 +427,8 @@ export function CUDADevelopmentServicePage() {
       </section>
 
       {/* What Our Clients Say Section */}
-      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
-        <div className={SECTION_CONTAINER}>
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.SECTION_BG }}>
+        <div className={Theme.SECTION_CONTAINER}>
           {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -477,16 +443,16 @@ export function CUDADevelopmentServicePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
               className="inline-block px-6 py-2 rounded-full border mb-6"
-              style={BADGE_TESTIMONIAL}
+              style={Theme.BADGE_TESTIMONIAL}
             >
-              <span style={{ color: ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Client Testimonials</span>
+              <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Client Testimonials</span>
             </motion.div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={HEADING_TITLE_STYLE}>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={Theme.HEADING_TITLE_STYLE}>
               Client Experiences
             </h2>
 
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: TEXT_MUTED, lineHeight: 1.7 }}>
+            <p className="text-lg max-w-2xl mx-auto" style={{ color: Theme.TEXT_MUTED, lineHeight: 1.7 }}>
               Proven Impact Across Industries
             </p>
           </motion.div>
@@ -504,15 +470,15 @@ export function CUDADevelopmentServicePage() {
               >
                 <div
                   className="h-full p-8 rounded-2xl border transition-all duration-300 bg-white/[0.02] backdrop-blur-[10px]"
-                  style={{ borderColor: BORDER_SUBTLE }}
+                  style={{ borderColor: Theme.BORDER_SUBTLE }}
                 >
                   <div className="mb-4"><QuoteIcon /></div>
                   <p className="text-base mb-8 text-[#D1D5DB] leading-[1.8]">{t.quote}</p>
-                  <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: BORDER_SUBTLE }}>
+                  <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: Theme.BORDER_SUBTLE }}>
                     <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold text-white" style={{ background: t.avatarGradient }}>{t.initials}</div>
                     <div>
-                      <div className="font-semibold text-[15px]" style={{ color: TEXT_FAFAFA }}>{t.role}</div>
-                      <div className="text-[13px]" style={{ color: TEXT_MUTED }}>{t.company}</div>
+                      <div className="font-semibold text-[15px]" style={{ color: Theme.TEXT_FAFAFA }}>{t.role}</div>
+                      <div className="text-[13px]" style={{ color: Theme.TEXT_MUTED }}>{t.company}</div>
                     </div>
                   </div>
                 </div>
@@ -523,8 +489,8 @@ export function CUDADevelopmentServicePage() {
       </section>
 
       {/* FAQ Section */}
-      <section className={SECTION_CLASS} style={{ background: SECTION_BG }}>
-        <div className={SECTION_CONTAINER}>
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.SECTION_BG }}>
+        <div className={Theme.SECTION_CONTAINER}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             {/* Left Column - Title */}
             <div className="lg:col-span-4">
@@ -553,13 +519,13 @@ export function CUDADevelopmentServicePage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
                   className="rounded-2xl border border-white/10 overflow-hidden"
-                  style={{ background: SECTION_BG }}
+                  style={{ background: Theme.SECTION_BG }}
                 >
                   <details className="group">
                     <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
                       <h3 className="text-lg font-semibold text-white pr-4">{item.q}</h3>
                       <svg className="w-6 h-6 text-white/60 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={CHEVRON_DOWN_D} />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={Theme.CHEVRON_DOWN_D} />
                       </svg>
                     </summary>
                     <div className="px-6 pt-2 pb-8">
@@ -573,7 +539,7 @@ export function CUDADevelopmentServicePage() {
         </div>
       </section>
 
-      <div className={`${SECTION_CONTAINER} px-4 sm:px-6 lg:px-8 pb-20`}>
+      <div className={`${Theme.SECTION_CONTAINER} px-4 sm:px-6 lg:px-8 pb-20`}>
         {/* Contact Form Section */}
         <motion.div
           className="mt-12 sm:mt-20"
@@ -589,7 +555,7 @@ export function CUDADevelopmentServicePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
-              style={HEADING_TITLE_STYLE}
+              style={Theme.HEADING_TITLE_STYLE}
             >
               Get Started with CUDA Development
             </motion.h2>
@@ -599,7 +565,7 @@ export function CUDADevelopmentServicePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-base sm:text-lg mb-4 leading-relaxed max-w-2xl mx-auto"
-              style={{ color: TEXT_MUTED }}
+              style={{ color: Theme.TEXT_MUTED }}
             >
               Fill out the form and our team will get back to you within 24 hours.
             </motion.p>
@@ -612,12 +578,12 @@ export function CUDADevelopmentServicePage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="relative"
-            style={FORM_MAX_WIDTH}
+            style={Theme.FORM_MAX_WIDTH}
           >
-            <div className="absolute inset-0 pointer-events-none" style={FORM_GLOW_STYLE} />
-            <div className="relative w-full" style={FORM_CONTAINER_STYLE}>
-              <form style={FORM_LAYOUT} onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 md:grid-cols-2" style={FORM_GRID_GAP}>
+            <div className="absolute inset-0 pointer-events-none" style={Theme.FORM_GLOW_STYLE} />
+            <div className="relative w-full" style={Theme.FORM_CONTAINER_STYLE}>
+              <form style={Theme.FORM_LAYOUT} onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 md:grid-cols-2" style={Theme.FORM_GRID_GAP}>
                   {formFieldsConfig.map((field) => (
                     <div key={field.name} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
                       <label htmlFor={`cuda-${field.name}`} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
@@ -629,8 +595,8 @@ export function CUDADevelopmentServicePage() {
                   <motion.button
                     type="submit"
                     className="px-12 py-4 rounded-xl font-semibold text-base transition-all duration-300 cursor-pointer"
-                    style={SUBMIT_BTN_STYLE}
-                    whileHover={{ y: -2, ...SUBMIT_BTN_HOVER }}
+                    style={Theme.SUBMIT_BTN_STYLE}
+                    whileHover={{ y: -2, ...Theme.SUBMIT_BTN_HOVER }}
                     whileTap={{ scale: 0.98 }}
                   >
                     Send Message
@@ -649,7 +615,7 @@ export function CUDADevelopmentServicePage() {
             className="mt-16"
           >
             <div className="text-center mb-10">
-              <h3 className="text-2xl sm:text-3xl font-bold mb-3" style={{ color: TEXT_FAFAFA }}>
+              <h3 className="text-2xl sm:text-3xl font-bold mb-3" style={{ color: Theme.TEXT_FAFAFA }}>
                 Our Office
               </h3>
             </div>
@@ -659,21 +625,21 @@ export function CUDADevelopmentServicePage() {
                 <div
                   key={card.title}
                   className="p-6 rounded-xl text-center transition-all duration-300 hover:scale-105"
-                  style={officeCardStyle}
+                  style={Theme.officeCardStyle}
                 >
-                  <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden" style={OFFICE_ICON_BG}>
+                  <div className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden" style={Theme.OFFICE_ICON_BG}>
                     {renderOfficeCardIcon(card.type)}
                   </div>
-                  <h4 className="text-lg font-semibold mb-3" style={{ color: TEXT_FAFAFA }}>{card.title}</h4>
+                  <h4 className="text-lg font-semibold mb-3" style={{ color: Theme.TEXT_FAFAFA }}>{card.title}</h4>
                   {card.href ? (
                     <>
-                      <a href={card.href} className="text-sm inline-block hover:text-[#059669] transition-colors" style={{ color: ACCENT_COLOR }}>
+                      <a href={card.href} className="text-sm inline-block hover:text-[#059669] transition-colors" style={{ color: Theme.ACCENT_COLOR }}>
                         {card.content}
                       </a>
-                      {card.subtitle && <p className="text-xs mt-3" style={{ color: TEXT_SUBTLE }}>{card.subtitle}</p>}
+                      {card.subtitle && <p className="text-xs mt-3" style={{ color: Theme.TEXT_SUBTLE }}>{card.subtitle}</p>}
                     </>
                   ) : (
-                    <p className="text-sm leading-relaxed" style={{ color: TEXT_MUTED, whiteSpace: typeof card.content === 'string' ? 'pre-line' : undefined }}>{card.content}</p>
+                    <p className="text-sm leading-relaxed" style={{ color: Theme.TEXT_MUTED, whiteSpace: typeof card.content === 'string' ? 'pre-line' : undefined }}>{card.content}</p>
                   )}
                 </div>
               ))}

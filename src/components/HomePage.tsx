@@ -8,50 +8,23 @@ import type { Blog } from '../api/blogs';
 // COMMENTED OUT - Services temporarily hidden from UI but preserved in codebase
 // import { ServicesSlider } from './ServicesSlider';
 import {
-  Cpu,
-  Zap,
-  Shield,
-  Brain,
-  TrendingUp,
-  Users,
   ArrowRight,
   Calendar,
   Clock,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
-import {
-  ACCENT_COLOR,
-  BADGE_STYLE,
-  BADGE_TESTIMONIAL,
-  BORDER_SUBTLE,
-  FORM_GRID_GAP,
-  FORM_LAYOUT,
-  FORM_MAX_WIDTH,
-  FORM_CONTAINER_STYLE,
-  FORM_GLOW_STYLE,
-  GRADIENT_TEXT_STYLE,
-  HEADING_TITLE_STYLE,
-  SECTION_BG,
-  SUBMIT_BTN_HOVER,
-  SUBMIT_BTN_STYLE,
-  TEXT_FAFAFA,
-  TEXT_GRAY,
-  TEXT_MUTED,
-  TEXT_QUOTE,
-  TEXT_SUBTLE,
-  TEXT_WHITE,
-} from '../constants/theme';
+import * as Theme from '../constants/theme';
 import { QuoteIcon, renderServiceFormField } from './ServicePageShared';
-import {
+import { homePageData, type HomeContactFormData } from './HomePage/data';
+
+const {
   BENEFIT_CARD_STYLE,
   BENEFIT_ICON_BOX,
   BLOG_BADGE_STYLE,
   BLOG_CARD_BG,
   BLOG_CARD_BORDER,
   CTA_GRADIENT_STYLE,
-  HomeContactFormData,
-  LOGO_BASE_CLASS,
   VIEW_ALL_BTN_STYLE,
   VIOLET_COLOR,
   benefitsData,
@@ -63,7 +36,7 @@ import {
   trustedLogosData,
   trustedMetricsData,
   whatWeDoData,
-} from './HomePage/data';
+} = homePageData;
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -176,9 +149,9 @@ export function HomePage() {
       />
 
       <div className="home">
-        <div className="min-h-screen" style={{ width: '100%', overflow: 'hidden', background: SECTION_BG }}>
+        <div className="min-h-screen" style={{ width: '100%', overflow: 'hidden', background: Theme.SECTION_BG }}>
           {/* Hero Section - Full Screen Edge-to-Edge */}
-          <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden" style={{ margin: 0, padding: 0, background: SECTION_BG }}>
+          <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden" style={{ margin: 0, padding: 0, background: Theme.SECTION_BG }}>
             {/* Video Background - Full Screen Coverage */}
             <video
               ref={videoRef}
@@ -220,13 +193,13 @@ export function HomePage() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <span style={{ color: TEXT_GRAY }}>Next-Gen AI Solutions</span>
+                  <span style={{ color: Theme.TEXT_GRAY }}>Next-Gen AI Solutions</span>
                 </motion.div>
 
                 <motion.h1
                   className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl px-2 sm:px-0"
                   style={{
-                    color: TEXT_FAFAFA,
+                    color: Theme.TEXT_FAFAFA,
                     fontWeight: 700,
                     letterSpacing: '-0.03em',
                     lineHeight: 1.15
@@ -236,7 +209,7 @@ export function HomePage() {
                   transition={{ delay: 0.3 }}
                 >
                   Powering High-Performance AI with <span style={{
-                    background: `linear-gradient(135deg, ${ACCENT_COLOR} 0%, ${VIOLET_COLOR} 50%, #06B6D4 100%)`,
+                    background: `linear-gradient(135deg, ${Theme.ACCENT_COLOR} 0%, ${VIOLET_COLOR} 50%, #06B6D4 100%)`,
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -247,7 +220,7 @@ export function HomePage() {
                 <motion.p
                   className="mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base px-4 sm:px-0"
                   style={{
-                    color: TEXT_GRAY,
+                    color: Theme.TEXT_GRAY,
                     lineHeight: 1.8,
                     textShadow: '0 2px 10px rgba(0,0,0,0.9)'
                   }}
@@ -279,7 +252,7 @@ export function HomePage() {
                     style={{
                       background: 'rgba(255, 255, 255, 0.04)',
                       borderColor: 'rgba(255, 255, 255, 0.12)',
-                      color: TEXT_FAFAFA
+                      color: Theme.TEXT_FAFAFA
                     }}
                   >
                     Schedule a Meeting
@@ -313,8 +286,8 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold" style={{ color: TEXT_FAFAFA, fontFamily: 'Inter, sans-serif', letterSpacing: '-0.025em' }}>
-                  What We <span style={{ color: ACCENT_COLOR }}>Do</span>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold" style={{ color: Theme.TEXT_FAFAFA, fontFamily: 'Inter, sans-serif', letterSpacing: '-0.025em' }}>
+                  What We <span style={{ color: Theme.ACCENT_COLOR }}>Do</span>
                 </h2>
               </motion.div>
 
@@ -328,7 +301,7 @@ export function HomePage() {
                 {whatWeDoData.map((item) => {
                   const isEmerald = item.colorKey === 'emerald';
                   const rgb = isEmerald ? '16, 185, 129' : '124, 58, 237';
-                  const color = isEmerald ? ACCENT_COLOR : VIOLET_COLOR;
+                  const color = isEmerald ? Theme.ACCENT_COLOR : VIOLET_COLOR;
                   return (
                     <motion.div
                       key={item.title}
@@ -369,10 +342,10 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: ACCENT_COLOR }}>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: Theme.ACCENT_COLOR }}>
                   Which Services We Provide
                 </h2>
-                <p className="text-lg max-w-2xl mx-auto" style={{ color: TEXT_MUTED }}>
+                <p className="text-lg max-w-2xl mx-auto" style={{ color: Theme.TEXT_MUTED }}>
                   Explore our specialized GPU and CUDA development services
                 </p>
               </motion.div>
@@ -382,7 +355,7 @@ export function HomePage() {
                 {servicesProvideData.map((item, i) => {
                   const isEmerald = item.colorKey === 'emerald';
                   const rgb = isEmerald ? '16, 185, 129' : '124, 58, 237';
-                  const color = isEmerald ? ACCENT_COLOR : VIOLET_COLOR;
+                  const color = isEmerald ? Theme.ACCENT_COLOR : VIOLET_COLOR;
                   const Icon = item.Icon;
                   return (
                     <motion.div
@@ -398,7 +371,7 @@ export function HomePage() {
                         <Icon className="w-6 h-6" style={{ color }} />
                       </div>
                       <h3 className="text-xl font-bold mb-3" style={{ color }}>{item.title}</h3>
-                      <p className="text-base mb-6 leading-relaxed" style={{ color: TEXT_MUTED }}>{item.description}</p>
+                      <p className="text-base mb-6 leading-relaxed" style={{ color: Theme.TEXT_MUTED }}>{item.description}</p>
                       <div className="w-full mt-auto text-right">
                         <a href={item.href} className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5" style={item.buttonStyle}>
                           Explore Service →
@@ -684,7 +657,7 @@ export function HomePage() {
           </section>
 
           {/* Premium Minimal Testimonials Section */}
-          <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: SECTION_BG }}>
+          <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: Theme.SECTION_BG }}>
             <div className="max-w-7xl mx-auto">
 
               {/* Section Header - Centered */}
@@ -697,16 +670,16 @@ export function HomePage() {
               >
                 <motion.div
                   className="inline-block mb-4 px-4 py-2 rounded-full border"
-                  style={BADGE_TESTIMONIAL}
+                  style={Theme.BADGE_TESTIMONIAL}
                 >
-                  <span style={{ color: ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Client Testimonials</span>
+                  <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Client Testimonials</span>
                 </motion.div>
 
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={HEADING_TITLE_STYLE}>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={Theme.HEADING_TITLE_STYLE}>
                   What Our Clients Say
                 </h2>
 
-                <p className="text-lg max-w-2xl mx-auto" style={{ color: TEXT_MUTED, lineHeight: 1.7 }}>
+                <p className="text-lg max-w-2xl mx-auto" style={{ color: Theme.TEXT_MUTED, lineHeight: 1.7 }}>
                   The industry leaders are banking on our CUDA and GPU engineering skills to get the compute workloads on high throughput, enhance AI responsiveness, and implement stable high-performance units with results that can be measured.
                 </p>
               </motion.div>
@@ -722,14 +695,14 @@ export function HomePage() {
                     transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
                     className="group"
                   >
-                    <div className="h-full p-8 rounded-2xl border transition-all duration-300" style={{ background: 'rgba(255, 255, 255, 0.02)', borderColor: BORDER_SUBTLE, backdropFilter: 'blur(10px)' }}>
+                    <div className="h-full p-8 rounded-2xl border transition-all duration-300" style={{ background: 'rgba(255, 255, 255, 0.02)', borderColor: Theme.BORDER_SUBTLE, backdropFilter: 'blur(10px)' }}>
                       <div className="mb-4"><QuoteIcon /></div>
-                      <p className="text-base mb-8" style={{ color: TEXT_QUOTE, lineHeight: 1.8 }}>{t.quote}</p>
-                      <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: BORDER_SUBTLE }}>
+                      <p className="text-base mb-8" style={{ color: Theme.TEXT_QUOTE, lineHeight: 1.8 }}>{t.quote}</p>
+                      <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: Theme.BORDER_SUBTLE }}>
                         <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold text-white" style={{ background: t.avatarGradient }}>{t.initials}</div>
                         <div>
-                          <div className="font-semibold text-[15px]" style={{ color: TEXT_FAFAFA }}>{t.name}</div>
-                          <div className="text-[13px]" style={{ color: TEXT_MUTED }}>{t.role}</div>
+                          <div className="font-semibold text-[15px]" style={{ color: Theme.TEXT_FAFAFA }}>{t.name}</div>
+                          <div className="text-[13px]" style={{ color: Theme.TEXT_MUTED }}>{t.role}</div>
                         </div>
                       </div>
                     </div>
@@ -740,7 +713,7 @@ export function HomePage() {
           </section>
 
           {/* Why Jashom - Benefits Section */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${BLOG_CARD_BG} 0%, ${SECTION_BG} 100%)` }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${BLOG_CARD_BG} 0%, ${Theme.SECTION_BG} 100%)` }}>
             {/* Subtle background glow */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
@@ -755,13 +728,13 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <div className="inline-block mb-4 px-6 py-2 rounded-full border" style={BADGE_STYLE}>
-                  <span style={{ color: ACCENT_COLOR, fontWeight: 600 }}>Why Choose Jashom?</span>
+                <div className="inline-block mb-4 px-6 py-2 rounded-full border" style={Theme.BADGE_STYLE}>
+                  <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600 }}>Why Choose Jashom?</span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: TEXT_FAFAFA, letterSpacing: '-0.025em' }}>
-                  Why Choose <span style={{ color: ACCENT_COLOR }}>Jashom</span>?
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: Theme.TEXT_FAFAFA, letterSpacing: '-0.025em' }}>
+                  Why Choose <span style={{ color: Theme.ACCENT_COLOR }}>Jashom</span>?
                 </h2>
-                <p className="max-w-2xl mx-auto text-base sm:text-lg" style={{ color: TEXT_GRAY, lineHeight: 1.8 }}>
+                <p className="max-w-2xl mx-auto text-base sm:text-lg" style={{ color: Theme.TEXT_GRAY, lineHeight: 1.8 }}>
                   Experience the Jashom advantage with cutting-edge GPU optimization and CUDA development solutions
                 </p>
               </motion.div>
@@ -786,10 +759,10 @@ export function HomePage() {
                     >
                       <div className="relative z-10">
                         <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={BENEFIT_ICON_BOX}>
-                          <Icon className="w-8 h-8" style={{ color: ACCENT_COLOR }} />
+                          <Icon className="w-8 h-8" style={{ color: Theme.ACCENT_COLOR }} />
                         </div>
-                        <h3 className="text-xl font-bold mb-3" style={{ color: TEXT_FAFAFA }}>{item.title}</h3>
-                        <p className="leading-relaxed" style={{ color: TEXT_GRAY, lineHeight: 1.8 }}>{item.description}</p>
+                        <h3 className="text-xl font-bold mb-3" style={{ color: Theme.TEXT_FAFAFA }}>{item.title}</h3>
+                        <p className="leading-relaxed" style={{ color: Theme.TEXT_GRAY, lineHeight: 1.8 }}>{item.description}</p>
                       </div>
                     </motion.div>
                   );
@@ -837,16 +810,16 @@ export function HomePage() {
                 <div className="text-center mb-6">
                   <motion.div
                     className="inline-block mb-4 px-4 py-2 rounded-full border"
-                    style={BADGE_STYLE}
+                    style={Theme.BADGE_STYLE}
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 }}
                   >
-                    <span style={{ color: ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Resources</span>
+                    <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Resources</span>
                   </motion.div>
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold" style={{ color: TEXT_FAFAFA, letterSpacing: '-0.025em' }}>
-                    Our Latest <span style={{ color: ACCENT_COLOR }}>Blogs</span>
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold" style={{ color: Theme.TEXT_FAFAFA, letterSpacing: '-0.025em' }}>
+                    Our Latest <span style={{ color: Theme.ACCENT_COLOR }}>Blogs</span>
                   </h2>
                 </div>
               </motion.div>
@@ -875,7 +848,7 @@ export function HomePage() {
                 </div>
               )}
               {blogsError && (
-                <div className="text-center py-12 mb-8" style={{ color: TEXT_MUTED }}>
+                <div className="text-center py-12 mb-8" style={{ color: Theme.TEXT_MUTED }}>
                   Unable to load latest blogs. Try again later.
                 </div>
               )}
@@ -890,7 +863,7 @@ export function HomePage() {
                       transition={{ delay: index * 0.15, duration: 0.5 }}
                       className="group"
                     >
-                      <Link to={`/blogs/${blog.slug}/`} className="block h-full" style={{ ['--accent' as string]: ACCENT_COLOR } as React.CSSProperties}>
+                      <Link to={`/blogs/${blog.slug}/`} className="block h-full" style={{ ['--accent' as string]: Theme.ACCENT_COLOR } as React.CSSProperties}>
                         <div
                           className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-[1.02]"
                           style={{ background: BLOG_CARD_BG, border: BLOG_CARD_BORDER }}
@@ -920,21 +893,21 @@ export function HomePage() {
                           {/* Content Section */}
                           <div className="p-6">
                             <h3 className="text-lg font-bold mb-3 line-clamp-2 transition-colors duration-240 group-hover:text-[var(--accent)]" style={{
-                              color: TEXT_FAFAFA,
+                              color: Theme.TEXT_FAFAFA,
                               lineHeight: 1.4
                             }}>
                               {blog.title}
                             </h3>
 
                             <p className="text-sm mb-4 line-clamp-2" style={{
-                              color: TEXT_MUTED,
+                              color: Theme.TEXT_MUTED,
                               lineHeight: 1.6
                             }}>
                               {blog.excerpt ?? ''}
                             </p>
 
                             {/* Meta Info */}
-                            <div className="flex items-center gap-4 mb-4 text-xs" style={{ color: TEXT_SUBTLE }}>
+                            <div className="flex items-center gap-4 mb-4 text-xs" style={{ color: Theme.TEXT_SUBTLE }}>
                               <div className="flex items-center gap-1.5">
                                 <Calendar className="w-3.5 h-3.5" />
                                 <span>{formatBlogDate(blog.published_at)}</span>
@@ -946,7 +919,7 @@ export function HomePage() {
                             </div>
 
                             {/* Read More Link */}
-                            <div className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-240" style={{ color: ACCENT_COLOR }}>
+                            <div className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-240" style={{ color: Theme.ACCENT_COLOR }}>
                               <span>Read More</span>
                               <ArrowRight className="w-4 h-4 transition-transform duration-240 group-hover:translate-x-1" />
                             </div>
@@ -963,7 +936,7 @@ export function HomePage() {
                 </div>
               )}
               {!blogsLoading && !blogsError && latestBlogs.length === 0 && (
-                <div className="text-center py-12 mb-8" style={{ color: TEXT_MUTED }}>
+                <div className="text-center py-12 mb-8" style={{ color: Theme.TEXT_MUTED }}>
                   No blogs yet.
                 </div>
               )}
@@ -991,7 +964,7 @@ export function HomePage() {
           <div className="premium-divider" />
 
           {/* Contact Form Section - Premium Layout */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${SECTION_BG} 0%, ${BLOG_CARD_BG} 100%)` }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${Theme.SECTION_BG} 0%, ${BLOG_CARD_BG} 100%)` }}>
             <div className="max-w-7xl mx-auto">
               {/* Header */}
               <motion.div
@@ -1002,24 +975,24 @@ export function HomePage() {
               >
                 <motion.div
                   className="inline-block mb-6 px-4 py-2 rounded-full border"
-                  style={BADGE_STYLE}
+                  style={Theme.BADGE_STYLE}
                 >
-                  <span style={{ color: ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Get In Touch</span>
+                  <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Get In Touch</span>
                 </motion.div>
 
                 <h2
                   className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight"
-                  style={{ color: TEXT_FAFAFA, letterSpacing: '-0.025em' }}
+                  style={{ color: Theme.TEXT_FAFAFA, letterSpacing: '-0.025em' }}
                 >
                   Let's Build High-Performance{' '}
-                  <span style={GRADIENT_TEXT_STYLE}>
+                  <span style={Theme.GRADIENT_TEXT_STYLE}>
                     AI Systems
                   </span>
                 </h2>
 
                 <p
                   className="text-base sm:text-lg mb-4 leading-relaxed max-w-2xl mx-auto"
-                  style={{ color: TEXT_MUTED }}
+                  style={{ color: Theme.TEXT_MUTED }}
                 >
                   Hire CUDA Developers today to experience highly accurate solutions to suit your goals.
                 </p>
@@ -1032,13 +1005,13 @@ export function HomePage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
                 className="relative"
-                style={FORM_MAX_WIDTH}
+                style={Theme.FORM_MAX_WIDTH}
               >
-                <div className="absolute inset-0 pointer-events-none" style={FORM_GLOW_STYLE} />
+                <div className="absolute inset-0 pointer-events-none" style={Theme.FORM_GLOW_STYLE} />
 
-                <div className="relative w-full" style={FORM_CONTAINER_STYLE}>
-                  <form onSubmit={handleFormSubmit} style={FORM_LAYOUT}>
-                    <div className="grid grid-cols-1 md:grid-cols-2" style={FORM_GRID_GAP}>
+                <div className="relative w-full" style={Theme.FORM_CONTAINER_STYLE}>
+                  <form onSubmit={handleFormSubmit} style={Theme.FORM_LAYOUT}>
+                    <div className="grid grid-cols-1 md:grid-cols-2" style={Theme.FORM_GRID_GAP}>
                       {homeContactFormFields.map((field) => (
                         <div key={field.name} className={field.type === 'select' || field.type === 'textarea' ? 'md:col-span-2' : ''}>
                           <label htmlFor={`home-contact-${field.name}`} className="block text-white/90 mb-2 font-medium text-sm">{field.label}</label>
@@ -1052,8 +1025,8 @@ export function HomePage() {
                       <motion.button
                         type="submit"
                         className="px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer"
-                        style={SUBMIT_BTN_STYLE}
-                        whileHover={{ y: -2, ...SUBMIT_BTN_HOVER }}
+                        style={Theme.SUBMIT_BTN_STYLE}
+                        whileHover={{ y: -2, ...Theme.SUBMIT_BTN_HOVER }}
                         whileTap={{ scale: 0.98 }}
                       >
                         Send Message
