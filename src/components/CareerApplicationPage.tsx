@@ -6,7 +6,7 @@ import { CheckCircle, Upload, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const INPUT_STYLE: React.CSSProperties = {
   background: 'rgba(17, 24, 39, 0.8)',
-  borderColor: 'rgba(16, 185, 129, 0.3)',
+  borderColor: 'rgba(34, 211, 238, 0.3)',
   color: '#FAFAFA',
 };
 const LABEL_CLASS = 'block text-sm font-semibold mb-3';
@@ -29,32 +29,32 @@ const stepsData = [
 ];
 
 const STEP_CIRCLE_STYLE: React.CSSProperties = {
-  background: 'rgba(16, 185, 129, 0.15)',
-  border: '2px solid rgba(16, 185, 129, 0.3)',
+  background: 'rgba(34, 211, 238, 0.15)',
+  border: '2px solid rgba(34, 211, 238, 0.3)',
 };
 
 const SECTION_BG = '#0B0F14';
-const BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba(16, 185, 129, 0.25)' } as const;
+const BADGE_STYLE = { background: 'rgba(34, 211, 238, 0.08)', borderColor: 'rgba(34, 211, 238, 0.25)' } as const;
 const FORM_CONTAINER_STYLE: React.CSSProperties = {
   background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.6) 0%, rgba(11, 15, 20, 0.8) 100%)',
-  borderColor: 'rgba(16, 185, 129, 0.2)',
+  borderColor: 'rgba(34, 211, 238, 0.2)',
   boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
 };
-const DIVIDER_STYLE = { height: '1px', background: 'linear-gradient(to right, transparent, rgba(16, 185, 129, 0.3), transparent)', margin: '32px 0' } as const;
+const DIVIDER_STYLE = { height: '1px', background: 'linear-gradient(to right, transparent, rgba(34, 211, 238, 0.3), transparent)', margin: '32px 0' } as const;
 const SUBMIT_BUTTON_STYLE = {
-  background: 'linear-gradient(135deg, #10B981, #06B6D4)',
+  background: 'linear-gradient(135deg, #22D3EE, #06B6D4)',
   borderColor: 'transparent',
   color: '#FFFFFF',
-  boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)',
+  boxShadow: '0 8px 32px rgba(34, 211, 238, 0.4)',
 } as const;
 const SUBMIT_BUTTON_HOVER = {
-  background: 'linear-gradient(135deg, #059669, #0891B2)',
-  boxShadow: '0 12px 48px rgba(16, 185, 129, 0.6)',
+  background: 'linear-gradient(135deg, #22D3EE, #06B6D4)',
+  boxShadow: '0 12px 48px rgba(34, 211, 238, 0.6)',
   transform: 'translateY(-2px)',
 } as const;
-const CTA_PRIMARY_STYLE = { background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', color: '#FFFFFF', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)' } as const;
+const CTA_PRIMARY_STYLE = { background: 'linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%)', color: '#FFFFFF', boxShadow: '0 4px 15px rgba(34, 211, 238, 0.3)' } as const;
 const CTA_SECONDARY_STYLE = { background: 'rgba(255, 255, 255, 0.05)', color: '#FAFAFA', border: '1px solid rgba(255, 255, 255, 0.1)' } as const;
-const ACCENT_COLOR = '#10B981';
+const ACCENT_COLOR = '#22D3EE';
 
 export function CareerApplicationPage() {
   const [searchParams] = useSearchParams();

@@ -121,7 +121,7 @@ export function HomePage() {
                   style={{
                     background: 'rgba(17, 24, 39, 0.4)',
                     backdropFilter: 'blur(12px)',
-                    borderColor: 'rgba(16, 185, 129, 0.2)'
+                    borderColor: 'rgba(34, 211, 238, 0.2)'
                   }}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -143,7 +143,7 @@ export function HomePage() {
                   transition={{ delay: 0.3 }}
                 >
                   Powering High-Performance AI with <span style={{
-                    background: `linear-gradient(135deg, ${Theme.ACCENT_COLOR} 0%, ${homePageData.VIOLET_COLOR} 50%, #06B6D4 100%)`,
+                    background: `linear-gradient(135deg, ${Theme.ACCENT_COLOR} 0%, ${Theme.ACCENT_HOVER} 50%, ${Theme.ACCENT_COLOR} 100%)`,
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -173,7 +173,7 @@ export function HomePage() {
                 >
                   <Link
                     to="/contact/"
-                    className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)]"
+                    className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
                     style={homePageData.CTA_GRADIENT_STYLE}
                   >
                     Start Your AI Transformation
@@ -182,7 +182,7 @@ export function HomePage() {
                     href="https://calendly.com/jaydave-jashom/new-meeting"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(16,185,129,0.4)] hover:-translate-y-px"
+                    className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
                     style={{
                       background: 'rgba(255, 255, 255, 0.04)',
                       borderColor: 'rgba(255, 255, 255, 0.12)',
@@ -203,7 +203,7 @@ export function HomePage() {
           <section
             className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
             style={{
-              background: 'radial-gradient(ellipse at top, rgba(16, 185, 129, 0.15) 0%, rgba(11, 15, 20, 0.95) 50%, #0B0F14 100%)',
+              background: 'radial-gradient(ellipse at top, rgba(34, 211, 238, 0.15) 0%, rgba(11, 15, 20, 0.95) 50%, #0B0F14 100%)',
               position: 'relative'
             }}
           >
@@ -234,7 +234,7 @@ export function HomePage() {
               >
                 {homePageData.whatWeDoData.map((item) => {
                   const isEmerald = item.colorKey === 'emerald';
-                  const rgb = isEmerald ? '16, 185, 129' : '124, 58, 237';
+                  const rgb = isEmerald ? '34, 211, 238' : '124, 58, 237';
                   const color = isEmerald ? Theme.ACCENT_COLOR : homePageData.VIOLET_COLOR;
                   return (
                     <motion.div
@@ -288,7 +288,7 @@ export function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-6xl mx-auto">
                 {homePageData.servicesProvideData.map((item, i) => {
                   const isEmerald = item.colorKey === 'emerald';
-                  const rgb = isEmerald ? '16, 185, 129' : '124, 58, 237';
+                  const rgb = isEmerald ? '34, 211, 238' : '124, 58, 237';
                   const color = isEmerald ? Theme.ACCENT_COLOR : homePageData.VIOLET_COLOR;
                   const Icon = item.Icon;
                   return (
@@ -688,7 +688,7 @@ export function HomePage() {
                       key={item.title}
                       variants={Theme.STAGGER_ITEM}
                       whileHover={{ y: -10, scale: 1.02 }}
-                      className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_8px_32px_rgba(16,185,129,0.15)]"
+                      className="group relative rounded-2xl p-8 border cursor-pointer overflow-hidden transition-all duration-300 hover:border-[rgba(34,211,238,0.4)] hover:shadow-[0_8px_32px_rgba(34,211,238,0.15)]"
                       style={homePageData.BENEFIT_CARD_STYLE}
                     >
                       <div className="relative z-10">
@@ -712,7 +712,7 @@ export function HomePage() {
               >
                 <Link
                   to="/contact/"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)]"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
                   style={homePageData.CTA_GRADIENT_STYLE}
                 >
                   <span>Start Your AI Transformation</span>
@@ -864,7 +864,7 @@ export function HomePage() {
 
                           {/* Hover Overlay */}
                           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
-                            background: 'linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%)'
+                            background: 'linear-gradient(180deg, rgba(34, 211, 238, 0.05) 0%, rgba(34, 211, 238, 0.02) 100%)'
                           }} />
                         </div>
                       </Link>
@@ -887,7 +887,7 @@ export function HomePage() {
               >
                 <Link
                   to="/blogs/"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-240 hover:bg-[rgba(16,185,129,0.18)] hover:border-[rgba(16,185,129,0.5)] hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-240 hover:bg-[rgba(34,211,238,0.18)] hover:border-[rgba(34,211,238,0.5)] hover:-translate-y-0.5"
                   style={homePageData.VIEW_ALL_BTN_STYLE}
                 >
                   <span>View All</span>

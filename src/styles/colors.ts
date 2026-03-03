@@ -5,11 +5,11 @@
  */
 
 export const colors = {
-  // Primary Brand Colors - "Neural Fusion"
-  primary: '#10B981',        // Electric Emerald - GPU/Performance (NVIDIA-inspired)
-  primaryHover: '#059669',   // Darker emerald for hover states
+  // Primary Brand Colors - Light Cyan theme
+  primary: '#22D3EE',        // Light Cyan - Primary
+  primaryHover: '#06B6D4',   // Darker cyan for hover states
   secondary: '#7C3AED',      // Deep Violet - AI Innovation
-  tertiary: '#06B6D4',       // Cyber Cyan - Technology
+  tertiary: '#06B6D4',       // Cyber Cyan (matches hover)
   
   // Background Colors
   bgPrimary: '#0B0F14',      // Deep navy/black - Main background
@@ -30,25 +30,25 @@ export const colors = {
   // Border Colors
   borderSubtle: 'rgba(255, 255, 255, 0.08)',
   borderDefault: 'rgba(255, 255, 255, 0.1)',
-  borderActive: 'rgba(16, 185, 129, 0.3)',      // Green active border
-  borderGlow: 'rgba(16, 185, 129, 0.5)',        // Green glow border
+  borderActive: 'rgba(34, 211, 238, 0.3)',      // Cyan active border
+  borderGlow: 'rgba(34, 211, 238, 0.5)',        // Cyan glow border
   
   // State Colors
-  success: '#10B981',        // Emerald-500 (matches primary)
+  success: '#22D3EE',        // Light Cyan (matches primary)
   warning: '#F59E0B',        // Amber-500
   error: '#EF4444',          // Red-500
   info: '#06B6D4',           // Cyan-500 (matches tertiary)
   
   // Gradient Colors
-  gradientStart: '#10B981',  // Electric Emerald
+  gradientStart: '#22D3EE',  // Light Cyan
   gradientMid: '#7C3AED',    // Deep Violet
-  gradientEnd: '#06B6D4',    // Cyber Cyan
+  gradientEnd: '#06B6D4',    // Cyan hover
   
   // Shadow & Glow
-  shadowPrimary: '0 4px 14px 0 rgba(16, 185, 129, 0.4)',
-  shadowCard: '0 8px 32px rgba(16, 185, 129, 0.15)',
-  glowPrimary: '0 0 40px rgba(16, 185, 129, 0.6)',
-  glowSubtle: '0 0 20px rgba(16, 185, 129, 0.3)',
+  shadowPrimary: '0 4px 14px 0 rgba(34, 211, 238, 0.4)',
+  shadowCard: '0 8px 32px rgba(34, 211, 238, 0.15)',
+  glowPrimary: '0 0 40px rgba(34, 211, 238, 0.6)',
+  glowSubtle: '0 0 20px rgba(34, 211, 238, 0.3)',
   glowPurple: '0 0 40px rgba(124, 58, 237, 0.4)',
   glowCyan: '0 0 40px rgba(6, 182, 212, 0.4)',
 } as const;
@@ -69,7 +69,7 @@ export const gradients = {
   card: `linear-gradient(135deg, ${colors.secondary}, ${colors.primary})`,             // Purple → Green
   primaryVertical: `linear-gradient(180deg, ${colors.primary}, ${colors.tertiary})`,
   background: `linear-gradient(180deg, ${colors.bgPrimary} 0%, ${colors.bgSecondary} 100%)`,
-  cardSubtle: `linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)`,
+  cardSubtle: `linear-gradient(135deg, rgba(34, 211, 238, 0.08) 0%, rgba(34, 211, 238, 0.03) 100%)`,
 } as const;
 
 export default colors;

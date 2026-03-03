@@ -373,7 +373,7 @@ export function ServicePageLayout({ data, variant }: Readonly<Props>) {
                     </div>
                     <h4 className="text-lg font-semibold mb-3" style={{ color: Theme.TEXT_FAFAFA }}>{card.title}</h4>
                     {card.href ? (
-                      <a href={card.href} className="text-sm inline-block hover:text-[#059669] transition-colors" style={{ color: Theme.ACCENT_COLOR }}>{card.content}</a>
+                      <a href={card.href} className="text-sm inline-block hover:text-[#06B6D4] transition-colors" style={{ color: Theme.ACCENT_COLOR }}>{card.content}</a>
                     ) : (
                       <p className="text-sm leading-relaxed" style={{ color: Theme.TEXT_MUTED, whiteSpace: 'pre-line' }}>{card.content}</p>
                     )}

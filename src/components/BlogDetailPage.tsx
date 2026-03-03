@@ -79,7 +79,7 @@ export function BlogDetailPage() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: '#0B0F14' }}>
         <div className="text-center" style={{ color: '#9CA3AF' }}>
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-2 border-[#10B981] border-t-transparent mb-4" />
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-2 border-[#22D3EE] border-t-transparent mb-4" />
           <p>Loading…</p>
         </div>
       </div>
@@ -132,9 +132,9 @@ export function BlogDetailPage() {
             <span
               className="inline-block px-4 py-2 rounded-full text-sm font-semibold"
               style={{
-                background: 'rgba(16, 185, 129, 0.1)',
-                color: '#10B981',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
+                background: 'rgba(34, 211, 238, 0.1)',
+                color: '#22D3EE',
+                border: '1px solid rgba(34, 211, 238, 0.3)',
               }}
             >
               Blog
@@ -316,8 +316,8 @@ export function BlogDetailPage() {
             transition={{ duration: 0.6 }}
             className="rounded-2xl p-12 text-center border"
             style={{
-              background: 'rgba(16, 185, 129, 0.05)',
-              borderColor: 'rgba(16, 185, 129, 0.2)',
+              background: 'rgba(34, 211, 238, 0.05)',
+              borderColor: 'rgba(34, 211, 238, 0.2)',
             }}
           >
             <h2 className="text-3xl font-bold mb-4" style={{ color: '#FFFFFF' }}>
@@ -330,7 +330,7 @@ export function BlogDetailPage() {
               to="/contact/"
               className="inline-block px-8 py-4 rounded-xl font-semibold text-lg transition-all"
               style={{
-                background: 'linear-gradient(135deg, #10B981 0%, #10B981 100%)',
+                background: 'linear-gradient(135deg, #22D3EE 0%, #22D3EE 100%)',
                 color: '#000000',
               }}
             >
@@ -374,7 +374,7 @@ export function BlogDetailPage() {
           letter-spacing: 0.06em;
           margin: 0 0 1rem 0;
           padding-bottom: 0.65rem;
-          border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+          border-bottom: 1px solid rgba(34, 211, 238, 0.25);
         }
         .blog-toc { display: flex; flex-direction: column; gap: 0.25rem; }
         .blog-toc-item {
@@ -391,17 +391,17 @@ export function BlogDetailPage() {
           transition: background 0.2s, color 0.2s;
           border-left: 3px solid transparent;
         }
-        .blog-toc-item:hover { background: rgba(16, 185, 129, 0.08); color: #D1D5DB; }
-        .blog-toc-item--active { background: rgba(16, 185, 129, 0.12); color: #10B981; border-left-color: #10B981; }
+        .blog-toc-item:hover { background: rgba(34, 211, 238, 0.08); color: #D1D5DB; }
+        .blog-toc-item--active { background: rgba(34, 211, 238, 0.12); color: #22D3EE; border-left-color: #22D3EE; }
 
         .blog-author-card { display: flex; align-items: center; gap: 0.75rem; }
         .blog-author-avatar {
           width: 44px; height: 44px;
           border-radius: 50%;
-          background: rgba(16, 185, 129, 0.2);
+          background: rgba(34, 211, 238, 0.2);
           display: flex; align-items: center; justify-content: center;
         }
-        .blog-author-icon { width: 22px; height: 22px; color: #10B981; }
+        .blog-author-icon { width: 22px; height: 22px; color: #22D3EE; }
         .blog-author-name { color: #E5E7EB; font-weight: 500; font-size: 0.9375rem; }
 
         .blog-share-buttons { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -417,7 +417,7 @@ export function BlogDetailPage() {
           cursor: pointer;
           transition: background 0.2s, color 0.2s;
         }
-        .blog-share-btn:hover { background: rgba(16, 185, 129, 0.15); color: #10B981; }
+        .blog-share-btn:hover { background: rgba(34, 211, 238, 0.15); color: #22D3EE; }
         .blog-share-icon { width: 16px; height: 16px; flex-shrink: 0; }
 
         .blog-related-list { list-style: none; margin: 0; padding: 0; }
@@ -431,26 +431,26 @@ export function BlogDetailPage() {
           font-size: 0.9375rem;
           transition: background 0.2s, color 0.2s;
         }
-        .blog-related-link:hover { background: rgba(16, 185, 129, 0.08); color: #10B981; }
+        .blog-related-link:hover { background: rgba(34, 211, 238, 0.08); color: #22D3EE; }
         .blog-related-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .blog-related-arrow { width: 16px; height: 16px; flex-shrink: 0; color: #10B981; }
+        .blog-related-arrow { width: 16px; height: 16px; flex-shrink: 0; color: #22D3EE; }
         .blog-sidebar-all {
           display: inline-block; margin-top: 0.75rem;
-          font-size: 0.875rem; color: #10B981; text-decoration: none;
+          font-size: 0.875rem; color: #22D3EE; text-decoration: none;
           font-weight: 500;
         }
         .blog-sidebar-all:hover { text-decoration: underline; }
 
         .blog-sidebar-cta {
-          background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.06) 100%);
-          border-color: rgba(16, 185, 129, 0.3);
+          background: linear-gradient(135deg, rgba(34, 211, 238, 0.12) 0%, rgba(34, 211, 238, 0.06) 100%);
+          border-color: rgba(34, 211, 238, 0.3);
         }
         .blog-sidebar-cta-text { color: #D1D5DB; font-size: 0.9375rem; margin: 0 0 0.75rem 0; line-height: 1.5; }
         .blog-sidebar-cta-btn {
           display: inline-block;
           padding: 0.5rem 1rem;
           border-radius: 8px;
-          background: #10B981;
+          background: #22D3EE;
           color: #000;
           font-size: 0.875rem; font-weight: 600;
           text-decoration: none;
@@ -469,11 +469,11 @@ export function BlogDetailPage() {
           aspect-ratio: 1 / 1;
           object-fit: cover;
           border-radius: 16px;
-          box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+          box-shadow: 0 4px 20px rgba(34, 211, 238, 0.2);
         }
         @media (min-width: 900px) { .blog-detail-img { max-width: 1200px; } }
         @media (min-width: 1200px) { .blog-detail-img { max-width: 1400px; } }
-        .blog-section-content h2 { color: #FFFFFF; font-size: 2.25rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; padding-left: 20px; border-left: 4px solid #10B981; }
+        .blog-section-content h2 { color: #FFFFFF; font-size: 2.25rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; padding-left: 20px; border-left: 4px solid #22D3EE; }
         .blog-section-content h3 { color: #FFFFFF; font-size: 1.75rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
         .blog-section-content p { color: #D1D5DB; line-height: 1.8; margin-bottom: 1.25rem; font-size: 1.0625rem; }
         .blog-section-content ul { list-style-type: disc; padding-left: 2rem; margin-bottom: 1.25rem; }
@@ -506,7 +506,7 @@ function BlogSection({
   return (
     <div id={id} className="mb-16">
       {index > 0 && (
-        <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, rgba(16, 185, 129, 0.3), transparent)', margin: '60px 0 40px' }} />
+        <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, rgba(34, 211, 238, 0.3), transparent)', margin: '60px 0 40px' }} />
       )}
       {section.title && (
         <h2
@@ -516,7 +516,7 @@ function BlogSection({
             fontWeight: 700,
             marginBottom: '24px',
             paddingLeft: '20px',
-            borderLeft: '4px solid #10B981',
+            borderLeft: '4px solid #22D3EE',
           }}
         >
           {section.title}

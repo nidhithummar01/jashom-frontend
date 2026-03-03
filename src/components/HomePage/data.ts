@@ -15,33 +15,33 @@ export const homePageData = {
     background: GRADIENT_EMERALD_CYAN,
     borderColor: 'transparent',
     color: TEXT_WHITE,
-    boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)',
+    boxShadow: '0 8px 32px rgba(34, 211, 238, 0.4)',
   } as const,
 
   BENEFIT_CARD_STYLE: {
-    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%)',
-    borderColor: 'rgba(16, 185, 129, 0.2)',
+    background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.08) 0%, rgba(34, 211, 238, 0.03) 100%)',
+    borderColor: 'rgba(34, 211, 238, 0.2)',
     backdropFilter: 'blur(8px)',
   } as const,
 
   BENEFIT_ICON_BOX: {
-    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%)',
-    border: '1px solid rgba(16, 185, 129, 0.3)',
+    background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.2) 0%, rgba(34, 211, 238, 0.1) 100%)',
+    border: '1px solid rgba(34, 211, 238, 0.3)',
   } as const,
 
   BLOG_CARD_BG: '#111827' as const,
   BLOG_CARD_BORDER: '1px solid rgba(255, 255, 255, 0.08)' as const,
 
   BLOG_BADGE_STYLE: {
-    background: 'rgba(16, 185, 129, 0.15)',
+    background: 'rgba(34, 211, 238, 0.15)',
     color: ACCENT_COLOR,
-    border: '1px solid rgba(16, 185, 129, 0.3)',
+    border: '1px solid rgba(34, 211, 238, 0.3)',
     backdropFilter: 'blur(8px)',
   } as const,
 
   VIEW_ALL_BTN_STYLE: {
-    background: 'rgba(16, 185, 129, 0.12)',
-    border: '1px solid rgba(16, 185, 129, 0.35)',
+    background: 'rgba(34, 211, 238, 0.12)',
+    border: '1px solid rgba(34, 211, 238, 0.35)',
     color: TEXT_FAFAFA,
   } as const,
 
@@ -70,12 +70,12 @@ export const homePageData = {
 
   whatWeDoData: [
     { title: 'GPU Optimization', description: 'We provide dedicated GPU Optimization Services aimed at the maximum use of the compute efficiency. Our model will guarantee optimization in the use of hardware, the reduction of operational expenses, and coherent high-performance scale.', colorKey: 'emerald' as const },
-    { title: 'CUDA Development', description: 'Our CUDA Development Services assist companies in developing high-performance parallel applications to suit their workloads with high demand. Our built-in kernel development-based team of CUDA Developers provides your apps with complete utilization of NVIDIA architecture.', colorKey: 'violet' as const },
+    { title: 'CUDA Development', description: 'Our CUDA Development Services assist companies in developing high-performance parallel applications to suit their workloads with high demand. Our built-in kernel development-based team of CUDA Developers provides your apps with complete utilization of NVIDIA architecture.', colorKey: 'emerald' as const },
   ] as const,
 
   servicesProvideData: [
     { title: 'GPU Optimization Service', description: 'We optimize AI and compute workloads with the help of advanced GPU optimization, performance, efficiency, and hardware usage.', href: '/gpu-optimization-service/', Icon: Cpu, colorKey: 'emerald' as const, buttonStyle: { background: ACCENT_COLOR, color: TEXT_WHITE } },
-    { title: 'CUDA Development Service', description: 'Hire skilled CUDA developers to create and optimize parallel advanced applications that meet your requirements.', href: '/cuda-development-service/', Icon: Zap, colorKey: 'violet' as const, buttonStyle: { background: 'linear-gradient(135deg, #7C3AED, #06B6D4)', color: TEXT_WHITE } },
+    { title: 'CUDA Development Service', description: 'Hire skilled CUDA developers to create and optimize parallel advanced applications that meet your requirements.', href: '/cuda-development-service/', Icon: Zap, colorKey: 'emerald' as const, buttonStyle: { background: 'linear-gradient(135deg, #22D3EE, #06B6D4)', color: TEXT_WHITE } },
   ] as const,
 
   trustedLogosData: [
@@ -95,7 +95,7 @@ export const homePageData = {
   testimonialsData: [
     { quote: `"Jashom's GPU optimization reduced our inference latency by 73%. The team's expertise in CUDA programming is unmatched."`, initials: 'DC', name: 'David Chen', role: 'VP Engineering, Apex AI', avatarGradient: GRADIENT_EMERALD_CYAN },
     { quote: `"The AI automation solutions delivered by Jashom transformed our workflow. We achieved 5x faster processing with their custom ML pipeline."`, initials: 'MR', name: 'Maria Rodriguez', role: 'CTO, DataFlow Systems', avatarGradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)' },
-    { quote: `"Outstanding DevSecOps implementation. Jashom's team integrated security seamlessly into our CI/CD pipeline without compromising speed."`, initials: 'EW', name: 'Emily Watson', role: 'Head of Security, TechCorp', avatarGradient: 'linear-gradient(135deg, #10B981, #34D399)' },
+    { quote: `"Outstanding DevSecOps implementation. Jashom's team integrated security seamlessly into our CI/CD pipeline without compromising speed."`, initials: 'EW', name: 'Emily Watson', role: 'Head of Security, TechCorp', avatarGradient: 'linear-gradient(135deg, #22D3EE, #34D399)' },
   ] as const,
 
   benefitsData: [

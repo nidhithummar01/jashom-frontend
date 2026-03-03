@@ -7,7 +7,7 @@ import { SEO as Seo } from './SEO';
 const SECTION_BG = '#0B0F14';
 const BORDER_WHITE_10 = 'rgba(255, 255, 255, 0.1)';
 const STAT_ICON_BOX = 'w-14 h-14 rounded flex items-center justify-center flex-shrink-0';
-const STAT_ICON_BG = { background: '#10B981' };
+const STAT_ICON_BG = { background: '#22D3EE' };
 const DIVIDER_CLASS = 'hidden sm:block w-px h-16';
 const DIVIDER_STYLE = { background: '#555555' };
 
@@ -35,8 +35,8 @@ const hireStepsData = [
 
 const EXPERTISE_ICON_BG = '#E3F2FD';
 const EXPERTISE_ICON_COLOR = '#2196F3';
-const STEP_CIRCLE_STYLE = { background: 'radial-gradient(circle, rgba(33, 150, 243, 0.2) 0%, rgba(33, 150, 243, 0.05) 70%)', border: '3px solid rgba(33, 150, 243, 0.3)' };
-const STEP_NUM_BG = { background: '#2196F3' };
+const STEP_CIRCLE_STYLE = { background: 'radial-gradient(circle, rgba(34, 211, 238, 0.2) 0%, rgba(34, 211, 238, 0.05) 70%)', border: '3px solid rgba(34, 211, 238, 0.3)' };
+const STEP_NUM_BG = { background: '#22D3EE' };
 
 const whyHireCardsData: { title: string; description: string; src: string; alt: string; imageStyle?: React.CSSProperties }[] = [
   { title: 'High-Quality Engineering Standards', description: 'Our developers observe the best practices of coding and performance to provide stable and maintainable solutions for the GPU.', src: '/images/cuda-quality-code.jpg.jpg', alt: 'Quality Code' },
@@ -66,19 +66,19 @@ const whyChooseBenefitsData: { title: string; description: string; pathD?: strin
   { title: 'Performance-Oriented Cost Strategy', description: 'We maximize compute usage and assigning GPU resources to minimize infrastructure wastage and maximize investment.', pathD: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' },
 ];
 
-const BENEFIT_CARD_STYLE = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)' };
-const BENEFIT_ICON_BOX_STYLE = { background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)' };
-const BADGE_FAQ = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.2)' } as const;
-const FAQ_ITEM_STYLE = { background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.3)' } as const;
+const BENEFIT_CARD_STYLE = { background: 'rgba(34, 211, 238, 0.05)', borderColor: 'rgba(34, 211, 238, 0.3)' };
+const BENEFIT_ICON_BOX_STYLE = { background: 'rgba(34, 211, 238, 0.1)', border: '1px solid rgba(34, 211, 238, 0.3)' };
+const BADGE_FAQ = { background: 'rgba(34, 211, 238, 0.05)', borderColor: 'rgba(34, 211, 238, 0.2)' } as const;
+const FAQ_ITEM_STYLE = { background: 'rgba(34, 211, 238, 0.05)', borderColor: 'rgba(34, 211, 238, 0.3)' } as const;
 const CHEVRON_DOWN_D = 'M19 9l-7 7-7-7';
-const REVIEW_CARD_STYLE = { background: '#FFFFFF', borderColor: 'rgba(16, 185, 129, 0.2)' } as const;
+const REVIEW_CARD_STYLE = { background: '#FFFFFF', borderColor: 'rgba(34, 211, 238, 0.2)' } as const;
 const STAR_PATH_D = 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z';
 const VERIFIED_BADGE_STYLE = { background: '#E8F5E9' } as const;
 const VERIFIED_TEXT_STYLE = { color: '#2E7D32' } as const;
-const ENGAGEMENT_CARD_BG = 'rgba(16, 185, 129, 0.05)';
+const ENGAGEMENT_CARD_BG = 'rgba(34, 211, 238, 0.05)';
 const RELATED_SERVICE_CARD_STYLE = { background: '#2a2a2a', border: '1px solid #3a3a3a' } as const;
-const RELATED_SERVICE_BTN_STYLE = { background: '#10B981', color: '#FFFFFF' } as const;
-const HIRE_FORM_INPUT_STYLE = { background: '#1F2937', borderColor: 'rgba(16, 185, 129, 0.3)', color: '#FAFAFA' } as const;
+const RELATED_SERVICE_BTN_STYLE = { background: '#22D3EE', color: '#FFFFFF' } as const;
+const HIRE_FORM_INPUT_STYLE = { background: '#1F2937', borderColor: 'rgba(34, 211, 238, 0.3)', color: '#FAFAFA' } as const;
 
 const reviewsData: { quote: string; author: string; filledStars: number }[] = [
   { quote: '"Our GPU workloads were dramatically improved after working with this team. Their CUDA optimization strategy enhanced throughput and reduced system latency beyond expectations."', author: 'CTO, AI Solutions Firm', filledStars: 5 },
@@ -118,7 +118,7 @@ const hireFormFieldsConfig: { name: 'name' | 'email' | 'company' | 'phone' | 'hi
   { name: 'message', label: 'Project Requirements *', type: 'textarea', placeholder: 'Tell us about your project, timeline, and specific CUDA expertise needed...', required: true, rows: 4 },
 ];
 
-const FEATURE_ICON_BOX_STYLE = { background: 'rgba(16, 185, 129, 0.1)' } as const;
+const FEATURE_ICON_BOX_STYLE = { background: 'rgba(34, 211, 238, 0.1)' } as const;
 
 export function HireCudaDeveloperPage() {
   const navigate = useNavigate();
@@ -149,7 +149,7 @@ export function HireCudaDeveloperPage() {
       />
 
       <div className="hire cuda developer">
-        <div className="min-h-screen" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+        <div className="min-h-screen" style={{ background: 'rgba(34, 211, 238, 0.05)' }}>
           {/* Hero Section */}
           <section className="relative px-4 sm:px-6 lg:px-8 overflow-hidden" style={{ minHeight: '600px', paddingTop: '160px', paddingBottom: '100px' }}>
             {/* Background Image with Overlay */}
@@ -216,7 +216,7 @@ export function HireCudaDeveloperPage() {
                           background: '#1F2937',
                           color: '#FAFAFA',
                           borderRadius: '4px',
-                          border: '1px solid rgba(16, 185, 129, 0.2)',
+                          border: '1px solid rgba(34, 211, 238, 0.2)',
                           padding: '0 16px',
                           height: '44px',
                           boxSizing: 'border-box'
@@ -228,10 +228,10 @@ export function HireCudaDeveloperPage() {
                         href="/contact/"
                         className="inline-flex items-center justify-center px-6 rounded-xl font-semibold text-sm leading-snug transition-all duration-300 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] w-full text-center"
                         style={{
-                          background: '#10B981',
+                          background: '#22D3EE',
                           color: '#FFFFFF',
                           textDecoration: 'none',
-                          boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.4)',
+                          boxShadow: '0 4px 14px 0 rgba(34, 211, 238, 0.4)',
                           paddingTop: '12px',
                           paddingBottom: '12px',
                           minHeight: '44px',
@@ -310,8 +310,8 @@ export function HireCudaDeveloperPage() {
                         className="inline-flex items-center justify-center w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border-2 text-center text-sm sm:text-base font-semibold transition-all duration-300 hover:bg-orange-500 hover:text-white cursor-pointer"
                         style={{
                           background: 'transparent',
-                          borderColor: '#10B981',
-                          color: '#10B981'
+                          borderColor: '#22D3EE',
+                          color: '#22D3EE'
                         }}
                       >
                         TALK TO OUR EXPERT
@@ -334,7 +334,7 @@ export function HireCudaDeveloperPage() {
                       alt="Hire CUDA Developers"
                       className="w-full rounded-2xl shadow-2xl"
                       style={{ 
-                        boxShadow: '0 20px 60px rgba(16, 185, 129, 0.3)',
+                        boxShadow: '0 20px 60px rgba(34, 211, 238, 0.3)',
                         aspectRatio: '1 / 1',
                         objectFit: 'cover'
                       }}
@@ -347,7 +347,7 @@ export function HireCudaDeveloperPage() {
           </section>
 
           {/* Our CUDA Engineers Expertise Section */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(34, 211, 238, 0.05)' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Heading */}
               <motion.div
@@ -439,7 +439,7 @@ export function HireCudaDeveloperPage() {
           </section>
 
           {/* Why Hire CUDA Engineers Section - 6 Cards with Images */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(34, 211, 238, 0.05)' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Heading */}
               <motion.div
@@ -499,7 +499,7 @@ export function HireCudaDeveloperPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: '#10B981' }}>
+                <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: '#22D3EE' }}>
                   Flexible Hiring Models
                 </h2>
                 <p className="text-lg max-w-3xl mx-auto" style={{ color: '#9E9E9E' }}>
@@ -582,7 +582,7 @@ export function HireCudaDeveloperPage() {
                   style={{
                     background: 'transparent',
                     color: '#FFFFFF',
-                    border: '2px solid #10B981'
+                    border: '2px solid #22D3EE'
                   }}
                 >
                   Take Charge
@@ -624,11 +624,11 @@ export function HireCudaDeveloperPage() {
                     <div className="relative z-10">
                       <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300" style={BENEFIT_ICON_BOX_STYLE}>
                         {benefit.pathD ? (
-                          <svg className="w-8 h-8" style={{ color: '#10B981' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-8 h-8" style={{ color: '#22D3EE' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={benefit.pathD} />
                           </svg>
                         ) : (
-                          <Zap className="w-8 h-8" style={{ color: '#10B981' }} />
+                          <Zap className="w-8 h-8" style={{ color: '#22D3EE' }} />
                         )}
                       </div>
                       <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>{benefit.title}</h3>
@@ -641,7 +641,7 @@ export function HireCudaDeveloperPage() {
           </section>
 
           {/* Reviews Section - We Are Trusted By Businesses Across the Globe */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(34, 211, 238, 0.05)' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Heading */}
               <motion.div
@@ -676,8 +676,8 @@ export function HireCudaDeveloperPage() {
                       <svg
                         key={star}
                         className="w-6 h-6"
-                        fill={star <= 4 ? '#10B981' : 'none'}
-                        stroke={star === 5 ? '#10B981' : 'none'}
+                        fill={star <= 4 ? '#22D3EE' : 'none'}
+                        stroke={star === 5 ? '#22D3EE' : 'none'}
                         viewBox="0 0 24 24"
                       >
                         <path
@@ -693,7 +693,7 @@ export function HireCudaDeveloperPage() {
                 </div>
                 <div className="h-8 w-px" style={{ background: '#e0e0e0' }}></div>
                 <div className="text-sm" style={{ color: '#9E9E9E' }}>
-                  Powered by <span className="font-bold" style={{ color: '#10B981' }}>Clutch</span>
+                  Powered by <span className="font-bold" style={{ color: '#22D3EE' }}>Clutch</span>
                 </div>
               </motion.div>
 
@@ -711,7 +711,7 @@ export function HireCudaDeveloperPage() {
                   >
                     <div className="flex items-center gap-1 mb-4">
                       {[1, 2, 3, 4, 5].map((star) => (
-                        <svg key={star} className="w-5 h-5" fill={star <= review.filledStars ? '#10B981' : 'none'} stroke={star > review.filledStars ? '#10B981' : 'none'} strokeWidth={2} viewBox="0 0 24 24">
+                        <svg key={star} className="w-5 h-5" fill={star <= review.filledStars ? '#22D3EE' : 'none'} stroke={star > review.filledStars ? '#22D3EE' : 'none'} strokeWidth={2} viewBox="0 0 24 24">
                           <path d={STAR_PATH_D} />
                         </svg>
                       ))}
@@ -733,7 +733,7 @@ export function HireCudaDeveloperPage() {
             </div>
           </section>
           {/* Related Services Section */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(34, 211, 238, 0.05)' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Header */}
               <motion.div
@@ -742,7 +742,7 @@ export function HireCudaDeveloperPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: '#10B981' }}>
+                <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: '#22D3EE' }}>
                   Explore Related GPU Services
                 </h2>
                 <p className="text-lg text-center mx-auto" style={{ color: '#B0B0B0' }}>
@@ -791,7 +791,7 @@ export function HireCudaDeveloperPage() {
                   className="inline-block mb-4 px-4 py-2 rounded-full border"
                   style={BADGE_FAQ}
                 >
-                  <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem' }}>FAQs</span>
+                  <span style={{ color: '#22D3EE', fontWeight: 600, fontSize: '0.875rem' }}>FAQs</span>
                 </motion.div>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style={{ color: '#FAFAFA', letterSpacing: '-0.025em', lineHeight: 1.2 }}>
                   Frequently Asked Questions
@@ -831,7 +831,7 @@ export function HireCudaDeveloperPage() {
           </section>
 
           {/* Contact Form Section */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(34, 211, 238, 0.05)' }}>
             <div className="max-w-5xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
@@ -854,7 +854,7 @@ export function HireCudaDeveloperPage() {
                     {getStartedFeaturesData.map((feature) => (
                       <div key={feature.title} className="flex flex-col items-center text-center gap-3">
                         <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style={FEATURE_ICON_BOX_STYLE}>
-                          <svg className="w-6 h-6 text-[#10B981]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-6 h-6 text-[#22D3EE]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={feature.pathD} />
                           </svg>
                         </div>
@@ -876,7 +876,7 @@ export function HireCudaDeveloperPage() {
                   className="rounded-2xl p-8 border"
                   style={{
                     background: '#111827',
-                    borderColor: 'rgba(16, 185, 129, 0.3)'
+                    borderColor: 'rgba(34, 211, 238, 0.3)'
                   }}
                 >
                   <form onSubmit={handleSubmit}>
@@ -998,18 +998,18 @@ export function HireCudaDeveloperPage() {
                       type="submit"
                       className="w-full px-8 py-4 rounded-lg font-semibold transition-all duration-300"
                       style={{
-                        background: 'linear-gradient(135deg, #10B981, #06B6D4)',
+                        background: 'linear-gradient(135deg, #22D3EE, #06B6D4)',
                         color: '#FFFFFF',
-                        boxShadow: '0 8px 24px rgba(16, 185, 129, 0.4)'
+                        boxShadow: '0 8px 24px rgba(34, 211, 238, 0.4)'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'linear-gradient(135deg, #059669, #0891B2)';
-                        e.currentTarget.style.boxShadow = '0 12px 32px rgba(16, 185, 129, 0.6)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #06B6D4, #06B6D4)';
+                        e.currentTarget.style.boxShadow = '0 12px 32px rgba(34, 211, 238, 0.6)';
                         e.currentTarget.style.transform = 'translateY(-2px)';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'linear-gradient(135deg, #10B981, #06B6D4)';
-                        e.currentTarget.style.boxShadow = '0 8px 24px rgba(16, 185, 129, 0.4)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #22D3EE, #06B6D4)';
+                        e.currentTarget.style.boxShadow = '0 8px 24px rgba(34, 211, 238, 0.4)';
                         e.currentTarget.style.transform = 'translateY(0)';
                       }}
                     >

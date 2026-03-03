@@ -68,7 +68,7 @@ const CUDA_PROCESS: readonly ProcessStep[] = [
 ];
 
 const CUDA_BENEFITS: readonly BenefitItem[] = [
-  { title: 'Accelerated\nComputational\nPerformance', description: 'CUDA allows parallel computation of thousands of Cores on the GPU, which saves a lot of processing time when dealing with complex workloads, like AI training, simulations, and applications of large data analytics.', borderColor: 'rgba(16, 185, 129, 0.35)' },
+  { title: 'Accelerated\nComputational\nPerformance', description: 'CUDA allows parallel computation of thousands of Cores on the GPU, which saves a lot of processing time when dealing with complex workloads, like AI training, simulations, and applications of large data analytics.', borderColor: 'rgba(34, 211, 238, 0.35)' },
   { title: 'Improved\nInfrastructure\nEfficiency', description: 'By moving more intensive workloads off of CPU and onto the GPUs, the organizations are able to handle larger data volumes with reduced hardware resources to enhance performance-per-watt and infrastructure ROI.', borderColor: 'rgba(6, 182, 212, 0.35)' },
   { title: 'Enhanced\nCompetitive\nPositioning', description: 'A rapid computational speed can be more useful in fast experimentation, real-time analysis, and sophisticated modeling, which will enable companies to innovate faster and have a high level of technological superiority in their industry.', borderColor: 'rgba(139, 92, 246, 0.35)' },
   { title: 'Scalable\nHigh-Performance\nArchitecture', description: 'The architecture of CUDA-based systems is built so that it can be used in both multi-GPU architectures and high-performance clusters, both in terms of throughput and reliability, as data requirements and computing complexity rise.', borderColor: 'rgba(236, 72, 153, 0.35)' },
@@ -85,7 +85,7 @@ const CUDA_WHY: readonly WhyChooseItem[] = [
 const CUDA_TESTIMONIALS: readonly TestimonialItem[] = [
   { quote: '"GPU acceleration significantly enhanced our data processing framework, reducing execution cycles under high-load scenarios."', initials: 'DE', role: 'Director of Engineering', company: 'AI Platform', avatarGradient: GRADIENT_EMERALD_CYAN },
   { quote: '"Our migration to CUDA-based execution improved analytical throughput without expanding infrastructure costs."', initials: 'CT', role: 'Chief Technology Officer', company: 'Technology Company', avatarGradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)' },
-  { quote: '"The architectural redesign delivered predictable performance scaling across multiple GPU nodes."', initials: 'HS', role: 'Head of Systems Engineering', company: 'Engineering Company', avatarGradient: 'linear-gradient(135deg, #10B981, #34D399)' },
+  { quote: '"The architectural redesign delivered predictable performance scaling across multiple GPU nodes."', initials: 'HS', role: 'Head of Systems Engineering', company: 'Engineering Company', avatarGradient: 'linear-gradient(135deg, #22D3EE, #34D399)' },
 ];
 
 const CUDA_FAQ: readonly FaqItem[] = [
@@ -115,7 +115,7 @@ const GPU_PROCESS: readonly ProcessStep[] = [
 ];
 
 const GPU_BENEFITS: readonly BenefitItem[] = [
-  { title: 'Faster\nProcessing\nSpeed', description: 'Fasten hardened compute tasks with an ideal use of parallelization and data movement. With decreased processing time, there will be shorter experimentation times and shorter delivery times.', borderColor: 'rgba(16, 185, 129, 0.35)' },
+  { title: 'Faster\nProcessing\nSpeed', description: 'Fasten hardened compute tasks with an ideal use of parallelization and data movement. With decreased processing time, there will be shorter experimentation times and shorter delivery times.', borderColor: 'rgba(34, 211, 238, 0.35)' },
   { title: 'Lower Costs of\nInfrastructure', description: 'Optimize the use of GPUs in order to reduce costs on clouds and hardware. Harmful efficiency brings a decrease in over-provisioning and enhanced resource allocation.', borderColor: 'rgba(6, 182, 212, 0.35)' },
   { title: 'Improved\nScalability', description: 'Processes more data and intricate programs with no drop in performance or increased proportional cost.', borderColor: 'rgba(139, 92, 246, 0.35)' },
   { title: 'Enhanced\nModel\nPerformance', description: 'Improve the performance of AI models training and inference with optimal CUDA execution paths.', borderColor: 'rgba(236, 72, 153, 0.35)' },

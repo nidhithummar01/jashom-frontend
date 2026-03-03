@@ -7,8 +7,8 @@
 @layer base {
   :root {
     /* Jashom "Neural Fusion" Brand Colors */
-    --color-primary: #10B981;           /* Electric Emerald - GPU/Performance */
-    --color-primary-hover: #059669;     /* Darker emerald */
+    --color-primary: #22D3EE;           /* Light Cyan - Primary */
+    --color-primary-hover: #06B6D4;     /* Cyan hover */
     --color-secondary: #7C3AED;         /* Deep Violet - AI Innovation */
     --color-tertiary: #06B6D4;          /* Cyber Cyan - Technology */
     
@@ -25,8 +25,8 @@
     /* Border Colors */
     --color-border-subtle: rgba(255, 255, 255, 0.08);
     --color-border-default: rgba(255, 255, 255, 0.1);
-    --color-border-active: rgba(16, 185, 129, 0.3);
-    --color-border-glow: rgba(16, 185, 129, 0.5);
+    --color-border-active: rgba(34, 211, 238, 0.3);
+    --color-border-glow: rgba(34, 211, 238, 0.5);
     
     /* Legacy Shadcn Variables */
     --background: 210 20% 5%;
@@ -147,13 +147,13 @@
   }
 
   .neon-glow {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.25);
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.12);
+    border: 1px solid rgba(34, 211, 238, 0.25);
   }
 
   .neon-glow-hover:hover {
-    box-shadow: 0 0 28px rgba(16, 185, 129, 0.2), 0 8px 32px rgba(0, 0, 0, 0.3);
-    border-color: rgba(16, 185, 129, 0.4);
+    box-shadow: 0 0 28px rgba(34, 211, 238, 0.2), 0 8px 32px rgba(0, 0, 0, 0.3);
+    border-color: rgba(34, 211, 238, 0.4);
     background: rgba(30, 41, 59, 0.8);
   }
 
@@ -165,7 +165,7 @@
   }
 
   .border-gradient {
-    border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(16, 185, 129, 0.25) 100%) 1;
+    border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(34, 211, 238, 0.25) 100%) 1;
   }
 
   .hide-scrollbar {
@@ -195,8 +195,8 @@
   height: 1px;
   width: 80%;
   margin: 80px auto;
-  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.25), transparent);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.25), transparent);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);
   pointer-events: none;
 }
 
@@ -212,8 +212,8 @@
   height: 1px;
   width: 100%;
   margin: 80px 0;
-  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.25), transparent);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.25), transparent);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);
   pointer-events: none;
 }
 
@@ -221,7 +221,7 @@
   height: 1px;
   width: 80%;
   margin: 60px auto;
-  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.25), transparent);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.25), transparent);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);
   pointer-events: none;
 }

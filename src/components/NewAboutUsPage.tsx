@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
-import { 
+import {
   Mail,
   Phone
 } from 'lucide-react';
@@ -52,10 +52,10 @@ export function NewAboutUsPage() {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     // Navigate to thank you page
     navigate('/thank-you/');
   };
@@ -140,13 +140,13 @@ export function NewAboutUsPage() {
         </section>
 
         {/* About Section - aligned with hero */}
-        <section 
-          className="py-16 sm:py-20 lg:py-24"
+        <section
+          className="pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-32 lg:pb-24 mb-20"
           style={{
             background: 'linear-gradient(180deg, #0B0F14 0%, #0F1419 100%)'
           }}
         >
-          <div className="about-page-container">
+          <div className="about-page-container mb-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 lg:gap-16 items-center">
               {/* Left Side - Title and Content */}
               <motion.div
@@ -157,20 +157,20 @@ export function NewAboutUsPage() {
                 className="space-y-6"
               >
                 <p className="text-sm mb-4" style={{ color: '#9CA3AF' }}>About</p>
-                <h2 
+                <h2
                   className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6"
                   style={{ color: '#FAFAFA' }}
                 >
                   Engineering Parallel Performance for{' '}
-                  <span style={{ color: '#10B981' }}>
+                  <span style={{ color: '#22D3EE' }}>
                     Modern
                   </span>
                   {' '}
-                  <span style={{ color: '#10B981' }}>
+                  <span style={{ color: '#22D3EE' }}>
                     Workloads
                   </span>
                 </h2>
-                
+
                 <div className="space-y-4">
                   <p className="text-base leading-relaxed" style={{ color: '#D1D5DB' }}>
                     Our company deals with the design of the GPU architecture and the development of CUDA and optimization of data-intensive applications. We deal with startups, research laboratories, and businesses that require the efficiency of an extra level of computation beyond the CPU.
@@ -195,25 +195,25 @@ export function NewAboutUsPage() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="relative flex items-center justify-center"
               >
-                <div 
+                <div
                   className="rounded-2xl overflow-hidden w-full max-w-md aspect-square"
                   style={{
-                    border: '1px solid rgba(16, 185, 129, 0.2)',
-                    boxShadow: '0 20px 60px rgba(16, 185, 129, 0.15)'
+                    border: '1px solid rgba(34, 211, 238, 0.2)',
+                    boxShadow: '0 20px 60px rgba(34, 211, 238, 0.15)'
                   }}
                 >
-                  <img 
-                    src="/images/About%20Us/about-us-Software-Solutions.jpg.jpg" 
+                  <img
+                    src="/images/About%20Us/about-us-Software-Solutions.jpg.jpg"
                     alt="Software Solutions"
                     className="w-full h-full object-cover"
                     style={{ objectFit: 'cover' }}
                   />
                 </div>
                 {/* Decorative glow effect */}
-                <div 
+                <div
                   className="absolute -inset-4 -z-10 rounded-2xl opacity-30 blur-2xl max-w-md aspect-square"
                   style={{
-                    background: 'linear-gradient(135deg, #10B981 0%, #06B6D4 100%)'
+                    background: 'linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%)'
                   }}
                 />
               </motion.div>
@@ -222,8 +222,8 @@ export function NewAboutUsPage() {
         </section>
 
         {/* Stats Section - same container alignment */}
-        <section className="py-16 sm:py-20 lg:py-24 bg-black">
-          <div className="about-page-container">
+        <section className="pt-20 pb-16 sm:pt-24 sm:pb-20 lg:pt-28 lg:pb-24 bg-black">
+          <div className="about-page-container ">
             <motion.div
               variants={staggerContainer}
               initial="hidden"
@@ -240,8 +240,8 @@ export function NewAboutUsPage() {
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}
               >
-                <img 
-                  src="/images/About%20Us/about-us-team-collaboration.jpg.jpg" 
+                <img
+                  src="/images/About%20Us/about-us-team-collaboration.jpg.jpg"
                   alt="Team collaboration"
                   className="w-full h-full object-cover"
                 />
@@ -265,7 +265,7 @@ export function NewAboutUsPage() {
                 }}
                 transition={{ duration: 0 }}
               >
-                <img 
+                <img
                   src="/images/social-media/facebook.png.png"
                   alt="Facebook"
                   className="w-16 h-16 object-cover transition-all duration-300"
@@ -291,7 +291,7 @@ export function NewAboutUsPage() {
                 }}
                 transition={{ duration: 0 }}
               >
-                <img 
+                <img
                   src="/images/social-media/twitter.png.png"
                   alt="Twitter"
                   className="w-16 h-16 object-cover transition-all duration-300"
@@ -304,11 +304,11 @@ export function NewAboutUsPage() {
                 variants={staggerItem}
                 className="sm:col-span-2 rounded-2xl p-8"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)',
-                  border: '1px solid rgba(16, 185, 129, 0.3)'
+                  background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)',
+                  border: '1px solid rgba(34, 211, 238, 0.3)'
                 }}
               >
-                <h3 className="text-4xl font-bold mb-2" style={{ color: '#10B981' }}>20+</h3>
+                <h3 className="text-4xl font-bold mb-2" style={{ color: '#22D3EE' }}>20+</h3>
                 <h4 className="text-xl font-semibold mb-3 text-white">Industries Served</h4>
                 <p className="text-sm" style={{ color: '#D1D5DB' }}>
                   Bringing graphics computing to healthcare, fintech, research, autonomous systems, and enterprise AI.
@@ -333,7 +333,7 @@ export function NewAboutUsPage() {
                 }}
                 transition={{ duration: 0 }}
               >
-                <img 
+                <img
                   src="/images/social-media/linkedin.png.png"
                   alt="LinkedIn"
                   className="w-16 h-16 object-cover transition-all duration-300"
@@ -359,7 +359,7 @@ export function NewAboutUsPage() {
                 }}
                 transition={{ duration: 0 }}
               >
-                <img 
+                <img
                   src="/images/social-media/instagram.png.png"
                   alt="Instagram"
                   className="w-16 h-16 object-cover transition-all duration-300"
@@ -376,7 +376,7 @@ export function NewAboutUsPage() {
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}
               >
-                <h3 className="text-4xl font-bold mb-2" style={{ color: '#10B981' }}>50k+</h3>
+                <h3 className="text-4xl font-bold mb-2" style={{ color: '#22D3EE' }}>50k+</h3>
                 <h4 className="text-xl font-semibold mb-3 text-white">GPU Compute Hours Delivered</h4>
                 <p className="text-sm" style={{ color: '#9CA3AF' }}>
                   Performance CUDA workloads running on AI training, simulations, and analytics pipelines.
@@ -392,7 +392,7 @@ export function NewAboutUsPage() {
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}
               >
-                <h3 className="text-4xl font-bold mb-2" style={{ color: '#10B981' }}>6 Weeks</h3>
+                <h3 className="text-4xl font-bold mb-2" style={{ color: '#22D3EE' }}>6 Weeks</h3>
                 <h4 className="text-xl font-semibold mb-3 text-white">Average Implementation Cycle</h4>
                 <p className="text-sm" style={{ color: '#9CA3AF' }}>
                   Planning of structured architecture and quick optimization minimize the time of deployment without affecting its quality.
@@ -408,7 +408,7 @@ export function NewAboutUsPage() {
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}
               >
-                <h3 className="text-4xl font-bold mb-2" style={{ color: '#10B981' }}>24/7</h3>
+                <h3 className="text-4xl font-bold mb-2" style={{ color: '#22D3EE' }}>24/7</h3>
                 <h4 className="text-xl font-semibold mb-3 text-white">Technical Performing Support</h4>
                 <p className="text-sm" style={{ color: '#9CA3AF' }}>
                   This is done through continuous monitoring, debugging, and optimization to ensure the existence of stable GPU execution environments.
@@ -424,8 +424,8 @@ export function NewAboutUsPage() {
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}
               >
-                <img 
-                  src="/images/About%20Us/about-us-team-working.jpg.jpg" 
+                <img
+                  src="/images/About%20Us/about-us-team-working.jpg.jpg"
                   alt="Team working"
                   className="w-full h-full object-cover"
                 />
@@ -440,7 +440,7 @@ export function NewAboutUsPage() {
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}
               >
-                <h3 className="text-4xl font-bold mb-2" style={{ color: '#10B981' }}>98%</h3>
+                <h3 className="text-4xl font-bold mb-2" style={{ color: '#22D3EE' }}>98%</h3>
                 <h4 className="text-xl font-semibold mb-3 text-white">Client Retention Rate</h4>
                 <p className="text-sm" style={{ color: '#9CA3AF' }}>
                   Long-term relationships based on the quantifiable performance improvements and open-engineering.
@@ -451,7 +451,7 @@ export function NewAboutUsPage() {
         </section>
 
         {/* Vision & Mission - one row, two cards side by side */}
-        <section 
+        <section
           className="py-20 sm:py-24 lg:py-32"
           style={{
             background: 'linear-gradient(180deg, #0B0F14 0%, #000000 100%)'
@@ -468,12 +468,12 @@ export function NewAboutUsPage() {
                 className="group relative rounded-2xl px-8 py-10 sm:px-10 sm:py-12 lg:px-12 lg:py-14 h-full flex flex-col"
                 style={{
                   background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(16, 185, 129, 0.2)',
+                  border: '1px solid rgba(34, 211, 238, 0.2)',
                   boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2)'
                 }}
               >
-                <div className="absolute top-0 left-8 sm:left-10 lg:left-12 w-12 h-0.5 rounded-full" style={{ background: 'linear-gradient(90deg, #10B981, transparent)' }} />
-                <p className="text-sm font-medium mb-3" style={{ color: '#10B981' }}>We Think in Compute Power</p>
+                <div className="absolute top-0  left-8 sm:left-10 lg:left-12 w-12 h-0.5 rounded-full" />
+                <p className="text-sm mt-2  font-medium mb-3" style={{ color: '#22D3EE' }}>We Think in Compute Power</p>
                 <h2 className="text-3xl sm:text-4xl font-bold mb-5" style={{ color: '#FAFAFA' }}>
                   Vision
                 </h2>
@@ -491,12 +491,12 @@ export function NewAboutUsPage() {
                 className="group relative rounded-2xl px-8 py-10 sm:px-10 sm:py-12 lg:px-12 lg:py-14 h-full flex flex-col"
                 style={{
                   background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(16, 185, 129, 0.2)',
+                  border: '1px solid rgba(34, 211, 238, 0.2)',
                   boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2)'
                 }}
               >
-                <div className="absolute top-0 left-8 sm:left-10 lg:left-12 w-12 h-0.5 rounded-full" style={{ background: 'linear-gradient(90deg, #10B981, transparent)' }} />
-                <p className="text-sm font-medium mb-3" style={{ color: '#10B981' }}>We Bring Impact</p>
+                <div className="absolute top-0 left-8 sm:left-10 lg:left-12 w-12 h-0.5 rounded-full" />
+                <p className="text-sm mt-2 font-medium mb-3" style={{ color: '#22D3EE' }}>We Bring Impact</p>
                 <h2 className="text-3xl sm:text-4xl font-bold mb-5" style={{ color: '#FAFAFA' }}>
                   Mission
                 </h2>
@@ -525,11 +525,11 @@ export function NewAboutUsPage() {
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/75 to-black/50" />
-                
+
                 <div className="relative h-full flex flex-col justify-between p-8 md:p-12 xl:p-16">
                   {/* Bottom Content */}
                   <div className="mt-auto">
-                    <h3 
+                    <h3
                       className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 text-white"
                       style={{
                         textShadow: '0 4px 12px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6)'
@@ -537,7 +537,7 @@ export function NewAboutUsPage() {
                     >
                       Want to create something impactful?
                     </h3>
-                    <p 
+                    <p
                       className="text-white mb-8 text-base md:text-lg"
                       style={{
                         textShadow: '0 2px 8px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 0.6)'
@@ -553,17 +553,17 @@ export function NewAboutUsPage() {
                         }}
                         className="px-8 py-3 rounded-xl font-semibold transition-all duration-300"
                         style={{
-                          background: 'linear-gradient(135deg, #10B981 0%, #06B6D4 100%)',
+                          background: 'linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%)',
                           color: '#FFFFFF',
-                          boxShadow: '0 8px 24px rgba(16, 185, 129, 0.4)'
+                          boxShadow: '0 8px 24px rgba(34, 211, 238, 0.4)'
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'translateY(-2px)';
-                          e.currentTarget.style.boxShadow = '0 12px 32px rgba(16, 185, 129, 0.6)';
+                          e.currentTarget.style.boxShadow = '0 12px 32px rgba(34, 211, 238, 0.6)';
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 8px 24px rgba(16, 185, 129, 0.4)';
+                          e.currentTarget.style.boxShadow = '0 8px 24px rgba(34, 211, 238, 0.4)';
                         }}
                       >
                         Contact Us
@@ -580,11 +580,11 @@ export function NewAboutUsPage() {
                 viewport={{ once: true }}
                 className="p-8 md:p-12 xl:p-16 flex flex-col justify-center min-h-[600px]"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)',
-                  borderLeft: '1px solid rgba(16, 185, 129, 0.3)'
+                  background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)',
+                  borderLeft: '1px solid rgba(34, 211, 238, 0.3)'
                 }}
               >
-                <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-8 md:mb-12" style={{ color: '#10B981' }}>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-8 md:mb-12" style={{ color: '#22D3EE' }}>
                   Values We Deliver
                 </h2>
 
@@ -632,7 +632,7 @@ export function NewAboutUsPage() {
         </section>
 
         {/* Contact Form Section - 50/50 Split */}
-        <section 
+        <section
           id="contact-form"
           className="py-16 sm:py-20 lg:py-24"
           style={{
@@ -660,65 +660,65 @@ export function NewAboutUsPage() {
                     </h2>
                   </div>
 
-                {/* Our Office */}
-                <div className="space-y-6">
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">Our Office</h3>
-                  
-                  <div className="flex items-start gap-3">
-                    <img 
-                      src="/images/inidan.flag.jpg" 
-                      alt="India" 
-                      className="w-8 h-6 object-cover rounded mt-1"
-                    />
-                    <div>
-                      <p className="text-white/90 leading-relaxed text-sm md:text-base lg:text-lg">
-                        414, Satyam-2, Amba Business Park,
-                      </p>
-                      <p className="text-white/90 leading-relaxed text-sm md:text-base lg:text-lg">
-                        ATPL, Adalaj, Gujarat, India
-                      </p>
-                    </div>
-                  </div>
+                  {/* Our Office */}
+                  <div className="space-y-6">
+                    <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">Our Office</h3>
 
-                  <div className="flex items-center gap-3 pt-4">
-                    <Mail className="w-5 h-5" style={{ color: '#10B981' }} />
-                    <a 
-                      href="mailto:info@jashom.com" 
-                      className="text-white/90 hover:text-white transition-colors text-sm md:text-base lg:text-lg"
-                    >
-                      info@jashom.com
-                    </a>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-5 h-5" style={{ color: '#10B981' }} />
-                    <a 
-                      href="tel:+919854412744" 
-                      className="text-white/90 hover:text-white transition-colors text-sm md:text-base lg:text-lg"
-                    >
-                      +91 985 441 2744
-                    </a>
-                  </div>
-
-                  <div className="pt-6">
-                    <p className="text-white/70 text-sm md:text-base mb-6">
-                      Pay us a visit for a cup of coffee. We'll be more than happy to welcome you.
-                    </p>
-                    
-                    {/* Office Image */}
-                    <div className="rounded-xl overflow-hidden mt-6" style={{
-                      border: '1px solid rgba(16, 185, 129, 0.2)',
-                      boxShadow: '0 4px 12px rgba(16, 185, 129, 0.1)'
-                    }}>
-                      <img 
-                        src="/images/about-us-our-office.jpg" 
-                        alt="Jashom Office" 
-                        className="w-full h-auto object-cover"
-                        style={{ maxHeight: '300px', objectFit: 'cover' }}
+                    <div className="flex items-start gap-3">
+                      <img
+                        src="/images/inidan.flag.jpg"
+                        alt="India"
+                        className="w-8 h-6 object-cover rounded mt-1"
                       />
+                      <div>
+                        <p className="text-white/90 leading-relaxed text-sm md:text-base lg:text-lg">
+                          414, Satyam-2, Amba Business Park,
+                        </p>
+                        <p className="text-white/90 leading-relaxed text-sm md:text-base lg:text-lg">
+                          ATPL, Adalaj, Gujarat, India
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 pt-4">
+                      <Mail className="w-5 h-5" style={{ color: '#22D3EE' }} />
+                      <a
+                        href="mailto:info@jashom.com"
+                        className="text-white/90 hover:text-white transition-colors text-sm md:text-base lg:text-lg"
+                      >
+                        info@jashom.com
+                      </a>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <Phone className="w-5 h-5" style={{ color: '#22D3EE' }} />
+                      <a
+                        href="tel:+919854412744"
+                        className="text-white/90 hover:text-white transition-colors text-sm md:text-base lg:text-lg"
+                      >
+                        +91 985 441 2744
+                      </a>
+                    </div>
+
+                    <div className="pt-6">
+                      <p className="text-white/70 text-sm md:text-base mb-6">
+                        Pay us a visit for a cup of coffee. We'll be more than happy to welcome you.
+                      </p>
+
+                      {/* Office Image */}
+                      <div className="rounded-xl overflow-hidden mt-6" style={{
+                        border: '1px solid rgba(34, 211, 238, 0.2)',
+                        boxShadow: '0 4px 12px rgba(34, 211, 238, 0.1)'
+                      }}>
+                        <img
+                          src="/images/about-us-our-office.jpg"
+                          alt="Jashom Office"
+                          className="w-full h-auto object-cover"
+                          style={{ maxHeight: '300px', objectFit: 'cover' }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
                 </div>
               </motion.div>
 
@@ -741,96 +741,96 @@ export function NewAboutUsPage() {
                     Let's analyze your current GPU performance, remove bottlenecks, and engineer scalable CUDA solutions that drive measurable computational gains.
                   </p>
 
-                <form onSubmit={handleFormSubmit} className="space-y-6">
-                  <div>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      disabled={isSubmitting}
-                      placeholder="Name"
-                      className="w-full px-4 py-3 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 transition-all disabled:opacity-50"
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.1)'
-                      }}
-                    />
-                  </div>
+                  <form onSubmit={handleFormSubmit} className="space-y-6">
+                    <div>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        disabled={isSubmitting}
+                        placeholder="Name"
+                        className="w-full px-4 py-3 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 transition-all disabled:opacity-50"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)'
+                        }}
+                      />
+                    </div>
 
-                  <div>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      disabled={isSubmitting}
-                      placeholder="Business Email ID"
-                      className="w-full px-4 py-3 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 transition-all disabled:opacity-50"
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.1)'
-                      }}
-                    />
-                  </div>
+                    <div>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        disabled={isSubmitting}
+                        placeholder="Business Email ID"
+                        className="w-full px-4 py-3 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 transition-all disabled:opacity-50"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)'
+                        }}
+                      />
+                    </div>
 
-                  <div>
-                    <input
-                      type="text"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleChange}
-                      disabled={isSubmitting}
-                      placeholder="Company Name"
-                      className="w-full px-4 py-3 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 transition-all disabled:opacity-50"
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.1)'
-                      }}
-                    />
-                  </div>
+                    <div>
+                      <input
+                        type="text"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleChange}
+                        disabled={isSubmitting}
+                        placeholder="Company Name"
+                        className="w-full px-4 py-3 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 transition-all disabled:opacity-50"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)'
+                        }}
+                      />
+                    </div>
 
-                  <div>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      disabled={isSubmitting}
-                      rows={5}
-                      placeholder="Message"
-                      className="w-full px-4 py-3 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 transition-all resize-none disabled:opacity-50"
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.1)'
-                      }}
-                    />
-                  </div>
+                    <div>
+                      <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        disabled={isSubmitting}
+                        rows={5}
+                        placeholder="Message"
+                        className="w-full px-4 py-3 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 transition-all resize-none disabled:opacity-50"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)'
+                        }}
+                      />
+                    </div>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full px-8 py-4 rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                    style={{
-                      background: 'linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%)',
-                      color: '#FFFFFF'
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isSubmitting) {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 8px 24px rgba(59, 130, 246, 0.4)';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = 'none';
-                    }}
-                  >
-                    {isSubmitting ? 'Submitting...' : 'Submit'}
-                  </button>
-                </form>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full px-8 py-4 rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      style={{
+                        background: 'linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%)',
+                        color: '#FFFFFF'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isSubmitting) {
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                          e.currentTarget.style.boxShadow = '0 8px 24px rgba(34, 211, 238, 0.4)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      {isSubmitting ? 'Submitting...' : 'Submit'}
+                    </button>
+                  </form>
                 </div>
               </motion.div>
             </div>

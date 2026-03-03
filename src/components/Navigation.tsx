@@ -360,7 +360,7 @@ export function Navigation() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: navItems.length * 0.05 }}
               onClick={() => setIsContactModalOpen(true)}
-              className="relative text-white hover:text-[#10B981] transition-colors cursor-pointer p-2 rounded-lg hover:bg-white/10"
+              className="relative text-white hover:text-[#22D3EE] transition-colors cursor-pointer p-2 rounded-lg hover:bg-white/10"
               aria-label="Quick Contact"
             >
               <motion.div whileHover={{ scale: 1.1, rotate: -15 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 300 }}>

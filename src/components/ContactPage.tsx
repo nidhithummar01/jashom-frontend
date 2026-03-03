@@ -6,15 +6,15 @@ import { useNavigate } from 'react-router-dom';
 
 const PAGE_BG = '#000000';
 const SECTION_BG_DARK = '#0B0F14';
-const ACCENT_COLOR = '#10B981';
+const ACCENT_COLOR = '#22D3EE';
 const TEXT_WHITE = '#FFFFFF';
 const TEXT_MUTED = '#9CA3AF';
 const HERO_OVERLAY_GRADIENT = 'linear-gradient(to right, rgba(11, 15, 20, 0.95) 0%, rgba(11, 15, 20, 0.85) 40%, rgba(11, 15, 20, 0.6) 70%, rgba(11, 15, 20, 0.4) 100%)';
-const CTA_HERO_STYLE = { background: ACCENT_COLOR, color: TEXT_WHITE, boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.4)', border: 'none', cursor: 'pointer' } as const;
-const DIVIDER_ACCENT_STYLE = { background: ACCENT_COLOR, boxShadow: '0 0 15px rgba(16, 185, 129, 0.6)' } as const;
-const MAP_CONTAINER_STYLE: React.CSSProperties = { borderRadius: '20px', borderColor: 'rgba(16, 185, 129, 0.3)', boxShadow: '0 0 40px rgba(16, 185, 129, 0.2)', height: '450px' };
-const SUBMIT_BUTTON_STYLE = { background: 'linear-gradient(135deg, #0066FF 0%, #0052CC 100%)', color: TEXT_WHITE, boxShadow: '0 4px 25px rgba(0, 102, 255, 0.4)' } as const;
-const SUBMIT_BUTTON_HOVER = { boxShadow: '0 6px 35px rgba(0, 102, 255, 0.6)' } as const;
+const CTA_HERO_STYLE = { background: ACCENT_COLOR, color: TEXT_WHITE, boxShadow: '0 4px 14px 0 rgba(34, 211, 238, 0.4)', border: 'none', cursor: 'pointer' } as const;
+const DIVIDER_ACCENT_STYLE = { background: ACCENT_COLOR, boxShadow: '0 0 15px rgba(34, 211, 238, 0.6)' } as const;
+const MAP_CONTAINER_STYLE: React.CSSProperties = { borderRadius: '20px', borderColor: 'rgba(34, 211, 238, 0.3)', boxShadow: '0 0 40px rgba(34, 211, 238, 0.2)', height: '450px' };
+const SUBMIT_BUTTON_STYLE = { background: 'linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%)', color: TEXT_WHITE, boxShadow: '0 4px 25px rgba(34, 211, 238, 0.4)' } as const;
+const SUBMIT_BUTTON_HOVER = { boxShadow: '0 6px 35px rgba(34, 211, 238, 0.6)' } as const;
 const FAQ_ITEM_STYLE = { background: SECTION_BG_DARK, borderColor: 'rgba(255, 255, 255, 0.1)' } as const;
 const TEXT_WHITE_60 = 'rgba(255, 255, 255, 0.6)';
 const TEXT_WHITE_70 = 'rgba(255, 255, 255, 0.7)';
@@ -63,7 +63,7 @@ const INPUT_BASE_STYLE: React.CSSProperties = {
 };
 const INPUT_FOCUSED = {
   borderColor: ACCENT_COLOR,
-  boxShadow: '0 0 20px rgba(16, 185, 129, 0.4), inset 0 0 10px rgba(16, 185, 129, 0.1)',
+  boxShadow: '0 0 20px rgba(34, 211, 238, 0.4), inset 0 0 10px rgba(34, 211, 238, 0.1)',
 };
 const INPUT_BLUR = {
   borderColor: 'rgba(255, 255, 255, 0.1)' as const,

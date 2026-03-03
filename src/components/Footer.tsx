@@ -58,7 +58,7 @@ export function Footer() {
       className="relative overflow-hidden mb-2" 
       style={{ 
         background: '#0a0a0a',
-        borderTop: '1px solid rgba(16, 185, 129, 0.15)',
+        borderTop: '1px solid rgba(34, 211, 238, 0.15)',
         paddingTop: '3rem'
       }}
       role="contentinfo"
@@ -96,7 +96,7 @@ export function Footer() {
                 Address
               </h4>
               <div className="text-sm mb-4 space-y-1" style={{ color: '#9CA3AF', lineHeight: '1.7' }}>
-                <div className="font-semibold" style={{ color: '#10B981' }}>
+                <div className="font-semibold" style={{ color: '#22D3EE' }}>
                   Ahmedabad, India
                 </div>
                 <div>414, Satyam-2,</div>
@@ -111,8 +111,8 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="w-full rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] block"
                 style={{
-                  border: '1px solid rgba(16, 185, 129, 0.2)',
-                  boxShadow: '0 4px 20px rgba(16, 185, 129, 0.1)',
+                  border: '1px solid rgba(34, 211, 238, 0.2)',
+                  boxShadow: '0 4px 20px rgba(34, 211, 238, 0.1)',
                   height: '140px'
                 }}
                 aria-label="Open Jashom office location in Google Maps"
@@ -144,16 +144,16 @@ export function Footer() {
                   className="flex items-center gap-3 text-base transition-colors group"
                   style={{ color: '#9CA3AF' }}
                 >
-                  <Phone className="w-4 h-4 flex-shrink-0" style={{ color: '#10B981' }} />
-                  <span className="group-hover:text-[#10B981]">+91 90239 06363</span>
+                  <Phone className="w-4 h-4 flex-shrink-0" style={{ color: '#22D3EE' }} />
+                  <span className="group-hover:text-[#22D3EE]">+91 90239 06363</span>
                 </a>
                 <a 
                   href="mailto:info@jashom.com"
                   className="flex items-center gap-3 text-base transition-colors group"
                   style={{ color: '#9CA3AF' }}
                 >
-                  <Mail className="w-4 h-4 flex-shrink-0" style={{ color: '#10B981' }} />
-                  <span className="group-hover:text-[#10B981]">info@jashom.com</span>
+                  <Mail className="w-4 h-4 flex-shrink-0" style={{ color: '#22D3EE' }} />
+                  <span className="group-hover:text-[#22D3EE]">info@jashom.com</span>
                 </a>
               </div>
             </div>
@@ -170,7 +170,7 @@ export function Footer() {
                       to={link.path}
                       className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
                       style={{ color: '#9CA3AF' }}
-                      onMouseEnter={(e) => e.currentTarget.style.color = '#10B981'}
+                      onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
                       onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
                     >
                       &gt; {link.label}
@@ -192,7 +192,7 @@ export function Footer() {
                       to={link.path}
                       className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
                       style={{ color: '#9CA3AF' }}
-                      onMouseEnter={(e) => e.currentTarget.style.color = '#10B981'}
+                      onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
                       onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
                     >
                       &gt; {link.label}
@@ -251,7 +251,7 @@ export function Footer() {
                       to={link.path}
                       className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
                       style={{ color: '#9CA3AF' }}
-                      onMouseEnter={(e) => e.currentTarget.style.color = '#10B981'}
+                      onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
                       onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
                     >
                       &gt; {link.label}
@@ -277,7 +277,7 @@ export function Footer() {
               to={link.path}
               className="transition-colors"
               style={{ color: '#FFFFFF' }}
-              onMouseEnter={(e) => e.currentTarget.style.color = '#10B981'}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
               onMouseLeave={(e) => e.currentTarget.style.color = '#FFFFFF'}
             >
               {link.label}

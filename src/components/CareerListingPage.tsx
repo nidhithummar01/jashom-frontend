@@ -8,33 +8,33 @@ import { MapPin, Clock, Users, ArrowRight } from 'lucide-react';
 const SECTION_BG = { black: '#000000', dark: '#0B0F14' } as const;
 const BENEFIT_CARD_STYLE = {
   background: 'rgba(17, 24, 39, 0.4)' as const,
-  borderColor: 'rgba(16, 185, 129, 0.2)' as const,
+  borderColor: 'rgba(34, 211, 238, 0.2)' as const,
 };
 const BENEFIT_ICON_BOX_STYLE = {
-  background: 'rgba(16, 185, 129, 0.15)' as const,
-  border: '1px solid rgba(16, 185, 129, 0.3)' as const,
+  background: 'rgba(34, 211, 238, 0.15)' as const,
+  border: '1px solid rgba(34, 211, 238, 0.3)' as const,
 };
-const BADGE_STYLE = { background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba(16, 185, 129, 0.25)' } as const;
+const BADGE_STYLE = { background: 'rgba(34, 211, 238, 0.08)', borderColor: 'rgba(34, 211, 238, 0.25)' } as const;
 const DEPT_BUTTON_SELECTED = { background: '#0066FF', color: '#FFFFFF', border: '1px solid #0066FF', cursor: 'pointer' as const };
 const DEPT_BUTTON_UNSELECTED = { background: 'transparent', color: '#9CA3AF', border: '1px solid rgba(156, 163, 175, 0.3)', cursor: 'pointer' as const };
 const CAREER_CARD_BG = { background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.6) 0%, rgba(11, 15, 20, 0.8) 100%)' } as const;
-const DEPT_PILL_STYLE = { background: 'rgba(16, 185, 129, 0.15)', color: '#10B981', border: '1px solid rgba(16, 185, 129, 0.3)' } as const;
+const DEPT_PILL_STYLE = { background: 'rgba(34, 211, 238, 0.15)', color: '#22D3EE', border: '1px solid rgba(34, 211, 238, 0.3)' } as const;
 const POSTED_PILL_STYLE = { background: 'rgba(255, 255, 255, 0.05)', color: '#9CA3AF' } as const;
 const APPLY_BUTTON_STYLE = {
-  background: 'linear-gradient(135deg, #10B981, #06B6D4)',
+  background: 'linear-gradient(135deg, #22D3EE, #06B6D4)',
   borderColor: 'transparent',
   color: '#FFFFFF',
-  boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)',
+  boxShadow: '0 8px 32px rgba(34, 211, 238, 0.4)',
 } as const;
 const APPLY_BUTTON_HOVER = {
-  background: 'linear-gradient(135deg, #059669, #0891B2)',
-  boxShadow: '0 12px 48px rgba(16, 185, 129, 0.6)',
+  background: 'linear-gradient(135deg, #22D3EE, #06B6D4)',
+  boxShadow: '0 12px 48px rgba(34, 211, 238, 0.6)',
   transform: 'translateY(-2px)',
 } as const;
-const DIVIDER_STYLE = { height: '1px', background: 'linear-gradient(to right, transparent, rgba(16, 185, 129, 0.3), transparent)', margin: '32px 0' } as const;
+const DIVIDER_STYLE = { height: '1px', background: 'linear-gradient(to right, transparent, rgba(34, 211, 238, 0.3), transparent)', margin: '32px 0' } as const;
 const HERO_BG_STYLE = { backgroundImage: 'url(/images/carrer.listing.hero.jpg)', backgroundSize: 'cover', backgroundPosition: '60% center', backgroundRepeat: 'no-repeat' } as const;
 const HERO_OVERLAY_STYLE = { background: 'linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.1) 70%, transparent 100%)' } as const;
-const META_ICON_COLOR = '#10B981';
+const META_ICON_COLOR = '#22D3EE';
 
 const benefitsData = [
   { title: 'FAST GROWING COMPANY', description: 'With our increasing growth and expansion every day, you can be an integral part of the progress.' },
@@ -45,7 +45,7 @@ const benefitsData = [
 
 const CHECKMARK_SVG = (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M13.3337 4L6.00033 11.3333L2.66699 8" stroke="#22D3EE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -56,8 +56,8 @@ const careerContentSections: { title: string; key: 'responsibilities' | 'require
 ];
 
 const LIST_ITEM_STYLE = { color: '#D1D5DB' as const, lineHeight: 1.6 };
-const BULLET_STYLE = { background: '#10B981' as const };
-const SECTION_TITLE_STYLE = { color: '#10B981' as const };
+const BULLET_STYLE = { background: '#22D3EE' as const };
+const SECTION_TITLE_STYLE = { color: '#22D3EE' as const };
 
 export function CareerListingPage() {
   const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -111,7 +111,7 @@ export function CareerListingPage() {
                 textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
               }}
             >
-              A Sneak Peek Into Our <span style={{ color: '#10B981' }}>Opportunities</span> That Help Us Power Innovation
+              A Sneak Peek Into Our <span style={{ color: '#22D3EE' }}>Opportunities</span> That Help Us Power Innovation
             </h1>
             
             <p 
@@ -142,12 +142,12 @@ export function CareerListingPage() {
               className="inline-block mb-4 px-4 py-2 rounded-full border"
               style={BADGE_STYLE}
             >
-              <span style={{ color: '#10B981', fontWeight: 600, fontSize: '0.875rem', letterSpacing: '0.05em' }}>
+              <span style={{ color: '#22D3EE', fontWeight: 600, fontSize: '0.875rem', letterSpacing: '0.05em' }}>
                 BENEFITS
               </span>
             </motion.div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold" style={{ color: '#FAFAFA', letterSpacing: '-0.025em' }}>
-              Perks of being a <span style={{ color: '#10B981' }}>Jashomian</span>
+              Perks of being a <span style={{ color: '#22D3EE' }}>Jashomian</span>
             </h2>
           </motion.div>
 

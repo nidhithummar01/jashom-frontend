@@ -64,13 +64,13 @@ export function BlogsPage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <span className="text-[#10B981] font-semibold text-sm">Blog & Resources</span>
+              <span className="text-[#22D3EE] font-semibold text-sm">Blog & Resources</span>
             </motion.div>
             <h1
               className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
               style={{ color: '#FAFAFA', letterSpacing: '-0.025em', textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}
             >
-              Latest <span style={{ color: '#10B981' }}>Blog</span> & Case Studies
+              Latest <span style={{ color: '#22D3EE' }}>Blog</span> & Case Studies
             </h1>
             <p className="text-lg sm:text-xl max-w-3xl mx-auto" style={{ color: '#D1D5DB', lineHeight: 1.7 }}>
               Stay informed with the latest trends, best practices, and success stories in AI, GPU optimization, and enterprise technology.
@@ -84,13 +84,13 @@ export function BlogsPage() {
         <div className="max-w-7xl mx-auto">
           <h2
             className="text-2xl sm:text-3xl font-bold mb-16 text-center"
-            style={{ color: '#10B981', letterSpacing: '-0.025em' }}
+            style={{ color: '#22D3EE', letterSpacing: '-0.025em' }}
           >
             All Blogs
           </h2>
           {loading && (
             <div className="text-center py-20" style={{ color: '#9CA3AF' }}>
-              <div className="inline-block animate-spin rounded-full h-10 w-10 border-2 border-[#10B981] border-t-transparent mb-4" />
+              <div className="inline-block animate-spin rounded-full h-10 w-10 border-2 border-[#22D3EE] border-t-transparent mb-4" />
               <p>Loading blogs…</p>
             </div>
           )}
@@ -144,9 +144,9 @@ export function BlogsPage() {
                       <div className="relative h-full flex flex-col justify-between p-6 sm:p-8">
                         <div>
                           <div className="inline-block mb-4 px-3 py-1 rounded-full text-xs font-semibold" style={{
-                            background: 'rgba(16, 185, 129, 0.15)',
-                            color: '#10B981',
-                            border: '1px solid rgba(16, 185, 129, 0.3)'
+                            background: 'rgba(34, 211, 238, 0.15)',
+                            color: '#22D3EE',
+                            border: '1px solid rgba(34, 211, 238, 0.3)'
                           }}>
                             Blog
                           </div>
@@ -168,7 +168,7 @@ export function BlogsPage() {
                             </div>
                           </div>
 
-                          <div className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-240" style={{ color: '#10B981' }}>
+                          <div className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-240" style={{ color: '#22D3EE' }}>
                             <span>Read more</span>
                             <ArrowRight className="w-4 h-4 transition-transform duration-240 group-hover:translate-x-1" />
                           </div>
@@ -176,7 +176,7 @@ export function BlogsPage() {
                       </div>
 
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
-                        background: 'linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%)'
+                        background: 'linear-gradient(180deg, rgba(34, 211, 238, 0.1) 0%, rgba(34, 211, 238, 0.05) 100%)'
                       }} />
                     </div>
                   </Link>
@@ -211,8 +211,8 @@ export function BlogsPage() {
             viewport={{ once: true }}
             className="rounded-2xl p-8 sm:p-12 text-center relative overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.08) 100%)',
-              border: '1px solid rgba(16, 185, 129, 0.2)'
+              background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(6, 182, 212, 0.08) 100%)',
+              border: '1px solid rgba(34, 211, 238, 0.2)'
             }}
           >
             <div className="absolute inset-0 opacity-10">
@@ -239,7 +239,7 @@ export function BlogsPage() {
                   }}
                 />
                 <button
-                  className="px-6 py-3 rounded-xl font-semibold whitespace-nowrap text-white bg-[#10B981] hover:bg-[#0284C7] hover:scale-105 transition-all duration-240"
+                  className="px-6 py-3 rounded-xl font-semibold whitespace-nowrap text-white bg-[#22D3EE] hover:bg-[#0284C7] hover:scale-105 transition-all duration-240"
                 >
                   Subscribe
                 </button>
@@ -261,7 +261,7 @@ export function BlogsPage() {
             <motion.div
               className="inline-block mb-4 px-4 py-2 rounded-full border border-[rgba(16,185,129,0.25)] bg-[rgba(16,185,129,0.08)]"
             >
-              <span className="text-[#10B981] font-semibold text-sm">GET IN TOUCH</span>
+              <span className="text-[#22D3EE] font-semibold text-sm">GET IN TOUCH</span>
             </motion.div>
             
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: '#FAFAFA', letterSpacing: '-0.025em' }}>
@@ -274,7 +274,7 @@ export function BlogsPage() {
             
             <Link
               to="/contact/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#10B981] to-[#06B6D4] shadow-[0_8px_32px_rgba(16,185,129,0.4)] hover:from-[#059669] hover:to-[#0891B2] hover:shadow-[0_12px_48px_rgba(16,185,129,0.6)] hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#22D3EE] to-[#06B6D4] shadow-[0_8px_32px_rgba(34,211,238,0.4)] hover:from-[#06B6D4] hover:to-[#06B6D4] hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)] hover:-translate-y-0.5"
             >
               <span>Contact Us</span>
               <ArrowRight className="w-4 h-4" />
