@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { SEO } from '../SEO';
+import { SEO as Seo } from '../SEO';
 import * as Theme from '../../constants/theme';
 import type { PortfolioPageContent } from './content';
 import { portfolioPageData } from './data';
@@ -16,12 +16,12 @@ function SectionHeader({
   title,
   subtitle,
   badgeHover,
-}: {
+}: Readonly<{
   badge: string;
   title: string;
   subtitle?: string;
   badgeHover?: boolean;
-}) {
+}>) {
   return (
     <motion.div
       className="text-center mb-8 md:mb-14"
@@ -57,12 +57,12 @@ function CapabilityMatrixCard({
   index,
   styles,
   centered,
-}: {
+}: Readonly<{
   item: { capability: string; technicalDepth: string; businessImpact: string; Icon: LucideIcon };
   index: number;
   styles: { CARD_BORDER: string; ICON_BOX_BG: string };
   centered?: boolean;
-}) {
+}>) {
   const IconComponent = item.Icon;
   const card = (
     <motion.div
@@ -165,13 +165,13 @@ function IconCard({
   children,
   cardStyle,
   iconBoxStyle,
-}: {
+}: Readonly<{
   Icon: LucideIcon;
   title: string;
   children: React.ReactNode;
   cardStyle: React.CSSProperties;
   iconBoxStyle: React.CSSProperties;
-}) {
+}>) {
   return (
     <motion.div
       variants={Theme.STAGGER_ITEM}
@@ -196,7 +196,7 @@ export function PortfolioPageLayout({ content, data }: Readonly<Props>) {
 
   return (
     <div className="min-h-screen" style={{ background: Theme.SECTION_BG }}>
-      <SEO title={c.seo.title} description={c.seo.description} keywords={c.seo.keywords} />
+      <Seo title={c.seo.title} description={c.seo.description} keywords={c.seo.keywords} />
 
       <section
         className="relative overflow-hidden w-full min-h-[70vh] flex items-center"
@@ -238,8 +238,8 @@ export function PortfolioPageLayout({ content, data }: Readonly<Props>) {
             <div>
               <motion.div {...Theme.MOTION_FADE_UP_20} className="space-y-6">
                 <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight">{c.about.title}</h2>
-                {c.about.paragraphs.map((p, i) => (
-                  <p key={i} className="text-white/70 text-base leading-relaxed">
+                {c.about.paragraphs.map((p) => (
+                  <p key={p} className="text-white/70 text-base leading-relaxed">
                     {p}
                   </p>
                 ))}
