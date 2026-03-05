@@ -146,3 +146,16 @@ export const capabilityMatrixData: {
     Icon: Heart,
   },
 ];
+
+/** Single export for layout (service-page pattern). */
+export const portfolioPageData = {
+  CAPABILITY_MATRIX_BG,
+  CARD_BORDER,
+  ICON_BOX_BG,
+  SUMMARY_CARD_STYLE,
+  SUMMARY_ICON_BOX,
+  capabilityMatrixData,
+  engagementModelData,
+  portfolioSummaryData,
+  techStackData,
+};
