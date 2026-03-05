@@ -31,6 +31,12 @@ const JashomHealthcarePage = lazy(() => import('./components/portfolio/JashomHea
 const JashomICUConnectPage = lazy(() => import('./components/portfolio/JashomICUConnectPage').then(module => ({ default: module.JashomICUConnectPage })));
 const RAGLUPage = lazy(() => import('./components/portfolio/RAGLUPage').then(module => ({ default: module.RAGLUPage })));
 
+// Lazy load GPU case study pages
+const LLMInferenceOptimizationCaseStudy = lazy(() => import('./components/portfolio/case-studies/LLMInferenceOptimizationCaseStudy').then(module => ({ default: module.LLMInferenceOptimizationCaseStudy })));
+const GPUWorkloadOrchestrationCaseStudy = lazy(() => import('./components/portfolio/case-studies/GPUWorkloadOrchestrationCaseStudy').then(module => ({ default: module.GPUWorkloadOrchestrationCaseStudy })));
+const CloudGPUFineTuningCaseStudy = lazy(() => import('./components/portfolio/case-studies/CloudGPUFineTuningCaseStudy').then(module => ({ default: module.CloudGPUFineTuningCaseStudy })));
+const RedfishBMCTelemetryCaseStudy = lazy(() => import('./components/portfolio/case-studies/RedfishBMCTelemetryCaseStudy').then(module => ({ default: module.RedfishBMCTelemetryCaseStudy })));
+
 // Lazy load service pages (high priority for optimization)
 const HireCudaDeveloperPage = lazy(() => import('./components/HireCudaDeveloperPage').then(module => ({ default: module.HireCudaDeveloperPage })));
 const GPUOptimizationServicePage = lazy(() => import('./components/GPUOptimizationServicePage').then(module => ({ default: module.GPUOptimizationServicePage })));
@@ -94,6 +100,10 @@ function AnimatedRoutes() {
           <Route path="/portfolio/pod-ai-clipforge/" element={<PageTransition><PodAIClipforgePage /></PageTransition>} />
           <Route path="/portfolio/nvtrust-gpu-attestation/" element={<PageTransition><NVTrustGPUAttestationPage /></PageTransition>} />
           <Route path="/portfolio/hti-cuda-acceleration/" element={<PageTransition><HTICUDAAccelerationPage /></PageTransition>} />
+          <Route path="/portfolio/case-study/llm-inference-optimization/" element={<PageTransition><LLMInferenceOptimizationCaseStudy /></PageTransition>} />
+          <Route path="/portfolio/case-study/gpu-workload-orchestration/" element={<PageTransition><GPUWorkloadOrchestrationCaseStudy /></PageTransition>} />
+          <Route path="/portfolio/case-study/cloud-gpu-fine-tuning/" element={<PageTransition><CloudGPUFineTuningCaseStudy /></PageTransition>} />
+          <Route path="/portfolio/case-study/redfish-bmc-telemetry/" element={<PageTransition><RedfishBMCTelemetryCaseStudy /></PageTransition>} />
           
           {/* Project Detail Routes */}
           <Route path="/projects/boostreferral/" element={<PageTransition><BoostReferralPage /></PageTransition>} />

@@ -98,7 +98,7 @@ const faqsData = [
 
 function SectionContent({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
+    <div className="px-4 sm:px-6 lg:px-4">
       <div className="max-w-7xl mx-auto">{children}</div>
     </div>
   );
@@ -323,7 +323,7 @@ export function ContactPage() {
           {/* SECTION 4 - FAQs */}
           <section style={{ ...SECTION_PADDING_120, background: SECTION_BG_DARK }}>
             <SectionContent>
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 max-w-5xl mx-auto">
 
                   {/* Left 40% - Heading */}
                   <motion.div {...MOTION_FADE_LEFT} className="lg:col-span-4">
