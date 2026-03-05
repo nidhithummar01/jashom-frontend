@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { SEO } from '../SEO';
+import { SEO as Seo } from '../SEO';
 import * as Theme from '../../constants/theme';
 
 /** Consistent spacing for all 4 case study pages */
@@ -39,10 +39,10 @@ export function CaseStudyArticleLayout({
   executiveSummary,
   stats,
   children,
-}: CaseStudyArticleLayoutProps) {
+}: Readonly<CaseStudyArticleLayoutProps>) {
   return (
     <div className={`min-h-screen ${SPACING.pagePaddingY}`} style={{ background: Theme.SECTION_BG }}>
-      <SEO title={seo.title} description={seo.description} keywords={seo.keywords} />
+      <Seo title={seo.title} description={seo.description} keywords={seo.keywords} />
 
       <article className={`${Theme.SECTION_CONTAINER} ${SPACING.articlePaddingX}`}>
         <motion.header
@@ -109,10 +109,10 @@ export function CaseStudyArticleLayout({
 export function CaseStudySection({
   title,
   children,
-}: {
+}: Readonly<{
   title: string;
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <motion.section
       className={SPACING.sectionMarginBottom}
@@ -137,10 +137,10 @@ export function CaseStudySection({
 export function CaseStudyTable({
   headers,
   rows,
-}: {
+}: Readonly<{
   headers: string[];
   rows: string[][];
-}) {
+}>) {
   return (
     <div className={`overflow-x-auto rounded-xl border ${SPACING.tableMarginY}`} style={{ borderColor: Theme.BORDER_SUBTLE }}>
       <table className="w-full text-left text-sm">
@@ -158,19 +158,23 @@ export function CaseStudyTable({
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, i) => (
-            <tr
-              key={i}
-              className="border-t"
-              style={{ borderColor: Theme.BORDER_SUBTLE }}
-            >
-              {row.map((cell, j) => (
-                <td key={j} className="px-4 py-3" style={{ color: Theme.TEXT_QUOTE }}>
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {rows.map((row) => {
+            const rowKey = row.join('|') || `row-${row.length}`;
+            const cellsWithHeaders = headers.map((header, colIndex) => ({ header, cell: row[colIndex] ?? '' }));
+            return (
+              <tr
+                key={rowKey}
+                className="border-t"
+                style={{ borderColor: Theme.BORDER_SUBTLE }}
+              >
+                {cellsWithHeaders.map(({ header, cell }) => (
+                  <td key={`${header}-${cell}`} className="px-4 py-3" style={{ color: Theme.TEXT_QUOTE }}>
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
