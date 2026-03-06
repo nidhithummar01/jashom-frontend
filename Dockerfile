@@ -7,6 +7,8 @@
     RUN npm ci
      
     COPY . .
+    ARG SITE_ORIGIN=https://new.jashom.com
+    ENV SITE_ORIGIN=${SITE_ORIGIN}
     RUN npm run build
      
      
