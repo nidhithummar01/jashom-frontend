@@ -23,6 +23,8 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Self-referencing canonical (per-page in dev via Vite plugin; in production via server.cjs) -->
+  <link id="canonical-url" rel="canonical" href="https://new.jashom.com/" />
   
   <!-- Favicon - Jashom Ball Icon -->
   <link rel="shortcut icon" href="/logos/jashom.logo/favicon.ico" />
@@ -39,10 +41,6 @@
   
   <!-- Preload critical assets -->
   <link rel="preload" href="/jashom-logo-header-70px.png" as="image" type="image/png" />
-  <link rel="preload" href="/videos/bg.mp4" as="video" type="video/mp4" />
-
-  <!-- Self-referencing canonical (updated per page by app); ensures tag exists in view-source -->
-  <link id="canonical-url" rel="canonical" href="https://new.jashom.com/" />
 
   <title>Jashom</title>
 </head>
