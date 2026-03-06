@@ -11,7 +11,13 @@ const fs = require('fs');
 const path = require('path');
 
 const DIST = path.join(__dirname, '..', 'dist');
-const CANONICAL_REGEX = /(<link\s+id="canonical-url"\s+rel="canonical"\s+href=")[^"]*("\s*\/?>)/i;
+// Match canonical link by id and replace href (attribute order may vary after build)
+const CANONICAL_REGEX = /<link\s+id="canonical-url"[^>]*\shref="[^"]*"[^>]*\/?>/i;
+function replaceCanonicalHref(html, newHref) {
+  return html.replace(CANONICAL_REGEX, (tag) =>
+    tag.replace(/\shref="[^"]*"/, ` href="${newHref}"`)
+  );
+}
 
 const SITE_ORIGIN = (process.env.SITE_ORIGIN || process.env.VITE_SITE_URL || 'https://new.jashom.com')
   .toString()
@@ -103,12 +109,14 @@ function main() {
 
   let indexHtml = fs.readFileSync(indexPath, 'utf8');
   if (!CANONICAL_REGEX.test(indexHtml)) {
-    console.error('scripts/canonical-per-route.cjs: canonical link not found in index.html');
+    console.error('scripts/canonical-per-route.cjs: canonical link (id="canonical-url") not found in index.html');
     process.exit(1);
   }
 
+  const rootCanonical = `${SITE_ORIGIN}/`;
+
   // 1) Update root index.html
-  const rootHtml = indexHtml.replace(CANONICAL_REGEX, `$1${SITE_ORIGIN}/$2`);
+  const rootHtml = replaceCanonicalHref(indexHtml, rootCanonical);
   fs.writeFileSync(indexPath, rootHtml);
 
   // 2) For each non-root route, write path/index.html with correct canonical
@@ -117,11 +125,28 @@ function main() {
     const dirSegments = routePath.slice(1, -1); // e.g. 'gpu-optimization-service' or 'portfolio/case-study/...'
     const dir = path.join(DIST, dirSegments);
     fs.mkdirSync(dir, { recursive: true });
-    const pathHtml = indexHtml.replace(CANONICAL_REGEX, `$1${SITE_ORIGIN}${routePath}$2`);
-    fs.writeFileSync(path.join(dir, 'index.html'), pathHtml);
+    const pathCanonical = `${SITE_ORIGIN}${routePath}`;
+    const pathHtml = replaceCanonicalHref(indexHtml, pathCanonical);
+    const outPath = path.join(dir, 'index.html');
+    fs.writeFileSync(outPath, pathHtml);
   }
 
-  console.log('Canonical per-route: updated root +', STATIC_ROUTES.length - 1, 'paths');
+  // 3) Verify key routes so build fails if something is wrong (e.g. deploy with stale dist)
+  const checkPaths = [
+    ['gpu-optimization-service', `${SITE_ORIGIN}/gpu-optimization-service/`],
+    ['cuda-development-service', `${SITE_ORIGIN}/cuda-development-service/`],
+    ['contact', `${SITE_ORIGIN}/contact/`],
+  ];
+  for (const [dirSegments, expectedHref] of checkPaths) {
+    const filePath = path.join(DIST, dirSegments, 'index.html');
+    const content = fs.readFileSync(filePath, 'utf8');
+    if (!content.includes(`href="${expectedHref}"`)) {
+      console.error('scripts/canonical-per-route.cjs: verification failed for', dirSegments, '- expected href', expectedHref);
+      process.exit(1);
+    }
+  }
+
+  console.log('Canonical per-route: updated root +', STATIC_ROUTES.length - 1, 'paths (verified)');
 }
 
 main();
