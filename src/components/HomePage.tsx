@@ -418,9 +418,9 @@ export function HomePage() {
             </div>
           </section>
 
-          {/* Portfolio Slider Section - Controlled Carousel */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black relative">
-            <div className="max-w-7xl mx-auto">
+          {/* Case Studies Slider Section - Controlled Carousel */}
+          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black relative overflow-visible">
+            <div className="max-w-7xl mx-auto relative">
               <motion.div
                 className="text-center mb-12"
                 initial={{ opacity: 0, y: 20 }}
@@ -428,48 +428,34 @@ export function HomePage() {
                 viewport={{ once: true }}
               >
                 <div className="inline-block mb-4 px-4 py-2 rounded-full glass-effect border border-[#ffffff]/30">
-                  <span className="text-[#d1d5db] text-sm">OUR PORTFOLIO</span>
+                  <span className="text-[#d1d5db] text-sm">CASE STUDIES</span>
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-bold text-gradient mb-4">
-                  Our Portfolio
+                  Case Studies
                 </h2>
                 <p className="text-white/70 max-w-3xl mx-auto">
                   See real-world applications in which advanced optimization of the GPU and tailored CUDA engineering improved performance standards and business speed.
                 </p>
               </motion.div>
 
-              {/* Controlled Carousel Container */}
-              <div className="relative">
-                {/* Left Arrow - Responsive positioning */}
+              {/* Controlled Carousel: arrows in flow so they are always visible */}
+              <div className="flex items-center gap-2 sm:gap-4">
+                {/* Left Arrow - in document flow, always visible */}
                 <button
                   onClick={goToPrev}
                   disabled={!canGoPrev}
-                  className={`absolute left-0 sm:left-2 top-1/2 -translate-y-1/2 z-50 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 ${canGoPrev
-                    ? 'bg-blue-500 hover:bg-cyan-600 cursor-pointer shadow-2xl'
-                    : 'bg-gray-700 cursor-not-allowed opacity-50'
+                  className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 border-2 border-white/30 shadow-xl ${canGoPrev
+                    ? 'bg-cyan-500 hover:bg-cyan-400 text-white cursor-pointer hover:scale-110 active:scale-95'
+                    : 'bg-gray-700 text-white/50 cursor-not-allowed opacity-60'
                     }`}
                   aria-label="Previous slide"
                   type="button"
                 >
-                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" strokeWidth={3} />
+                  <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={3} />
                 </button>
 
-                {/* Right Arrow - Responsive positioning */}
-                <button
-                  onClick={goToNext}
-                  disabled={!canGoNext}
-                  className={`absolute right-0 sm:right-2 top-1/2 -translate-y-1/2 z-50 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 ${canGoNext
-                    ? 'bg-blue-500 hover:bg-cyan-600 cursor-pointer shadow-2xl'
-                    : 'bg-gray-700 cursor-not-allowed opacity-50'
-                    }`}
-                  aria-label="Next slide"
-                  type="button"
-                >
-                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" strokeWidth={3} />
-                </button>
-
-                {/* Carousel Wrapper - Overflow Hidden with responsive padding */}
-                <div className="overflow-hidden px-12 sm:px-14 lg:px-16">
+                {/* Carousel Wrapper */}
+                <div className="flex-1 min-w-0 overflow-hidden">
                   {/* Carousel Track - Transform Based */}
                   <div
                     className="flex gap-4 sm:gap-6 transition-transform duration-500 ease-in-out"
@@ -573,6 +559,20 @@ export function HomePage() {
                     ))}
                   </div>
                 </div>
+
+                {/* Right Arrow - in document flow, always visible */}
+                <button
+                  onClick={goToNext}
+                  disabled={!canGoNext}
+                  className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 border-2 border-white/30 shadow-xl ${canGoNext
+                    ? 'bg-cyan-500 hover:bg-cyan-400 text-white cursor-pointer hover:scale-110 active:scale-95'
+                    : 'bg-gray-700 text-white/50 cursor-not-allowed opacity-60'
+                  }`}
+                  aria-label="Next slide"
+                  type="button"
+                >
+                  <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={3} />
+                </button>
               </div>
 
               {/* View All Button */}
@@ -581,7 +581,7 @@ export function HomePage() {
                   to="/portfolio/"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-black font-semibold hover:bg-white/90 transition-all duration-300 hover:scale-105"
                 >
-                  View All Projects
+                  View All Case Studies
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
