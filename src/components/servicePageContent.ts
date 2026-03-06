@@ -57,7 +57,7 @@ export const SERVICE_PAGE_CONTENT = {
     ],
     overviewStat1: { value: '10x', label: 'Faster Execution' },
     overviewStat2: { value: '40%', label: 'Reduced Compute Costs' },
-    overviewImage: { src: '/images/gpu.optimization.jpg', alt: 'GPU Optimization' },
+    overviewImage: { src: '/images/gpu.jpg', alt: 'GPU Optimization' },
     servicesTitle: 'Optimize Performance That\nDrives Real Results',
     servicesIntro: 'Our engineers integrate CUDA Development Services with profound architectural experience to increase the use of a GPU on a wide range of workloads.',
     industryTitle: 'Industry-Focused GPU\nOptimization Solutions',

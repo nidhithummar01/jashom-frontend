@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import { HomePage } from './components/HomePage';
 import { PageTransition } from './components/PageTransition';
 import { ScrollProgress } from './components/ScrollProgress';
+import { CanonicalTag } from './components/CanonicalTag';
 import { AnimatePresence } from 'motion/react';
 
 // Lazy load heavy components for better performance
@@ -188,6 +189,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <CanonicalTag />
       <ScrollToTop />
       <ScrollProgress />
       <div className="min-h-screen bg-black text-white overflow-x-hidden max-w-full" style={{ overflowX: 'hidden', maxWidth: '100vw' }}>
