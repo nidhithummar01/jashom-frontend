@@ -2312,3 +2312,11 @@
     padding-right: 3rem;
   }
 }
+
+/* Cookie consent dialog: no browser-default white background */
+.cookie-consent-dialog {
+  background: transparent !important;
+}
+.cookie-consent-dialog::backdrop {
+  background: transparent;
+}

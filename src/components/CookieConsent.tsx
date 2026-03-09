@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { Cookie, X } from 'lucide-react';
 
 const STORAGE_KEY = 'jashom_cookie_consent';
@@ -67,26 +67,30 @@ export function CookieConsent() {
   const close = () => deny();
 
   const banner = (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          role="dialog"
-          aria-label="Cookie consent"
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 60, opacity: 0 }}
-          transition={{ type: 'spring', damping: 28, stiffness: 260 }}
-          className="px-4 pb-5 md:px-6 md:pb-6"
-          style={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 99999,
-            pointerEvents: 'auto',
-          }}
-        >
-          <div
+    <dialog
+      open={visible}
+      aria-label="Cookie consent"
+      className="cookie-consent-dialog w-full max-w-none border-0 p-0 m-0 shadow-none"
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        top: 'auto',
+        margin: 0,
+        maxHeight: 'none',
+        zIndex: 99999,
+        pointerEvents: 'auto',
+        background: 'transparent',
+      }}
+    >
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: 'spring', damping: 28, stiffness: 260 }}
+        className="px-4 pb-5 md:px-6 md:pb-6"
+      >
+        <div
             className="relative pointer-events-auto w-full max-w-5xl mx-auto rounded-2xl overflow-hidden"
             style={{
               background: 'linear-gradient(168deg, rgba(12,12,14,0.98) 0%, rgba(6,6,8,0.99) 100%)',
@@ -171,9 +175,8 @@ export function CookieConsent() {
               </div>
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      </motion.div>
+    </dialog>
   );
 
   if (!mounted || typeof document === 'undefined') return null;
