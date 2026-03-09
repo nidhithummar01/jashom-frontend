@@ -67,10 +67,10 @@ export function Footer() {
       <div className="max-w-7xl mx-auto">
         
         {/* Main Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-20 mb-12 pb-8 px-4 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_2fr] gap-8 md:gap-10 lg:gap-12 xl:gap-16 mb-12 pb-8 px-4 md:px-8 lg:px-12">
           
           {/* COLUMN 1: Logo + Description + Address + Map */}
-          <div>
+          <div className="flex flex-col">
             {/* Logo + Description */}
             <div>
               <Link to="/" className="inline-block mb-5" aria-label="Jashom home">
@@ -91,7 +91,7 @@ export function Footer() {
             </div>
 
             {/* Address + Map */}
-            <div className="mt-16">
+            <div className="mt-8 md:mt-12 lg:mt-16">
               <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
                 Address
               </h4>
@@ -131,134 +131,138 @@ export function Footer() {
             </div>
           </div>
 
-          {/* COLUMN 2: Get in Touch + Company + Services */}
-          <div style={{ paddingLeft: '120px' }}>
-            {/* Get in Touch */}
-            <div>
-              <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
-                Get in Touch
-              </h4>
-              <div className="space-y-4">
-                <a 
-                  href="tel:+919023906363"
-                  className="flex items-center gap-3 text-base transition-colors group"
-                  style={{ color: '#9CA3AF' }}
-                >
-                  <Phone className="w-4 h-4 flex-shrink-0" style={{ color: '#22D3EE' }} />
-                  <span className="group-hover:text-[#22D3EE]">+91 90239 06363</span>
-                </a>
-                <a 
-                  href="mailto:info@jashom.com"
-                  className="flex items-center gap-3 text-base transition-colors group"
-                  style={{ color: '#9CA3AF' }}
-                >
-                  <Mail className="w-4 h-4 flex-shrink-0" style={{ color: '#22D3EE' }} />
-                  <span className="group-hover:text-[#22D3EE]">info@jashom.com</span>
-                </a>
-              </div>
-            </div>
-
-            {/* Company */}
-            <div className="mt-16">
-              <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
-                Company
-              </h4>
-              <ul className="space-y-2.5">
-                {footerLinks.company.map((link, index) => (
-                  <li key={index}>
-                    <Link
-                      to={link.path}
-                      className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
-                      style={{ color: '#9CA3AF' }}
-                      onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
-                      onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
-                    >
-                      &gt; {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Services */}
-            <div className="mt-16">
-              <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
-                Services
-              </h4>
-              <ul className="space-y-2.5">
-                {footerLinks.services.map((link, index) => (
-                  <li key={index}>
-                    <Link
-                      to={link.path}
-                      className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
-                      style={{ color: '#9CA3AF' }}
-                      onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
-                      onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
-                    >
-                      &gt; {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* COLUMN 3: Quick Links + Resources */}
-          <div style={{ paddingLeft: '110px' }}>
-            {/* Quick Links (Social) */}
-            <div>
-              <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
-                Quick Links
-              </h4>
-              <div className="flex items-center gap-3">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block transition-all duration-300"
-                    whileHover={{ 
-                      scale: 1.1
-                    }}
-                    aria-label={social.label}
+          {/* RIGHT SIDE: Grid with Get in Touch, Company, Services, Quick Links, Resources */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12">
+            
+            {/* Get in Touch + Company + Services */}
+            <div className="flex flex-col">
+              {/* Get in Touch */}
+              <div>
+                <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
+                  Get in Touch
+                </h4>
+                <div className="space-y-4">
+                  <a 
+                    href="tel:+919023906363"
+                    className="flex items-center gap-3 text-base transition-colors group"
+                    style={{ color: '#9CA3AF' }}
                   >
-                    <img 
-                      src={social.image}
-                      alt={social.label}
-                      style={{ 
-                        objectFit: 'contain', 
-                        width: social.label === 'Reddit' ? '32px' : '38px', 
-                        height: social.label === 'Reddit' ? '32px' : '38px',
-                        display: 'block',
-                        background: 'transparent'
-                      }}
-                    />
-                  </motion.a>
-                ))}
+                    <Phone className="w-4 h-4 flex-shrink-0" style={{ color: '#22D3EE' }} />
+                    <span className="group-hover:text-[#22D3EE]">+91 90239 06363</span>
+                  </a>
+                  <a 
+                    href="mailto:info@jashom.com"
+                    className="flex items-center gap-3 text-base transition-colors group"
+                    style={{ color: '#9CA3AF' }}
+                  >
+                    <Mail className="w-4 h-4 flex-shrink-0" style={{ color: '#22D3EE' }} />
+                    <span className="group-hover:text-[#22D3EE]">info@jashom.com</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Company */}
+              <div className="mt-8 md:mt-12 lg:mt-16">
+                <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
+                  Company
+                </h4>
+                <ul className="space-y-2.5">
+                  {footerLinks.company.map((link, index) => (
+                    <li key={index}>
+                      <Link
+                        to={link.path}
+                        className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
+                        style={{ color: '#9CA3AF' }}
+                        onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
+                        onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
+                      >
+                        &gt; {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Services */}
+              <div className="mt-8 md:mt-12 lg:mt-16">
+                <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
+                  Services
+                </h4>
+                <ul className="space-y-2.5">
+                  {footerLinks.services.map((link, index) => (
+                    <li key={index}>
+                      <Link
+                        to={link.path}
+                        className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
+                        style={{ color: '#9CA3AF' }}
+                        onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
+                        onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
+                      >
+                        &gt; {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
-            {/* Resources */}
-            <div className="mt-16">
-              <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
-                Resources
-              </h4>
-              <ul className="space-y-2.5">
-                {footerLinks.resources.map((link, index) => (
-                  <li key={index}>
-                    <Link
-                      to={link.path}
-                      className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
-                      style={{ color: '#9CA3AF' }}
-                      onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
-                      onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
+            {/* Quick Links + Resources */}
+            <div className="flex flex-col">
+              {/* Quick Links (Social) */}
+              <div>
+                <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
+                  Quick Links
+                </h4>
+                <div className="flex items-center gap-3">
+                  {socialLinks.map((social, index) => (
+                    <motion.a
+                      key={index}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block transition-all duration-300"
+                      whileHover={{ 
+                        scale: 1.1
+                      }}
+                      aria-label={social.label}
                     >
-                      &gt; {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+                      <img 
+                        src={social.image}
+                        alt={social.label}
+                        style={{ 
+                          objectFit: 'contain', 
+                          width: social.label === 'Reddit' ? '32px' : '38px', 
+                          height: social.label === 'Reddit' ? '32px' : '38px',
+                          display: 'block',
+                          background: 'transparent'
+                        }}
+                      />
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Resources */}
+              <div className="mt-8 md:mt-12 lg:mt-16">
+                <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
+                  Resources
+                </h4>
+                <ul className="space-y-2.5">
+                  {footerLinks.resources.map((link, index) => (
+                    <li key={index}>
+                      <Link
+                        to={link.path}
+                        className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
+                        style={{ color: '#9CA3AF' }}
+                        onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
+                        onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
+                      >
+                        &gt; {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -270,7 +274,7 @@ export function Footer() {
         />
 
         {/* Bottom Bar */}
-        <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
+        <div className="flex flex-wrap items-center justify-center gap-3 text-sm px-4">
           {footerLinks.legal.map((link, index) => (
             <Link
               key={index}
@@ -283,8 +287,8 @@ export function Footer() {
               {link.label}
             </Link>
           ))}
-          <span style={{ color: '#4B5563' }}>|</span>
-          <span style={{ color: '#FFFFFF' }}>© {currentYear} Jashom. All Rights Reserved.</span>
+          <span className="hidden sm:inline" style={{ color: '#4B5563' }}>|</span>
+          <span className="w-full sm:w-auto text-center" style={{ color: '#FFFFFF' }}>© {currentYear} Jashom. All Rights Reserved.</span>
         </div>
       </div>
     </footer>

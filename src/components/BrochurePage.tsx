@@ -1,767 +1,1004 @@
-import { motion, AnimatePresence } from 'motion/react';
-import { useState } from 'react';
+import { motion } from 'motion/react';
+import { useMemo, useRef, useState } from 'react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import {
-  ChevronLeft,
-  ChevronRight,
-  Cpu,
-  MessageSquare,
   Brain,
-  Code,
-  Cloud,
-  Package,
-  Zap,
-  Shield,
-  Award,
-  Users,
-  Globe,
-  TrendingUp,
   CheckCircle2,
-  Mail,
-  Phone,
-  MapPin,
+  Cloud,
+  Code,
+  Cpu,
   Download,
-  Maximize2,
   GitBranch,
+  Globe,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Package,
+  Phone,
   RefreshCw,
-  Workflow
+  Shield,
+  TrendingUp,
+  Workflow,
+  Zap
 } from 'lucide-react';
 import { SEO } from './SEO';
 
-const slides = [
-  {
-    id: 1,
-    type: 'cover',
-    title: 'Jashom',
-    subtitle: 'AI. Optimized. Everywhere.',
-    tagline: 'Cutting-Edge AI & GPU Optimization Solutions',
-    footer: 'Transforming Businesses Through Innovation'
-  },
-  {
-    id: 2,
-    type: 'about',
-    title: 'About Jashom',
-    subtitle: 'Who We Are',
-    content: {
-      mission: 'Pioneering AI and GPU optimization solutions that transform businesses across industries.',
-      vision: 'To be the global leader in AI optimization, making advanced technology accessible and efficient for enterprises worldwide.',
-      stats: [
-        { value: '50+', label: 'Projects Delivered' },
-        { value: '98%', label: 'Client Satisfaction' },
-        { value: '10x', label: 'Performance Gain' },
-        { value: '24/7', label: 'Support Available' }
-      ]
-    }
-  },
-  {
-    id: 3,
-    type: 'services-overview',
-    title: 'Our Services',
-    subtitle: 'Comprehensive AI Solutions',
-    services: [
-      { icon: Cpu, name: 'AI GPU Optimization & Attestation', color: 'from-[#ffffff] to-[#d1d5db]' },
-      { icon: MessageSquare, name: 'RAG Applications', color: 'from-[#d1d5db] to-[#ffffff]' },
-      { icon: Shield, name: 'Cybersecurity', color: 'from-[#ffffff] to-[#d1d5db]' },
-      { icon: Shield, name: 'VAPT', color: 'from-[#d1d5db] to-[#ffffff]' },
-      { icon: RefreshCw, name: 'CI/CD Automation', color: 'from-[#ffffff] to-[#d1d5db]' },
-      { icon: Package, name: 'SaaS Development', color: 'from-[#d1d5db] to-[#ffffff]' }
-    ]
-  },
-  {
-    id: 4,
-    type: 'service-detail',
-    title: 'AI GPU Optimization & Attestation',
-    subtitle: 'Unlock True GPU Performance',
-    content: {
-      description: 'Specialized AI GPU optimization and attestation, helping enterprises achieve faster, more efficient, and verifiable AI performance.',
-      highlights: [
-        'Kernel-level GPU tuning for NVIDIA/AMD',
-        'LLM fine-tuning & quantization',
-        'GPU Attestation with nvTrust',
-        'Up to 40% cost reduction',
-        'Dynamic batching & parallelization',
-        'Energy-efficient computing'
-      ],
-      tech: 'CUDA • TensorRT • PyTorch • Triton • ONNX'
-    }
-  },
-  {
-    id: 5,
-    type: 'service-detail',
-    title: 'RAG Applications',
-    subtitle: 'Interactive & Intelligent Data',
-    content: {
-      description: 'Retrieval-Augmented Generation systems that combine retrieval, reasoning, and response—creating AI agents grounded in your data.',
-      highlights: [
-        'Text ↔ Voice multilingual interaction',
-        'Text → Video AI generation',
-        'Automated meeting summaries',
-        'Context-aware chatbots',
-        'AI document summarization',
-        'Private data training'
-      ],
-      tech: 'LangChain • Hugging Face • OpenAI • AWS Bedrock'
-    }
-  },
-  {
-    id: 6,
-    type: 'service-detail',
-    title: 'HealthTech Solutions',
-    subtitle: 'Connected Healthcare Intelligence',
-    content: {
-      description: 'AI-powered healthcare platforms that automate workflows, enhance patient care, and maintain HIPAA compliance.',
-      highlights: [
-        'Multi-location hospital management',
-        'Real-time patient monitoring',
-        'Predictive analytics',
-        'Medical imaging AI',
-        'IoT integration',
-        '99.9% uptime guaranteed'
-      ],
-      tech: 'HIPAA-Compliant • IoT • Computer Vision'
-    }
-  },
-  {
-    id: 7,
-    type: 'service-detail',
-    title: 'FoodTech Solutions',
-    subtitle: 'Smart Supply Chain Ecosystem',
-    content: {
-      description: 'AI-driven food tech solutions that enhance visibility, reduce waste, and improve decision-making from manufacturing to delivery.',
-      highlights: [
-        'AI demand forecasting',
-        'Blockchain traceability',
-        'Real-time quality monitoring',
-        'Predictive logistics',
-        'Consumer sentiment analysis',
-        'Supply optimization'
-      ],
-      tech: 'IoT • Blockchain • NLP • Predictive Analytics'
-    }
-  },
-  {
-    id: 8,
-    type: 'service-detail',
-    title: 'EnvironmentTech Solutions',
-    subtitle: 'Sustainable Technology',
-    content: {
-      description: 'Digital ecosystems that monitor, predict, and reduce environmental impact using AI and data automation.',
-      highlights: [
-        'AI emission optimization',
-        'ESG data automation',
-        'Air/water/soil quality analytics',
-        'IoT & satellite integration',
-        'Sustainability scoring',
-        'Compliance reporting'
-      ],
-      tech: 'IoT • Satellite Data • Real-time Dashboards'
-    }
-  },
-  {
-    id: 9,
-    type: 'service-detail',
-    title: 'RetailTech for Garments',
-    subtitle: 'Fashion Innovation',
-    content: {
-      description: 'AI and analytics for the garment industry—from design to distribution—enabling faster decisions and personalized experiences.',
-      highlights: [
-        'AI visual search & virtual try-on',
-        'Smart inventory predictions',
-        'Edge vision quality control',
-        'Sentiment dashboards',
-        'Customer intelligence',
-        'Reduced waste'
-      ],
-      tech: 'Computer Vision • Edge AI • Analytics'
-    }
-  },
-  {
-    id: 10,
-    type: 'capabilities',
-    title: 'Capability Matrix',
-    subtitle: 'Our Technical Expertise',
-    capabilities: [
-      { icon: Brain, name: 'AI & LLM Platforms', items: ['GPT Integration', 'Custom LLMs', 'RAG Systems', 'Fine-tuning'] },
-      { icon: Cpu, name: 'GPU Optimization', items: ['CUDA Development', 'Tensor Optimization', 'Performance Profiling', 'Hardware Acceleration'] },
-      { icon: Code, name: 'Web & App Engineering', items: ['React & Next.js', 'Mobile Development', 'PWAs', 'API Development'] },
-      { icon: Cloud, name: 'Cloud & Edge', items: ['AWS/Azure/GCP', 'Kubernetes', 'Serverless', 'Edge Computing'] },
-      { icon: Package, name: 'Product Engineering', items: ['Agile Development', 'MVP Creation', 'DevOps', 'CI/CD'] }
-    ]
-  },
-  {
-    id: 11,
-    type: 'development-process',
-    title: 'Our Development Process',
-    subtitle: 'Faster & Adaptive Development',
-    content: {
-      tagline: 'Agile. Iterative. Continuous.',
-      description: 'We leverage industry-leading tools and methodologies to deliver exceptional results with speed and precision.',
-      methodology: {
-        title: 'Agile & Iterative Development',
+type Stat = { value: string; label: string };
+type Feature = { title: string; description: string };
+
+const BROCHURE_THEME = {
+  bg: '#0A0A0A',
+  panel: 'rgba(255,255,255,0.04)',
+  panelStrong: 'rgba(255,255,255,0.06)',
+  border: 'rgba(255,255,255,0.12)',
+  borderStrong: 'rgba(255,255,255,0.18)',
+  text: '#FFFFFF',
+  muted: 'rgba(255,255,255,0.70)',
+  mutedStrong: 'rgba(255,255,255,0.82)',
+  accent: '#22D3EE',
+} as const;
+
+const BROCHURE_DECOR = {
+  glow: `0 18px 60px rgba(34,211,238,0.10)`,
+  glowStrong: `0 24px 90px rgba(34,211,238,0.14)`,
+  heroGradient: `radial-gradient(900px 340px at 22% 10%, rgba(34,211,238,0.14) 0%, rgba(34,211,238,0.00) 60%),
+                 radial-gradient(800px 320px at 88% 18%, rgba(167,139,250,0.12) 0%, rgba(167,139,250,0.00) 55%),
+                 linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 55%, rgba(255,255,255,0.00) 100%)`,
+  gridPattern: {
+    backgroundImage: `
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
+    `,
+    backgroundSize: '56px 56px',
+    opacity: 0.06,
+  } as const,
+} as const;
+
+const CARD_STYLE = {
+  surface: 'linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%)',
+  surfaceSoft: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+  shadow: '0 18px 60px rgba(0,0,0,0.35)',
+} as const;
+
+const SERVICE_ICONS = {
+  'AI GPU Optimization': Cpu,
+  'CUDA Development': Code,
+  'RAG Applications': MessageSquare,
+  'SaaS Development': Package,
+  'CI/CD Automation': RefreshCw,
+  'Security & VAPT': Shield,
+} as const;
+
+const SECTION_SPACING = {
+  paddingTop: 56,
+  paddingBottom: 52,
+} as const;
+
+export function BrochurePage() {
+  const brochureRef = useRef<HTMLDivElement | null>(null);
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [pdfMode, setPdfMode] = useState(false);
+
+  const brochure = useMemo(() => {
+    const stats: Stat[] = [
+      { value: '25+', label: 'Clients' },
+      { value: '50+', label: 'Projects Delivered' },
+      { value: '98%', label: 'Client Satisfaction' },
+      { value: '24/7', label: 'Support' },
+    ];
+
+    const services: Feature[] = [
+      { title: 'AI GPU Optimization', description: 'Kernel-level tuning, profiling, batching, and performance engineering for real-world AI workloads.' },
+      { title: 'CUDA Development', description: 'Custom CUDA kernels, TensorRT pipelines, Triton optimization, and deployment hardening.' },
+      { title: 'RAG Applications', description: 'Grounded assistants and agents using your private data with secure retrieval and evaluation.' },
+      { title: 'SaaS Development', description: 'Design, build, and ship production-grade SaaS products with scalability and reliability.' },
+      { title: 'CI/CD Automation', description: 'Fast, repeatable releases with quality gates, observability, and infrastructure automation.' },
+      { title: 'Security & VAPT', description: 'Security-first delivery with vulnerability assessment, penetration testing, and best practices.' },
+    ];
+
+    const industrySolutions = [
+      {
+        title: 'HealthTech Solutions',
+        subtitle: 'Connected healthcare intelligence',
+        bullets: ['Hospital workflow automation', 'Real-time monitoring', 'Predictive analytics', 'Compliance-ready architecture'],
+        tech: 'HIPAA-ready patterns • IoT • Computer Vision',
+      },
+      {
+        title: 'FoodTech Solutions',
+        subtitle: 'Smart supply chain ecosystem',
+        bullets: ['Demand forecasting', 'Traceability', 'Quality monitoring', 'Predictive logistics'],
+        tech: 'IoT • Blockchain • NLP • Predictive Analytics',
+      },
+      {
+        title: 'EnvironmentTech Solutions',
+        subtitle: 'Sustainable technology',
+        bullets: ['Emission optimization', 'ESG automation', 'Sensor analytics', 'Compliance reporting'],
+        tech: 'IoT • Satellite Data • Real-time Dashboards',
+      },
+      {
+        title: 'RetailTech for Garments',
+        subtitle: 'Fashion innovation',
+        bullets: ['Visual search', 'Inventory prediction', 'Vision QC', 'Customer intelligence'],
+        tech: 'Computer Vision • Edge AI • Analytics',
+      },
+    ] as const;
+
+    const capabilities = [
+      { icon: Brain, name: 'AI & LLM Platforms', items: ['GPT integration', 'Custom LLMs', 'RAG systems', 'Fine-tuning & evaluation'] },
+      { icon: Cpu, name: 'GPU Optimization', items: ['CUDA development', 'Tensor optimization', 'Performance profiling', 'Hardware acceleration'] },
+      { icon: Code, name: 'Web & App Engineering', items: ['React apps', 'Mobile-friendly UI', 'APIs & integrations', 'Performance & SEO'] },
+      { icon: Cloud, name: 'Cloud & Edge', items: ['AWS/Azure/GCP', 'Kubernetes', 'Serverless', 'Edge deployments'] },
+      { icon: Package, name: 'Product Engineering', items: ['Agile delivery', 'MVP to scale', 'DevOps', 'CI/CD'] },
+    ] as const;
+
+    const processSteps = [
+      {
+        icon: RefreshCw,
+        title: 'Agile & Iterative Delivery',
         points: [
           'Sprint-based delivery for faster time-to-market',
           'Continuous feedback loops with stakeholders',
-          'Adaptive planning and flexible responses to change',
-          'Incremental delivery of business value'
-        ]
-      },
-      tools: [
-        { icon: GitBranch, name: 'JIRA', desc: 'Project management & tracking' },
-        { icon: Code, name: 'Confluence', desc: 'Documentation & collaboration' },
-        { icon: Package, name: 'Bitbucket', desc: 'Version control & code review' },
-        { icon: RefreshCw, name: 'Jenkins', desc: 'CI/CD automation' },
-        { icon: Cloud, name: 'Kubernetes', desc: 'Container orchestration' },
-        { icon: Workflow, name: 'DevOps', desc: 'End-to-end automation' }
-      ],
-      benefits: [
-        'Faster deployment cycles',
-        'Higher code quality',
-        'Reduced time-to-market',
-        'Improved collaboration'
-      ]
-    }
-  },
-  {
-    id: 12,
-    type: 'why-choose-us',
-    title: 'Why Choose Jashom?',
-    subtitle: 'The Jashom Difference',
-    reasons: [
-      { icon: Zap, title: 'Lightning Fast', desc: 'Deploy AI solutions at unprecedented speeds' },
-      { icon: Shield, title: 'Enterprise Security', desc: 'Bank-grade security protocols' },
-      { icon: Award, title: '15+ Awards', desc: 'Industry recognition for excellence' },
-      { icon: Users, title: '100+ AI Engineers', desc: 'Expert team of specialists' },
-      { icon: Globe, title: '25+ Countries', desc: 'Global presence and support' },
-      { icon: TrendingUp, title: 'Proven ROI', desc: '10x performance improvements' }
-    ]
-  },
-  {
-    id: 13,
-    type: 'portfolio',
-    title: 'Success Stories',
-    subtitle: 'Transforming Businesses Worldwide',
-    cases: [
-      {
-        title: 'TechVision Inc',
-        impact: '85% reduction in AI inference time',
-        client: 'CTO, Sarah Chen',
-        industry: 'Technology'
+          'Adaptive planning and flexible response to change',
+          'Incremental delivery of business value',
+        ],
       },
       {
-        title: 'RetailPro',
-        impact: 'ROI exceeded within 6 months',
-        client: 'VP Engineering, Michael Rodriguez',
-        industry: 'Retail'
+        icon: Workflow,
+        title: 'Enterprise Collaboration',
+        points: [
+          'Clear documentation and shared visibility',
+          'Code review and automated quality checks',
+          'Release pipelines with traceability',
+          'Monitoring and long-term performance tuning',
+        ],
       },
-      {
-        title: 'HealthTech Solutions',
-        impact: 'Model deployment: weeks → hours',
-        client: 'Head of AI, Dr. Emily Watson',
-        industry: 'Healthcare'
-      }
-    ]
-  },
-  {
-    id: 14,
-    type: 'contact',
-    title: 'Let\'s Connect',
-    subtitle: 'Ready to Transform Your Business?',
-    content: {
-      tagline: 'Join hundreds of forward-thinking companies leveraging Jashom\'s AI expertise',
-      contact: [
-        { icon: Mail, label: 'Email', value: 'info@jashom.com' },
-        { icon: Phone, label: 'Phone', value: '+91 90239 06363' },
-        { icon: MapPin, label: 'Location', value: '414, Satyam-2, Amba Business Park, ATPL, Adalaj, Gujarat, India' }
-      ]
-    }
-  }
-];
+    ] as const;
 
-export function BrochurePage() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+    const tools = [
+      { icon: GitBranch, name: 'JIRA', desc: 'Project tracking' },
+      { icon: Code, name: 'Confluence', desc: 'Documentation' },
+      { icon: Package, name: 'Bitbucket', desc: 'Version control & code review' },
+      { icon: RefreshCw, name: 'Jenkins', desc: 'CI/CD automation' },
+      { icon: Cloud, name: 'Kubernetes', desc: 'Container orchestration' },
+      { icon: Workflow, name: 'DevOps', desc: 'End-to-end automation' },
+    ] as const;
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
+    const reasons = [
+      { icon: Zap, title: 'Fast Execution', desc: 'Move from idea to production quickly with an optimization-first mindset.' },
+      { icon: Shield, title: 'Security Mindset', desc: 'Security and best practices baked into delivery and operations.' },
+      { icon: TrendingUp, title: 'Measurable Outcomes', desc: 'Performance, cost, and reliability improvements you can validate.' },
+      { icon: Cpu, title: 'Deep GPU Expertise', desc: 'Hands-on tuning from kernels to inference pipelines and tooling.' },
+      { icon: Globe, title: 'Global Collaboration', desc: 'Remote-friendly delivery with transparent communication and reporting.' },
+      { icon: MessageSquare, title: 'Clear Communication', desc: 'Simple explanations, practical trade-offs, and tight feedback loops.' },
+    ] as const;
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
+    const successStories = [
+      { title: 'TechVision Inc', impact: 'Significant reduction in AI inference time', byline: 'CTO testimonial', industry: 'Technology' },
+      { title: 'RetailPro', impact: 'ROI achieved quickly with optimization-led delivery', byline: 'VP Engineering testimonial', industry: 'Retail' },
+      { title: 'HealthTech Solutions', impact: 'Model deployment cycle accelerated dramatically', byline: 'Head of AI testimonial', industry: 'Healthcare' },
+    ] as const;
 
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
+    const contact = {
+      email: 'info@jashom.com',
+      phone: '+91 90239 06363',
+      address: '414, Satyam-2, Amba Business Park, ATPL, Adalaj, Gujarat, India',
+    };
 
-  const toggleFullscreen = async () => {
+    return {
+      hero: {
+        title: 'Company Brochure',
+        subtitle: 'AI. Optimized. Everywhere.',
+        tagline: 'GPU optimization, CUDA development, and applied AI engineering for modern teams.',
+      },
+      stats,
+      services,
+      industrySolutions,
+      capabilities,
+      processSteps,
+      tools,
+      reasons,
+      successStories,
+      about: {
+        mission: 'Pioneering AI and GPU optimization solutions that transform business outcomes with speed, reliability, and measurable performance.',
+        vision: 'To help teams adopt advanced AI efficiently—making performance and scale accessible without compromising security or quality.',
+      },
+      contact,
+    };
+  }, []);
+
+  const handleDownloadPdf = async () => {
+    if (!brochureRef.current || isGeneratingPdf) return;
+
+    setIsGeneratingPdf(true);
+    setPdfMode(true);
     try {
-      if (!document.fullscreenElement) {
-        await document.documentElement.requestFullscreen();
-      } else {
-        await document.exitFullscreen();
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+      const canvas = await html2canvas(brochureRef.current, {
+        scale: 2,
+        backgroundColor: BROCHURE_THEME.bg,
+        useCORS: true,
+        windowWidth: brochureRef.current.scrollWidth,
+      });
+
+      const pdf = new jsPDF({ orientation: 'p', unit: 'pt', format: 'a4' });
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+
+      // Slice the captured canvas into page-sized images.
+      // This avoids "seam lines" / shadow bars that can appear when using a single
+      // huge image shifted by negative positions across pages.
+      const marginTopPt = 18;
+      const marginBottomPt = 18;
+      const contentHeightPt = pdfHeight - marginTopPt - marginBottomPt;
+
+      const pageHeightPx = Math.round((contentHeightPt * canvas.width) / pdfWidth);
+      const overlapPx = 2;
+
+      let renderedHeightPx = 0;
+      let pageIndex = 0;
+
+      while (renderedHeightPx < canvas.height) {
+        const sliceTop = pageIndex === 0 ? 0 : Math.max(0, renderedHeightPx - overlapPx);
+        const sliceHeight = Math.min(pageHeightPx + (pageIndex === 0 ? 0 : overlapPx), canvas.height - sliceTop);
+
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = sliceHeight;
+        const ctx = pageCanvas.getContext('2d');
+        if (!ctx) break;
+
+        ctx.fillStyle = BROCHURE_THEME.bg;
+        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        ctx.imageSmoothingEnabled = true;
+
+        ctx.drawImage(
+          canvas,
+          0,
+          sliceTop,
+          canvas.width,
+          sliceHeight,
+          0,
+          0,
+          canvas.width,
+          sliceHeight
+        );
+
+        const imgData = pageCanvas.toDataURL('image/png');
+        const sliceHeightPt = (sliceHeight * pdfWidth) / canvas.width;
+
+        if (pageIndex > 0) pdf.addPage();
+
+        // Fill the whole PDF page background (prevents white area).
+        pdf.setFillColor(10, 10, 10);
+        pdf.rect(0, 0, pdfWidth, pdfHeight, 'F');
+
+        pdf.addImage(imgData, 'PNG', 0, marginTopPt, pdfWidth, sliceHeightPt);
+
+        renderedHeightPx += pageHeightPx;
+        pageIndex += 1;
       }
-    } catch (error) {
-      console.log('Fullscreen not supported or blocked:', error);
-      // Silently fail - fullscreen is a nice-to-have feature
+
+      pdf.save('Jashom-Company-Brochure.pdf');
+    } finally {
+      setPdfMode(false);
+      setIsGeneratingPdf(false);
     }
   };
-
-  const slide = slides[currentSlide];
 
   return (
     <div className="min-h-screen bg-black pt-16">
       <SEO
-        title="Company Brochure | Jashom AI Solutions"
-        description="Download Jashom's comprehensive company brochure featuring our AI services, capabilities, and success stories."
-        keywords="Jashom brochure, AI services presentation, company profile, IT services"
+        title="Company Brochure | Jashom"
+        description="Explore Jashom's company brochure and download a PDF with our services, capabilities, and contact details."
+        keywords="Jashom brochure, GPU optimization, CUDA development, RAG applications, AI engineering"
       />
 
-      {/* Presentation Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Controls */}
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex items-center gap-4">
-            <span className="text-white/60 text-sm">
-              Slide {currentSlide + 1} of {slides.length}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-3">
+      {/* Brochure page */}
+      <div
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
+        style={{ paddingTop: '24px' }}
+      >
+        {/* Page actions (non-sticky) */}
+        <div className="flex justify-center mb-4" style={{ marginTop: '12px' }}>
+          <div
+            className="w-full max-w-4xl"
+            style={{ display: 'flex', justifyContent: 'flex-end' }}
+          >
             <motion.button
-              onClick={() => window.print()}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-[#ffffff]/30 text-white hover:bg-white/10 transition-all text-sm"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              onClick={handleDownloadPdf}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all text-sm disabled:opacity-60 disabled:cursor-not-allowed"
+              style={{
+                backgroundColor: BROCHURE_THEME.accent,
+                color: '#001014',
+                boxShadow: '0 10px 24px rgba(0,0,0,0.35)',
+                border: `1px solid ${BROCHURE_THEME.borderStrong}`,
+              }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              disabled={isGeneratingPdf}
+              aria-label="Download brochure as PDF"
             >
               <Download className="w-4 h-4" />
-              <span>Print/PDF</span>
-            </motion.button>
-
-            <motion.button
-              onClick={toggleFullscreen}
-              className="p-2 rounded-lg bg-white/5 border border-[#ffffff]/30 text-white hover:bg-white/10 transition-all"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Maximize2 className="w-4 h-4" />
+              <span>{isGeneratingPdf ? 'Generating…' : 'Download PDF'}</span>
             </motion.button>
           </div>
         </div>
 
-        {/* Slide Display */}
-        <div className="relative aspect-[16/9] glass-effect rounded-2xl border-2 border-[#ffffff]/30 overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute inset-0" style={{
-            backgroundImage: `
-              linear-gradient(rgba(30, 144, 255, 0.03) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(30, 144, 255, 0.03) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px'
-          }} />
-
-          {/* Slide Navigation */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full glass-effect border border-[#ffffff]/30 flex items-center justify-center text-white hover:border-[#d1d5db]/50 transition-all opacity-70 hover:opacity-100"
-            disabled={currentSlide === 0}
+        <div className="flex justify-center">
+          <div
+            ref={brochureRef}
+            className="w-full max-w-4xl rounded-2xl overflow-hidden"
+            data-brochure-root="true"
+            style={{
+              position: 'relative',
+              backgroundColor: BROCHURE_THEME.bg,
+              color: BROCHURE_THEME.text,
+              boxShadow: '0 30px 120px rgba(0,0,0,0.55)',
+              border: `1px solid ${BROCHURE_THEME.border}`,
+            }}
           >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-
-          <button
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full glass-effect border border-[#ffffff]/30 flex items-center justify-center text-white hover:border-[#d1d5db]/50 transition-all opacity-70 hover:opacity-100"
-            disabled={currentSlide === slides.length - 1}
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-
-          {/* Slide Content */}
-          <div className="relative h-full p-12 flex flex-col">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={slide.id}
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.3 }}
-                className="h-full flex flex-col"
+            {pdfMode && (
+              <style>{`
+                [data-brochure-root],
+                [data-brochure-root] *,
+                [data-brochure-root] *::before,
+                [data-brochure-root] *::after {
+                  box-shadow: none !important;
+                  filter: none !important;
+                  backdrop-filter: none !important;
+                  background-image: none !important;
+                  border: none !important;
+                  border-width: 0 !important;
+                  outline: none !important;
+                }
+                [data-brochure-root] [data-brochure-section="true"] {
+                  border-bottom-width: 0 !important;
+                  border-top-width: 0 !important;
+                }
+                [data-brochure-root] [data-pdf-surface="card"] {
+                  background: #0F0F10 !important;
+                }
+                [data-brochure-root] [data-pdf-surface="panel"] {
+                  background: rgba(255,255,255,0.04) !important;
+                }
+              `}</style>
+            )}
+            {/* Cover */}
+            <div style={{ position: 'relative' }}>
+              {!pdfMode && (
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: BROCHURE_DECOR.heroGradient,
+                  }}
+                />
+              )}
+              {!pdfMode && (
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    ...BROCHURE_DECOR.gridPattern,
+                  }}
+                />
+              )}
+              <div
+                className="px-8 sm:px-10 py-10 border-b"
+                data-brochure-section="true"
+                style={{
+                  position: 'relative',
+                  backgroundColor: 'transparent',
+                  borderBottomColor: BROCHURE_THEME.border,
+                }}
               >
-                {/* Cover Slide */}
-                {slide.type === 'cover' && (
-                  <div className="flex flex-col items-center justify-center h-full text-center">
-                    <motion.div
-                      className="mb-8"
-                      animate={{
-                        scale: [1, 1.05, 1]
+                <div className="flex items-start justify-between gap-6 flex-wrap">
+                  <div className="min-w-0" style={{ maxWidth: 760 }}>
+                    <div className="inline-flex items-center gap-3 mb-6">
+                      <img src="/jashom-logo-header-70px.png" alt="Jashom" className="h-10 w-auto object-contain" />
+                      <div className="text-sm" style={{ color: BROCHURE_THEME.muted }}>
+                        Jashom Technologies
+                      </div>
+                      <span
+                        className="text-xs"
+                        style={{
+                          color: BROCHURE_THEME.mutedStrong,
+                          border: `1px solid ${BROCHURE_THEME.border}`,
+                          padding: '6px 10px',
+                          borderRadius: 999,
+                          background: 'rgba(255,255,255,0.03)',
+                        }}
+                      >
+                        Company Brochure
+                      </span>
+                    </div>
+
+                    <h1 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ lineHeight: 1.15 }}>
+                      {brochure.hero.title}
+                    </h1>
+                    <p className="text-lg sm:text-xl mt-2" style={{ color: BROCHURE_THEME.mutedStrong }}>
+                      {brochure.hero.subtitle}
+                    </p>
+                    <div
+                      className="mt-5"
+                      style={{
+                        height: 3,
+                        width: 120,
+                        borderRadius: 999,
+                        background: `linear-gradient(90deg, ${BROCHURE_THEME.accent}, rgba(34,211,238,0.0))`,
                       }}
-                      transition={{ duration: 4, repeat: Infinity }}
+                    />
+                    <p className="mt-4 max-w-2xl leading-relaxed" style={{ color: BROCHURE_THEME.muted }}>
+                      {brochure.hero.tagline}
+                    </p>
+                  </div>
+
+                  {/* Quick contact card */}
+                  <div
+                    className="w-full sm:w-auto rounded-2xl border p-5"
+                    data-pdf-surface="panel"
+                    style={{
+                      borderColor: BROCHURE_THEME.border,
+                      background: 'rgba(0,0,0,0.25)',
+                      backdropFilter: pdfMode ? undefined : 'blur(10px)',
+                      boxShadow: BROCHURE_DECOR.glow,
+                      minWidth: 280,
+                      marginTop: 10,
+                      paddingTop: 20,
+                      paddingRight: 20,
+                      paddingBottom: 18,
+                      paddingLeft: 20,
+                    }}
+                  >
+                    <div className="text-xs" style={{ color: BROCHURE_THEME.muted }}>
+                      Contact
+                    </div>
+                    <div
+                      className="text-sm"
+                      style={{
+                        color: BROCHURE_THEME.mutedStrong,
+                        marginTop: 12,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 10,
+                      }}
                     >
-                      <img
-                        src="/jashom-logo-header-70px.png"
-                        alt="Jashom Logo"
-                        className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto mx-auto object-contain"
-                      />
-                    </motion.div>
-                    <h1 className="text-6xl mb-4 text-gradient">{slide.title}</h1>
-                    <p className="text-4xl text-[#d1d5db] mb-4">{slide.subtitle}</p>
-                    <p className="text-xl text-white/70 mb-8">{slide.tagline}</p>
-                    <div className="h-1 w-32 bg-gradient-to-r from-[#ffffff] to-[#d1d5db] rounded-full" />
-                    <p className="text-white/50 mt-8">{slide.footer}</p>
-                  </div>
-                )}
-
-                {/* About Slide */}
-                {slide.type === 'about' && (
-                  <div className="h-full flex flex-col">
-                    <div className="mb-8">
-                      <h2 className="text-4xl mb-2 text-gradient">{slide.title}</h2>
-                      <p className="text-[#d1d5db]">{slide.subtitle}</p>
-                    </div>
-
-                    <div className="flex-grow grid grid-cols-2 gap-8">
-                      <div className="space-y-6">
-                        <div>
-                          <h3 className="text-white mb-3">Our Mission</h3>
-                          <p className="text-white/70">{slide.content?.mission}</p>
-                        </div>
-                        <div>
-                          <h3 className="text-white mb-3">Our Vision</h3>
-                          <p className="text-white/70">{slide.content?.vision}</p>
-                        </div>
+                      <div className="flex items-center gap-2">
+                        <Mail className="w-4 h-4" style={{ color: BROCHURE_THEME.accent }} />
+                        <span>{brochure.contact.email}</span>
                       </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        {slide.content?.stats?.map((stat: any, idx: number) => (
-                          <div key={idx} className="glass-effect rounded-xl p-6 border border-[#ffffff]/20 text-center">
-                            <div className="text-3xl text-gradient mb-2">{stat.value}</div>
-                            <div className="text-white/60 text-sm">{stat.label}</div>
-                          </div>
-                        ))}
+                      <div className="flex items-center gap-2">
+                        <Phone className="w-4 h-4" style={{ color: BROCHURE_THEME.accent }} />
+                        <span>{brochure.contact.phone}</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <MapPin className="w-4 h-4 mt-0.5" style={{ color: BROCHURE_THEME.accent }} />
+                        <span className="leading-relaxed">{brochure.contact.address}</span>
                       </div>
                     </div>
                   </div>
-                )}
-
-                {/* Services Overview Slide */}
-                {slide.type === 'services-overview' && (
-                  <div className="h-full flex flex-col">
-                    <div className="mb-8">
-                      <h2 className="text-4xl mb-2 text-gradient">{slide.title}</h2>
-                      <p className="text-[#d1d5db]">{slide.subtitle}</p>
-                    </div>
-
-                    <div className="flex-grow grid grid-cols-3 gap-6">
-                      {slide.services?.map((service: any, idx: number) => (
-                        <motion.div
-                          key={idx}
-                          className="glass-effect rounded-xl p-6 border border-[#ffffff]/20 hover:border-[#d1d5db]/50 transition-all flex flex-col items-center text-center"
-                          whileHover={{ scale: 1.05, y: -5 }}
-                        >
-                          <div className={`w-16 h-16 rounded-xl bg-[#111] border border-white/10 flex items-center justify-center mb-4`}>
-                            <service.icon className="w-8 h-8 text-white" />
-                          </div>
-                          <h3 className="text-white text-sm">{service.name}</h3>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Service Detail Slide */}
-                {slide.type === 'service-detail' && (
-                  <div className="h-full flex flex-col">
-                    <div className="mb-6">
-                      <h2 className="text-4xl mb-2 text-gradient">{slide.title}</h2>
-                      <p className="text-[#d1d5db]">{slide.subtitle}</p>
-                    </div>
-
-                    <div className="flex-grow">
-                      <p className="text-white/70 mb-6 text-lg">{slide.content?.description}</p>
-
-                      <div className="grid grid-cols-2 gap-4 mb-6">
-                        {slide.content?.highlights?.map((highlight: string, idx: number) => (
-                          <div key={idx} className="flex items-center gap-3 glass-effect rounded-lg p-3 border border-[#ffffff]/20">
-                            <CheckCircle2 className="w-5 h-5 text-[#d1d5db] flex-shrink-0" />
-                            <span className="text-white/80 text-sm">{highlight}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="glass-effect rounded-lg p-4 border border-[#ffffff]/30">
-                        <div className="text-[#d1d5db] text-sm mb-1">Tech Stack</div>
-                        <div className="text-white/70">{slide.content?.tech}</div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Capabilities Slide */}
-                {slide.type === 'capabilities' && (
-                  <div className="h-full flex flex-col">
-                    <div className="mb-6">
-                      <h2 className="text-4xl mb-2 text-gradient">{slide.title}</h2>
-                      <p className="text-[#d1d5db]">{slide.subtitle}</p>
-                    </div>
-
-                    <div className="flex-grow grid grid-cols-3 gap-4">
-                      {slide.capabilities?.slice(0, 3).map((cap: any, idx: number) => (
-                        <div key={idx} className="glass-effect rounded-xl p-4 border border-[#ffffff]/20">
-                          <div className="w-12 h-12 rounded-lg bg-[#111] border border-white/10 flex items-center justify-center mb-3">
-                            <cap.icon className="w-6 h-6 text-white" />
-                          </div>
-                          <h3 className="text-white mb-2 text-sm">{cap.name}</h3>
-                          <div className="space-y-1">
-                            {cap.items.map((item: string, i: number) => (
-                              <div key={i} className="text-white/60 text-xs">• {item}</div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 mt-4">
-                      {slide.capabilities?.slice(3).map((cap: any, idx: number) => (
-                        <div key={idx} className="glass-effect rounded-xl p-4 border border-[#ffffff]/20">
-                          <div className="w-12 h-12 rounded-lg bg-[#111] border border-white/10 flex items-center justify-center mb-3">
-                            <cap.icon className="w-6 h-6 text-white" />
-                          </div>
-                          <h3 className="text-white mb-2 text-sm">{cap.name}</h3>
-                          <div className="space-y-1">
-                            {cap.items.map((item: string, i: number) => (
-                              <div key={i} className="text-white/60 text-xs">• {item}</div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Development Process Slide */}
-                {slide.type === 'development-process' && (
-                  <div className="h-full flex flex-col">
-                    <div className="mb-6">
-                      <h2 className="text-4xl mb-2 text-gradient">{slide.title}</h2>
-                      <p className="text-[#d1d5db] mb-2">{slide.subtitle}</p>
-                      <p className="text-2xl text-gradient italic">{slide.content?.tagline}</p>
-                    </div>
-
-                    <div className="flex-grow grid grid-cols-2 gap-6">
-                      {/* Left Column - Methodology */}
-                      <div className="space-y-6">
-                        <div className="glass-effect rounded-xl p-6 border border-[#ffffff]/30">
-                          <div className="flex items-center gap-3 mb-4">
-                            <div className="w-12 h-12 rounded-lg bg-[#111] border border-white/10 flex items-center justify-center">
-                              <RefreshCw className="w-6 h-6 text-white" />
-                            </div>
-                            <h3 className="text-white text-xl">{slide.content?.methodology?.title}</h3>
-                          </div>
-                          <div className="space-y-2">
-                            {slide.content?.methodology?.points?.map((point: string, idx: number) => (
-                              <div key={idx} className="flex items-start gap-2">
-                                <CheckCircle2 className="w-4 h-4 text-[#d1d5db] flex-shrink-0 mt-1" />
-                                <span className="text-white/70 text-sm">{point}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Benefits */}
-                        <div className="glass-effect rounded-xl p-6 border border-[#ffffff]/30">
-                          <h4 className="text-white mb-3">Key Benefits</h4>
-                          <div className="grid grid-cols-2 gap-2">
-                            {slide.content?.benefits?.map((benefit: string, idx: number) => (
-                              <div key={idx} className="flex items-center gap-2 text-sm text-white/70">
-                                <div className="w-1.5 h-1.5 rounded-full bg-[#d1d5db]" />
-                                {benefit}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Right Column - Tools */}
-                      <div>
-                        <div className="glass-effect rounded-xl p-6 border border-[#ffffff]/30 h-full">
-                          <h3 className="text-white mb-4 text-lg">Enterprise Tools & Technologies</h3>
-                          <div className="grid grid-cols-2 gap-4">
-                            {slide.content?.tools?.map((tool: any, idx: number) => (
-                              <motion.div
-                                key={idx}
-                                className="glass-effect rounded-lg p-4 border border-[#ffffff]/20 hover:border-[#d1d5db]/50 transition-all"
-                                whileHover={{ scale: 1.05, y: -3 }}
-                              >
-                                <tool.icon className="w-8 h-8 text-[#d1d5db] mb-2" />
-                                <div className="text-white mb-1">{tool.name}</div>
-                                <div className="text-white/60 text-xs">{tool.desc}</div>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Bottom highlight */}
-                    <div className="mt-6 glass-effect rounded-lg p-4 border border-[#d1d5db]/30 bg-gradient-to-r from-[#ffffff]/10 to-[#d1d5db]/10">
-                      <p className="text-center text-white/80 text-sm">
-                        <span className="text-[#d1d5db]">Company-wide standardization</span> on JIRA, Confluence, and Bitbucket ensures seamless collaboration across all teams
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {/* Why Choose Us Slide */}
-                {slide.type === 'why-choose-us' && (
-                  <div className="h-full flex flex-col">
-                    <div className="mb-6">
-                      <h2 className="text-4xl mb-2 text-gradient">{slide.title}</h2>
-                      <p className="text-[#d1d5db]">{slide.subtitle}</p>
-                    </div>
-
-                    <div className="flex-grow grid grid-cols-3 gap-4">
-                      {slide.reasons?.map((reason: any, idx: number) => (
-                        <motion.div
-                          key={idx}
-                          className="glass-effect rounded-xl p-6 border border-[#ffffff]/20 hover:border-[#d1d5db]/50 transition-all text-center"
-                          whileHover={{ scale: 1.05 }}
-                        >
-                          <div className="w-14 h-14 rounded-xl bg-[#111] border border-white/10 flex items-center justify-center mx-auto mb-3">
-                            <reason.icon className="w-7 h-7 text-white" />
-                          </div>
-                          <h3 className="text-white mb-2">{reason.title}</h3>
-                          <p className="text-white/60 text-sm">{reason.desc}</p>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Portfolio Slide */}
-                {slide.type === 'portfolio' && (
-                  <div className="h-full flex flex-col">
-                    <div className="mb-6">
-                      <h2 className="text-4xl mb-2 text-gradient">{slide.title}</h2>
-                      <p className="text-[#d1d5db]">{slide.subtitle}</p>
-                    </div>
-
-                    <div className="flex-grow space-y-4">
-                      {slide.cases?.map((case_: any, idx: number) => (
-                        <div key={idx} className="glass-effect rounded-xl p-6 border border-[#ffffff]/20">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-grow">
-                              <h3 className="text-white text-xl mb-2">{case_.title}</h3>
-                              <p className="text-[#d1d5db] mb-2">{case_.impact}</p>
-                              <div className="flex items-center gap-4 text-white/60 text-sm">
-                                <span>{case_.client}</span>
-                                <span>•</span>
-                                <span>{case_.industry}</span>
-                              </div>
-                            </div>
-                            <div className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#ffffff]/20 to-[#d1d5db]/20 border border-[#ffffff]/30">
-                              <div className="text-2xl text-gradient">★★★★★</div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Contact Slide */}
-                {slide.type === 'contact' && (
-                  <div className="h-full flex flex-col items-center justify-center text-center">
-                    <h2 className="text-5xl mb-4 text-gradient">{slide.title}</h2>
-                    <p className="text-2xl text-[#d1d5db] mb-6">{slide.subtitle}</p>
-                    <p className="text-white/70 mb-12 max-w-2xl">{slide.content?.tagline}</p>
-
-                    <div className="grid grid-cols-3 gap-6 mb-12">
-                      {slide.content?.contact?.map((item: any, idx: number) => (
-                        <div key={idx} className="glass-effect rounded-xl p-6 border border-[#ffffff]/20">
-                          <item.icon className="w-8 h-8 text-[#d1d5db] mx-auto mb-3" />
-                          <div className="text-white/60 text-sm mb-2">{item.label}</div>
-                          <div className="text-white text-sm leading-relaxed">{item.value}</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <motion.a
-                      href="/contact/"
-                      className="inline-block px-10 py-4 rounded-xl bg-black border border-white text-white text-lg transition-all duration-300 hover:bg-white hover:text-black"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Request a Demo
-                    </motion.a>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Slide Number Footer */}
-            <div className="absolute bottom-4 right-4 text-white/40 text-sm">
-              {currentSlide + 1} / {slides.length}
-            </div>
-
-            {/* Company Logo Footer */}
-            <div className="absolute bottom-4 left-4 text-gradient">
-              Jashom
-            </div>
-          </div>
-        </div>
-
-        {/* Slide Dots Navigation */}
-        <div className="flex justify-center gap-2 mt-6">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`h-2 rounded-full transition-all ${index === currentSlide
-                ? 'bg-[#ffffff] w-8'
-                : 'bg-white/20 w-2 hover:bg-white/40'
-                }`}
-            />
-          ))}
-        </div>
-
-        {/* Slide Thumbnails */}
-        <div className="mt-8 grid grid-cols-6 gap-3">
-          {slides.map((s, index) => (
-            <motion.button
-              key={s.id}
-              onClick={() => goToSlide(index)}
-              className={`aspect-video rounded-lg border-2 overflow-hidden transition-all ${index === currentSlide
-                ? 'border-[#ffffff] scale-105'
-                : 'border-white/10 hover:border-[#ffffff]/50'
-                }`}
-              whileHover={{ scale: index === currentSlide ? 1.05 : 1.05 }}
-            >
-              <div className="w-full h-full glass-effect p-2 flex flex-col items-center justify-center">
-                <div className="text-white/60 text-[10px] text-center line-clamp-2">
-                  {s.title}
                 </div>
-                <div className="text-white/40 text-[8px] mt-1">{index + 1}</div>
+
+                {/* Stats */}
+                <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {brochure.stats.map((s) => (
+                    <div
+                      key={s.label}
+                      className="rounded-xl border p-4"
+                      data-pdf-surface="card"
+                      style={{
+                        borderColor: BROCHURE_THEME.border,
+                        background: 'linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03))',
+                        boxShadow: BROCHURE_DECOR.glow,
+                      }}
+                    >
+                      <div
+                        className="text-2xl font-bold"
+                        style={
+                          pdfMode
+                            ? {
+                              color: BROCHURE_THEME.text,
+                              textShadow: '0 10px 26px rgba(0,0,0,0.45)',
+                            }
+                            : {
+                              background: `linear-gradient(90deg, ${BROCHURE_THEME.text}, ${BROCHURE_THEME.accent})`,
+                              WebkitBackgroundClip: 'text',
+                              backgroundClip: 'text',
+                              color: 'transparent',
+                            }
+                        }
+                      >
+                        {s.value}
+                      </div>
+                      <div className="text-xs mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                        {s.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </motion.button>
-          ))}
+            </div>
+
+            {/* About */}
+            <section
+              className="px-8 sm:px-10 py-10 border-b"
+              data-brochure-section="true"
+              style={{ borderBottomColor: BROCHURE_THEME.border, ...SECTION_SPACING }}
+            >
+              <div className="flex items-end justify-between gap-6">
+                <div>
+                  <h2 className="text-xl font-bold">About Jashom</h2>
+                  <p className="mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                    Who we are and how we help teams ship faster.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <motion.div
+                  className="rounded-2xl border p-6"
+                  data-pdf-surface="card"
+                  style={{
+                    borderColor: BROCHURE_THEME.border,
+                    background: CARD_STYLE.surfaceSoft,
+                    boxShadow: CARD_STYLE.shadow,
+                  }}
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  <div className="text-sm font-semibold">Mission</div>
+                  <div
+                    className="mt-3"
+                    style={{
+                      height: 2,
+                      width: 64,
+                      borderRadius: 999,
+                      background: `linear-gradient(90deg, ${BROCHURE_THEME.accent}, rgba(34,211,238,0))`,
+                    }}
+                  />
+                  <p className="mt-2 leading-relaxed" style={{ color: BROCHURE_THEME.mutedStrong }}>
+                    {brochure.about.mission}
+                  </p>
+                </motion.div>
+                <motion.div
+                  className="rounded-2xl border p-6"
+                  data-pdf-surface="card"
+                  style={{
+                    borderColor: BROCHURE_THEME.border,
+                    background: CARD_STYLE.surfaceSoft,
+                    boxShadow: CARD_STYLE.shadow,
+                  }}
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  <div className="text-sm font-semibold">Vision</div>
+                  <div
+                    className="mt-3"
+                    style={{
+                      height: 2,
+                      width: 64,
+                      borderRadius: 999,
+                      background: `linear-gradient(90deg, ${BROCHURE_THEME.accent}, rgba(34,211,238,0))`,
+                    }}
+                  />
+                  <p className="mt-2 leading-relaxed" style={{ color: BROCHURE_THEME.mutedStrong }}>
+                    {brochure.about.vision}
+                  </p>
+                </motion.div>
+              </div>
+            </section>
+
+            {/* Services */}
+            <section
+              className="px-8 sm:px-10 py-10 border-b"
+              data-brochure-section="true"
+              style={{
+                borderBottomColor: BROCHURE_THEME.border,
+                ...SECTION_SPACING,
+              }}
+            >
+              <div className="flex items-center justify-between gap-6 flex-wrap">
+                <div>
+                  <h2 className="text-xl font-bold">Services</h2>
+                  <p className="mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                    A practical toolkit for applied AI and performance engineering.
+                  </p>
+                </div>
+                <div
+                  className="text-xs"
+                  style={{
+                    marginLeft: 'auto',
+                    alignSelf: 'center',
+                    color: BROCHURE_THEME.accent,
+                    border: `1px solid rgba(34,211,238,0.38)`,
+                    padding: '10px 14px',
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, rgba(34,211,238,0.14), rgba(255,255,255,0.03))',
+                    boxShadow: BROCHURE_DECOR.glow,
+                    letterSpacing: 0.4,
+                  }}
+                >
+                  GPU • CUDA • Applied AI
+                </div>
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {brochure.services.map((svc) => (
+                  <motion.div
+                    key={svc.title}
+                    className="rounded-2xl border p-6"
+                    data-pdf-surface="card"
+                    style={{
+                      borderColor: BROCHURE_THEME.border,
+                      background: CARD_STYLE.surface,
+                      boxShadow: CARD_STYLE.shadow,
+                    }}
+                    whileHover={{ y: -3 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-start gap-3">
+                        <div
+                          className="w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0"
+                          style={{
+                            borderColor: BROCHURE_THEME.borderStrong,
+                            background: 'rgba(0,0,0,0.25)',
+                            boxShadow: BROCHURE_DECOR.glow,
+                          }}
+                        >
+                          {(() => {
+                            const Icon = (SERVICE_ICONS as any)[svc.title] ?? CheckCircle2;
+                            return <Icon className="w-5 h-5" style={{ color: BROCHURE_THEME.accent }} />;
+                          })()}
+                        </div>
+                        <div>
+                          <div className="font-semibold">{svc.title}</div>
+                          <p className="mt-2 text-sm leading-relaxed" style={{ color: BROCHURE_THEME.muted }}>
+                            {svc.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+
+            {/* Industry solutions */}
+            <section
+              className="px-8 sm:px-10 py-10 border-b"
+              data-brochure-section="true"
+              style={{ borderBottomColor: BROCHURE_THEME.border, ...SECTION_SPACING }}
+            >
+              <h2 className="text-xl font-bold">Industry Solutions</h2>
+              <p className="mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                Built for real-world operations, compliance, and scale.
+              </p>
+
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {brochure.industrySolutions.map((s) => (
+                  <motion.div
+                    key={s.title}
+                    className="rounded-2xl border p-6"
+                    data-pdf-surface="card"
+                    style={{
+                      borderColor: BROCHURE_THEME.border,
+                      background: CARD_STYLE.surface,
+                      boxShadow: CARD_STYLE.shadow,
+                    }}
+                    whileHover={{ y: -3 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="font-semibold">{s.title}</div>
+                        <div className="text-sm mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                          {s.subtitle}
+                        </div>
+                      </div>
+                      <div
+                        className="w-10 h-10 rounded-xl bg-[#ffffff] border flex items-center justify-center flex-shrink-0"
+                        style={{
+                          borderColor: BROCHURE_THEME.borderStrong,
+                          backgroundColor: 'rgba(255,255,255,0.06)',
+                        }}
+                      >
+                        <Zap className="w-5 h-5" />
+                      </div>
+                    </div>
+
+                    <ul className="mt-4 space-y-2">
+                      {s.bullets.map((b) => (
+                        <li
+                          key={b}
+                          className="flex items-start gap-2 text-sm"
+                          style={{ color: BROCHURE_THEME.mutedStrong }}
+                        >
+                          <span
+                            className="mt-1 inline-block w-1.5 h-1.5 rounded-full"
+                            style={{ backgroundColor: BROCHURE_THEME.accent }}
+                          />
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-4 text-xs" style={{ color: BROCHURE_THEME.muted }}>
+                      {s.tech}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+
+            {/* Capabilities */}
+            <section
+              className="px-8 sm:px-10 py-10 border-b"
+              data-brochure-section="true"
+              style={{ borderBottomColor: BROCHURE_THEME.border, ...SECTION_SPACING }}
+            >
+              <h2 className="text-xl font-bold">Capability Matrix</h2>
+              <p className="mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                Technical expertise across AI, GPU performance, and product delivery.
+              </p>
+
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {brochure.capabilities.map((cap) => (
+                  <motion.div
+                    key={cap.name}
+                    className="rounded-2xl border p-6"
+                    data-pdf-surface="card"
+                    style={{
+                      borderColor: BROCHURE_THEME.border,
+                      background: CARD_STYLE.surfaceSoft,
+                      boxShadow: CARD_STYLE.shadow,
+                    }}
+                    whileHover={{ y: -3 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="w-10 h-10 rounded-xl border flex items-center justify-center"
+                        style={{
+                          borderColor: BROCHURE_THEME.borderStrong,
+                          background: 'rgba(0,0,0,0.25)',
+                          boxShadow: BROCHURE_DECOR.glow,
+                        }}
+                      >
+                        <cap.icon className="w-5 h-5" style={{ color: BROCHURE_THEME.accent }} />
+                      </div>
+                      <div className="font-semibold">{cap.name}</div>
+                    </div>
+                    <div className="mt-4 grid grid-cols-1 gap-2">
+                      {cap.items.map((item) => (
+                        <div
+                          key={item}
+                          className="flex items-start gap-2 text-sm"
+                          style={{ color: BROCHURE_THEME.mutedStrong }}
+                        >
+                          <CheckCircle2 className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: BROCHURE_THEME.accent }} />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+
+            {/* Process */}
+            <section
+              className="px-8 sm:px-10 py-10 border-b"
+              data-brochure-section="true"
+              style={{ borderBottomColor: BROCHURE_THEME.border, ...SECTION_SPACING }}
+            >
+              <h2 className="text-xl font-bold">Development Process</h2>
+              <p className="mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                Agile, measurable, and aligned to production outcomes.
+              </p>
+
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {brochure.processSteps.map((step) => (
+                  <div
+                    key={step.title}
+                    className="rounded-2xl border p-6"
+                    data-pdf-surface="card"
+                    style={{ borderColor: BROCHURE_THEME.border, backgroundColor: BROCHURE_THEME.panel }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="w-10 h-10 rounded-xl bg-[#ffffff] border flex items-center justify-center"
+                        style={{
+                          borderColor: BROCHURE_THEME.borderStrong,
+                          backgroundColor: 'rgba(255,255,255,0.06)',
+                        }}
+                      >
+                        <step.icon className="w-5 h-5" />
+                      </div>
+                      <div className="font-semibold">{step.title}</div>
+                    </div>
+                    <div className="mt-4 space-y-2">
+                      {step.points.map((p) => (
+                        <div
+                          key={p}
+                          className="flex items-start gap-2 text-sm"
+                          style={{ color: BROCHURE_THEME.mutedStrong }}
+                        >
+                          <span
+                            className="mt-1 inline-block w-1.5 h-1.5 rounded-full"
+                            style={{ backgroundColor: BROCHURE_THEME.accent }}
+                          />
+                          <span>{p}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div
+                className="mt-6 rounded-2xl border p-6"
+                data-pdf-surface="card"
+                style={{ borderColor: BROCHURE_THEME.border, backgroundColor: BROCHURE_THEME.panel }}
+              >
+                <div className="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <div className="font-semibold">Tools we use</div>
+                    <div className="text-sm mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                      Visibility, documentation, and automated delivery.
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full sm:w-auto">
+                    {brochure.tools.map((t) => (
+                      <div
+                        key={t.name}
+                        className="rounded-xl border p-3"
+                        style={{ borderColor: BROCHURE_THEME.border, backgroundColor: 'rgba(255,255,255,0.03)' }}
+                      >
+                        <div className="flex items-center gap-2">
+                          <t.icon className="w-4 h-4" />
+                          <div className="text-sm font-semibold">{t.name}</div>
+                        </div>
+                        <div className="text-xs mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                          {t.desc}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Why choose */}
+            <section
+              className="px-8 sm:px-10 py-10 border-b"
+              data-brochure-section="true"
+              style={{ borderBottomColor: BROCHURE_THEME.border, ...SECTION_SPACING }}
+            >
+              <h2 className="text-xl font-bold">Why Choose Jashom</h2>
+              <p className="mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                A delivery partner focused on outcomes and maintainability.
+              </p>
+
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {brochure.reasons.map((r) => (
+                  <motion.div
+                    key={r.title}
+                    className="rounded-2xl border p-6"
+                    data-pdf-surface="card"
+                    style={{
+                      borderColor: BROCHURE_THEME.border,
+                      background: CARD_STYLE.surface,
+                      boxShadow: CARD_STYLE.shadow,
+                    }}
+                    whileHover={{ y: -3 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div
+                        className="w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0"
+                        style={{
+                          borderColor: BROCHURE_THEME.borderStrong,
+                          background: 'rgba(0,0,0,0.25)',
+                          boxShadow: BROCHURE_DECOR.glow,
+                        }}
+                      >
+                        <r.icon className="w-5 h-5" style={{ color: BROCHURE_THEME.accent }} />
+                      </div>
+                      <div>
+                        <div className="font-semibold">{r.title}</div>
+                        <div className="text-sm mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                          {r.desc}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+
+            {/* Success stories */}
+            <section
+              className="px-8 sm:px-10 py-10 border-b"
+              data-brochure-section="true"
+              style={{ borderBottomColor: BROCHURE_THEME.border, ...SECTION_SPACING }}
+            >
+              <h2 className="text-xl font-bold">Success Stories</h2>
+              <p className="mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                Representative outcomes from real delivery engagements.
+              </p>
+
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {brochure.successStories.map((s) => (
+                  <motion.div
+                    key={s.title}
+                    className="rounded-2xl border p-6"
+                    data-pdf-surface="card"
+                    style={{
+                      borderColor: BROCHURE_THEME.border,
+                      background: CARD_STYLE.surfaceSoft,
+                      boxShadow: CARD_STYLE.shadow,
+                    }}
+                    whileHover={{ y: -3 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    <div className="font-semibold">{s.title}</div>
+                    <div className="text-sm mt-2 leading-relaxed" style={{ color: BROCHURE_THEME.mutedStrong }}>
+                      {s.impact}
+                    </div>
+                    <div className="text-xs mt-3" style={{ color: BROCHURE_THEME.muted }}>
+                      {s.byline} • {s.industry}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+
+            {/* Contact */}
+            <section
+              className="px-8 sm:px-10 py-10"
+              data-brochure-section="true"
+              style={{ ...SECTION_SPACING, paddingBottom: 64 }}
+            >
+              <div className="flex items-start justify-between gap-6 flex-wrap">
+                <div>
+                  <h2 className="text-xl font-bold">Let’s Connect</h2>
+                  <p className="mt-1" style={{ color: BROCHURE_THEME.muted }}>
+                    Ready to optimize performance or ship an AI product?
+                  </p>
+                  <div className="mt-5 space-y-2 text-sm" style={{ color: BROCHURE_THEME.mutedStrong }}>
+                    <div className="flex items-center gap-2">
+                      <Mail className="w-4 h-4" />
+                      <span>{brochure.contact.email}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-4 h-4" />
+                      <span>{brochure.contact.phone}</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <MapPin className="w-4 h-4 mt-0.5" />
+                      <span className="leading-relaxed">{brochure.contact.address}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-full sm:w-auto">
+                  {!pdfMode && (
+                    <div className="text-xs mt-3" style={{ color: BROCHURE_THEME.muted }}>
+                      Tip: Use “Download PDF” above to save this brochure as a PDF.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
-
-      {/* Print Styles */}
-      <style>{`
-        @media print {
-          body * {
-            visibility: hidden;
-          }
-          .print-slide, .print-slide * {
-            visibility: visible;
-          }
-          .print-slide {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-          }
-        }
-      `}</style>
-    </div >
+    </div>
   );
 }
