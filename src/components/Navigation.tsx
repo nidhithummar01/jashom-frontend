@@ -319,8 +319,8 @@ export function Navigation() {
       >
       {/* Logo + badha options ek j pill ma */}
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between" style={{ minHeight: 56 }}>
-        {/* Left: mobile par logo, desktop par khali (pill center rahe) */}
-        <div className="flex-1 flex justify-start min-w-0">
+        {/* Left: mobile par logo (content width), desktop par khali (pill center rahe) */}
+        <div className="flex justify-start min-w-0 md:flex-1">
           <Link to="/" className="flex items-center flex-shrink-0 md:hidden">
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} whileHover={{ scale: 1.05 }}>
               <img src="/jashom-logo-header-70px.png" alt="Jashom" className="w-auto object-contain" style={{ height: 40, maxWidth: 135 }} />
@@ -372,8 +372,8 @@ export function Navigation() {
           </div>
         </div>
 
-        {/* Right: mobile menu button (desktop par empty, pill center rahe) */}
-        <div className="flex-1 flex justify-end min-w-0">
+        {/* Right: mobile menu button (content width so logo left / menu right on mobile) */}
+        <div className="flex justify-end min-w-0 md:flex-1">
           <motion.button
             className="md:hidden text-white z-50 flex-shrink-0 cursor-pointer"
             onClick={() => setIsOpen(!isOpen)}

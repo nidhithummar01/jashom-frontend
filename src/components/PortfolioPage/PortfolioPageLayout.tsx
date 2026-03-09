@@ -230,36 +230,6 @@ export function PortfolioPageLayout({ content, data }: Readonly<Props>) {
       </section>
 
       <section
-        className={`${Theme.SECTION_CLASS} relative overflow-hidden`}
-        style={{ background: Theme.SECTION_BG }}
-      >
-        <div className={`${Theme.SECTION_CONTAINER} relative z-10`}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
-              <motion.div {...Theme.MOTION_FADE_UP_20} className="space-y-6">
-                <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight">{c.about.title}</h2>
-                {c.about.paragraphs.map((p) => (
-                  <p key={p} className="text-white/70 text-base leading-relaxed">
-                    {p}
-                  </p>
-                ))}
-              </motion.div>
-            </div>
-            <div>
-              <motion.div {...Theme.MOTION_FADE_SCALE} transition={{ duration: 0.6, delay: 0.2 }} className="relative">
-                <img
-                  src={c.about.image.src}
-                  alt={c.about.image.alt}
-                  className="w-full h-auto rounded-2xl shadow-2xl"
-                  style={Theme.IMAGE_SHADOW_ACCENT}
-                />
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section
         className="py-20 px-4 sm:px-6 lg:px-8"
         style={{ background: d.CAPABILITY_MATRIX_BG }}
       >

@@ -13,14 +13,6 @@ export const PORTFOLIO_PAGE_CONTENT = {
       'Jashom is an applied AI company advancing artificial intelligence while optimizing performance and reducing energy consumption across GPU infrastructure, model deployment, and healthcare AI systems.',
     backgroundImage: '/images/portfolio.jpg',
   },
-  about: {
-    title: 'About Jashom Technologies',
-    paragraphs: [
-      "Jashom Technologies is a deep-technology AI company that operates at the intersection of GPU engineering and applied artificial intelligence. We don't build surface-level AI solutions — we engineer them from the hardware up, building custom kernels, optimizing inference paths, designing workload orchestration systems, and deploying production-grade AI into environments where performance and reliability are non-negotiable.",
-      'Our work spans four interconnected domains: GPU and systems optimization, AI model fine-tuning and deployment, GPU workload orchestration, and healthcare AI infrastructure. In every domain, the thread is the same — applied engineering that produces measurable results on real hardware.',
-    ],
-    image: { src: '/images/contact.hero.jpg', alt: 'GPU Optimization and Applied AI' },
-  },
   capabilityMatrix: { title: 'Core Capability Matrix' },
   caseStudies: {
     badge: 'GPU Portfolio & Case Studies',

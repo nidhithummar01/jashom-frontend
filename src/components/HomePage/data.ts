@@ -107,7 +107,7 @@ export const homePageData = {
   ] as const,
 
   statsData: [
-    { value: '500+', label: 'Projects Delivered' },
+    { value: '50+', label: 'Projects Delivered' },
     { value: '98%', label: 'Client Satisfaction' },
     { value: '10x', label: 'Performance Gain' },
     { value: '24/7', label: 'Support Available' },

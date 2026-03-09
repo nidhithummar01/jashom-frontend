@@ -381,7 +381,7 @@ export function HomePage() {
                 >
                   {/* Heading with gradient */}
                   <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent leading-tight mb-8 md:mb-10">
-                    500+ clients served
+                    25+ clients, 50+ Projects delivered
                   </h3>
 
                   {/* Metrics Grid - 2 columns on larger screens */}
@@ -994,12 +994,14 @@ export function HomePage() {
                     to drive innovation and achieve unprecedented business outcomes.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
-                    <Link
-                      to="/contact/"
+                    <a
+                      href="https://calendly.com/jaydave-jashom/new-meeting"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-block w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-black border border-white text-white hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 text-sm sm:text-base cursor-pointer"
                     >
                       Request a Demo
-                    </Link>
+                    </a>
                     <Link
                       to="/portfolio/"
                       className="inline-block w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-white/5 border border-[#ffffff]/30 text-white hover:bg-white/10 transition-all duration-300 text-sm sm:text-base cursor-pointer"
