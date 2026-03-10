@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, ChevronDown, Send } from 'lucide-react';
 import { ContactModal } from './ContactModal';
+import { SHOW_BLOG_SECTION } from '../config/featureFlags';
 
 const menuItemVariants = {
   closed: { opacity: 0, x: -20 },
@@ -224,7 +225,7 @@ export function Navigation() {
         { path: '/about/', label: 'About Us' },
         { path: '/about/team/', label: 'Team' },
         { path: '/about/portfolio/', label: 'Portfolio' },
-        { path: '/blogs/', label: 'Blog' },
+        ...(SHOW_BLOG_SECTION ? [{ path: '/blogs/', label: 'Blog' as const }] : []),
         { path: '/about/career/', label: 'Career' }
       ]
     },

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Phone, Mail } from 'lucide-react';
+import { SHOW_BLOG_SECTION } from '../config/featureFlags';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,7 +19,7 @@ export function Footer() {
       { label: 'Hire CUDA Developer', path: '/hire-cuda-developer/' }
     ],
     resources: [
-      { label: 'Blog', path: '/blogs/' },
+      ...(SHOW_BLOG_SECTION ? [{ label: 'Blog', path: '/blogs/' }] : []),
       { label: 'Case Studies', path: '/portfolio/' },
       { label: 'Documentation', path: '/docs/' }
     ],

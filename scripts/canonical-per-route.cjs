@@ -19,9 +19,11 @@ function replaceCanonicalHref(html, newHref) {
   );
 }
 
+// Use www.jashom.com; normalize any old new.jashom.com from env to live domain
 const SITE_ORIGIN = (process.env.SITE_ORIGIN || process.env.VITE_SITE_URL || 'https://www.jashom.com')
   .toString()
-  .replace(/\/$/, '');
+  .replace(/\/$/, '')
+  .replace(/^https:\/\/new\.jashom\.com$/i, 'https://www.jashom.com');
 
 // Static routes only (no :slug or params). Must have leading and trailing slash.
 const STATIC_ROUTES = [

@@ -15,6 +15,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import * as Theme from '../constants/theme';
+import { SHOW_BLOG_SECTION } from '../config/featureFlags';
 import { QuoteIcon, renderServiceFormField, useHomeContactForm } from './ServicePageShared';
 import { homePageData, formatBlogDate } from './HomePage/data';
 
@@ -28,6 +29,10 @@ export function HomePage() {
   const [blogsError, setBlogsError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!SHOW_BLOG_SECTION) {
+      setBlogsLoading(false);
+      return;
+    }
     getBlogs({ status: 'published', limit: 3 })
       .then(setLatestBlogs)
       .catch((e) => setBlogsError(e.message))
@@ -725,7 +730,8 @@ export function HomePage() {
           {/* Premium Divider */}
           <div className="premium-divider" />
 
-          {/* Latest Blogs Section */}
+          {/* Latest Blogs Section - hidden when SHOW_BLOG_SECTION is false; enable in src/config/featureFlags.ts when you have blogs */}
+          {SHOW_BLOG_SECTION && (
           <section className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: '#0B0F14' }}>
             {/* Background decoration */}
             <div className="absolute inset-0 opacity-10">
@@ -896,9 +902,10 @@ export function HomePage() {
               </motion.div>
             </div>
           </section>
+          )}
 
-          {/* Premium Divider */}
-          <div className="premium-divider" />
+          {/* Premium Divider - only when blog section was shown, avoid double divider; keep one for next section */}
+          {SHOW_BLOG_SECTION && <div className="premium-divider" />}
 
           {/* Contact Form Section - Premium Layout */}
           <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${Theme.SECTION_BG} 0%, ${homePageData.BLOG_CARD_BG} 100%)` }}>
