@@ -138,7 +138,7 @@ The project uses Vite for environment variables. Create a `.env` file in the roo
 
 | Variable | Description |
 |----------|-------------|
-| `VITE_SITE_URL` | **Frontend site URL** (no trailing slash), e.g. `https://new.jashom.com`. Used for canonical URLs, Open Graph, and structured data. If unset, the app uses the current origin so DevOps can change the domain via env without code changes. |
+| `VITE_SITE_URL` | **Frontend site URL** (no trailing slash), e.g. `https://www.jashom.com`. Used for canonical URLs, Open Graph, and structured data. If unset, the app uses the current origin so DevOps can change the domain via env without code changes. |
 | `VITE_API_URL` | Backend API base URL (no trailing slash). Used when not using the proxy option. |
 | `VITE_USE_API_PROXY` | Set to `true` to use **same-origin proxy (no CORS)**. The app will request `/api/v1/admin/blogs`; your server must proxy `/api` to the backend. |
 

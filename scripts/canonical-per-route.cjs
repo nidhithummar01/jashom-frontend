@@ -4,7 +4,7 @@
  * No Nginx or server changes required.
  *
  * Usage: node scripts/canonical-per-route.cjs
- * Env:   SITE_ORIGIN or VITE_SITE_URL (e.g. https://new.jashom.com)
+ * Env:   SITE_ORIGIN or VITE_SITE_URL (e.g. https://www.jashom.com)
  */
 
 const fs = require('fs');
@@ -19,7 +19,7 @@ function replaceCanonicalHref(html, newHref) {
   );
 }
 
-const SITE_ORIGIN = (process.env.SITE_ORIGIN || process.env.VITE_SITE_URL || 'https://new.jashom.com')
+const SITE_ORIGIN = (process.env.SITE_ORIGIN || process.env.VITE_SITE_URL || 'https://www.jashom.com')
   .toString()
   .replace(/\/$/, '');
 
