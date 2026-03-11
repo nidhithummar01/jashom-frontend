@@ -324,7 +324,7 @@ export function Navigation() {
         <div className="flex justify-start min-w-0 md:flex-1">
           <Link to="/" className="flex items-center flex-shrink-0 md:hidden">
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} whileHover={{ scale: 1.05 }}>
-              <img src="/jashom-logo-header-70px.png" alt="Jashom" className="w-auto object-contain" style={{ height: 40, maxWidth: 135 }} />
+              <img src="/jashom-logo-header-70px.png" alt="Jashom" width="135" height="40" className="w-auto object-contain" style={{ height: 40, maxWidth: 135 }} />
             </motion.div>
           </Link>
         </div>
@@ -339,7 +339,7 @@ export function Navigation() {
             {/* Logo ane Home vache gap */}
             <Link to="/" className="flex items-center flex-shrink-0" style={{ marginRight: 56 }}>
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} whileHover={{ scale: 1.05 }}>
-                <img src="/jashom-logo-header-70px.png" alt="Jashom" className="w-auto object-contain" style={{ height: 54, maxWidth: 140 }} />
+                <img src="/jashom-logo-header-70px.png" alt="Jashom" width="140" height="54" className="w-auto object-contain" style={{ height: 54, maxWidth: 140 }} />
               </motion.div>
             </Link>
             {/* Home thi badha options - ek sarkho gap */}

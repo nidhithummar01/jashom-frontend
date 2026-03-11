@@ -1,23 +1,25 @@
-# Long cache for hashed assets (Vite build)
+# Long cache for hashed assets (Vite build) - 1 year
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Static media - 30 days (PageSpeed: efficient cache lifetimes)
+# Static media - 1 year (PageSpeed: efficient cache lifetimes)
 /videos/*
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000
 /images/*
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000
 /logos/*
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000
+/social-media/*
+  Cache-Control: public, max-age=31536000
 /*.png
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000
 /*.jpg
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000
 /*.jpeg
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000
 /*.webp
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000
 /*.svg
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000
 /*.ico
-  Cache-Control: public, max-age=2592000
+  Cache-Control: public, max-age=31536000

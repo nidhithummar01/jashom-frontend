@@ -22,8 +22,10 @@ import { homePageData, formatBlogDate } from './HomePage/data';
 export function HomePage() {
   const { formData, handleFormSubmit, handleFormChange } = useHomeContactForm();
   const videoRef = useRef<HTMLVideoElement>(null);
-  /* Default true so mobile never requests bg.mp4 on first paint (saves ~5MB, improves LCP) */
-  const [isMobile, setIsMobile] = useState(true);
+  /* Read from HTML script so desktop has video from first paint; mobile stays no-video */
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof document !== 'undefined' && document.documentElement.dataset.mobile === '1'
+  );
   const [currentSlide, setCurrentSlide] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
   const [latestBlogs, setLatestBlogs] = useState<Blog[]>([]);
@@ -48,17 +50,19 @@ export function HomePage() {
     // Handle responsive cards per view and mobile detection
     const handleResize = () => {
       const width = window.innerWidth;
+      const mobile = width < 640;
+      if (document.documentElement) document.documentElement.dataset.mobile = mobile ? '1' : '';
       if (width >= 1024) {
-        setCardsPerView(3); // Desktop: 3 cards
+        setCardsPerView(3);
         setIsMobile(false);
       } else if (width >= 640) {
-        setCardsPerView(2); // Tablet: 2 cards
+        setCardsPerView(2);
         setIsMobile(false);
       } else {
-        setCardsPerView(1); // Mobile: 1 card
+        setCardsPerView(1);
         setIsMobile(true);
       }
-      setCurrentSlide(0); // Reset to start on resize
+      setCurrentSlide(0);
     };
 
     handleResize();
@@ -432,7 +436,7 @@ export function HomePage() {
                         whileHover={{ scale: 1.1, y: -5 }}
                         transition={{ type: "spring", stiffness: 300 }}
                       >
-                        <img src={logo.src} alt={logo.alt} className={logo.className} />
+                        <img src={logo.src} alt={logo.alt} width={128} height={48} className={logo.className} />
                       </motion.div>
                     ))}
                   </div>
@@ -547,6 +551,8 @@ export function HomePage() {
                               <img
                                 src={project.image}
                                 alt={project.title}
+                                width={400}
+                                height={200}
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                               />
                               {/* Subtle gradient overlay for depth */}
