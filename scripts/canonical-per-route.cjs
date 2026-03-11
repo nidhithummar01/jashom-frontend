@@ -19,31 +19,86 @@ function replaceCanonicalHref(html, newHref) {
   );
 }
 
-const TITLE_REGEX = /<title>[\s\S]*?<\/title>/i;
-// Match <meta name="description" ...> even if attributes are reordered
-const META_DESC_REGEX = /<meta\s+[^>]*name=["']description["'][^>]*>/i;
-const PRERENDER_H1_REGEX = /<noscript\s+id=["']prerender-h1["'][^>]*>[\s\S]*?<\/noscript>/i;
+/**
+ * Sonar/ReDoS hardening:
+ * Avoid backtracking-heavy regexes like /[\s\S]*?/ which can be super-linear on crafted input.
+ * Use simple index-based scanning (linear time) for title/meta/noscript replacement.
+ */
+
+function replaceBetween(html, startIdx, endIdx, replacement) {
+  if (startIdx < 0 || endIdx < 0 || endIdx < startIdx) return html;
+  return html.slice(0, startIdx) + replacement + html.slice(endIdx);
+}
+
+function findTagRange(html, openTagStart, closeTag) {
+  const start = html.toLowerCase().indexOf(openTagStart.toLowerCase());
+  if (start === -1) return null;
+  const end = html.toLowerCase().indexOf(closeTag.toLowerCase(), start);
+  if (end === -1) return null;
+  return { start, end: end + closeTag.length };
+}
+
+function findHeadCloseIndex(html) {
+  return html.toLowerCase().indexOf('</head>');
+}
 
 function replaceTitle(html, newTitle) {
-  if (TITLE_REGEX.test(html)) return html.replace(TITLE_REGEX, `<title>${newTitle}</title>`);
-  return html.replace(/<\/head>/i, `  <title>${newTitle}</title>\n</head>`);
+  const range = findTagRange(html, '<title', '</title>');
+  const titleTag = `<title>${newTitle}</title>`;
+  if (range) return replaceBetween(html, range.start, range.end, titleTag);
+  const headClose = findHeadCloseIndex(html);
+  if (headClose === -1) return html;
+  return replaceBetween(html, headClose, headClose, `  ${titleTag}\n`);
 }
 
 function replaceMetaDescription(html, newDescription) {
-  const tag = `<meta name="description" content="${newDescription.replace(/"/g, '&quot;')}" />`;
-  if (META_DESC_REGEX.test(html)) {
-    return html.replace(META_DESC_REGEX, tag);
+  const safeDesc = newDescription.replace(/"/g, '&quot;');
+  const tag = `<meta name="description" content="${safeDesc}" />`;
+
+  const lower = html.toLowerCase();
+  // Find first <meta ...> containing name="description" or name='description'
+  let idx = lower.indexOf('<meta');
+  while (idx !== -1) {
+    const end = lower.indexOf('>', idx);
+    if (end === -1) break;
+    const metaTag = lower.slice(idx, end + 1);
+    if (metaTag.includes('name="description"') || metaTag.includes("name='description'")) {
+      return replaceBetween(html, idx, end + 1, tag);
+    }
+    idx = lower.indexOf('<meta', end + 1);
   }
-  return html.replace(/<\/head>/i, `  ${tag}\n</head>`);
+
+  const headClose = findHeadCloseIndex(html);
+  if (headClose === -1) return html;
+  return replaceBetween(html, headClose, headClose, `  ${tag}\n`);
 }
 
 function replacePrerenderH1(html, h1Text) {
   const safe = String(h1Text).replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const block = `<noscript id="prerender-h1"><h1>${safe}</h1></noscript>`;
-  if (PRERENDER_H1_REGEX.test(html)) return html.replace(PRERENDER_H1_REGEX, block);
+  const lower = html.toLowerCase();
+  const openIdx = lower.indexOf('<noscript');
+  if (openIdx !== -1) {
+    // specifically target noscript id="prerender-h1"
+    const target = 'id="prerender-h1"';
+    const target2 = "id='prerender-h1'";
+    const idIdx = lower.indexOf(target, openIdx);
+    const idIdx2 = lower.indexOf(target2, openIdx);
+    const chosen = idIdx !== -1 ? idIdx : idIdx2;
+    if (chosen !== -1) {
+      const nsStart = lower.lastIndexOf('<noscript', chosen);
+      const nsEnd = lower.indexOf('</noscript>', chosen);
+      if (nsStart !== -1 && nsEnd !== -1) {
+        return replaceBetween(html, nsStart, nsEnd + '</noscript>'.length, block);
+      }
+    }
+  }
+
   // Fallback: insert after root container if present
-  if (html.includes('<div id="root"></div>')) {
-    return html.replace('<div id="root"></div>', `<div id="root"></div>\n  ${block}`);
+  const rootMarker = '<div id="root"></div>';
+  const rootIdx = html.indexOf(rootMarker);
+  if (rootIdx !== -1) {
+    return replaceBetween(html, rootIdx + rootMarker.length, rootIdx + rootMarker.length, `\n  ${block}`);
   }
   return html;
 }
