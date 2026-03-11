@@ -22,7 +22,8 @@ import { homePageData, formatBlogDate } from './HomePage/data';
 export function HomePage() {
   const { formData, handleFormSubmit, handleFormChange } = useHomeContactForm();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  /* Default true so mobile never requests bg.mp4 on first paint (saves ~5MB, improves LCP) */
+  const [isMobile, setIsMobile] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
   const [latestBlogs, setLatestBlogs] = useState<Blog[]>([]);
@@ -124,82 +125,141 @@ export function HomePage() {
             }} />
 
             <div className="relative z-[10] max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                <motion.div
-                  className="inline-block mb-6 px-4 py-2 rounded-full border"
-                  style={{
-                    background: 'rgba(17, 24, 39, 0.4)',
-                    backdropFilter: 'blur(12px)',
-                    borderColor: 'rgba(34, 211, 238, 0.2)'
-                  }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <span style={{ color: Theme.TEXT_GRAY }}>Next-Gen AI Solutions</span>
-                </motion.div>
-
-                <motion.h1
-                  className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl px-2 sm:px-0"
-                  style={{
-                    color: Theme.TEXT_FAFAFA,
-                    fontWeight: 700,
-                    letterSpacing: '-0.03em',
-                    lineHeight: 1.15
-                  }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  GPU Optimization Services
-                </motion.h1>
-
-                <motion.p
-                  className="mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base px-4 sm:px-0"
-                  style={{
-                    color: Theme.TEXT_GRAY,
-                    lineHeight: 1.8,
-                    textShadow: '0 2px 10px rgba(0,0,0,0.9)'
-                  }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                >
-                  We assist companies in unleashing the power of the current hardware, whether it is through high-level optimization of graphics cards or scalable parallel computing. Our developers have expertise in NVIDIA GPU optimization, CUDA acceleration, and production-ready AI systems that are used to deliver quantifiable improvements.
-                </motion.p>
-
-                <motion.div
-                  className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full px-4 sm:px-0"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  <Link
-                    to="/contact/"
-                    className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
-                    style={homePageData.CTA_GRADIENT_STYLE}
-                  >
-                    Start Your AI Transformation
-                  </Link>
-                  <a
-                    href="https://calendly.com/jaydave-jashom/new-meeting"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
+              {isMobile ? (
+                /* Mobile: static hero for faster LCP and lower TBT (no motion) */
+                <div>
+                  <div
+                    className="inline-block mb-6 px-4 py-2 rounded-full border"
                     style={{
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      borderColor: 'rgba(255, 255, 255, 0.12)',
-                      color: Theme.TEXT_FAFAFA
+                      background: 'rgba(17, 24, 39, 0.4)',
+                      backdropFilter: 'blur(12px)',
+                      borderColor: 'rgba(34, 211, 238, 0.2)'
                     }}
                   >
-                    Schedule a Meeting
-                  </a>
+                    <span style={{ color: Theme.TEXT_GRAY }}>Next-Gen AI Solutions</span>
+                  </div>
+                  <h1
+                    className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl px-2 sm:px-0"
+                    style={{
+                      color: Theme.TEXT_FAFAFA,
+                      fontWeight: 700,
+                      letterSpacing: '-0.03em',
+                      lineHeight: 1.15
+                    }}
+                  >
+                    GPU Optimization Services
+                  </h1>
+                  <p
+                    className="mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base px-4 sm:px-0"
+                    style={{
+                      color: Theme.TEXT_GRAY,
+                      lineHeight: 1.8,
+                      textShadow: '0 2px 10px rgba(0,0,0,0.9)'
+                    }}
+                  >
+                    We assist companies in unleashing the power of the current hardware, whether it is through high-level optimization of graphics cards or scalable parallel computing. Our developers have expertise in NVIDIA GPU optimization, CUDA acceleration, and production-ready AI systems that are used to deliver quantifiable improvements.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full px-4 sm:px-0">
+                    <Link
+                      to="/contact/"
+                      className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
+                      style={homePageData.CTA_GRADIENT_STYLE}
+                    >
+                      Start Your AI Transformation
+                    </Link>
+                    <a
+                      href="https://calendly.com/jaydave-jashom/new-meeting"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.04)',
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        color: Theme.TEXT_FAFAFA
+                      }}
+                    >
+                      Schedule a Meeting
+                    </a>
+                  </div>
+                </div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <motion.div
+                    className="inline-block mb-6 px-4 py-2 rounded-full border"
+                    style={{
+                      background: 'rgba(17, 24, 39, 0.4)',
+                      backdropFilter: 'blur(12px)',
+                      borderColor: 'rgba(34, 211, 238, 0.2)'
+                    }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <span style={{ color: Theme.TEXT_GRAY }}>Next-Gen AI Solutions</span>
+                  </motion.div>
+
+                  <motion.h1
+                    className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl px-2 sm:px-0"
+                    style={{
+                      color: Theme.TEXT_FAFAFA,
+                      fontWeight: 700,
+                      letterSpacing: '-0.03em',
+                      lineHeight: 1.15
+                    }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    GPU Optimization Services
+                  </motion.h1>
+
+                  <motion.p
+                    className="mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base px-4 sm:px-0"
+                    style={{
+                      color: Theme.TEXT_GRAY,
+                      lineHeight: 1.8,
+                      textShadow: '0 2px 10px rgba(0,0,0,0.9)'
+                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    We assist companies in unleashing the power of the current hardware, whether it is through high-level optimization of graphics cards or scalable parallel computing. Our developers have expertise in NVIDIA GPU optimization, CUDA acceleration, and production-ready AI systems that are used to deliver quantifiable improvements.
+                  </motion.p>
+
+                  <motion.div
+                    className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full px-4 sm:px-0"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <Link
+                      to="/contact/"
+                      className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
+                      style={homePageData.CTA_GRADIENT_STYLE}
+                    >
+                      Start Your AI Transformation
+                    </Link>
+                    <a
+                      href="https://calendly.com/jaydave-jashom/new-meeting"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.04)',
+                        borderColor: 'rgba(255, 255, 255, 0.12)',
+                        color: Theme.TEXT_FAFAFA
+                      }}
+                    >
+                      Schedule a Meeting
+                    </a>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
+              )}
             </div>
           </section>
 
