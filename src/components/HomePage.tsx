@@ -83,7 +83,7 @@ export function HomePage() {
     <>
       <Seo
         title="GPU Optimization Services & CUDA Development Company | Jashom"
-        description="Jashom provides advanced GPU optimization, CUDA development, and high-performance computing solutions to accelerate AI, simulation, and enterprise workloads efficiently"
+        description="Jashom provides advanced GPU optimization, CUDA development, and high-performance computing solutions to accelerate AI, simulation, and enterprise workloads efficiently."
         keywords="GPU optimization, CUDA development, high-performance computing, AI acceleration, GPU consulting, CUDA experts"
       />
 
@@ -147,13 +147,7 @@ export function HomePage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  Powering High-Performance AI with <span style={{
-                    background: `linear-gradient(135deg, ${Theme.ACCENT_COLOR} 0%, ${Theme.ACCENT_HOVER} 50%, ${Theme.ACCENT_COLOR} 100%)`,
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    fontWeight: 800
-                  }}>Precision GPU Engineering</span>
+                  GPU Optimization Services
                 </motion.h1>
 
                 <motion.p

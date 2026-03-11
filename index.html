@@ -42,7 +42,12 @@
   <!-- Preload critical assets -->
   <link rel="preload" href="/jashom-logo-header-70px.png" as="image" type="image/png" />
 
-  <title>Jashom</title>
+  <!-- Default SEO (SPA will override per-route at runtime; build script can generate per-route index.html for view-source) -->
+  <title>GPU Optimization Services | CUDA Development Company | Jashom</title>
+  <meta
+    name="description"
+    content="Jashom provides advanced GPU optimization, CUDA development, and high-performance computing solutions to accelerate AI, simulation, and enterprise workloads efficiently."
+  />
 </head>
 
 <body style="overflow-x: hidden; max-width: 100vw; margin: 0; padding: 0;">
@@ -72,6 +77,10 @@
   <!--End of Tawk.to Script-->
 
   <div id="root"></div>
+  <!-- Static H1 fallback for view-source / no-JS environments (replaced per-route in build) -->
+  <noscript id="prerender-h1">
+    <h1>GPU Optimization Services</h1>
+  </noscript>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 

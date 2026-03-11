@@ -19,11 +19,87 @@ function replaceCanonicalHref(html, newHref) {
   );
 }
 
+const TITLE_REGEX = /<title>[\s\S]*?<\/title>/i;
+// Match <meta name="description" ...> even if attributes are reordered
+const META_DESC_REGEX = /<meta\s+[^>]*name=["']description["'][^>]*>/i;
+const PRERENDER_H1_REGEX = /<noscript\s+id=["']prerender-h1["'][^>]*>[\s\S]*?<\/noscript>/i;
+
+function replaceTitle(html, newTitle) {
+  if (TITLE_REGEX.test(html)) return html.replace(TITLE_REGEX, `<title>${newTitle}</title>`);
+  return html.replace(/<\/head>/i, `  <title>${newTitle}</title>\n</head>`);
+}
+
+function replaceMetaDescription(html, newDescription) {
+  const tag = `<meta name="description" content="${newDescription.replace(/"/g, '&quot;')}" />`;
+  if (META_DESC_REGEX.test(html)) {
+    return html.replace(META_DESC_REGEX, tag);
+  }
+  return html.replace(/<\/head>/i, `  ${tag}\n</head>`);
+}
+
+function replacePrerenderH1(html, h1Text) {
+  const safe = String(h1Text).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const block = `<noscript id="prerender-h1"><h1>${safe}</h1></noscript>`;
+  if (PRERENDER_H1_REGEX.test(html)) return html.replace(PRERENDER_H1_REGEX, block);
+  // Fallback: insert after root container if present
+  if (html.includes('<div id="root"></div>')) {
+    return html.replace('<div id="root"></div>', `<div id="root"></div>\n  ${block}`);
+  }
+  return html;
+}
+
 // Use www.jashom.com; normalize any old new.jashom.com from env to live domain
 const SITE_ORIGIN = (process.env.SITE_ORIGIN || process.env.VITE_SITE_URL || 'https://www.jashom.com')
   .toString()
   .replace(/\/$/, '')
   .replace(/^https:\/\/new\.jashom\.com$/i, 'https://www.jashom.com');
+
+// Per-route Title/Description for view-source (static HTML) on key SEO pages.
+// Other pages fall back to whatever is in dist/index.html (runtime SEO still applies).
+const ROUTE_META = {
+  '/': {
+    title: 'GPU Optimization Services | CUDA Development Company | Jashom',
+    description:
+      'Jashom provides advanced GPU optimization, CUDA development, and high-performance computing solutions to accelerate AI, simulation, and enterprise workloads efficiently.',
+    h1: 'GPU Optimization Services',
+  },
+  '/gpu-optimization-service/': {
+    title: 'NVIDIA GPU Optimization Services | Optimize NVIDIA GPU Performance',
+    description:
+      'Improve speed and efficiency with expert NVIDIA GPU optimization services. We help businesses optimize NVIDIA GPU performance for AI, HPC, and data-intensive applications.',
+    h1: 'NVIDIA GPU Optimization Services',
+  },
+  '/cuda-development-service/': {
+    title: 'CUDA Development Services | Expert CUDA Developers for GPU Computing',
+    description:
+      'Hire experienced CUDA developers to build high-performance GPU applications. Jashom delivers scalable CUDA development solutions for AI, deep learning, and parallel computing.',
+    h1: 'CUDA Development Services',
+  },
+  '/hire-cuda-developer/': {
+    title: 'Hire CUDA Developers | Dedicated CUDA Programmers & GPU Experts',
+    description:
+      'Looking to hire CUDA developers? Get skilled GPU programmers for NVIDIA CUDA projects, performance optimization, and custom parallel computing solutions.',
+    h1: 'Hire CUDA Developers',
+  },
+  '/about/': {
+    title: 'About Jashom | GPU Optimization & CUDA Development Experts',
+    description:
+      'Learn about Jashom, a technology-driven company specializing in GPU optimization, NVIDIA CUDA development, and high-performance computing solutions for modern AI and enterprise applications.',
+    h1: 'About Jashom',
+  },
+  '/about-us/': {
+    title: 'About Jashom | GPU Optimization & CUDA Development Experts',
+    description:
+      'Learn about Jashom, a technology-driven company specializing in GPU optimization, NVIDIA CUDA development, and high-performance computing solutions for modern AI and enterprise applications.',
+    h1: 'About Jashom',
+  },
+  '/contact/': {
+    title: 'Contact Jashom | GPU & CUDA Development Consultation',
+    description:
+      'Get in touch with Jashom for expert GPU optimization and CUDA development services. Contact our team to discuss your performance challenges and project requirements.',
+    h1: 'Contact Jashom',
+  },
+};
 
 // Static routes only (no :slug or params). Must have leading and trailing slash.
 const STATIC_ROUTES = [
@@ -118,7 +194,12 @@ function main() {
   const rootCanonical = `${SITE_ORIGIN}/`;
 
   // 1) Update root index.html
-  const rootHtml = replaceCanonicalHref(indexHtml, rootCanonical);
+  let rootHtml = replaceCanonicalHref(indexHtml, rootCanonical);
+  if (ROUTE_META['/']) {
+    rootHtml = replaceTitle(rootHtml, ROUTE_META['/'].title);
+    rootHtml = replaceMetaDescription(rootHtml, ROUTE_META['/'].description);
+    rootHtml = replacePrerenderH1(rootHtml, ROUTE_META['/'].h1);
+  }
   fs.writeFileSync(indexPath, rootHtml);
 
   // 2) For each non-root route, write path/index.html with correct canonical
@@ -128,7 +209,12 @@ function main() {
     const dir = path.join(DIST, dirSegments);
     fs.mkdirSync(dir, { recursive: true });
     const pathCanonical = `${SITE_ORIGIN}${routePath}`;
-    const pathHtml = replaceCanonicalHref(indexHtml, pathCanonical);
+    let pathHtml = replaceCanonicalHref(indexHtml, pathCanonical);
+    if (ROUTE_META[routePath]) {
+      pathHtml = replaceTitle(pathHtml, ROUTE_META[routePath].title);
+      pathHtml = replaceMetaDescription(pathHtml, ROUTE_META[routePath].description);
+      pathHtml = replacePrerenderH1(pathHtml, ROUTE_META[routePath].h1);
+    }
     const outPath = path.join(dir, 'index.html');
     fs.writeFileSync(outPath, pathHtml);
   }

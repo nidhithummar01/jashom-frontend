@@ -139,7 +139,7 @@ export function ContactPage() {
     <>
       <Seo
         title="Contact Jashom | GPU & CUDA Development Consultation"
-        description="Get in touch with Jashom for expert GPU optimization and CUDA development services. Contact our team to discuss your performance challenges and project requirements"
+        description="Get in touch with Jashom for expert GPU optimization and CUDA development services. Contact our team to discuss your performance challenges and project requirements."
         keywords="contact Jashom, GPU consultation, CUDA development inquiry, AI consulting"
       />
 
@@ -166,7 +166,7 @@ export function ContactPage() {
                 >
                   {/* Heading */}
                   <h1 className="font-bold text-white leading-tight" style={HERO_H1_STYLE}>
-                    Accelerate Your Compute Strategy with GPU & CUDA Expertise
+                    Contact Jashom
                   </h1>
 
                   {/* Paragraph */}

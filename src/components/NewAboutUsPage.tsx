@@ -70,10 +70,10 @@ export function NewAboutUsPage() {
   return (
     <>
       <Helmet>
-        <title>About Jashom | GPU Optimization & AI Development Experts</title>
+        <title>About Jashom | GPU Optimization & CUDA Development Experts</title>
         <meta
           name="description"
-          content="Learn about Jashom - a technology-driven company specializing in GPU optimization, CUDA development, and AI solutions. Building epic digital solutions with cutting-edge technology."
+          content="Learn about Jashom, a technology-driven company specializing in GPU optimization, NVIDIA CUDA development, and high-performance computing solutions for modern AI and enterprise applications."
         />
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
@@ -118,7 +118,7 @@ export function NewAboutUsPage() {
                     marginBottom: '32px'
                   }}
                 >
-                  High-Performance GPU & CUDA Engineering
+                  About Jashom
                 </h1>
 
                 {/* Paragraph */}
