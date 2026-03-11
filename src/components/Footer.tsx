@@ -100,14 +100,13 @@ export function Footer() {
                 <div className="font-semibold" style={{ color: '#22D3EE' }}>
                   Ahmedabad, India
                 </div>
-                <div>414, Satyam-2,</div>
-                <div>Amba Business Park</div>
-                <div>ATPL, Adalaj, Gujarat</div>
+                <div>Shivam 2, AMBA BUSINESS PARK, 414,</div>
+                <div>Adalaj, Gujarat 382421</div>
               </div>
 
-              {/* Map */}
+              {/* Map - Jashom Technologies office */}
               <a
-                href="https://www.google.com/maps/search/?api=1&query=414+Satyam-2+Amba+Business+Park+ATPL+Adalaj+Gujarat+India"
+                href="https://www.google.com/maps/search/?api=1&query=Jashom+Technologies+Shivam+2+AMBA+BUSINESS+PARK+414+Adalaj+Gujarat+382421"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] block"
@@ -116,17 +115,17 @@ export function Footer() {
                   boxShadow: '0 4px 20px rgba(34, 211, 238, 0.1)',
                   height: '140px'
                 }}
-                aria-label="Open Jashom office location in Google Maps"
+                aria-label="Open Jashom Technologies office in Google Maps"
               >
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3667.234!2d72.5840!3d23.1645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDA5JzUyLjIiTiA3MsKwMzUnMDIuNCJF!5e0!3m2!1sen!2sin!4v1707734400000!5m2!1sen!2sin&z=16&gestureHandling=none&maptype=roadmap&style=feature:all|element:geometry|color:0x212121&style=feature:all|element:labels.icon|visibility:off&style=feature:all|element:labels.text.fill|color:0x757575&style=feature:all|element:labels.text.stroke|color:0x212121&style=feature:administrative|element:geometry|color:0x757575&style=feature:landscape|element:geometry|color:0x212121&style=feature:poi|element:geometry|color:0x212121&style=feature:road|element:geometry.fill|color:0x2c2c2c&style=feature:road|element:labels.text.fill|color:0x8a8a8a&style=feature:road.arterial|element:geometry|color:0x373737&style=feature:road.highway|element:geometry|color:0x3c3c3c&style=feature:road.highway.controlled_access|element:geometry|color:0x4e4e4e&style=feature:road.local|element:labels.text.fill|color:0x616161&style=feature:transit|element:labels.text.fill|color:0x757575&style=feature:water|element:geometry|color:0x000000&style=feature:water|element:labels.text.fill|color:0x3d3d3d"
+                  src="https://www.google.com/maps?q=Jashom+Technologies+Shivam+2+AMBA+BUSINESS+PARK+414+Adalaj+Gujarat+382421&output=embed"
                   width="100%"
                   height="140"
                   style={{ border: 0, pointerEvents: 'none' }}
                   allowFullScreen={false}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Jashom Office Location"
+                  title="Jashom Technologies Office"
                 />
               </a>
             </div>

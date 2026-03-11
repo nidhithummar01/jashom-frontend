@@ -307,14 +307,14 @@ export function ContactPage() {
                   style={MAP_CONTAINER_STYLE}
                 >
                   <iframe
-                    src="https://www.google.com/maps?q=414,+Satyam-2,+Amba+Business+Park,+ATPL,+Adalaj,+Gujarat,+India&output=embed"
+                    src="https://www.google.com/maps?q=Jashom+Technologies+Shivam+2+AMBA+BUSINESS+PARK+414+Adalaj+Gujarat+382421&output=embed"
                     width="100%"
                     height="100%"
                     style={MAP_IFRAME_STYLE}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Jashom Office Location"
+                    title="Jashom Technologies Office"
                   />
                 </motion.div>
             </SectionContent>
