@@ -10,6 +10,9 @@ const PREFERENCES_KEY = 'jashom_cookie_preferences';
 const CYAN = '#22D3EE';
 const CYAN_RGB = '34, 211, 238';
 
+/* Delay before showing banner so hero can be LCP on mobile (PageSpeed) */
+const COOKIE_BANNER_DELAY_MS = 1800;
+
 export function CookieConsent() {
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -20,12 +23,14 @@ export function CookieConsent() {
 
   useEffect(() => {
     if (!mounted) return;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (!stored) setVisible(true);
+      if (!stored) timeoutId = setTimeout(() => setVisible(true), COOKIE_BANNER_DELAY_MS);
     } catch {
-      setVisible(true);
+      timeoutId = setTimeout(() => setVisible(true), COOKIE_BANNER_DELAY_MS);
     }
+    return () => { if (timeoutId) clearTimeout(timeoutId); };
   }, [mounted]);
 
   const allow = () => {

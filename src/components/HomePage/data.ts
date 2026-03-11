@@ -6,6 +6,19 @@ const LOGO_BASE_CLASS = 'w-auto object-contain filter brightness-90 hover:bright
 
 export type { HomeContactFormData };
 
+export type PortfolioProject = {
+  title: string;
+  industry: string;
+  challenge: string;
+  solution: string;
+  impact: string[];
+  tags: string[];
+  image: string;
+  link: string;
+  /** Optional external URL for "Visit Live Platform" link */
+  liveUrl?: string;
+};
+
 /** Single export to avoid Sonar duplicated-lines from multiple const declarations. */
 export const homePageData = {
   VIOLET_COLOR: '#7C3AED' as const,
@@ -118,7 +131,7 @@ export const homePageData = {
     { title: 'GPU Workload Orchestration Framework on Rocky Linux 9.7', industry: 'Infrastructure · GPU Operations', challenge: 'Organizations needed VRAM-aware GPU job scheduling with isolation and audit trails', solution: 'REST API orchestration with VRAM-aware scheduling, Docker isolation, and full audit trail', impact: ['5 days to demo', '4 endpoints', '100% isolation'], tags: ['FastAPI', 'Docker', 'Rocky Linux'], image: '/images/cuda.service.hero.jpg', link: '/portfolio/case-study/gpu-workload-orchestration/' },
     { title: 'Cloud GPU Fine-Tuning Strategy for Production LLM Deployment', industry: 'AI Engineering · Cloud Infrastructure', challenge: 'Production LLM deployment required tiered fine-tuning across 7B–70B+ models', solution: 'Provider-agnostic cloud GPU strategy with LoRA/QLoRA, Axolotl, DeepSpeed; dataset to production in days', impact: ['7B–70B+ models', '3 tiers', 'Days to deploy'], tags: ['LoRA', 'DeepSpeed', 'Cloud GPU'], image: '/images/blog.jpg', link: '/portfolio/case-study/cloud-gpu-fine-tuning/' },
     { title: 'Real-Time GPU Server Hardware Telemetry via Redfish BMC', industry: 'Infrastructure Monitoring · GPU Data Centers', challenge: 'Real-time visibility into GPU server power, temperature, and fan metrics without OS dependency', solution: 'Live dashboard with 30s refresh from Lambda Scalar BMCs via Redfish; HTTPS, Basic Auth, scoped SSL', impact: ['30s refresh', '4 servers', 'Out-of-band'], tags: ['Redfish', 'BMC', 'Telemetry'], image: '/images/portfolio.jpg', link: '/portfolio/case-study/redfish-bmc-telemetry/' },
-  ],
+  ] as PortfolioProject[],
 };
 
 export function formatBlogDate(iso: string | null): string {

@@ -12,15 +12,6 @@
 
   <!-- Google Search Console Verification -->
   <meta name="google-site-verification" content="7s-g7AA6QgoODcEvc9ckmwyQhuqQ1l-ZAw9F0JQyyDQ" />
-
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function (c, l, a, r, i, t, y) {
-      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-      const clarityScript = l.createElement(r); clarityScript.async = 1; clarityScript.src = "https://www.clarity.ms/tag/" + i;
-      const firstScript = l.getElementsByTagName(r)[0]; firstScript.parentNode.insertBefore(clarityScript, firstScript);
-    })(window, document, "clarity", "script", "u3spfqeqx7");
-  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Self-referencing canonical (per-page in dev via CanonicalTag; in production via build-time per-route jashom.com index.html) -->
@@ -34,12 +25,14 @@
   <link rel="apple-touch-icon" href="/logos/jashom.logo/apple-touch-icon.png" />
   <link rel="manifest" href="/logos/jashom.logo/site.webmanifest" />
   
-  <!-- Performance Optimizations: Preload Critical Resources -->
+  <!-- Non-blocking fonts for faster FCP/LCP on mobile -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
-  <link rel="dns-prefetch" href="https://www.clarity.ms" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" as="style" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" /></noscript>
   
-  <!-- Preload critical assets -->
+  <link rel="dns-prefetch" href="https://www.clarity.ms" />
   <link rel="preload" href="/jashom-logo-header-70px.png" as="image" type="image/png" />
 
   <!-- Default SEO (SPA will override per-route at runtime; build script can generate per-route index.html for view-source) -->
@@ -62,20 +55,18 @@
     ></iframe>
   </noscript>
   <!-- End Google Tag Manager (noscript) -->
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-  s1.async=true;
-  s1.src='https://embed.tawk.to/69a6b24e7b02b21c3601d773/1jipih1bs';
-  s1.charset='UTF-8';
-  s1.setAttribute('crossorigin','*');
-  s0.parentNode.insertBefore(s1,s0);
-  })();
+  <!-- Clarity & Tawk load after interactive to improve mobile LCP/TBT -->
+  <script>
+    function loadDeferred() {
+      var d=document,s='script';
+      window.clarity=window.clarity||function(){(window.clarity.q=window.clarity.q||[]).push(arguments);};
+      var c=d.createElement(s);c.async=1;c.src='https://www.clarity.ms/tag/u3spfqeqx7';d.getElementsByTagName(s)[0].parentNode.insertBefore(c,d.getElementsByTagName(s)[0]);
+      window.Tawk_API=window.Tawk_API||{};window.Tawk_LoadStart=new Date();
+      var t=d.createElement(s);t.async=true;t.src='https://embed.tawk.to/69a6b24e7b02b21c3601d773/1jipih1bs';t.charset='UTF-8';t.setAttribute('crossorigin','*');d.body.appendChild(t);
+    }
+    if (window.requestIdleCallback) window.addEventListener('load',function(){ requestIdleCallback(loadDeferred,{timeout:2500}); });
+    else window.addEventListener('load',function(){ setTimeout(loadDeferred,500); });
   </script>
-  <!--End of Tawk.to Script-->
-
   <div id="root"></div>
   <!-- Static H1 fallback for view-source / no-JS environments (replaced per-route in build) -->
   <noscript id="prerender-h1">

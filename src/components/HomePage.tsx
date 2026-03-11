@@ -22,6 +22,7 @@ import { homePageData, formatBlogDate } from './HomePage/data';
 export function HomePage() {
   const { formData, handleFormSubmit, handleFormChange } = useHomeContactForm();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(3);
   const [latestBlogs, setLatestBlogs] = useState<Blog[]>([]);
@@ -43,30 +44,35 @@ export function HomePage() {
   const maxSlide = totalSlides - cardsPerView;
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.play().catch((error) => {
-        console.error('Video autoplay failed:', error);
-      });
-    }
-
-    // Handle responsive cards per view
+    // Handle responsive cards per view and mobile detection
     const handleResize = () => {
       const width = window.innerWidth;
       if (width >= 1024) {
         setCardsPerView(3); // Desktop: 3 cards
+        setIsMobile(false);
       } else if (width >= 640) {
         setCardsPerView(2); // Tablet: 2 cards
+        setIsMobile(false);
       } else {
         setCardsPerView(1); // Mobile: 1 card
+        setIsMobile(true);
       }
       setCurrentSlide(0); // Reset to start on resize
     };
 
     handleResize();
+
+    // Only attempt to autoplay video on non-mobile devices
+    const video = videoRef.current;
+    if (video && !isMobile) {
+      video.play().catch((error) => {
+        console.error('Video autoplay failed:', error);
+      });
+    }
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [isMobile]);
 
   const goToNext = () => {
     setCurrentSlide((prev) => Math.min(prev + 1, maxSlide));
@@ -91,7 +97,8 @@ export function HomePage() {
         <div className="min-h-screen" style={{ width: '100%', overflow: 'hidden', background: Theme.SECTION_BG }}>
           {/* Hero Section - Full Screen Edge-to-Edge */}
           <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden" style={{ margin: 0, padding: 0, background: Theme.SECTION_BG }}>
-            {/* Video Background - Full Screen Coverage */}
+          {/* Video Background - desktop/tablet only to improve mobile performance */}
+          {!isMobile && (
             <video
               ref={videoRef}
               autoPlay
@@ -109,6 +116,7 @@ export function HomePage() {
             >
               <source src="/videos/bg.mp4" type="video/mp4" />
             </video>
+          )}
 
             {/* Subtle Premium Gradient Overlay */}
             <div className="absolute inset-0 z-[1]" style={{
