@@ -10,8 +10,8 @@ const PREFERENCES_KEY = 'jashom_cookie_preferences';
 const CYAN = '#22D3EE';
 const CYAN_RGB = '34, 211, 238';
 
-/* Delay before showing banner so hero can be LCP on mobile (PageSpeed) */
-const COOKIE_BANNER_DELAY_MS = 1800;
+/* Show banner immediately when consent not yet set */
+const COOKIE_BANNER_DELAY_MS = 0;
 
 export function CookieConsent() {
   const [visible, setVisible] = useState(false);
