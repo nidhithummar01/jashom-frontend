@@ -188,7 +188,6 @@ const STATIC_ROUTES = [
   '/cuda-development-service/',
   '/about-us/',
   '/about/team/',
-  '/about/portfolio/',
   '/about/blog/',
   '/about/',
   '/careers/',
