@@ -2,15 +2,18 @@
  * Post-build: generate per-route index.html with correct canonical for view-source/SEO.
  * Nginx try_files $uri $uri/ /index.html will serve path/index.html when present.
  * No Nginx or server changes required.
+ * Fetches published blogs from API and injects blog links into prerender-links + generates blogs/slug/index.html.
  *
  * Usage: node scripts/canonical-per-route.cjs
  * Env:   SITE_ORIGIN or VITE_SITE_URL (e.g. https://www.jashom.com)
+ *        VITE_API_URL (e.g. https://backend.jashom.com) for blogs
  */
 
 const fs = require('fs');
 const path = require('path');
 
 const DIST = path.join(__dirname, '..', 'dist');
+const API_BASE = (process.env.VITE_API_URL || 'https://backend.jashom.com').toString().replace(/\/$/, '');
 // Match canonical link by id and replace href (attribute order may vary after build)
 const CANONICAL_REGEX = /<link\s+id="canonical-url"[^>]*\shref="[^"]*"[^>]*\/?>/i;
 function replaceCanonicalHref(html, newHref) {
@@ -101,6 +104,34 @@ function replacePrerenderH1(html, h1Text) {
     return replaceBetween(html, rootIdx + rootMarker.length, rootIdx + rootMarker.length, `\n  ${block}`);
   }
   return html;
+}
+
+/** Find index of </nav> inside <noscript id="prerender-links"> for injecting blog links. */
+function findPrerenderLinksNavClose(html) {
+  const lower = html.toLowerCase();
+  const idMatch = lower.indexOf('id="prerender-links"');
+  const idMatch2 = lower.indexOf("id='prerender-links'");
+  const start = idMatch !== -1 ? idMatch : idMatch2;
+  if (start === -1) return -1;
+  const navClose = lower.indexOf('</nav>', start);
+  return navClose !== -1 ? navClose : -1;
+}
+
+function escapeHtml(s) {
+  if (typeof s !== 'string') return '';
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/** Inject blog links before </nav> inside prerender-links so crawlers discover blog URLs. */
+function injectBlogPrerenderLinks(html, blogs) {
+  const idx = findPrerenderLinksNavClose(html);
+  if (idx === -1) return html;
+  const links = (blogs || [])
+    .filter((b) => b && b.slug)
+    .map((b) => `      <a href="/blogs/${escapeHtml(b.slug)}/">${escapeHtml(b.title || b.slug)}</a>`)
+    .join('\n');
+  if (!links) return html;
+  return replaceBetween(html, idx, idx, '\n' + links + '\n    ');
 }
 
 // Use www.jashom.com; normalize any old new.jashom.com from env to live domain
@@ -231,7 +262,19 @@ const STATIC_ROUTES = [
   '/ai-for-industry/rnd/',
 ];
 
-function main() {
+async function fetchPublishedBlogs() {
+  try {
+    const res = await fetch(`${API_BASE}/v1/admin/blogs?status=published&limit=500`);
+    const text = await res.text();
+    if (!res.ok || !text.trim().startsWith('[')) return [];
+    return JSON.parse(text);
+  } catch (e) {
+    console.warn('canonical-per-route: could not fetch blogs:', e.message);
+    return [];
+  }
+}
+
+async function main() {
   const indexPath = path.join(DIST, 'index.html');
   if (!fs.existsSync(indexPath)) {
     console.error('scripts/canonical-per-route.cjs: dist/index.html not found. Run vite build first.');
@@ -244,6 +287,11 @@ function main() {
     process.exit(1);
   }
 
+  const blogs = await fetchPublishedBlogs();
+  const blogRoutes = (blogs || []).filter((b) => b && b.slug).map((b) => '/blogs/' + b.slug + '/');
+  indexHtml = injectBlogPrerenderLinks(indexHtml, blogs);
+
+  const allRoutes = [...STATIC_ROUTES, ...blogRoutes];
   const rootCanonical = `${SITE_ORIGIN}/`;
 
   // 1) Update root index.html
@@ -255,8 +303,8 @@ function main() {
   }
   fs.writeFileSync(indexPath, rootHtml);
 
-  // 2) For each non-root route, write path/index.html with correct canonical
-  for (const routePath of STATIC_ROUTES) {
+  // 2) For each non-root route (static + blogs), write path/index.html with correct canonical
+  for (const routePath of allRoutes) {
     if (routePath === '/') continue;
     const dirSegments = routePath.slice(1, -1); // e.g. 'gpu-optimization-service' or 'portfolio/case-study/...'
     const dir = path.join(DIST, dirSegments);
@@ -287,7 +335,10 @@ function main() {
     }
   }
 
-  console.log('Canonical per-route: updated root +', STATIC_ROUTES.length - 1, 'paths (verified)');
+  console.log('Canonical per-route: updated root +', allRoutes.length - 1, 'paths (' + blogRoutes.length + ' blogs, verified)');
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
