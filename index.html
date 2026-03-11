@@ -59,7 +59,8 @@
   <script>
     function loadDeferred() {
       var d=document,s='script';
-      window.clarity=window.clarity||function(){(window.clarity.q=window.clarity.q||[]).push(arguments);};
+      window.clarity=window.clarity||function(){window.clarity.q.push(arguments);};
+      window.clarity.q=window.clarity.q||[];
       var c=d.createElement(s);c.async=1;c.src='https://www.clarity.ms/tag/u3spfqeqx7';d.getElementsByTagName(s)[0].parentNode.insertBefore(c,d.getElementsByTagName(s)[0]);
       window.Tawk_API=window.Tawk_API||{};window.Tawk_LoadStart=new Date();
       var t=d.createElement(s);t.async=true;t.src='https://embed.tawk.to/69a6b24e7b02b21c3601d773/1jipih1bs';t.charset='UTF-8';t.setAttribute('crossorigin','*');d.body.appendChild(t);
