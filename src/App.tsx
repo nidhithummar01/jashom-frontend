@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import { Navigation } from './components/Navigation';
 import { Footer } from './components/Footer';
@@ -139,7 +139,8 @@ function AnimatedRoutes() {
           <Route path="/careers/openings/" element={<PageTransition><CareerListingPage /></PageTransition>} />
           <Route path="/careers/apply/" element={<PageTransition><CareerApplicationPage /></PageTransition>} />
           <Route path="/news/" element={<PageTransition><PlaceholderPage title="News" description="Read the latest news, announcements, and press releases from Jashom." /></PageTransition>} />
-          <Route path="/docs/" element={<PageTransition><PlaceholderPage title="Documentation" description="Technical documentation, API references, and implementation guides for Jashom's AI solutions." /></PageTransition>} />
+          {/* /docs/ removed (blank). Redirect old links to Resources. */}
+          <Route path="/docs/" element={<Navigate to="/resources/" replace />} />
           <Route path="/resources/" element={<PageTransition><PlaceholderPage title="Resources" description="Access whitepapers, research papers, and technical resources from Jashom's AI experts." /></PageTransition>} />
           <Route path="/api/" element={<PageTransition><PlaceholderPage title="API Reference" description="Complete API documentation and integration guides for Jashom's AI platform." /></PageTransition>} />
           

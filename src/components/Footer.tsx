@@ -21,7 +21,7 @@ export function Footer() {
     resources: [
       ...(SHOW_BLOG_SECTION ? [{ label: 'Blog', path: '/blogs/' }] : []),
       { label: 'Case Studies', path: '/portfolio/' },
-      { label: 'Documentation', path: '/docs/' }
+      // Documentation page is currently removed (blank). Re-add when ready.
     ],
     legal: [
       { label: 'Privacy Policy', path: '/privacy/' },
