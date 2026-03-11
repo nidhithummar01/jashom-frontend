@@ -226,7 +226,7 @@ export function Navigation() {
         { path: '/about/team/', label: 'Team' },
         { path: '/about/portfolio/', label: 'Portfolio' },
         ...(SHOW_BLOG_SECTION ? [{ path: '/blogs/', label: 'Blog' as const }] : []),
-        { path: '/about/career/', label: 'Career' }
+        { path: '/careers/', label: 'Career' }
       ]
     },
     { path: '/contact/', label: 'Contact Us' },

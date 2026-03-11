@@ -190,7 +190,6 @@ const STATIC_ROUTES = [
   '/about/team/',
   '/about/portfolio/',
   '/about/blog/',
-  '/about/career/',
   '/about/',
   '/careers/',
   '/careers/openings/',
