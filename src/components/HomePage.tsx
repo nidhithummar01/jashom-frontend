@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { SEO as Seo } from './SEO';
 import { AnimatedCounter } from './AnimatedCounter';
@@ -90,8 +91,40 @@ export function HomePage() {
   const canGoPrev = currentSlide > 0;
   const canGoNext = currentSlide < maxSlide;
 
+  const corporationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Corporation',
+    name: 'Jashom Technologies',
+    alternateName: 'Jashom',
+    url: 'https://www.jashom.com/',
+    logo: 'https://www.jashom.com/jashom-logo-header-70px.png',
+    sameAs: [
+      'https://www.instagram.com/jashomtechnologies_',
+      'https://www.linkedin.com/company/jashom/',
+      'https://www.jashom.com/',
+      'https://youtube.com/@infojashom',
+      'https://reddit.com/r/jashom'
+    ]
+  };
+
+  const webSiteSchema = {
+    '@context': 'https://schema.org/',
+    '@type': 'WebSite',
+    name: 'jashom',
+    url: 'https://www.jashom.com/',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://www.jashom.com/search?q={search_term_string}',
+      'query-input': 'required name=search_term_string'
+    }
+  };
+
   return (
     <>
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(corporationSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(webSiteSchema)}</script>
+      </Helmet>
       <Seo
         title="GPU Optimization Services & CUDA Development Company | Jashom"
         description="Jashom provides advanced GPU optimization, CUDA development, and high-performance computing solutions to accelerate AI, simulation, and enterprise workloads efficiently."

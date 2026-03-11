@@ -45,6 +45,48 @@ function findHeadCloseIndex(html) {
   return html.toLowerCase().indexOf('</head>');
 }
 
+/** Remove all <script type="application/ld+json">...</script> from html (so per-route can inject its own). */
+function removeLdJsonScripts(html) {
+  const re = /<script\s+type\s*=\s*["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>\s*/gi;
+  return html.replace(re, '');
+}
+
+/** Inject one or more JSON-LD script(s) before </head>. scripts = array of plain objects (will be JSON.stringified). */
+function injectSchemaScripts(html, scripts) {
+  if (!Array.isArray(scripts) || scripts.length === 0) return html;
+  const headClose = findHeadCloseIndex(html);
+  if (headClose === -1) return html;
+  const blocks = scripts.map((obj) => {
+    const json = typeof obj === 'string' ? obj : JSON.stringify(obj);
+    return `<script type="application/ld+json">${json}</script>`;
+  });
+  const insertion = '\n  ' + blocks.join('\n  ') + '\n  ';
+  return replaceBetween(html, headClose, headClose, insertion);
+}
+
+/** Schema for Contact page only (ProfessionalService). */
+const CONTACT_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Jashom Technologies',
+  image: 'https://www.jashom.com/jashom-logo-header-70px.png',
+  '@id': 'https://www.jashom.com/contact/',
+  url: 'https://www.jashom.com/',
+  telephone: '90239 06363',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '414, Shivam 2, AMBA BUSINESS PARK',
+    addressLocality: 'Adalaj',
+    postalCode: '382421',
+    addressCountry: 'IN'
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 23.1872755,
+    longitude: 72.573118
+  }
+};
+
 function replaceTitle(html, newTitle) {
   const range = findTagRange(html, '<title', '</title>');
   const titleTag = `<title>${newTitle}</title>`;
@@ -315,6 +357,11 @@ async function main() {
       pathHtml = replaceTitle(pathHtml, ROUTE_META[routePath].title);
       pathHtml = replaceMetaDescription(pathHtml, ROUTE_META[routePath].description);
       pathHtml = replacePrerenderH1(pathHtml, ROUTE_META[routePath].h1);
+    }
+    // Contact page: replace home schemas with ProfessionalService only (so view-source shows correct schema)
+    if (routePath === '/contact/') {
+      pathHtml = removeLdJsonScripts(pathHtml);
+      pathHtml = injectSchemaScripts(pathHtml, [CONTACT_SCHEMA]);
     }
     const outPath = path.join(dir, 'index.html');
     fs.writeFileSync(outPath, pathHtml);

@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
 import { SEO as Seo } from './SEO';
 import { Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
@@ -135,8 +136,33 @@ export function ContactPage() {
     navigate('/thank-you/');
   };
 
+  const contactPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: 'Jashom Technologies',
+    image: 'https://www.jashom.com/jashom-logo-header-70px.png',
+    '@id': 'https://www.jashom.com/contact/',
+    url: 'https://www.jashom.com/',
+    telephone: '90239 06363',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '414, Shivam 2, AMBA BUSINESS PARK',
+      addressLocality: 'Adalaj',
+      postalCode: '382421',
+      addressCountry: 'IN'
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 23.1872755,
+      longitude: 72.573118
+    }
+  };
+
   return (
     <>
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(contactPageSchema)}</script>
+      </Helmet>
       <Seo
         title="Contact Jashom | GPU & CUDA Development Consultation"
         description="Get in touch with Jashom for expert GPU optimization and CUDA development services. Contact our team to discuss your performance challenges and project requirements."
