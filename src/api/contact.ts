@@ -1,13 +1,18 @@
 const API_PROXY_PREFIX = '/api';
 
 function getBaseUrl(): string {
-  if (import.meta.env.VITE_USE_API_PROXY === 'true') {
-    return typeof window !== 'undefined' ? window.location.origin + API_PROXY_PREFIX : API_PROXY_PREFIX;
+  const useProxy = import.meta.env.VITE_USE_API_PROXY === 'true';
+  const isLocalhost =
+    typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname);
+  // Only use the dev proxy on localhost. In production it can break other devices
+  // if the hosting platform isn't configured to forward `/api` to the backend.
+  if (useProxy && isLocalhost) {
+    return window.location.origin + API_PROXY_PREFIX;
   }
   const url = import.meta.env.VITE_API_URL;
   if (url) return String(url).replace(/\/$/, '');
   /* Local dev: frontend and API are different ports */
-  if (typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname)) {
+  if (isLocalhost) {
     return 'http://localhost:5000';
   }
   const isLive = typeof window !== 'undefined' && !/localhost|127\.0\.0\.1/.test(window.location.origin);
