@@ -150,8 +150,8 @@ export function ContactPage() {
       const payload = buildContactPayloadFromForm(e.currentTarget as HTMLFormElement, 'Contact page');
       await submitContact(payload);
       navigate('/thank-you/');
-    } catch (err: any) {
-      setSubmitError(err?.message || 'Failed to submit. Please try again.');
+    } catch (err: unknown) {
+      setSubmitError((err as any)?.message ?? 'Failed to submit. Please try again.');
     } finally {
       setSubmitting(false);
     }

@@ -62,7 +62,7 @@ export function CareersPage() {
     if (careersSubmitting) return;
     const fd = new FormData(e.currentTarget);
     const resume = fd.get('resume');
-    if (!resume || typeof resume !== 'object' || !('name' in resume) || !(resume as File).name) {
+    if (!(resume instanceof File) || !resume.name) {
       setCareersError('Please attach your resume (PDF, DOC, or DOCX).');
       return;
     }

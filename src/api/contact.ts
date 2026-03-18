@@ -66,12 +66,9 @@ export function buildContactPayloadFromForm(form: HTMLFormElement, sourceLine: s
   lines.push(body || '(No message body)');
 
   const resume = fd.get('resume');
-  if (resume && typeof resume === 'object' && 'name' in resume && typeof (resume as File).name === 'string') {
-    const f = resume as File;
-    if (f.name) {
-      lines.push('');
-      lines.push(`Resume file: ${f.name} (attach file storage not enabled — follow up with applicant for CV)`);
-    }
+  if (resume instanceof File && resume.name) {
+    lines.push('');
+    lines.push(`Resume file: ${resume.name} (attach file storage not enabled — follow up with applicant for CV)`);
   }
 
   return {
@@ -116,12 +113,21 @@ const CONTACT_TIMEOUT_MS = 20000;
 /** Every contact form must use these JSON keys (matches backend). */
 export const CONTACT_API_FIELDS = ['fullName', 'email', 'phone', 'company', 'message'] as const;
 
+function parseErrorMessage(text: string, res: Response): string {
+  try {
+    const json = JSON.parse(text);
+    return (json?.error ?? res.statusText) ?? 'Request failed';
+  } catch {
+    return res.statusText ?? 'Request failed';
+  }
+}
+
 export async function submitContact(payload: ContactPayload): Promise<void> {
   const body: ContactPayload = {
     fullName: String(payload.fullName ?? '').trim(),
     email: String(payload.email ?? '').trim(),
-    phone: payload.phone?.trim() || undefined,
-    company: payload.company?.trim() || undefined,
+    phone: payload.phone?.trim() ?? undefined,
+    company: payload.company?.trim() ?? undefined,
     message: String(payload.message ?? '').trim(),
   };
   if (!body.fullName || !body.email || !body.message) {
@@ -140,19 +146,9 @@ export async function submitContact(payload: ContactPayload): Promise<void> {
       body: JSON.stringify(body),
       signal: controller.signal,
     });
-    clearTimeout(timeoutId);
     const text = await res.text();
-    if (!res.ok) {
-      try {
-        const json = JSON.parse(text);
-        throw new Error(json?.error || res.statusText || 'Request failed');
-      } catch (e) {
-        if (e instanceof Error && e.message !== 'Request failed') throw e;
-        throw new Error(res.statusText || 'Request failed');
-      }
-    }
+    if (!res.ok) throw new Error(parseErrorMessage(text, res));
   } catch (e) {
-    clearTimeout(timeoutId);
     if (e instanceof Error) {
       if (e.name === 'AbortError') throw new Error('Request timed out. Please try again.');
       if (e.message.includes('fetch') || e.message.includes('NetworkError') || e.message === 'Failed to fetch') {
@@ -161,6 +157,8 @@ export async function submitContact(payload: ContactPayload): Promise<void> {
       throw e;
     }
     throw new Error('Something went wrong. Please try again.');
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
 

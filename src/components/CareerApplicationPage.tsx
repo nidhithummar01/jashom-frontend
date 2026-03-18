@@ -93,14 +93,14 @@ export function CareerApplicationPage() {
     if (applySubmitting) return;
     const fd = new FormData(e.currentTarget);
     const resume = fd.get('resume');
-    if (!resume || typeof resume !== 'object' || !('name' in resume) || !(resume as File).name) {
+    if (!(resume instanceof File) || !resume.name) {
       setApplyError('Please upload your resume.');
       return;
     }
     setApplyError(null);
     setApplySubmitting(true);
     try {
-      const source = `Career application — role: ${jobRole || '(not specified)'}`;
+      const source = `Career application — role: ${jobRole ?? '(not specified)'}`;
       const payload = buildContactPayloadFromForm(e.currentTarget as HTMLFormElement, source);
       await submitContact(payload);
       setSubmitted(true);
