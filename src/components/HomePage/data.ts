@@ -60,7 +60,7 @@ export const homePageData = {
   LOGO_BASE_CLASS,
 
   homeContactFormFields: [
-    { name: 'name', label: 'Name *', type: 'text', placeholder: 'John Doe', required: true },
+    { name: 'fullName', label: 'Name *', type: 'text', placeholder: 'John Doe', required: true },
     { name: 'email', label: 'Email *', type: 'email', placeholder: 'john@company.com', required: true },
     { name: 'company', label: 'Company', type: 'text', placeholder: 'Your Company' },
     { name: 'phone', label: 'Phone', type: 'tel', placeholder: '+1 (555) 000-0000' },

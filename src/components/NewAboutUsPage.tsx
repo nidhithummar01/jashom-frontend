@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
+import { buildContactPayloadFromForm, submitContact } from '../api/contact';
 import {
   Mail,
   Phone
@@ -42,25 +43,33 @@ export function NewAboutUsPage() {
   const navigate = useNavigate();
   const canonicalUrl = useCanonicalUrl();
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
+    phone: '',
     company: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setSubmitError(null);
     setIsSubmitting(true);
-
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Navigate to thank you page
-    navigate('/thank-you/');
+    try {
+      const payload = buildContactPayloadFromForm(e.currentTarget as HTMLFormElement, 'About Us page — contact form');
+      await submitContact(payload);
+      navigate('/thank-you/');
+    } catch (err: unknown) {
+      setSubmitError(err instanceof Error ? err.message : 'Failed to submit. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setSubmitError(null);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -745,8 +754,8 @@ export function NewAboutUsPage() {
                     <div>
                       <input
                         type="text"
-                        name="name"
-                        value={formData.name}
+                        name="fullName"
+                        value={formData.fullName}
                         onChange={handleChange}
                         required
                         disabled={isSubmitting}
@@ -768,6 +777,22 @@ export function NewAboutUsPage() {
                         required
                         disabled={isSubmitting}
                         placeholder="Business Email ID"
+                        className="w-full px-4 py-3 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 transition-all disabled:opacity-50"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)'
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        disabled={isSubmitting}
+                        placeholder="Phone (optional)"
                         className="w-full px-4 py-3 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 transition-all disabled:opacity-50"
                         style={{
                           background: 'rgba(255, 255, 255, 0.05)',
@@ -808,6 +833,12 @@ export function NewAboutUsPage() {
                         }}
                       />
                     </div>
+
+                    {submitError && (
+                      <p className="text-sm text-red-300" role="alert">
+                        {submitError}
+                      </p>
+                    )}
 
                     <button
                       type="submit"

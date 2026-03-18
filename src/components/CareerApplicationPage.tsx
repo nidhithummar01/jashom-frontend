@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { SEO as Seo } from './SEO';
 import { useState } from 'react';
+import { buildContactPayloadFromForm, submitContact } from '../api/contact';
 import { CheckCircle, Upload, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const INPUT_STYLE: React.CSSProperties = {
@@ -14,10 +15,11 @@ const LABEL_STYLE = { color: '#FAFAFA' as const };
 const REQUIRED_SPAN = <span style={{ color: '#EF4444' }}>*</span>;
 const INPUT_CLASS = 'w-full px-5 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all';
 
-const formFieldsConfig: { name: 'fullName' | 'email' | 'phone' | 'linkedIn' | 'message'; label: string; placeholder: string; type: 'text' | 'email' | 'tel' | 'url' | 'textarea'; required: boolean; rows?: number }[] = [
+const formFieldsConfig: { name: 'fullName' | 'email' | 'phone' | 'company' | 'linkedIn' | 'message'; label: string; placeholder: string; type: 'text' | 'email' | 'tel' | 'url' | 'textarea'; required: boolean; rows?: number }[] = [
   { name: 'fullName', label: 'Full Name', placeholder: 'John Doe', type: 'text', required: true },
   { name: 'email', label: 'Email Address', placeholder: 'john.doe@example.com', type: 'email', required: true },
   { name: 'phone', label: 'Phone Number', placeholder: '+1 (555) 000-0000', type: 'tel', required: true },
+  { name: 'company', label: 'Company', placeholder: 'Your company (optional)', type: 'text', required: false },
   { name: 'linkedIn', label: 'LinkedIn Profile URL', placeholder: 'https://linkedin.com/in/johndoe', type: 'url', required: false },
   { name: 'message', label: 'Cover Letter / Message', placeholder: "Tell us why you're a great fit for this role...", type: 'textarea', required: false, rows: 6 },
 ];
@@ -61,11 +63,14 @@ export function CareerApplicationPage() {
   const jobRole = searchParams.get('role') ?? '';
   const [submitted, setSubmitted] = useState(false);
   const [fileName, setFileName] = useState('');
+  const [applySubmitting, setApplySubmitting] = useState(false);
+  const [applyError, setApplyError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phone: '',
+    company: '',
     linkedIn: '',
     resume: null as File | null,
     message: ''
@@ -83,9 +88,27 @@ export function CareerApplicationPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (applySubmitting) return;
+    const fd = new FormData(e.currentTarget);
+    const resume = fd.get('resume');
+    if (!resume || typeof resume !== 'object' || !('name' in resume) || !(resume as File).name) {
+      setApplyError('Please upload your resume.');
+      return;
+    }
+    setApplyError(null);
+    setApplySubmitting(true);
+    try {
+      const source = `Career application — role: ${jobRole || '(not specified)'}`;
+      const payload = buildContactPayloadFromForm(e.currentTarget as HTMLFormElement, source);
+      await submitContact(payload);
+      setSubmitted(true);
+    } catch (err: unknown) {
+      setApplyError(err instanceof Error ? err.message : 'Failed to submit.');
+    } finally {
+      setApplySubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -298,19 +321,28 @@ export function CareerApplicationPage() {
               {/* Divider */}
               <div style={DIVIDER_STYLE} />
 
+              {applyError && (
+                <p className="text-sm mb-4 text-center" style={{ color: '#fca5a5' }} role="alert">
+                  {applyError}
+                </p>
+              )}
+
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0"
+                disabled={applySubmitting}
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0 disabled:opacity-60 disabled:cursor-not-allowed"
                 style={SUBMIT_BUTTON_STYLE}
-                onMouseEnter={(e) => Object.assign(e.currentTarget.style, SUBMIT_BUTTON_HOVER)}
+                onMouseEnter={(e) => {
+                  if (!applySubmitting) Object.assign(e.currentTarget.style, SUBMIT_BUTTON_HOVER);
+                }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = SUBMIT_BUTTON_STYLE.background;
                   e.currentTarget.style.boxShadow = SUBMIT_BUTTON_STYLE.boxShadow;
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
-                <span>Submit Application</span>
+                <span>{applySubmitting ? 'Submitting…' : 'Submit Application'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 

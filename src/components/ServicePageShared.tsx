@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { buildContactPayloadFromForm, buildContactPayloadFromState, submitContact } from '../api/contact';
 import type { HomeContactFormData, ServiceFormField } from './homeContactTypes';
 import {
   ACCENT_COLOR,
@@ -13,35 +14,74 @@ import {
 
 type FormFieldChangeTarget = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
-const INITIAL_SERVICE_FORM = { name: '', email: '', company: '', phone: '', message: '' };
-const INITIAL_HOME_FORM: HomeContactFormData = { name: '', email: '', company: '', phone: '', service: '', message: '' };
+const INITIAL_SERVICE_FORM = { fullName: '', email: '', company: '', phone: '', message: '' };
+const INITIAL_HOME_FORM: HomeContactFormData = { fullName: '', email: '', company: '', phone: '', service: '', message: '' };
 
 /** Shared form state and handlers for CUDA/GPU service pages to avoid duplicated const/handlers. */
 export function useServicePageForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState(INITIAL_SERVICE_FORM);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const handleChange = (e: React.ChangeEvent<FormFieldChangeTarget>) => {
+    setSubmitError(null);
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate('/thank-you/');
+    if (submitting) return;
+    setSubmitError(null);
+    setSubmitting(true);
+    try {
+      const payload = buildContactPayloadFromState(
+        {
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          message: formData.message,
+        },
+        `Service / inquiry form (${location.pathname})`
+      );
+      await submitContact(payload);
+      navigate('/thank-you/');
+    } catch (err: unknown) {
+      setSubmitError(err instanceof Error ? err.message : 'Failed to submit. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
-  return { formData, handleChange, handleSubmit };
+  return { formData, handleChange, handleSubmit, submitting, submitError };
 }
 
 /** Home contact form state and handlers to avoid duplicated const in HomePage. */
 export function useHomeContactForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<HomeContactFormData>(INITIAL_HOME_FORM);
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate('/thank-you/');
+    if (submitting) return;
+    setSubmitError(null);
+    setSubmitting(true);
+    try {
+      const form = e.currentTarget;
+      const payload = buildContactPayloadFromForm(form, 'Home page — Get in touch');
+      await submitContact(payload);
+      navigate('/thank-you/');
+    } catch (err: unknown) {
+      setSubmitError(err instanceof Error ? err.message : 'Failed to submit. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
   const handleFormChange = (e: React.ChangeEvent<FormFieldChangeTarget>) => {
+    setSubmitError(null);
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  return { formData, handleFormSubmit, handleFormChange };
+  return { formData, handleFormSubmit, handleFormChange, submitting, submitError };
 }
 
 export function CheckIcon({ size = 'sm' }: Readonly<{ size?: 'sm' | 'lg' }>) {

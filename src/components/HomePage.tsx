@@ -21,7 +21,7 @@ import { QuoteIcon, renderServiceFormField, useHomeContactForm } from './Service
 import { homePageData, formatBlogDate } from './HomePage/data';
 
 export function HomePage() {
-  const { formData, handleFormSubmit, handleFormChange } = useHomeContactForm();
+  const { formData, handleFormSubmit, handleFormChange, submitting: homeContactSubmitting, submitError: homeContactError } = useHomeContactForm();
   const videoRef = useRef<HTMLVideoElement>(null);
   /* Read from HTML script so desktop has video from first paint; mobile stays no-video */
   const [isMobile, setIsMobile] = useState(() =>
@@ -1065,16 +1065,22 @@ export function HomePage() {
                       ))}
                     </div>
 
+                    {homeContactError && (
+                      <p className="text-sm mb-4" style={{ color: '#fca5a5' }} role="alert">
+                        {homeContactError}
+                      </p>
+                    )}
                     {/* Submit Button */}
                     <div className="flex justify-center sm:justify-start">
                       <motion.button
                         type="submit"
-                        className="px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer"
+                        disabled={homeContactSubmitting}
+                        className="px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                         style={Theme.SUBMIT_BTN_STYLE}
-                        whileHover={{ y: -2, ...Theme.SUBMIT_BTN_HOVER }}
-                        whileTap={{ scale: 0.98 }}
+                        whileHover={homeContactSubmitting ? undefined : { y: -2, ...Theme.SUBMIT_BTN_HOVER }}
+                        whileTap={homeContactSubmitting ? undefined : { scale: 0.98 }}
                       >
-                        Send Message
+                        {homeContactSubmitting ? 'Sending…' : 'Send Message'}
                       </motion.button>
                     </div>
                   </form>

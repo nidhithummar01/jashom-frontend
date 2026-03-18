@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Award, Zap, DollarSign, ArrowRight } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { buildContactPayloadFromState, submitContact } from '../api/contact';
 import { SEO as Seo } from './SEO';
 
 const SECTION_BG = '#0B0F14';
@@ -109,8 +110,8 @@ const relatedServicesData = [
   { title: 'CUDA Development Service', description: 'Build high-performance parallel applications with expert CUDA development tailored for speed, scalability and precision.', href: '/cuda-development-service' },
 ];
 
-const hireFormFieldsConfig: { name: 'name' | 'email' | 'company' | 'phone' | 'hiringModel' | 'message'; label: string; type: 'text' | 'email' | 'tel' | 'select' | 'textarea'; placeholder?: string; required?: boolean; rows?: number; options?: { value: string; label: string }[] }[] = [
-  { name: 'name', label: 'Full Name *', type: 'text', placeholder: 'John Doe', required: true },
+const hireFormFieldsConfig: { name: 'fullName' | 'email' | 'company' | 'phone' | 'hiringModel' | 'message'; label: string; type: 'text' | 'email' | 'tel' | 'select' | 'textarea'; placeholder?: string; required?: boolean; rows?: number; options?: { value: string; label: string }[] }[] = [
+  { name: 'fullName', label: 'Full Name *', type: 'text', placeholder: 'John Doe', required: true },
   { name: 'email', label: 'Email Address *', type: 'email', placeholder: 'john@company.com', required: true },
   { name: 'phone', label: 'Phone Number', type: 'tel', placeholder: '+1 (555) 000-0000' },
   { name: 'company', label: 'Company Name', type: 'text', placeholder: 'Your Company' },
@@ -123,7 +124,7 @@ const FEATURE_ICON_BOX_STYLE = { background: 'rgba(34, 211, 238, 0.1)' } as cons
 export function HireCudaDeveloperPage() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
     company: '',
     phone: '',
@@ -132,12 +133,37 @@ export function HireCudaDeveloperPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setHireSubmitError(null);
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [hireSubmitting, setHireSubmitting] = useState(false);
+  const [hireSubmitError, setHireSubmitError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/thank-you/');
+    if (hireSubmitting) return;
+    setHireSubmitError(null);
+    setHireSubmitting(true);
+    try {
+      const payload = buildContactPayloadFromState(
+        {
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          message: formData.message,
+          hiringModel: formData.hiringModel,
+        },
+        'Hire CUDA Developer page'
+      );
+      await submitContact(payload);
+      navigate('/thank-you/');
+    } catch (err: unknown) {
+      setHireSubmitError(err instanceof Error ? err.message : 'Failed to submit.');
+    } finally {
+      setHireSubmitting(false);
+    }
   };
 
   return (
@@ -884,14 +910,14 @@ export function HireCudaDeveloperPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '28px', marginBottom: '28px' }}>
                       {/* Name */}
                       <div>
-                        <label htmlFor="name" className="block text-sm font-semibold mb-2" style={{ color: '#FAFAFA' }}>
+                        <label htmlFor="hire-fullName" className="block text-sm font-semibold mb-2" style={{ color: '#FAFAFA' }}>
                           Full Name *
                         </label>
                         <input
                           type="text"
-                          id="name"
-                          name="name"
-                          value={formData.name}
+                          id="hire-fullName"
+                          name="fullName"
+                          value={formData.fullName}
                           onChange={handleChange}
                           required
                           className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
@@ -993,10 +1019,17 @@ export function HireCudaDeveloperPage() {
                       />
                     </div>
 
+                    {hireSubmitError && (
+                      <p className="text-sm mb-4" style={{ color: '#fca5a5' }} role="alert">
+                        {hireSubmitError}
+                      </p>
+                    )}
+
                     {/* Submit Button - Full Width */}
                     <button
                       type="submit"
-                      className="w-full px-8 py-4 rounded-lg font-semibold transition-all duration-300"
+                      disabled={hireSubmitting}
+                      className="w-full px-8 py-4 rounded-lg font-semibold transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                       style={{
                         background: 'linear-gradient(135deg, #22D3EE, #06B6D4)',
                         color: '#FFFFFF',
@@ -1013,7 +1046,7 @@ export function HireCudaDeveloperPage() {
                         e.currentTarget.style.transform = 'translateY(0)';
                       }}
                     >
-                      Submit Request
+                      {hireSubmitting ? 'Submitting…' : 'Submit Request'}
                     </button>
 
                     <p className="text-xs text-center mt-4" style={{ color: '#999999' }}>

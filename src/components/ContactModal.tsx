@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, Send } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { buildContactPayloadFromForm, submitContact } from '../api/contact';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -11,7 +12,7 @@ interface ContactModalProps {
 export function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
     company: '',
     phone: '',
@@ -21,6 +22,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -57,8 +59,9 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     if (!isOpen) {
       setSubmitted(false);
       setIsSubmitting(false);
+      setSubmitError(null);
       setFormData({
-        name: '',
+        fullName: '',
         email: '',
         company: '',
         phone: '',
@@ -70,29 +73,27 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setSubmitError(null);
     setIsSubmitting(true);
-    
-    // Simulate form submission (reuse existing backend logic)
     try {
-      // This would be the actual form submission logic from ContactPage
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const form = e.currentTarget as HTMLFormElement;
+      const payload = buildContactPayloadFromForm(form, 'Contact modal (navigation)');
+      await submitContact(payload);
       setSubmitted(true);
-      
-      // Redirect to thank you page after success
       setTimeout(() => {
         onClose();
         navigate('/thank-you/');
-      }, 2000);
-      
-    } catch (error) {
-      // Handle error (existing behavior)
+      }, 1500);
+    } catch (error: unknown) {
       console.error('Form submission error:', error);
+      setSubmitError(error instanceof Error ? error.message : 'Failed to submit.');
       setIsSubmitting(false);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setSubmitError(null);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -167,8 +168,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                       <label className="block text-white/80 mb-2 font-medium">Name *</label>
                       <input
                         type="text"
-                        name="name"
-                        value={formData.name}
+                        name="fullName"
+                        value={formData.fullName}
                         onChange={handleChange}
                         required
                         disabled={isSubmitting}
@@ -250,6 +251,12 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                       placeholder="Tell us about your project..."
                     />
                   </div>
+
+                  {submitError && (
+                    <p className="text-sm text-red-300" role="alert">
+                      {submitError}
+                    </p>
+                  )}
 
                   <motion.button
                     type="submit"

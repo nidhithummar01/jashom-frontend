@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { SEO as Seo } from './SEO';
 import { Briefcase, Users, TrendingUp, Heart, Clock, MapPin, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
+import { buildContactPayloadFromForm, submitContact } from '../api/contact';
 
 interface JobOpening {
   id: number;
@@ -41,23 +42,41 @@ export function CareersPage() {
     fullName: '',
     email: '',
     phone: '',
+    company: '',
     position: '',
-    resume: '',
-    coverLetter: ''
+    message: ''
   });
+  const [careersSubmitting, setCareersSubmitting] = useState(false);
+  const [careersError, setCareersError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setCareersError(null);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Redirect to thank you page
-    navigate('/thank-you/');
+    if (careersSubmitting) return;
+    const fd = new FormData(e.currentTarget);
+    const resume = fd.get('resume');
+    if (!resume || typeof resume !== 'object' || !('name' in resume) || !(resume as File).name) {
+      setCareersError('Please attach your resume (PDF, DOC, or DOCX).');
+      return;
+    }
+    setCareersError(null);
+    setCareersSubmitting(true);
+    try {
+      const payload = buildContactPayloadFromForm(e.currentTarget, 'Careers page — general application');
+      await submitContact(payload);
+      navigate('/thank-you/');
+    } catch (err: unknown) {
+      setCareersError(err instanceof Error ? err.message : 'Failed to submit.');
+    } finally {
+      setCareersSubmitting(false);
+    }
   };
   return (
     <div className="min-h-screen" style={{ background: '#0B0F14' }}>
@@ -536,8 +555,29 @@ export function CareersPage() {
                     />
                   </div>
 
-                  {/* Position */}
+                  {/* Company (same as other contact forms) */}
                   <div>
+                    <label htmlFor="careers-company" className="block text-sm font-semibold mb-2" style={{ color: '#FAFAFA' }}>
+                      Company
+                    </label>
+                    <input
+                      type="text"
+                      id="careers-company"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
+                      style={{
+                        background: '#1F2937',
+                        borderColor: 'rgba(34, 211, 238, 0.3)',
+                        color: '#FAFAFA'
+                      }}
+                      placeholder="Your company"
+                    />
+                  </div>
+
+                  {/* Position — full width */}
+                  <div className="md:col-span-2">
                     <label htmlFor="position" className="block text-sm font-semibold mb-2" style={{ color: '#FAFAFA' }}>
                       Position Applied For
                     </label>
@@ -579,16 +619,17 @@ export function CareersPage() {
                   </p>
                 </div>
 
-                {/* Cover Letter - Full Width */}
+                {/* Message (same field name as all contact forms) */}
                 <div style={{ marginBottom: '28px' }}>
-                  <label htmlFor="coverLetter" className="block text-sm font-semibold mb-2" style={{ color: '#FAFAFA' }}>
-                    Cover Letter
+                  <label htmlFor="careers-message" className="block text-sm font-semibold mb-2" style={{ color: '#FAFAFA' }}>
+                    Message / Cover letter
                   </label>
                   <textarea
-                    id="coverLetter"
-                    name="coverLetter"
-                    value={formData.coverLetter}
+                    id="careers-message"
+                    name="message"
+                    value={formData.message}
                     onChange={handleChange}
+                    required
                     rows={4}
                     className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all resize-none"
                     style={{ 
@@ -600,12 +641,19 @@ export function CareersPage() {
                   />
                 </div>
 
+                {careersError && (
+                  <p className="text-sm mb-4" style={{ color: '#fca5a5' }} role="alert">
+                    {careersError}
+                  </p>
+                )}
+
                 {/* Submit Button - Full Width */}
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#22D3EE] to-[#06B6D4] shadow-[0_8px_32px_rgba(34,211,238,0.4)] hover:from-[#06B6D4] hover:to-[#06B6D4] hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)] hover:-translate-y-0.5"
+                  disabled={careersSubmitting}
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#22D3EE] to-[#06B6D4] shadow-[0_8px_32px_rgba(34,211,238,0.4)] hover:from-[#06B6D4] hover:to-[#06B6D4] hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)] hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  <span>Submit Application</span>
+                  <span>{careersSubmitting ? 'Submitting…' : 'Submit Application'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 

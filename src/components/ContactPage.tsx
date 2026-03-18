@@ -4,6 +4,7 @@ import { SEO as Seo } from './SEO';
 import { Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { buildContactPayloadFromForm, submitContact } from '../api/contact';
 
 const PAGE_BG = '#000000';
 const SECTION_BG_DARK = '#0B0F14';
@@ -71,11 +72,18 @@ const INPUT_BLUR = {
   boxShadow: 'none' as const,
 };
 
-const formFieldsConfig: { name: 'fullName' | 'email' | 'company' | 'message'; placeholder: string; type: 'text' | 'email' | 'textarea'; rows?: number }[] = [
-  { name: 'fullName', placeholder: 'Name', type: 'text' },
-  { name: 'email', placeholder: 'Business Email ID', type: 'email' },
-  { name: 'company', placeholder: 'Company Name', type: 'text' },
-  { name: 'message', placeholder: 'Message', type: 'textarea', rows: 5 },
+const formFieldsConfig: {
+  name: 'fullName' | 'email' | 'phone' | 'company' | 'message';
+  placeholder: string;
+  type: 'text' | 'email' | 'tel' | 'textarea';
+  rows?: number;
+  required?: boolean;
+}[] = [
+  { name: 'fullName', placeholder: 'Name', type: 'text', required: true },
+  { name: 'email', placeholder: 'Business Email ID', type: 'email', required: true },
+  { name: 'phone', placeholder: 'Phone (optional)', type: 'tel', required: false },
+  { name: 'company', placeholder: 'Company Name (optional)', type: 'text', required: false },
+  { name: 'message', placeholder: 'Message', type: 'textarea', rows: 5, required: true },
 ];
 
 const faqsData = [
@@ -126,14 +134,27 @@ export function ContactPage() {
     message: ''
   });
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/thank-you/');
+    if (submitting) return;
+    setSubmitError(null);
+    setSubmitting(true);
+    try {
+      const payload = buildContactPayloadFromForm(e.currentTarget as HTMLFormElement, 'Contact page');
+      await submitContact(payload);
+      navigate('/thank-you/');
+    } catch (err: any) {
+      setSubmitError(err?.message || 'Failed to submit. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const contactPageSchema = {
@@ -292,7 +313,7 @@ export function ContactPage() {
                           onChange: handleChange,
                           onFocus: () => setFocusedField(field.name),
                           onBlur: () => setFocusedField(null),
-                          required: true,
+                          required: field.required ?? true,
                           className: field.type === 'textarea' ? `${INPUT_CLASS_BASE} resize-none` : INPUT_CLASS_BASE,
                           style: inputStyle,
                         };
@@ -307,6 +328,16 @@ export function ContactPage() {
                         );
                       })}
 
+                      {submitError && (
+                        <div
+                          role="alert"
+                          className="text-sm"
+                          style={{ color: 'rgba(255,255,255,0.85)', background: 'rgba(239,68,68,0.14)', border: '1px solid rgba(239,68,68,0.35)', padding: '10px 12px', borderRadius: '12px' }}
+                        >
+                          {submitError}
+                        </div>
+                      )}
+
                       {/* Submit Button */}
                       <motion.button
                         type="submit"
@@ -314,8 +345,9 @@ export function ContactPage() {
                         style={SUBMIT_BUTTON_STYLE}
                         whileHover={{ scale: 1.02, ...SUBMIT_BUTTON_HOVER }}
                         whileTap={{ scale: 0.98 }}
+                        disabled={submitting}
                       >
-                        Submit
+                        {submitting ? 'Submitting...' : 'Submit'}
                       </motion.button>
                     </form>
                   </motion.div>

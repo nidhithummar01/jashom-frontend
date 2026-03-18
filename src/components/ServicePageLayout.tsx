@@ -28,7 +28,7 @@ export function createServicePage(data: ServicePageData, variant: ServicePageVar
 
 export function ServicePageLayout({ data, variant }: Readonly<Props>) {
   const c = SERVICE_PAGE_CONTENT[variant];
-  const { formData, handleChange, handleSubmit } = useServicePageForm();
+  const { formData, handleChange, handleSubmit, submitting, submitError } = useServicePageForm();
   const heroBgStyle = c.heroImageStyle === 'top' ? Theme.HERO_BG_TOP : Theme.HERO_BG_CENTER;
   const heroFilter = variant === 'cuda' ? 'brightness(1.2)' : 'brightness(1.3)';
 
@@ -353,9 +353,21 @@ export function ServicePageLayout({ data, variant }: Readonly<Props>) {
                       </div>
                     ))}
                   </div>
+                  {submitError && (
+                    <p className="text-sm mb-4 px-1" style={{ color: '#fca5a5' }} role="alert">
+                      {submitError}
+                    </p>
+                  )}
                   <div className="flex justify-center sm:justify-start">
-                    <motion.button type="submit" className="px-12 py-4 rounded-xl font-semibold text-base transition-all duration-300 cursor-pointer" style={Theme.SUBMIT_BTN_STYLE} whileHover={{ y: -2, ...Theme.SUBMIT_BTN_HOVER }} whileTap={{ scale: 0.98 }}>
-                      Send Message
+                    <motion.button
+                      type="submit"
+                      disabled={submitting}
+                      className="px-12 py-4 rounded-xl font-semibold text-base transition-all duration-300 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                      style={Theme.SUBMIT_BTN_STYLE}
+                      whileHover={submitting ? undefined : { y: -2, ...Theme.SUBMIT_BTN_HOVER }}
+                      whileTap={submitting ? undefined : { scale: 0.98 }}
+                    >
+                      {submitting ? 'Sending…' : 'Send Message'}
                     </motion.button>
                   </div>
                 </form>
