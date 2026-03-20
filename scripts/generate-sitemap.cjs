@@ -17,6 +17,31 @@ const SITE_ORIGIN = (process.env.SITE_ORIGIN || process.env.VITE_SITE_URL || 'ht
   .replace(/\/$/, '');
 const API_BASE = (process.env.VITE_API_URL || 'https://backend.jashom.com').toString().replace(/\/$/, '');
 
+function nowSitemapLastmod() {
+  // Sitemap `lastmod` format with explicit timezone offset.
+  return new Date().toISOString().replace(/\.\d{3}Z$/, '+00:00');
+}
+
+function extractRouteMetaKeys() {
+  // Keep sitemap in sync with view-source SEO routes.
+  const canonicalPath = path.join(__dirname, 'canonical-per-route.cjs');
+  if (!fs.existsSync(canonicalPath)) return [];
+
+  const src = fs.readFileSync(canonicalPath, 'utf8');
+  const start = src.indexOf('const ROUTE_META = {');
+  if (start === -1) return [];
+  const end = src.indexOf('};', start);
+  if (end === -1) return [];
+
+  const block = src.slice(start, end + 2);
+  const keyRe = /['"](?<route>\/[^'"]+)['"]\s*:\s*\{/g;
+  const keys = [];
+  for (const m of block.matchAll(keyRe)) {
+    if (m.groups && m.groups.route) keys.push(m.groups.route);
+  }
+  return keys;
+}
+
 function escapeXml(str) {
   if (typeof str !== 'string') return '';
   return str
@@ -53,35 +78,78 @@ async function main() {
   }
 
   let sitemap = fs.readFileSync(SITEMAP_PATH, 'utf8');
+
+  const closingTag = '</urlset>';
+  const closingIdx = sitemap.indexOf(closingTag);
+  if (closingIdx === -1) {
+    console.warn('generate-sitemap: </urlset> not found; sitemap unchanged.');
+    return;
+  }
+
+  // Collect existing <loc> so rerunning this script doesn't duplicate entries.
+  const existingLocs = new Set(
+    Array.from(sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)).map((m) => (m[1] || '').trim())
+  );
+
+  // 1) Ensure static ROUTE_META routes are present in sitemap.
+  const routeMetaKeys = extractRouteMetaKeys();
+  const staticEntriesXml = [];
+  for (const routePath of routeMetaKeys) {
+    const loc = routePath === '/' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${routePath}`;
+    const escapedLoc = escapeXml(loc);
+    if (existingLocs.has(loc)) continue;
+    staticEntriesXml.push(`<url>
+  <loc>${escapedLoc}</loc>
+  <lastmod>${nowSitemapLastmod()}</lastmod>
+  <priority>0.51</priority>
+</url>`);
+  }
+
+  if (staticEntriesXml.length > 0) {
+    sitemap =
+      sitemap.slice(0, closingIdx) +
+      '\n' +
+      staticEntriesXml.join('\n') +
+      '\n' +
+      sitemap.slice(closingIdx);
+  }
+  for (const routePath of routeMetaKeys) {
+    const loc = routePath === '/' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${routePath}`;
+    existingLocs.add(loc);
+  }
+
   const blogs = await fetchPublishedBlogs();
-  const blogEntries = (blogs || [])
+  const newBlogEntries = (blogs || [])
     .filter((b) => b && b.slug)
     .map((b) => {
       const loc = SITE_ORIGIN + '/blogs/' + encodeURIComponent(b.slug) + '/';
+      if (existingLocs.has(loc)) return null;
       const lastmod = toSitemapLastmod(b.updated_at || b.published_at || b.created_at);
+      existingLocs.add(loc);
       return `<url>
   <loc>${escapeXml(loc)}</loc>
   <lastmod>${escapeXml(lastmod)}</lastmod>
   <priority>0.51</priority>
 </url>`;
     })
+    .filter(Boolean)
     .join('\n');
 
-  if (!blogEntries) {
-    console.log('generate-sitemap: no published blogs; sitemap unchanged.');
+  if (!newBlogEntries) {
+    fs.writeFileSync(SITEMAP_PATH, sitemap, 'utf8');
+    console.log('generate-sitemap: no new blog URLs to add.');
     return;
   }
 
   // Insert blog entries before </urlset>
-  const closingTag = '</urlset>';
   const idx = sitemap.indexOf(closingTag);
   if (idx === -1) {
     console.warn('generate-sitemap: </urlset> not found; sitemap unchanged.');
     return;
   }
-  sitemap = sitemap.slice(0, idx) + '\n' + blogEntries + '\n' + sitemap.slice(idx);
+  sitemap = sitemap.slice(0, idx) + '\n' + newBlogEntries + '\n' + sitemap.slice(idx);
   fs.writeFileSync(SITEMAP_PATH, sitemap, 'utf8');
-  console.log('generate-sitemap: appended', blogs.filter((b) => b && b.slug).length, 'blog URLs to sitemap.');
+  console.log('generate-sitemap: appended new blog URLs to sitemap.');
 }
 
 main().catch((err) => {

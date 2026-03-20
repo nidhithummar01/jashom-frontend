@@ -227,6 +227,99 @@ const ROUTE_META = {
       'Get in touch with Jashom for expert GPU optimization and CUDA development services. Contact our team to discuss your performance challenges and project requirements.',
     h1: 'Contact Jashom',
   },
+
+  '/about/team/': {
+    title: 'Meet the Jashom Team | Experts in AI, Cloud & Digital Innovation',
+    description:
+      'Get to know the Jashom team experts in AI, cloud computing, and digital transformation driving innovation and scalable business solutions.',
+    h1: 'Meet the Jashom Team',
+  },
+
+  '/brochure/': {
+    title: 'Jashom Brochure | AI, Cloud & Digital Transformation Solutions',
+    description:
+      'Download the Jashom brochure to explore our AI driven solutions, cloud expertise, and digital transformation services for modern enterprises.',
+    h1: 'Jashom Brochure',
+  },
+
+  '/careers/': {
+    title: 'Careers at Jashom | Join Our AI & Technology Team',
+    description:
+      'Explore careers at Jashom and work on cutting edge AI, cloud, and automation solutions. Build your future with a fast growing tech team.',
+    h1: 'Careers at Jashom',
+  },
+
+  '/careers/openings/': {
+    title: 'Current Job Openings at Jashom | AI & Tech Careers',
+    description:
+      'Browse current job openings at Jashom. Join our team to work on AI, cloud infrastructure, and next gen digital solutions.',
+    h1: 'Current Job Openings at Jashom',
+  },
+
+  '/cookies/': {
+    title: 'Cookies Policy | Jashom Technologies',
+    description:
+      'Learn how Jashom uses cookies to enhance user experience, analyze traffic, and improve website performance.',
+    h1: 'Cookies Policy',
+  },
+
+  '/portfolio/': {
+    title: 'Jashom Portfolio | AI, Cloud & Digital Transformation Projects',
+    description:
+      'Explore Jashom\'s portfolio showcasing AI, cloud, and digital transformation projects delivering scalable and high performance solutions.',
+    h1: 'Jashom Portfolio',
+  },
+
+  '/portfolio/case-study/cloud-gpu-fine-tuning/': {
+    title: 'Cloud GPU Fine Tuning Case Study | Jashom AI Solutions',
+    description:
+      'Discover how Jashom optimized cloud GPU fine tuning for AI models, improving performance, scalability, and cost efficiency.',
+    h1: 'Cloud GPU Fine Tuning Case Study',
+  },
+
+  '/portfolio/case-study/gpu-workload-orchestration/': {
+    title: 'GPU Workload Orchestration Case Study | Jashom Technologies',
+    description:
+      'Learn how Jashom streamlined GPU workload orchestration to maximize efficiency, reduce costs, and enhance performance.',
+    h1: 'GPU Workload Orchestration Case Study',
+  },
+
+  '/portfolio/case-study/llm-inference-optimization/': {
+    title: 'LLM Inference Optimization Case Study | Jashom Technologies',
+    description:
+      'See how Jashom optimized LLM inference to achieve faster response times, reduced costs, and improved AI performance at scale.',
+    h1: 'LLM Inference Optimization Case Study',
+  },
+
+  '/portfolio/case-study/redfish-bmc-telemetry/': {
+    title: 'Redfish BMC Telemetry Case Study | Jashom Technologies',
+    description:
+      'Explore how Jashom implemented Redfish BMC telemetry to enhance system monitoring, reliability, and infrastructure visibility.',
+    h1: 'Redfish BMC Telemetry Case Study',
+  },
+
+  '/privacy/': {
+    title: 'Privacy Policy | Jashom Data Protection & Compliance',
+    description:
+      'Read Jashom\'s privacy policy to understand how we collect, use, and protect your personal data in compliance with global standards.',
+    h1: 'Privacy Policy',
+  },
+
+  '/security/': {
+    title: 'Security at Jashom | Data Protection & Infrastructure Security',
+    description:
+      'Learn about Jashom\'s security practices, ensuring data protection, system integrity, and enterprise grade infrastructure security.',
+    h1: 'Security at Jashom',
+  },
+
+  '/terms/': {
+    title: 'Terms & Conditions | Jashom Website Usage Policy',
+    description:
+      'Review Jashom\'s terms and conditions outlining website usage, legal policies, and user responsibilities.',
+    h1: 'Terms & Conditions',
+  },
+
+  // NOTE: '/contact/' and '/about/' are handled above. Add other routes here when needed.
 };
 
 // Static routes only (no :slug or params). Must have leading and trailing slash.
