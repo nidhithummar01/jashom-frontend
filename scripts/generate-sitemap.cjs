@@ -14,7 +14,10 @@ const DIST = path.join(__dirname, '..', 'dist');
 const SITEMAP_PATH = path.join(DIST, 'sitemap.xml');
 const SITE_ORIGIN = (process.env.SITE_ORIGIN || process.env.VITE_SITE_URL || 'https://www.jashom.com')
   .toString()
-  .replace(/\/$/, '');
+  .replace(/\/$/, '')
+  // Normalize any old origin:
+  // - If an env var is set to new.jashom.com, keep sitemap on the live www domain.
+  .replace(/^https?:\/\/new\.jashom\.com$/i, 'https://www.jashom.com');
 const API_BASE = (process.env.VITE_API_URL || 'https://backend.jashom.com').toString().replace(/\/$/, '');
 
 function nowSitemapLastmod() {
@@ -71,6 +74,55 @@ async function fetchPublishedBlogs() {
   }
 }
 
+function normalizeUrlLocToWww(loc) {
+  if (typeof loc !== 'string') return loc;
+  const raw = loc.trim();
+  // Support:
+  // - https://www.jashom.com/...
+  // - https://jashom.com/...
+  // - https://new.jashom.com/...
+  const m = raw.match(/^https?:\/\/(?:(?:new)\.)?jashom\.com(\/.*)?$/i);
+  if (!m) return raw;
+  const path = m[1] || '/';
+  return `https://www.jashom.com${path}`;
+}
+
+function normalizeSitemapLocsToWwwAndDedupe(xml) {
+  const closingTag = '</urlset>';
+  const closingIdx = xml.indexOf(closingTag);
+  if (closingIdx === -1) return xml;
+
+  const beforeClosing = xml.slice(0, closingIdx);
+  const afterClosing = xml.slice(closingIdx); // includes </urlset>
+
+  const firstUrlStart = beforeClosing.indexOf('<url>');
+  if (firstUrlStart === -1) return xml;
+
+  const prefix = beforeClosing.slice(0, firstUrlStart);
+  const urlBlocks = beforeClosing.match(/<url>[\s\S]*?<\/url>/g) || [];
+
+  const seen = new Set();
+  const outBlocks = [];
+
+  for (const block of urlBlocks) {
+    const locMatch = block.match(/<loc>([^<]+)<\/loc>/i);
+    const rawLoc = locMatch && locMatch[1] ? locMatch[1].trim() : null;
+    const normalizedLoc = rawLoc ? normalizeUrlLocToWww(rawLoc) : rawLoc;
+
+    if (!normalizedLoc) continue;
+    if (seen.has(normalizedLoc)) continue;
+    seen.add(normalizedLoc);
+
+    const nextBlock = block.replace(
+      /<loc>[^<]+<\/loc>/i,
+      `<loc>${escapeXml(normalizedLoc)}</loc>`
+    );
+    outBlocks.push(nextBlock);
+  }
+
+  return prefix + outBlocks.join('\n') + afterClosing;
+}
+
 async function main() {
   if (!fs.existsSync(SITEMAP_PATH)) {
     console.warn('generate-sitemap: dist/sitemap.xml not found. Run vite build first. Skipping.');
@@ -78,6 +130,9 @@ async function main() {
   }
 
   let sitemap = fs.readFileSync(SITEMAP_PATH, 'utf8');
+
+  // Normalize any existing sitemap URLs to `www.jashom.com` and dedupe.
+  sitemap = normalizeSitemapLocsToWwwAndDedupe(sitemap);
 
   const closingTag = '</urlset>';
   const closingIdx = sitemap.indexOf(closingTag);
