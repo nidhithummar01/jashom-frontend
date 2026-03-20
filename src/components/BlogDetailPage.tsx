@@ -118,60 +118,76 @@ export function BlogDetailPage() {
 
       {/* Hero - padding so content starts below fixed navbar */}
       <section
-        className="relative pt-52 pb-20 px-4 sm:px-6 lg:px-8 blog-detail-hero"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          minHeight: '420px',
-        }}
+        className="relative overflow-hidden px-4 sm:px-6 lg:px-8 pb-20 blog-detail-hero"
       >
-        <div className="absolute inset-0" style={{ background: 'rgba(11, 15, 20, 0.85)' }} />
-        <div className="max-w-4xl mx-auto relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-6">
-            <span
-              className="inline-block px-4 py-2 rounded-full text-sm font-semibold"
-              style={{
-                background: 'rgba(34, 211, 238, 0.1)',
-                color: '#22D3EE',
-                border: '1px solid rgba(34, 211, 238, 0.3)',
-              }}
-            >
-              Blog
-            </span>
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-            style={{ color: '#FFFFFF' }}
-          >
-            {blog.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl mb-8 leading-relaxed"
-            style={{ color: '#D1D5DB' }}
-          >
-            {blog.excerpt ?? ''}
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap items-center gap-6"
-          >
-            <div className="flex items-center gap-2">
-              <Calendar className="w-5 h-5" style={{ color: '#9CA3AF' }} />
-              <span style={{ color: '#9CA3AF' }}>{formatDate(blog.published_at)}</span>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-stretch gap-10">
+            <div className="mx-auto md:mx-0 w-full md:max-w-2xl text-center md:text-left">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="mb-6"
+              >
+                <span
+                  className="inline-block px-4 py-2 rounded-full text-sm font-semibold"
+                  style={{
+                    background: 'rgba(34, 211, 238, 0.1)',
+                    color: '#22D3EE',
+                    border: '1px solid rgba(34, 211, 238, 0.3)',
+                  }}
+                >
+                  Blog
+                </span>
+              </motion.div>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+                style={{ color: '#FFFFFF' }}
+              >
+                {blog.title}
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-xl mb-8 leading-relaxed"
+                style={{ color: '#D1D5DB' }}
+              >
+                {blog.excerpt ?? ''}
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="flex flex-wrap items-center justify-center lg:justify-start gap-6"
+              >
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-5 h-5" style={{ color: '#9CA3AF' }} />
+                  <span style={{ color: '#9CA3AF' }}>{formatDate(blog.published_at)}</span>
+                </div>
+                {blog.author_name && <span style={{ color: '#9CA3AF' }}>{blog.author_name}</span>}
+              </motion.div>
             </div>
-            {blog.author_name && (
-              <span style={{ color: '#9CA3AF' }}>{blog.author_name}</span>
-            )}
-          </motion.div>
+
+            <div className="relative w-full h-full min-h-[320px] md:min-h-[420px]">
+              <img
+                src={heroImage}
+                alt={blog.title}
+                className="w-full h-full object-cover rounded-2xl md:rounded-3xl"
+                loading="eager"
+              />
+              {/* Helps keep left-side text readable when content overlaps on smaller screens */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: 'linear-gradient(90deg, rgba(11, 15, 20, 0.85) 0%, rgba(11, 15, 20, 0.35) 45%, rgba(11, 15, 20, 0.05) 100%)',
+                }}
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -347,16 +363,12 @@ export function BlogDetailPage() {
         .blog-detail-content-section { padding-top: 5rem; padding-bottom: 5rem; }
         .blog-detail-container { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; }
         @media (min-width: 1024px) {
-          .blog-detail-grid { display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: start; }
+          .blog-detail-grid { display: grid; grid-template-columns: 1fr; gap: 0; align-items: start; }
         }
         .blog-detail-main { min-width: 0; }
         .blog-detail-article { color: #D1D5DB; max-width: 1200px; }
 
         .blog-detail-sidebar { display: none; }
-        @media (min-width: 1024px) {
-          .blog-detail-sidebar { display: block; }
-          .blog-detail-sidebar-sticky { position: sticky; top: 7rem; }
-        }
 
         .blog-sidebar-card {
           background: rgba(17, 24, 39, 0.7);
