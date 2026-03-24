@@ -50,6 +50,7 @@ const PrivacyPolicyPage = lazy(() => import('./components/PrivacyPolicyPage').th
 const TermsOfServicePage = lazy(() => import('./components/TermsOfServicePage').then(module => ({ default: module.TermsOfServicePage })));
 const CookiePolicyPage = lazy(() => import('./components/CookiePolicyPage').then(module => ({ default: module.CookiePolicyPage })));
 const SecurityPolicyPage = lazy(() => import('./components/SecurityPolicyPage').then(module => ({ default: module.SecurityPolicyPage })));
+const NotFoundPage = lazy(() => import('./components/NotFoundPage').then(module => ({ default: module.NotFoundPage })));
 
 // Lazy load about pages
 const TeamPage = lazy(() => import('./components/about/TeamPage').then(module => ({ default: module.TeamPage })));
@@ -151,6 +152,9 @@ function AnimatedRoutes() {
           <Route path="/terms/" element={<PageTransition><TermsOfServicePage /></PageTransition>} />
           <Route path="/cookies/" element={<PageTransition><CookiePolicyPage /></PageTransition>} />
           <Route path="/security/" element={<PageTransition><SecurityPolicyPage /></PageTransition>} />
+
+          {/* Catch-all route for unknown URLs */}
+          <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
         </Routes>
       </Suspense>
     </AnimatePresence>
