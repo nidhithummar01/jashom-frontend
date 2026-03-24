@@ -23,6 +23,8 @@ export function BlogDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState('');
+  const pageBackground =
+    'radial-gradient(1200px 560px at 14% 0%, rgba(34, 211, 238, 0.12) 0%, rgba(11, 15, 20, 1) 56%, rgba(11, 15, 20, 1) 100%)';
 
   useEffect(() => {
     if (!slug) {
@@ -77,7 +79,7 @@ export function BlogDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0B0F14' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: pageBackground }}>
         <div className="text-center" style={{ color: '#9CA3AF' }}>
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-2 border-[#22D3EE] border-t-transparent mb-4" />
           <p>Loading…</p>
@@ -88,7 +90,7 @@ export function BlogDetailPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 pt-32" style={{ background: '#0B0F14' }}>
+      <div className="min-h-screen flex items-center justify-center px-4 pt-32" style={{ background: pageBackground }}>
         <div className="text-center" style={{ color: '#e57373' }}>
           <p>Failed to load blog: {error}</p>
         </div>
@@ -98,7 +100,7 @@ export function BlogDetailPage() {
 
   if (!blog) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 pt-32" style={{ background: '#0B0F14' }}>
+      <div className="min-h-screen flex items-center justify-center px-4 pt-32" style={{ background: pageBackground }}>
         <div className="text-center" style={{ color: '#9CA3AF' }}>
           <p>Blog not found.</p>
         </div>
@@ -109,7 +111,7 @@ export function BlogDetailPage() {
   const heroImage = blog.featured_image_url ?? '/images/service-hero-bg.jpg';
 
   return (
-    <div className="min-h-screen" style={{ background: '#0B0F14' }}>
+    <div className="min-h-screen" style={{ background: pageBackground }}>
       <Seo
         title={`${blog.title} | Jashom Blog`}
         description={blog.excerpt ?? blog.title}
@@ -360,13 +362,18 @@ export function BlogDetailPage() {
         .blog-detail-hero { min-height: 420px; padding-top: 13rem; }
         @media (max-width: 768px) { .blog-detail-hero { min-height: 360px; padding-top: 11rem; } }
 
-        .blog-detail-content-section { padding-top: 5rem; padding-bottom: 5rem; }
+        .blog-detail-content-section {
+          position: relative;
+          padding-top: 5rem;
+          padding-bottom: 5rem;
+          background: linear-gradient(180deg, rgba(15, 23, 42, 0.16) 0%, rgba(11, 15, 20, 0) 100%);
+        }
         .blog-detail-container { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; }
         @media (min-width: 1024px) {
           .blog-detail-grid { display: grid; grid-template-columns: 1fr; gap: 0; align-items: start; }
         }
-        .blog-detail-main { min-width: 0; }
-        .blog-detail-article { color: #D1D5DB; max-width: 1200px; }
+        .blog-detail-main { min-width: 0; width: 100%; }
+        .blog-detail-article { color: #D1D5DB; width: 100%; max-width: none; }
 
         .blog-detail-sidebar { display: none; }
 
@@ -485,6 +492,16 @@ export function BlogDetailPage() {
         }
         @media (min-width: 900px) { .blog-detail-img { max-width: 1200px; } }
         @media (min-width: 1200px) { .blog-detail-img { max-width: 1400px; } }
+        .blog-section-shell {
+          width: 100%;
+          background: linear-gradient(180deg, rgba(17, 24, 39, 0.62) 0%, rgba(15, 23, 42, 0.5) 100%);
+          border: 1px solid rgba(34, 211, 238, 0.16);
+          border-radius: 18px;
+          padding: 1.35rem 1.2rem;
+          box-shadow: 0 14px 38px rgba(0, 0, 0, 0.22);
+        }
+        @media (min-width: 768px) { .blog-section-shell { padding: 1.8rem 1.6rem; } }
+        .blog-section-content { margin-top: 0.5rem; }
         .blog-section-content h2 { color: #FFFFFF; font-size: 2.25rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; padding-left: 20px; border-left: 4px solid #22D3EE; }
         .blog-section-content h3 { color: #FFFFFF; font-size: 1.75rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
         .blog-section-content p { color: #D1D5DB; line-height: 1.8; margin-bottom: 1.25rem; font-size: 1.0625rem; }
@@ -520,40 +537,42 @@ function BlogSection({
       {index > 0 && (
         <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, rgba(34, 211, 238, 0.3), transparent)', margin: '60px 0 40px' }} />
       )}
-      {section.title && (
-        <h2
-          style={{
-            color: '#FFFFFF',
-            fontSize: '2.25rem',
-            fontWeight: 700,
-            marginBottom: '24px',
-            paddingLeft: '20px',
-            borderLeft: '4px solid #22D3EE',
-          }}
-        >
-          {section.title}
-        </h2>
-      )}
-      <div className={hasImages ? 'blog-section-with-images' : ''}>
-        {section.content && (
-          <div
-            className="blog-section-content"
-            dangerouslySetInnerHTML={{ __html: section.content }}
-            style={{ lineHeight: 1.8, color: '#D1D5DB' }}
-          />
+      <div className="blog-section-shell">
+        {section.title && (
+          <h2
+            style={{
+              color: '#FFFFFF',
+              fontSize: '2.25rem',
+              fontWeight: 700,
+              marginBottom: '24px',
+              paddingLeft: '20px',
+              borderLeft: '4px solid #22D3EE',
+            }}
+          >
+            {section.title}
+          </h2>
         )}
-        {hasImages && section.images && (
-          <div className="blog-detail-section-images">
-            {section.images.map((img) => (
-              <img
-                key={`${img.url}-${img.alt ?? ''}`}
-                src={img.url}
-                alt={img.alt ?? ''}
-                className="blog-detail-img"
-              />
-            ))}
-          </div>
-        )}
+        <div className={hasImages ? 'blog-section-with-images' : ''}>
+          {section.content && (
+            <div
+              className="blog-section-content"
+              dangerouslySetInnerHTML={{ __html: section.content }}
+              style={{ lineHeight: 1.8, color: '#D1D5DB' }}
+            />
+          )}
+          {hasImages && section.images && (
+            <div className="blog-detail-section-images">
+              {section.images.map((img) => (
+                <img
+                  key={`${img.url}-${img.alt ?? ''}`}
+                  src={img.url}
+                  alt={img.alt ?? ''}
+                  className="blog-detail-img"
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
