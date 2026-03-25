@@ -42,7 +42,8 @@ export const homePageData = {
   } as const,
 
   BLOG_CARD_BG: '#111827' as const,
-  BLOG_CARD_BORDER: '1px solid rgba(255, 255, 255, 0.08)' as const,
+  /** No border on latest-blog cards (image/gradient provides edge definition). */
+  BLOG_CARD_BORDER: 'none' as const,
 
   BLOG_BADGE_STYLE: {
     background: 'rgba(34, 211, 238, 0.15)',

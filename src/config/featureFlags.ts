@@ -1,5 +1,5 @@
 /**
- * Toggle blog section visibility site-wide (nav, footer, homepage).
- * Set to true when you have published blogs and want to show the section.
+ * Toggle blog section visibility site-wide (nav Company → Blog, footer, homepage).
+ * Set to false to hide blog links and the home page blog section.
  */
-export const SHOW_BLOG_SECTION = false;
+export const SHOW_BLOG_SECTION = true;

@@ -1,16 +1,12 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type CSSProperties } from 'react';
 import { SEO as Seo } from './SEO';
-import { ArrowRight, Calendar } from 'lucide-react';
+import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { getBlogs } from '../api/blogs';
 import type { Blog } from '../api/blogs';
-
-function formatDate(iso: string | null): string {
-  if (!iso) return '';
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-}
+import * as Theme from '../constants/theme';
+import { homePageData, formatBlogDate } from './HomePage/data';
 
 export function BlogsPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -117,67 +113,82 @@ export function BlogsPage() {
                     blog.is_featured ? 'md:col-span-2 lg:col-span-1' : ''
                   } ${index === 0 ? 'lg:row-span-2' : ''}`}
                 >
-                  <Link to={`/blogs/${blog.slug}/`} className="block h-full">
+                  <Link
+                    to={`/blogs/${blog.slug}/`}
+                    className="block h-full"
+                    style={{ ['--accent' as string]: Theme.ACCENT_COLOR } as CSSProperties}
+                  >
                     <div
-                      className="relative h-full min-h-[320px] overflow-hidden transition-all duration-500 group-hover:scale-[1.02]"
+                      className="relative h-full min-h-[320px] rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-[1.02] flex flex-col"
                       style={{
-                        background: '#1E293B',
-                        border: '1px solid rgba(255, 255, 255, 0.08)'
+                        background: blog.featured_image_url ? undefined : homePageData.BLOG_CARD_BG,
+                        border: homePageData.BLOG_CARD_BORDER,
+                        ...(blog.featured_image_url
+                          ? {
+                              backgroundImage: `url(${blog.featured_image_url})`,
+                              backgroundSize: 'cover',
+                              backgroundPosition: 'center',
+                            }
+                          : {}),
                       }}
                     >
-                      <div className="absolute inset-0">
-                        <div
-                          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                          style={{
-                            backgroundImage: blog.featured_image_url ? `url(${blog.featured_image_url})` : 'none',
-                            opacity: blog.featured_image_url ? 0.3 : 0
-                          }}
-                        />
-                        <div
-                          className="absolute inset-0"
-                          style={{
-                            background: 'linear-gradient(180deg, #1E293B00 0%, #1E293B 100%)'
-                          }}
-                        />
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background: blog.featured_image_url
+                            ? 'linear-gradient(180deg, rgba(11, 15, 20, 0.7) 0%, rgba(11, 15, 20, 0.88) 50%, rgba(11, 15, 20, 0.96) 100%)'
+                            : 'none',
+                        }}
+                      />
+
+                      <div className="absolute top-4 left-4 z-10">
+                        <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={homePageData.BLOG_BADGE_STYLE}>
+                          Blog
+                        </div>
                       </div>
 
-                      <div className="relative h-full flex flex-col justify-between p-6 sm:p-8">
+                      <div className="relative z-10 flex flex-col flex-1 justify-between p-6 sm:p-8 pt-14">
                         <div>
-                          <div className="inline-block mb-4 px-3 py-1 rounded-full text-xs font-semibold" style={{
-                            background: 'rgba(34, 211, 238, 0.15)',
-                            color: '#22D3EE',
-                            border: '1px solid rgba(34, 211, 238, 0.3)'
-                          }}>
-                            Blog
-                          </div>
-
-                          <h3 className="text-xl sm:text-2xl font-bold mb-3 transition-colors duration-240" style={{ color: '#FAFAFA', lineHeight: 1.3 }}>
+                          <h3
+                            className="text-xl sm:text-2xl font-bold mb-3 line-clamp-3 transition-colors duration-240 group-hover:text-[var(--accent)]"
+                            style={{ color: Theme.TEXT_FAFAFA, lineHeight: 1.3 }}
+                          >
                             {blog.title}
                           </h3>
 
-                          <p className="text-sm sm:text-base mb-4" style={{ color: '#D1D5DB', lineHeight: 1.6 }}>
+                          <p className="text-sm sm:text-base mb-4 line-clamp-3" style={{ color: Theme.TEXT_MUTED, lineHeight: 1.6 }}>
                             {blog.excerpt ?? ''}
                           </p>
                         </div>
 
                         <div>
-                          <div className="flex items-center gap-4 mb-4 text-xs" style={{ color: '#9CA3AF' }}>
+                          <div className="flex items-center gap-4 mb-4 text-xs" style={{ color: Theme.TEXT_SUBTLE }}>
                             <div className="flex items-center gap-1.5">
-                              <Calendar className="w-4 h-4" />
-                              <span>{formatDate(blog.published_at)}</span>
+                              <Calendar className="w-3.5 h-3.5" />
+                              <span>{formatBlogDate(blog.published_at)}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                              <Clock className="w-3.5 h-3.5" />
+                              <span>— min read</span>
                             </div>
                           </div>
 
-                          <div className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-240" style={{ color: '#22D3EE' }}>
+                          <div
+                            className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-240"
+                            style={{ color: Theme.ACCENT_COLOR }}
+                          >
                             <span>Read more</span>
                             <ArrowRight className="w-4 h-4 transition-transform duration-240 group-hover:translate-x-1" />
                           </div>
                         </div>
                       </div>
 
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
-                        background: 'linear-gradient(180deg, rgba(34, 211, 238, 0.1) 0%, rgba(34, 211, 238, 0.05) 100%)'
-                      }} />
+                      <div
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        style={{
+                          background: 'linear-gradient(180deg, rgba(34, 211, 238, 0.05) 0%, rgba(34, 211, 238, 0.02) 100%)',
+                        }}
+                      />
                     </div>
                   </Link>
                 </motion.div>
