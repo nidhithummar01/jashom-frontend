@@ -60,13 +60,13 @@ export function BlogsPage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <span className="text-[#22D3EE] font-semibold text-sm">Blog & Resources</span>
+              <span className="text-[#22D3EE] font-semibold text-sm">Blog</span>
             </motion.div>
             <h1
               className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
               style={{ color: '#FAFAFA', letterSpacing: '-0.025em', textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}
             >
-              Latest <span style={{ color: '#22D3EE' }}>Blog</span> & Case Studies
+              Latest <span style={{ color: '#22D3EE' }}>Blog</span>
             </h1>
             <p className="text-lg sm:text-xl max-w-3xl mx-auto" style={{ color: '#D1D5DB', lineHeight: 1.7 }}>
               Stay informed with the latest trends, best practices, and success stories in AI, GPU optimization, and enterprise technology.
