@@ -213,53 +213,6 @@ export function BlogsPage() {
         </div>
       </section>
 
-      {/* Newsletter CTA */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="rounded-2xl p-8 sm:p-12 text-center relative overflow-hidden"
-            style={{
-              background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(6, 182, 212, 0.08) 100%)',
-              border: '1px solid rgba(34, 211, 238, 0.2)'
-            }}
-          >
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
-            </div>
-
-            <div className="relative z-10">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: '#FAFAFA' }}>
-                Stay Updated with Latest Blog
-              </h2>
-              <p className="text-lg mb-8" style={{ color: '#D1D5DB' }}>
-                Get the latest AI, GPU optimization, and technology blog posts delivered to your inbox.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 transition-all"
-                  style={{
-                    background: 'rgba(0, 0, 0, 0.3)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    color: '#FAFAFA'
-                  }}
-                />
-                <button
-                  className="px-6 py-3 rounded-xl font-semibold whitespace-nowrap text-white bg-[#22D3EE] hover:bg-[#0284C7] hover:scale-105 transition-all duration-240"
-                >
-                  Subscribe
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Contact Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
         <div className="max-w-4xl mx-auto">

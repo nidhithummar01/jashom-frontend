@@ -5,6 +5,8 @@ import { Calendar, User, Share2, ArrowRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getBlogBySlug, getBlogs } from '../api/blogs';
 import type { Blog, BlogContentSection } from '../api/blogs';
+import * as Theme from '../constants/theme';
+import { homePageData } from './HomePage/data';
 
 function formatDate(iso: string | null): string {
   if (!iso) return '';
@@ -42,11 +44,21 @@ export function BlogDetailPage() {
   }, [slug]);
 
   useEffect(() => {
-    if (!blog?.slug) return;
-    getBlogs({ status: 'published', limit: 5 })
-      .then((list) => setRelatedBlogs(list.filter((b) => b.slug !== blog.slug).slice(0, 3)))
+    // Always fetch latest blogs for the detail page.
+    // Some API responses may not include `blog.slug`, so we fall back to the route param.
+    if (!slug) return;
+
+    // Fetch extra so we still have 3 items after excluding the current blog.
+    getBlogs({ status: 'published', limit: 8 })
+      .then((list) => {
+        const currentSlug = blog?.slug ?? slug;
+        const valid = list.filter((b) => b.slug);
+        const withoutCurrent = valid.filter((b) => b.slug !== currentSlug).slice(0, 3);
+        // If there is only one blog total, show it (so the section is still visible).
+        setRelatedBlogs(withoutCurrent.length > 0 ? withoutCurrent : valid.slice(0, 3));
+      })
       .catch(() => setRelatedBlogs([]));
-  }, [blog?.slug]);
+  }, [slug, blog?.slug]);
 
   const sections: { id: string; title: string }[] =
     blog?.content_sections
@@ -293,25 +305,6 @@ export function BlogDetailPage() {
                   </div>
                 </div>
 
-                {relatedBlogs.length > 0 && (
-                  <div className="blog-sidebar-card">
-                    <h3 className="blog-sidebar-title">Related reads</h3>
-                    <ul className="blog-related-list">
-                      {relatedBlogs.map((b) => (
-                        <li key={b.id}>
-                          <Link to={`/blogs/${b.slug}`} className="blog-related-link">
-                            <span className="blog-related-title">{b.title}</span>
-                            <ArrowRight className="blog-related-arrow" />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                    <Link to="/blogs/" className="blog-sidebar-all">
-                      View all posts
-                    </Link>
-                  </div>
-                )}
-
                 <div className="blog-sidebar-card blog-sidebar-cta">
                   <p className="blog-sidebar-cta-text">Need help with AI or GPU acceleration?</p>
                   <Link to="/contact/" className="blog-sidebar-cta-btn">
@@ -323,6 +316,119 @@ export function BlogDetailPage() {
           </div>
         </div>
       </section>
+
+      {/* Latest Blogs (3) */}
+      {relatedBlogs.length > 0 && (
+        <section
+          className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+          style={{ background: `linear-gradient(180deg, ${homePageData.BLOG_CARD_BG} 0%, rgba(11, 15, 20, 0.0) 100%)` }}
+        >
+          {/* Background decoration (same feel as Home blog section) */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-16 right-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl" />
+            <div className="absolute bottom-16 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl" />
+          </div>
+
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="text-center mb-12">
+              <motion.div
+                className="inline-block mb-4 px-4 py-2 rounded-full border"
+                style={Theme.BADGE_STYLE}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45 }}
+              >
+                <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>
+                  Related Blogs
+                </span>
+              </motion.div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold" style={{ color: Theme.TEXT_FAFAFA, letterSpacing: '-0.025em' }}>
+                Latest <span style={{ color: Theme.ACCENT_COLOR }}>Reads</span>
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedBlogs.map((b, index) => (
+                <motion.div
+                  key={b.id}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.08, duration: 0.45 }}
+                  className="group"
+                >
+                  <Link
+                    to={`/blogs/${b.slug}/`}
+                    className="block h-full"
+                    style={{ ['--accent' as string]: Theme.ACCENT_COLOR } as React.CSSProperties}
+                  >
+                    <div
+                      className="relative h-full min-h-[320px] rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-[1.02] flex flex-col"
+                      style={{
+                        background: b.featured_image_url ? undefined : homePageData.BLOG_CARD_BG,
+                        border: 'none',
+                        ...(b.featured_image_url
+                          ? {
+                              backgroundImage: `url(${b.featured_image_url})`,
+                              backgroundSize: 'cover',
+                              backgroundPosition: 'center',
+                            }
+                          : {}),
+                      }}
+                    >
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background: b.featured_image_url
+                            ? 'linear-gradient(180deg, rgba(11, 15, 20, 0.68) 0%, rgba(11, 15, 20, 0.88) 55%, rgba(11, 15, 20, 0.96) 100%)'
+                            : 'none',
+                        }}
+                      />
+
+                      <div className="absolute top-4 left-4 z-10">
+                        <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={homePageData.BLOG_BADGE_STYLE}>
+                          Blog
+                        </div>
+                      </div>
+
+                      <div className="relative z-10 flex flex-col flex-1 justify-between p-6 pt-14">
+                        <div>
+                          <h3
+                            className="text-lg font-bold mb-3 line-clamp-3 transition-colors duration-240 group-hover:text-[var(--accent)]"
+                            style={{ color: Theme.TEXT_FAFAFA, lineHeight: 1.35 }}
+                          >
+                            {b.title}
+                          </h3>
+                          <p className="text-sm mb-4 line-clamp-3" style={{ color: Theme.TEXT_MUTED, lineHeight: 1.6 }}>
+                            {b.excerpt ?? ''}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex items-center gap-2 text-xs" style={{ color: Theme.TEXT_SUBTLE }}>
+                            <Calendar className="w-3.5 h-3.5" />
+                            <span>{formatDate(b.published_at)}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: Theme.ACCENT_COLOR }}>
+                            <span>Read More</span>
+                            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        style={{ background: 'linear-gradient(180deg, rgba(34, 211, 238, 0.05) 0%, rgba(34, 211, 238, 0.02) 100%)' }}
+                      />
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
