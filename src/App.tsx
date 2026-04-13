@@ -129,7 +129,6 @@ function AnimatedRoutes() {
 
           {/* About Us — canonical URL is /about-us/. /about/ redirects for old links. */}
           <Route path="/about-us/" element={<PageTransition><NewAboutUsPage /></PageTransition>} />
-          <Route path="/about/" element={<Navigate to="/about-us/" replace />} />
           <Route path="/about/team/" element={<PageTransition><TeamPage /></PageTransition>} />
           {/* Canonical portfolio URL is /portfolio/. Redirect duplicate to avoid same content on two URLs. */}
           <Route path="/about/portfolio/" element={<Navigate to="/portfolio/" replace />} />
