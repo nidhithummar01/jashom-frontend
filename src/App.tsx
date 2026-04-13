@@ -161,39 +161,6 @@ function AnimatedRoutes() {
 }
 
 export default function App() {
-  // useEffect(() => {
-  //   /*
-  //    * Tawk.to chat widget — loads the official script from embed.tawk.to.
-  //    *
-  //    * Security: Subresource Integrity (SRI) is intentionally not used.
-  //    * - The script is hosted and updated by Tawk.to; a fixed integrity hash would
-  //    *   break whenever they deploy changes, which is frequent for chat widgets.
-  //    * - This is an accepted trade-off for third-party widgets: we load only from
-  //    *   the vendor's official HTTPS URL (embed.tawk.to). Safe because:
-  //    *   (1) Script source is fixed and vendor-controlled, not user input.
-  //    *   (2) Delivered over HTTPS from a known domain.
-  //    *   (3) Omitting SRI for vendor-hosted, frequently updated scripts is a
-  //    *       common and documented pattern when the vendor controls the asset.
-  //    */
-  //   const Tawk_API: any = (window as any).Tawk_API ?? {};
-  //   const Tawk_LoadStart = new Date();
-  //   (window as any).Tawk_API = Tawk_API;
-  //   (window as any).Tawk_LoadStart = Tawk_LoadStart;
-
-  //   (function () {
-  //     const s1 = document.createElement("script");
-  //     const s0 = document.getElementsByTagName("script")[0];
-  //     s1.async = true;
-  //     s1.src = "https://embed.tawk.to/699ecfbd8b10421c355a9f93/1jia5mv9u";
-  //     s1.setAttribute("crossorigin", "anonymous");
-  //     if (s0?.parentNode) {
-  //       s0.parentNode.insertBefore(s1, s0);
-  //     } else {
-  //       document.head.appendChild(s1);
-  //     }
-  //   })();
-  // }, []);
-
   return (
     <BrowserRouter>
       <CanonicalTag />
