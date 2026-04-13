@@ -8,7 +8,7 @@ export function Footer() {
 
   const footerLinks = {
     company: [
-      { label: 'About Us', path: '/about/' },
+      { label: 'About Us', path: '/about-us/' },
       { label: 'Company Brochure', path: '/brochure/' },
       { label: 'Case Studies', path: '/portfolio/' },
       { label: 'Contact Us', path: '/contact/' }

@@ -127,15 +127,15 @@ function AnimatedRoutes() {
           <Route path="/gpu-optimization-service/" element={<PageTransition><GPUOptimizationServicePage /></PageTransition>} />
           <Route path="/cuda-development-service/" element={<PageTransition><CUDADevelopmentServicePage /></PageTransition>} />
 
-          {/* About Us routes */}
+          {/* About Us — canonical URL is /about-us/. /about/ redirects for old links. */}
           <Route path="/about-us/" element={<PageTransition><NewAboutUsPage /></PageTransition>} />
+          <Route path="/about/" element={<Navigate to="/about-us/" replace />} />
           <Route path="/about/team/" element={<PageTransition><TeamPage /></PageTransition>} />
           {/* Canonical portfolio URL is /portfolio/. Redirect duplicate to avoid same content on two URLs. */}
           <Route path="/about/portfolio/" element={<Navigate to="/portfolio/" replace />} />
           <Route path="/about/blog/" element={<PageTransition><PlaceholderPage title="Blog" description="Stay updated with the latest blog posts, trends, and best practices in AI, machine learning, and GPU optimization." /></PageTransition>} />
           {/* Canonical Careers URL is /careers/. Keep /about/career/ as redirect to avoid duplicate pages. */}
           <Route path="/about/career/" element={<Navigate to="/careers/" replace />} />
-          <Route path="/about/" element={<PageTransition><NewAboutUsPage /></PageTransition>} />
           
           {/* Placeholder routes */}
           <Route path="/careers/" element={<PageTransition><CareersPage /></PageTransition>} />

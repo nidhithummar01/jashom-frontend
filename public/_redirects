@@ -1,0 +1,3 @@
+# About page: canonical at /about-us/ (matches sitemap). 301 old /about/ URLs for crawlers (Netlify / compatible hosts).
+/about   /about-us/   301
+/about/  /about-us/   301

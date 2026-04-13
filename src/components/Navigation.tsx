@@ -222,7 +222,7 @@ export function Navigation() {
     {
       label: 'Company',
       dropdown: [
-        { path: '/about/', label: 'About Us' },
+        { path: '/about-us/', label: 'About Us' },
         { path: '/about/team/', label: 'Team' },
         { path: '/portfolio/', label: 'Portfolio' },
         ...(SHOW_BLOG_SECTION ? [{ path: '/blogs/', label: 'Blog' as const }] : []),

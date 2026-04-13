@@ -209,12 +209,6 @@ const ROUTE_META = {
       'Looking to hire CUDA developers? Get skilled GPU programmers for NVIDIA CUDA projects, performance optimization, and custom parallel computing solutions.',
     h1: 'Hire CUDA Developers',
   },
-  '/about/': {
-    title: 'About Jashom | GPU Optimization & CUDA Development Experts',
-    description:
-      'Learn about Jashom, a technology-driven company specializing in GPU optimization, NVIDIA CUDA development, and high-performance computing solutions for modern AI and enterprise applications.',
-    h1: 'About Jashom',
-  },
   '/about-us/': {
     title: 'About Jashom | GPU Optimization & CUDA Development Experts',
     description:
@@ -319,7 +313,7 @@ const ROUTE_META = {
     h1: 'Terms & Conditions',
   },
 
-  // NOTE: '/contact/' and '/about/' are handled above. Add other routes here when needed.
+  // NOTE: '/contact/' and '/about-us/' are handled above. Add other routes here when needed.
 };
 
 // Static routes only (no :slug or params). Must have leading and trailing slash.
@@ -352,10 +346,9 @@ const STATIC_ROUTES = [
   '/thank-you/',
   '/gpu-optimization-service/',
   '/cuda-development-service/',
-  '/about-us/',
   '/about/team/',
   '/about/blog/',
-  '/about/',
+  '/about-us/',
   '/careers/',
   '/careers/openings/',
   '/careers/apply/',
