@@ -164,14 +164,14 @@ export function CareerApplicationPage() {
           >
             <Link
               to="/careers/openings/"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-xl font-semibold transition-all duration-300"
+              className="ui-btn ui-btn--lg transition-all duration-300"
               style={CTA_PRIMARY_STYLE}
             >
               View Other Openings
             </Link>
             <Link
               to="/"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-xl font-semibold transition-all duration-300"
+              className="ui-btn ui-btn--lg transition-all duration-300"
               style={CTA_SECONDARY_STYLE}
             >
               Back to Home
@@ -238,12 +238,12 @@ export function CareerApplicationPage() {
 
       {/* Application Form Section */}
       <section className="pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
+        <div className="ui-form-shell max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="rounded-3xl p-8 sm:p-12 border"
+            className="ui-form-card rounded-3xl border"
             style={FORM_CONTAINER_STYLE}
           >
             <form onSubmit={handleSubmit} className="space-y-8">
@@ -331,7 +331,7 @@ export function CareerApplicationPage() {
               <button
                 type="submit"
                 disabled={applySubmitting}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0 disabled:opacity-60 disabled:cursor-not-allowed"
+                className="ui-btn ui-btn--lg ui-btn--full transition-all duration-300 cursor-pointer border-0 disabled:opacity-60 disabled:cursor-not-allowed"
                 style={SUBMIT_BUTTON_STYLE}
                 onMouseEnter={(e) => {
                   if (!applySubmitting) Object.assign(e.currentTarget.style, SUBMIT_BUTTON_HOVER);

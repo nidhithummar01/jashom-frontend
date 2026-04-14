@@ -90,46 +90,43 @@ export function CookieConsent() {
       }}
     >
       <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: 'spring', damping: 28, stiffness: 260 }}
-        className="px-4 pb-5 md:px-6 md:pb-6"
+        initial={{ y: 48, opacity: 0, scale: 0.97 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        transition={{ type: 'spring', damping: 24, stiffness: 220 }}
+        className="px-4 pb-4 md:px-6 md:pb-6"
       >
         <div
-            className="relative pointer-events-auto w-full max-w-5xl mx-auto rounded-2xl overflow-hidden"
+            className="relative pointer-events-auto w-full max-w-4xl mx-auto rounded-2xl overflow-hidden"
             style={{
-              background: 'linear-gradient(168deg, rgba(12,12,14,0.98) 0%, rgba(6,6,8,0.99) 100%)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              boxShadow: `0 0 0 1px rgba(${CYAN_RGB},0.06), 0 24px 48px -12px rgba(0,0,0,0.7), 0 0 100px -24px rgba(${CYAN_RGB},0.08)`,
+              background: 'linear-gradient(135deg, rgba(22, 36, 48, 0.78) 0%, rgba(10, 18, 28, 0.76) 100%)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              boxShadow: `0 12px 40px -16px rgba(0,0,0,0.72), 0 0 0 1px rgba(${CYAN_RGB},0.12)`,
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
             }}
           >
-            {/* Top accent */}
-            <div
-              className="absolute top-0 left-0 right-0 h-px"
-              style={{
-                background: `linear-gradient(90deg, transparent, rgba(${CYAN_RGB},0.45), transparent)`,
-              }}
-            />
+            <div className="absolute inset-0 pointer-events-none" style={{
+              background: 'linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)'
+            }} />
 
-            <div className="p-5 md:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
-              {/* Left: Icon + Title + Description */}
-              <div className="flex items-start gap-4 flex-1 min-w-0 pr-4 sm:pr-6">
+            <div className="relative z-10 pt-8 pb-9 pl-8 pr-5 md:pt-9 md:pb-10 md:pl-10 md:pr-6">
+              <div className="flex items-start gap-4">
                 <div
-                  className="flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center"
+                  className="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center"
                   style={{
-                    background: `linear-gradient(135deg, rgba(${CYAN_RGB},0.2) 0%, rgba(${CYAN_RGB},0.06) 100%)`,
-                    border: `1px solid rgba(${CYAN_RGB},0.25)`,
+                    background: `linear-gradient(135deg, rgba(${CYAN_RGB},0.28) 0%, rgba(${CYAN_RGB},0.1) 100%)`,
+                    border: `1px solid rgba(${CYAN_RGB},0.35)`,
                   }}
                 >
-                  <Cookie className="w-6 h-6" style={{ color: CYAN }} strokeWidth={1.75} />
+                  <Cookie className="w-7 h-7" style={{ color: CYAN }} strokeWidth={1.9} />
                 </div>
                 <div className="min-w-0">
-                  <h2 className="font-semibold text-white text-lg md:text-xl tracking-tight">
+                  <h2 className="font-semibold text-white text-xl tracking-tight">
                     This website uses cookies
                   </h2>
                   <p
-                    className="text-sm md:text-[15px] leading-relaxed mt-1"
-                    style={{ color: 'rgba(255,255,255,0.78)' }}
+                    className="text-sm md:text-base leading-relaxed mt-1.5"
+                    style={{ color: 'rgba(255,255,255,0.82)' }}
                   >
                     We use cookies to personalise content and ads, to provide social media features and to
                     analyse our traffic.{' '}
@@ -140,44 +137,44 @@ export function CookieConsent() {
                 </div>
               </div>
 
-              {/* Right: Actions row – Allow, Deny, Close */}
-              <div className="relative z-10 flex flex-shrink-0 sm:pl-6 items-center gap-3">
+              <div className="mt-5 mb-2 flex items-center justify-center gap-3">
                 <button
                   type="button"
                   onClick={allow}
-                  className="cursor-pointer px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:brightness-110 active:scale-[0.98] whitespace-nowrap"
+                  className="cursor-pointer min-w-[120px] px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:brightness-110 active:scale-[0.98] whitespace-nowrap"
                   style={{
                     cursor: 'pointer',
                     background: `linear-gradient(135deg, ${CYAN} 0%, #06b6d4 100%)`,
                     color: '#0a0a0a',
-                    boxShadow: `0 0 24px -4px rgba(${CYAN_RGB},0.45), 0 1px 0 0 rgba(255,255,255,0.1) inset`,
+                    boxShadow: `0 0 20px -4px rgba(${CYAN_RGB},0.52), 0 1px 0 0 rgba(255,255,255,0.14) inset`,
                   }}
                 >
-                  Allow
+                  Allow all
                 </button>
                 <button
                   type="button"
                   onClick={deny}
-                  className="cursor-pointer px-6 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-white/[0.08] active:scale-[0.98] whitespace-nowrap"
+                  className="cursor-pointer min-w-[120px] px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-white/[0.08] active:scale-[0.98] whitespace-nowrap"
                   style={{
                     cursor: 'pointer',
-                    background: 'rgba(255,255,255,0.04)',
+                    background: 'rgba(16, 24, 36, 0.55)',
                     color: 'rgba(255,255,255,0.9)',
-                    border: '1px solid rgba(255,255,255,0.12)',
+                    border: '1px solid rgba(255,255,255,0.24)',
                   }}
                 >
                   Deny
                 </button>
-                <button
-                  type="button"
-                  onClick={close}
-                  className="cursor-pointer p-2.5 rounded-xl transition-colors duration-200 hover:bg-white/10 flex-shrink-0"
-                  style={{ cursor: 'pointer', color: 'rgba(255,255,255,0.55)' }}
-                  aria-label="Close"
-                >
-                  <X className="w-5 h-5" strokeWidth={2} />
-                </button>
               </div>
+
+              <button
+                type="button"
+                onClick={close}
+                className="cursor-pointer absolute top-3 right-3 p-2 rounded-lg transition-colors duration-200 hover:bg-white/10"
+                style={{ cursor: 'pointer', color: 'rgba(255,255,255,0.58)' }}
+                aria-label="Close"
+              >
+                <X className="w-4 h-4" strokeWidth={2} />
+              </button>
             </div>
           </div>
       </motion.div>

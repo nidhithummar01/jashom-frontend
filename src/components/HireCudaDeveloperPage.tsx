@@ -34,8 +34,9 @@ const hireStepsData = [
   { title: 'Start Development Implementation', description: 'The CUDA developer of your choice is integrated with your working process and immediately begins to optimize and accelerate your application.' },
 ];
 
-const EXPERTISE_ICON_BG = '#E3F2FD';
-const EXPERTISE_ICON_COLOR = '#2196F3';
+const EXPERTISE_ICON_BG = 'rgba(34, 211, 238, 0.12)';
+const EXPERTISE_ICON_BORDER = '1px solid rgba(34, 211, 238, 0.28)';
+const EXPERTISE_ICON_COLOR = '#22D3EE';
 const STEP_CIRCLE_STYLE = { background: 'radial-gradient(circle, rgba(34, 211, 238, 0.2) 0%, rgba(34, 211, 238, 0.05) 70%)', border: '3px solid rgba(34, 211, 238, 0.3)' };
 const STEP_NUM_BG = { background: '#22D3EE' };
 
@@ -70,14 +71,24 @@ const whyChooseBenefitsData: { title: string; description: string; pathD?: strin
 const BENEFIT_CARD_STYLE = { background: 'rgba(34, 211, 238, 0.05)', borderColor: 'rgba(34, 211, 238, 0.3)' };
 const BENEFIT_ICON_BOX_STYLE = { background: 'rgba(34, 211, 238, 0.1)', border: '1px solid rgba(34, 211, 238, 0.3)' };
 const BADGE_FAQ = { background: 'rgba(34, 211, 238, 0.05)', borderColor: 'rgba(34, 211, 238, 0.2)' } as const;
-const FAQ_ITEM_STYLE = { background: 'rgba(34, 211, 238, 0.05)', borderColor: 'rgba(34, 211, 238, 0.3)' } as const;
+const FAQ_ITEM_STYLE = {
+  background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.62) 0%, rgba(10, 20, 34, 0.8) 100%)',
+  borderColor: 'rgba(34, 211, 238, 0.24)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.2)'
+} as const;
 const CHEVRON_DOWN_D = 'M19 9l-7 7-7-7';
-const REVIEW_CARD_STYLE = { background: '#FFFFFF', borderColor: 'rgba(34, 211, 238, 0.2)' } as const;
+const REVIEW_CARD_STYLE = {
+  background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
+  borderColor: 'rgba(34, 211, 238, 0.24)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0, 0, 0.24)'
+} as const;
 const STAR_PATH_D = 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z';
-const VERIFIED_BADGE_STYLE = { background: '#E8F5E9' } as const;
-const VERIFIED_TEXT_STYLE = { color: '#2E7D32' } as const;
 const ENGAGEMENT_CARD_BG = 'rgba(34, 211, 238, 0.05)';
-const RELATED_SERVICE_CARD_STYLE = { background: '#2a2a2a', border: '1px solid #3a3a3a' } as const;
+const RELATED_SERVICE_CARD_STYLE = {
+  background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
+  border: '1px solid rgba(34, 211, 238, 0.24)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0, 0, 0.24)'
+} as const;
 const RELATED_SERVICE_BTN_STYLE = { background: '#22D3EE', color: '#FFFFFF' } as const;
 const HIRE_FORM_INPUT_STYLE = { background: '#1F2937', borderColor: 'rgba(34, 211, 238, 0.3)', color: '#FAFAFA' } as const;
 
@@ -175,7 +186,7 @@ export function HireCudaDeveloperPage() {
       />
 
       <div className="hire cuda developer">
-        <div className="min-h-screen" style={{ background: 'rgba(34, 211, 238, 0.05)' }}>
+        <div className="min-h-screen" style={{ background: '#0B0F14' }}>
           {/* Hero Section */}
           <section className="relative px-4 sm:px-6 lg:px-8 overflow-hidden" style={{ minHeight: '600px', paddingTop: '160px', paddingBottom: '100px' }}>
             {/* Background Image with Overlay */}
@@ -373,7 +384,7 @@ export function HireCudaDeveloperPage() {
           </section>
 
           {/* Our CUDA Engineers Expertise Section */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(34, 211, 238, 0.05)' }}>
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
             <div className="max-w-7xl mx-auto">
               {/* Section Heading */}
               <motion.div
@@ -394,14 +405,18 @@ export function HireCudaDeveloperPage() {
                   <motion.div
                     key={item.title}
                     className="flex gap-4 border rounded-xl p-6"
-                    style={{ borderColor: BORDER_WHITE_10 }}
+                    style={{
+                      borderColor: 'rgba(34, 211, 238, 0.24)',
+                      background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.66) 0%, rgba(10, 20, 34, 0.82) 100%)',
+                      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0, 0, 0.24)',
+                    }}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
                   >
                     <div className="flex-shrink-0">
-                      <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: EXPERTISE_ICON_BG }}>
+                      <div className="w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: EXPERTISE_ICON_BG, border: EXPERTISE_ICON_BORDER }}>
                         <svg className="w-8 h-8" style={{ color: EXPERTISE_ICON_COLOR }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           {item.pathDs.map((d) => (
                             <path key={d} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={d} />
@@ -484,29 +499,33 @@ export function HireCudaDeveloperPage() {
               </motion.div>
 
               {/* 6 Cards Grid - 3 columns */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-14">
                 {whyHireCardsData.map((card, i) => (
                   <motion.div
                     key={card.title}
-                    className="rounded-2xl overflow-hidden group border"
-                    style={{ background: SECTION_BG, borderColor: BORDER_WHITE_10 }}
+                    className="h-full rounded-2xl overflow-hidden group border transition-all duration-300 hover:-translate-y-1"
+                    style={{
+                      background: 'linear-gradient(160deg, rgba(18, 30, 46, 0.72) 0%, rgba(10, 20, 34, 0.84) 100%)',
+                      borderColor: 'rgba(34, 211, 238, 0.24)',
+                      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 12px 30px rgba(0, 0, 0, 0.24)',
+                    }}
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
                   >
-                    <div className="relative w-full overflow-hidden" style={{ height: '260px' }}>
+                    <div className="relative w-full overflow-hidden" style={{ height: '220px' }}>
                       <img
                         src={card.src}
                         alt={card.alt}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         style={{ ...WHY_HIRE_CARD_IMG_STYLE, ...card.imageStyle }}
                       />
-                      <div className="absolute inset-0 pointer-events-none" style={{ background: WHY_HIRE_GRADIENT }} />
+                      <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to bottom, rgba(11, 15, 20, 0.08) 0%, rgba(11, 15, 20, 0.42) 100%)' }} />
                     </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-3" style={{ color: '#FAFAFA' }}>{card.title}</h3>
-                      <p className="text-sm leading-relaxed" style={{ color: '#9E9E9E' }}>{card.description}</p>
+                    <div className="p-8 sm:p-9 border-t" style={{ borderColor: 'rgba(34, 211, 238, 0.18)' }}>
+                      <h3 className="text-xl font-bold mb-3 leading-tight" style={{ color: '#FAFAFA' }}>{card.title}</h3>
+                      <p className="text-sm leading-7" style={{ color: '#9E9E9E' }}>{card.description}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -534,12 +553,16 @@ export function HireCudaDeveloperPage() {
               </motion.div>
 
               {/* 4 Cards Grid - 2x2 */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
                 {engagementModelsData.map((model, i) => (
                   <motion.div
                     key={model.title}
-                    className="rounded-2xl p-8"
-                    style={{ background: ENGAGEMENT_CARD_BG }}
+                    className="rounded-2xl p-8 min-h-[230px] border"
+                    style={{
+                      background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
+                      borderColor: 'rgba(34, 211, 238, 0.24)',
+                      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0, 0, 0.24)',
+                    }}
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -554,65 +577,72 @@ export function HireCudaDeveloperPage() {
           </section>
 
           {/* CTA Section with Background Image */}
-          <section
-            className="relative px-4 sm:px-6 lg:px-8 overflow-hidden flex items-center"
-            style={{
-              minHeight: '400px',
-              background: '#0B0F14'
-            }}
-          >
-            {/* Background Image */}
-            <div className="absolute inset-0" >
-              <img
-                src="/images/cuda-cta-bg.jpg.jpg"
-                alt="CUDA Background"
-                className="w-full h-full"
-                style={{
-                  objectFit: 'cover',
-                  objectPosition: 'center center',
-                  minHeight: '400px'
-                }}
-              />
-            </div>
-
-            {/* Lighter Gradient Overlay for better image visibility */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background: 'linear-gradient(90deg, rgba(11, 15, 20, 0.75) 0%, rgba(11, 15, 20, 0.4) 60%, rgba(11, 15, 20, 0.2) 100%)'
-              }}
-            ></div>
-
-            <div className="max-w-7xl mx-auto relative z-10 py-20 w-full">
+          <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
+            <div className="max-w-7xl mx-auto">
               <motion.div
-                className="max-w-[60%]"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
+                className="relative rounded-2xl overflow-hidden border"
+                style={{
+                  minHeight: '360px',
+                  borderColor: 'rgba(34, 211, 238, 0.24)',
+                  boxShadow: '0 20px 50px rgba(0, 0, 0, 0.35)',
+                }}
               >
-                <h2
-                  className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 leading-tight"
-                  style={{
-                    color: '#FFFFFF',
-                    letterSpacing: '-0.02em',
-                    textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
-                  }}
-                >
-                  Ready to unleash the power of CUDA?
-                </h2>
+                <div className="absolute inset-0">
+                  <img
+                    src="/images/cuda-cta-bg.jpg.jpg"
+                    alt="CUDA Background"
+                    className="w-full h-full object-cover"
+                    style={{ objectPosition: 'center center' }}
+                  />
+                </div>
 
-                <a
-                  href="/contact/"
-                  className="inline-flex items-center justify-center px-10 py-4 rounded-lg font-bold text-lg transition-all duration-300 hover:bg-orange-500"
+                <div
+                  className="absolute inset-0"
                   style={{
-                    background: 'transparent',
-                    color: '#FFFFFF',
-                    border: '2px solid #22D3EE'
+                    background: 'linear-gradient(90deg, rgba(8, 14, 24, 0.9) 0%, rgba(8, 14, 24, 0.72) 45%, rgba(8, 14, 24, 0.48) 100%)'
                   }}
-                >
-                  Take Charge
-                </a>
+                />
+
+                <div className="relative z-10 p-8 sm:p-10 lg:p-12 h-full flex items-center">
+                  <div
+                    className="max-w-2xl rounded-2xl p-6 sm:p-8 border"
+                    style={{
+                      background: 'rgba(8, 14, 24, 0.5)',
+                      borderColor: 'rgba(34, 211, 238, 0.2)',
+                      backdropFilter: 'blur(6px)',
+                    }}
+                  >
+                    <h2
+                      className="text-3xl sm:text-4xl font-bold mb-5 leading-tight"
+                      style={{
+                        color: '#FFFFFF',
+                        letterSpacing: '-0.02em',
+                      }}
+                    >
+                      Ready to unleash the power of CUDA?
+                    </h2>
+
+                    <p className="text-base sm:text-lg mb-8 leading-relaxed" style={{ color: '#D1D5DB' }}>
+                      Accelerate your compute workloads with production-grade CUDA engineering and performance-first architecture.
+                    </p>
+
+                    <a
+                      href="/contact/"
+                      className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl font-semibold text-base transition-all duration-300 hover:-translate-y-0.5"
+                      style={{
+                        background: 'linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%)',
+                        color: '#FFFFFF',
+                        boxShadow: '0 10px 26px rgba(34, 211, 238, 0.35)',
+                      }}
+                    >
+                      Take Charge
+                    </a>
+                  </div>
+                </div>
               </motion.div>
             </div>
           </section>
@@ -744,14 +774,7 @@ export function HireCudaDeveloperPage() {
                     </div>
                     <p className="text-sm leading-relaxed mb-4" style={{ color: '#9E9E9E' }}>{review.quote}</p>
                     <div className="flex items-center justify-between">
-                      <div className="font-semibold text-sm" style={{ color: '#000000' }}>{review.author}</div>
-                      <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={VERIFIED_BADGE_STYLE}>
-                        <svg className="w-4 h-4" style={VERIFIED_TEXT_STYLE} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={2} />
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4" />
-                        </svg>
-                        <span className="text-xs font-medium" style={VERIFIED_TEXT_STYLE}>Verified</span>
-                      </div>
+                      <div className="font-semibold text-sm" style={{ color: '#FAFAFA' }}>{review.author}</div>
                     </div>
                   </motion.div>
                 ))}

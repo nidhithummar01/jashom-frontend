@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useParams, Link } from 'react-router-dom';
 import { SEO as Seo } from './SEO';
-import { Calendar, User, Share2, ArrowRight } from 'lucide-react';
+import { Calendar, Share2, ArrowRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getBlogBySlug, getBlogs } from '../api/blogs';
 import type { Blog, BlogContentSection } from '../api/blogs';
@@ -16,6 +16,13 @@ function formatDate(iso: string | null): string {
 function slugifyId(title: string, index: number): string {
   const base = title?.replace(/\s+/g, '-').toLowerCase() || `section-${index}`;
   return `${base}-${index}`;
+}
+
+function getInitials(name: string | null): string {
+  if (!name) return 'JD';
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return `${parts[0][0] ?? ''}${parts[parts.length - 1][0] ?? ''}`.toUpperCase();
 }
 
 export function BlogDetailPage() {
@@ -67,6 +74,11 @@ export function BlogDetailPage() {
         title: s.title ?? `Section ${i + 1}`,
       }))
       .filter((s) => s.title) ?? [];
+  const tocItems =
+    sections.length > 0
+      ? sections
+      : [{ id: 'blog-top', title: 'Overview' }];
+  const authorDisplayName = blog.author_name ?? 'Jashom Team';
 
   useEffect(() => {
     if (sections.length === 0) return;
@@ -236,35 +248,41 @@ export function BlogDetailPage() {
               className="blog-detail-sidebar"
             >
               <div className="blog-detail-sidebar-sticky">
-                {sections.length > 0 && (
-                  <div className="blog-sidebar-card">
-                    <h3 className="blog-sidebar-title">On this page</h3>
-                    <nav className="blog-toc">
-                      {sections.map((item) => (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => scrollToSection(item.id)}
-                          className={`blog-toc-item ${activeSection === item.id ? 'blog-toc-item--active' : ''}`}
-                        >
-                          {item.title}
-                        </button>
-                      ))}
-                    </nav>
-                  </div>
-                )}
+                <div className="blog-sidebar-card">
+                  <h3 className="blog-sidebar-title">In this article</h3>
+                  <nav className="blog-toc">
+                    {tocItems.map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => {
+                          if (item.id === 'blog-top') {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            return;
+                          }
+                          scrollToSection(item.id);
+                        }}
+                        className={`blog-toc-item ${activeSection === item.id ? 'blog-toc-item--active' : ''}`}
+                      >
+                        {item.title}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
 
-                {blog.author_name && (
-                  <div className="blog-sidebar-card">
-                    <h3 className="blog-sidebar-title">Author</h3>
-                    <div className="blog-author-card">
-                      <div className="blog-author-avatar">
-                        <User className="blog-author-icon" />
-                      </div>
-                      <span className="blog-author-name">{blog.author_name}</span>
+                <div className="blog-sidebar-card">
+                  <h3 className="blog-sidebar-title">Author</h3>
+                  <div className="blog-author-card">
+                    <div className="blog-author-avatar">
+                      <span className="blog-author-initials">{getInitials(authorDisplayName)}</span>
+                    </div>
+                    <div>
+                      <div className="blog-author-name">{authorDisplayName}</div>
+                      <div className="blog-author-role">Author, Jashom</div>
                     </div>
                   </div>
-                )}
+                  <p className="blog-author-bio">GPU engineer focused on real-world AI and performance optimization workflows.</p>
+                </div>
 
                 <div className="blog-sidebar-card">
                   <h3 className="blog-sidebar-title">Share</h3>
@@ -277,7 +295,7 @@ export function BlogDetailPage() {
                       aria-label="Share on X"
                     >
                       <Share2 className="blog-share-icon" />
-                      <span>X / Twitter</span>
+                      <span>X (Twitter)</span>
                     </a>
                     <a
                       href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`}
@@ -289,27 +307,30 @@ export function BlogDetailPage() {
                       <Share2 className="blog-share-icon" />
                       <span>LinkedIn</span>
                     </a>
-                    <button
-                      type="button"
-                      className="blog-share-btn"
-                      onClick={() => {
-                        if (typeof navigator !== 'undefined' && navigator.clipboard) {
-                          navigator.clipboard.writeText(typeof window !== 'undefined' ? window.location.href : '');
-                        }
-                      }}
-                      aria-label="Copy link"
-                    >
-                      <Share2 className="blog-share-icon" />
-                      <span>Copy link</span>
-                    </button>
                   </div>
                 </div>
 
-                <div className="blog-sidebar-card blog-sidebar-cta">
-                  <p className="blog-sidebar-cta-text">Need help with AI or GPU acceleration?</p>
-                  <Link to="/contact/" className="blog-sidebar-cta-btn">
-                    Get in touch
-                  </Link>
+                <div className="blog-sidebar-card">
+                  <h3 className="blog-sidebar-title">Related posts</h3>
+                  {relatedBlogs.length > 0 ? (
+                    <ul className="blog-related-list">
+                      {relatedBlogs.map((rb) => (
+                        <li key={rb.id}>
+                          <Link to={`/blogs/${rb.slug}/`} className="blog-related-link">
+                            <span className="blog-related-icon-box">
+                              <ArrowRight className="blog-related-arrow" />
+                            </span>
+                            <span className="blog-related-texts">
+                              <span className="blog-related-title">{rb.title}</span>
+                              <span className="blog-related-date">{formatDate(rb.published_at)}</span>
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="blog-related-empty">More related articles will appear here soon.</p>
+                  )}
                 </div>
               </div>
             </motion.aside>
@@ -440,8 +461,9 @@ export function BlogDetailPage() {
             transition={{ duration: 0.6 }}
             className="rounded-2xl p-12 text-center border"
             style={{
-              background: 'rgba(34, 211, 238, 0.05)',
-              borderColor: 'rgba(34, 211, 238, 0.2)',
+              background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
+              borderColor: 'rgba(34, 211, 238, 0.24)',
+              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0, 0, 0.24)',
             }}
           >
             <h2 className="text-3xl font-bold mb-4" style={{ color: '#FFFFFF' }}>
@@ -475,31 +497,34 @@ export function BlogDetailPage() {
           background: linear-gradient(180deg, rgba(15, 23, 42, 0.16) 0%, rgba(11, 15, 20, 0) 100%);
         }
         .blog-detail-container { max-width: 1600px; margin: 0 auto; padding: 0 1.5rem; }
-        @media (min-width: 1024px) {
-          .blog-detail-grid { display: grid; grid-template-columns: 1fr; gap: 0; align-items: start; }
+        .blog-detail-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: start; }
+        @media (min-width: 1200px) {
+          .blog-detail-grid { grid-template-columns: minmax(0, 1fr) 320px; gap: 2rem; }
         }
         .blog-detail-main { min-width: 0; width: 100%; }
         .blog-detail-article { color: #D1D5DB; width: 100%; max-width: none; }
 
         .blog-detail-sidebar { display: none; }
+        @media (min-width: 1200px) { .blog-detail-sidebar { display: block; } }
+        .blog-detail-sidebar-sticky { position: sticky; top: 7rem; display: flex; flex-direction: column; gap: 1rem; }
 
         .blog-sidebar-card {
-          background: rgba(17, 24, 39, 0.7);
-          border: 1px solid rgba(75, 85, 99, 0.4);
+          background: linear-gradient(160deg, rgba(20, 36, 56, 0.62) 0%, rgba(10, 20, 34, 0.82) 100%);
+          border: 1px solid rgba(34, 211, 238, 0.2);
           border-radius: 14px;
-          padding: 1.35rem 1.25rem;
-          margin-bottom: 1.25rem;
+          padding: 1rem 1rem;
           backdrop-filter: blur(8px);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.2);
         }
         .blog-sidebar-title {
-          color: #fff;
-          font-size: 0.8125rem;
+          color: #9CA3AF;
+          font-size: 0.6875rem;
           font-weight: 600;
           text-transform: uppercase;
-          letter-spacing: 0.06em;
-          margin: 0 0 1rem 0;
-          padding-bottom: 0.65rem;
-          border-bottom: 1px solid rgba(34, 211, 238, 0.25);
+          letter-spacing: 0.14em;
+          margin: 0 0 0.8rem 0;
+          padding-bottom: 0.6rem;
+          border-bottom: 1px solid rgba(34, 211, 238, 0.18);
         }
         .blog-toc { display: flex; flex-direction: column; gap: 0.25rem; }
         .blog-toc-item {
@@ -526,19 +551,21 @@ export function BlogDetailPage() {
           background: rgba(34, 211, 238, 0.2);
           display: flex; align-items: center; justify-content: center;
         }
-        .blog-author-icon { width: 22px; height: 22px; color: #22D3EE; }
-        .blog-author-name { color: #E5E7EB; font-weight: 500; font-size: 0.9375rem; }
+        .blog-author-initials { color: #22D3EE; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+        .blog-author-name { color: #E5E7EB; font-weight: 600; font-size: 0.9375rem; }
+        .blog-author-role { color: #6B7280; font-size: 0.75rem; margin-top: 0.15rem; }
+        .blog-author-bio { color: #9CA3AF; font-size: 0.8rem; line-height: 1.55; margin: 0.8rem 0 0; }
 
-        .blog-share-buttons { display: flex; flex-direction: column; gap: 0.5rem; }
+        .blog-share-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
         .blog-share-btn {
           display: inline-flex; align-items: center; gap: 0.5rem;
-          padding: 0.5rem 0.75rem;
+          padding: 0.55rem 0.7rem;
           border-radius: 8px;
-          background: rgba(55, 65, 81, 0.5);
+          background: rgba(15, 23, 42, 0.62);
+          border: 1px solid rgba(34, 211, 238, 0.14);
           color: #D1D5DB;
-          font-size: 0.875rem;
+          font-size: 0.75rem;
           text-decoration: none;
-          border: none;
           cursor: pointer;
           transition: background 0.2s, color 0.2s;
         }
@@ -548,40 +575,28 @@ export function BlogDetailPage() {
         .blog-related-list { list-style: none; margin: 0; padding: 0; }
         .blog-related-list li { margin-bottom: 0.5rem; }
         .blog-related-link {
-          display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
-          padding: 0.6rem 0.75rem;
+          display: flex; align-items: center; justify-content: flex-start; gap: 0.65rem;
+          padding: 0.55rem 0.55rem;
           border-radius: 8px;
           color: #D1D5DB;
           text-decoration: none;
-          font-size: 0.9375rem;
+          font-size: 0.75rem;
           transition: background 0.2s, color 0.2s;
+          border: 1px solid transparent;
         }
-        .blog-related-link:hover { background: rgba(34, 211, 238, 0.08); color: #22D3EE; }
-        .blog-related-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .blog-related-arrow { width: 16px; height: 16px; flex-shrink: 0; color: #22D3EE; }
-        .blog-sidebar-all {
-          display: inline-block; margin-top: 0.75rem;
-          font-size: 0.875rem; color: #22D3EE; text-decoration: none;
-          font-weight: 500;
+        .blog-related-link:hover { background: rgba(34, 211, 238, 0.08); color: #22D3EE; border-color: rgba(34, 211, 238, 0.2); }
+        .blog-related-icon-box {
+          width: 34px; height: 34px; border-radius: 8px;
+          display: inline-flex; align-items: center; justify-content: center;
+          background: rgba(17, 24, 39, 0.9);
+          border: 1px solid rgba(34, 211, 238, 0.14);
+          flex-shrink: 0;
         }
-        .blog-sidebar-all:hover { text-decoration: underline; }
-
-        .blog-sidebar-cta {
-          background: linear-gradient(135deg, rgba(34, 211, 238, 0.12) 0%, rgba(34, 211, 238, 0.06) 100%);
-          border-color: rgba(34, 211, 238, 0.3);
-        }
-        .blog-sidebar-cta-text { color: #D1D5DB; font-size: 0.9375rem; margin: 0 0 0.75rem 0; line-height: 1.5; }
-        .blog-sidebar-cta-btn {
-          display: inline-block;
-          padding: 0.5rem 1rem;
-          border-radius: 8px;
-          background: #22D3EE;
-          color: #000;
-          font-size: 0.875rem; font-weight: 600;
-          text-decoration: none;
-          transition: opacity 0.2s, transform 0.2s;
-        }
-        .blog-sidebar-cta-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .blog-related-texts { min-width: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+        .blog-related-title { color: #E5E7EB; overflow: hidden; text-overflow: ellipsis; white-space: normal; line-height: 1.35; font-size: 0.8125rem; }
+        .blog-related-date { color: #6B7280; font-size: 0.72rem; }
+        .blog-related-arrow { width: 13px; height: 13px; color: #22D3EE; }
+        .blog-related-empty { color: #9CA3AF; font-size: 0.8rem; line-height: 1.5; margin: 0; }
 
         .blog-detail-section-images { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
         /* API/admin images: full-width large square (1080×1080 / 1400×1400), no column squeeze */

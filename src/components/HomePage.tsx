@@ -184,7 +184,7 @@ export function HomePage() {
                       lineHeight: 1.15
                     }}
                   >
-                    GPU Optimization Services
+                    Powering High-Performance AI with Precision GPU Engineering
                   </h1>
                   <p
                     className="mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base px-4 sm:px-0"
@@ -199,7 +199,7 @@ export function HomePage() {
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full px-4 sm:px-0">
                     <Link
                       to="/contact/"
-                      className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
+                      className="ui-btn ui-btn--lg w-auto max-w-xs border text-center cursor-pointer transition-all duration-240 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
                       style={homePageData.CTA_GRADIENT_STYLE}
                     >
                       Start Your AI Transformation
@@ -208,7 +208,7 @@ export function HomePage() {
                       href="https://calendly.com/jaydave-jashom/new-meeting"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
+                      className="ui-btn ui-btn--lg w-auto max-w-xs border text-center cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
                       style={{
                         background: 'rgba(255, 255, 255, 0.04)',
                         borderColor: 'rgba(255, 255, 255, 0.12)',
@@ -251,7 +251,7 @@ export function HomePage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                   >
-                    GPU Optimization Services
+                    Powering High-Performance AI with Precision GPU Engineering
                   </motion.h1>
 
                   <motion.p
@@ -276,7 +276,7 @@ export function HomePage() {
                   >
                     <Link
                       to="/contact/"
-                      className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
+                      className="ui-btn ui-btn--lg w-auto max-w-xs border text-center cursor-pointer transition-all duration-240 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
                       style={homePageData.CTA_GRADIENT_STYLE}
                     >
                       Start Your AI Transformation
@@ -285,7 +285,7 @@ export function HomePage() {
                       href="https://calendly.com/jaydave-jashom/new-meeting"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-auto max-w-xs px-6 sm:px-8 py-3 sm:py-4 rounded-xl border text-center text-sm sm:text-base cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
+                      className="ui-btn ui-btn--lg w-auto max-w-xs border text-center cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
                       style={{
                         background: 'rgba(255, 255, 255, 0.04)',
                         borderColor: 'rgba(255, 255, 255, 0.12)',
@@ -523,7 +523,7 @@ export function HomePage() {
           </section>
 
           {/* Case Studies Slider Section - Controlled Carousel */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black relative overflow-visible">
+          <section className="pt-28 pb-10 sm:pt-32 px-4 sm:px-6 lg:px-8 bg-black relative overflow-visible">
             <div className="max-w-7xl mx-auto relative">
               <motion.div
                 className="text-center mb-12"
@@ -577,90 +577,60 @@ export function HomePage() {
                             : `calc(${100 / cardsPerView}% - ${(24 * (cardsPerView - 1)) / cardsPerView}px)`
                         }}
                       >
-                        <div className="glass-effect rounded-2xl border border-[#ffffff]/30 h-full flex flex-col hover:border-[#ffffff]/50 transition-all duration-300 group overflow-hidden">
+                        <Link
+                          to={project.link}
+                          className="block rounded-2xl border h-full flex flex-col transition-all duration-300 group overflow-hidden hover:border-[#06B6D4] focus-visible:border-[#06B6D4] active:border-[#06B6D4] focus-visible:ring-2 focus-visible:ring-[#06B6D4]/40"
+                          style={{
+                            background: 'linear-gradient(180deg, rgba(8, 12, 22, 0.95) 0%, rgba(7, 10, 18, 0.98) 100%)',
+                            borderColor: 'rgba(255, 255, 255, 0.16)'
+                          }}
+                        >
+                          <div className="px-4 sm:px-5 pt-4 sm:pt-5">
+                            <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.72)' }}>{project.industry}</p>
+                          </div>
                           {/* Image - Edge-to-edge at top with increased height */}
                           {project.image && (
-                            <div className="relative w-full overflow-hidden" style={{ height: '200px' }}>
+                            <div className="relative overflow-hidden px-3 sm:px-4 pt-3 sm:pt-4">
                               <img
                                 src={project.image}
                                 alt={project.title}
                                 width={400}
-                                height={200}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                              />
-                              {/* Subtle gradient overlay for depth */}
-                              <div
-                                className="absolute inset-0 pointer-events-none"
-                                style={{
-                                  background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%)'
-                                }}
+                                height={180}
+                                className="w-full object-cover rounded-2xl"
+                                style={{ height: '210px' }}
                               />
                             </div>
                           )}
 
-                          {/* Content section with padding */}
-                          <div className="p-3 sm:p-4 flex flex-col flex-grow">
-                            <div className="flex items-center gap-2 mb-2">
-                              <span className="px-2 py-1 rounded-md bg-white/10 text-white/70 text-xs">
-                                {project.industry}
-                              </span>
-                            </div>
-                            <h3 className="text-base sm:text-lg font-semibold text-white mb-2 group-hover:text-[#d1d5db] transition-colors line-clamp-2">
+                          <div className="p-4 sm:p-5 flex flex-col flex-grow">
+                            <p className="text-sm mb-3" style={{ color: 'rgba(255, 255, 255, 0.72)' }}>{project.industry}</p>
+                            <h3 className="font-bold text-white mb-4 leading-tight line-clamp-2 uppercase" style={{ fontSize: 'clamp(20px, 1.6vw, 28px)', letterSpacing: '-0.02em' }}>
                               {project.title}
                             </h3>
 
-                            <div className="space-y-2 mb-3 flex-grow">
-                              <div>
-                                <div className="flex items-center gap-2 mb-1">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-[#ffffff]" />
-                                  <span className="text-[#d1d5db] text-xs font-medium">Challenge</span>
-                                </div>
-                                <p className="text-white/60 text-xs leading-relaxed pl-3 line-clamp-2">{project.challenge}</p>
-                              </div>
-
-                              <div>
-                                <div className="flex items-center gap-2 mb-1">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-[#ffffff]" />
-                                  <span className="text-[#d1d5db] text-xs font-medium">Solution</span>
-                                </div>
-                                <p className="text-white/60 text-xs leading-relaxed pl-3 line-clamp-2">{project.solution}</p>
-                              </div>
-                            </div>
-
-                            <div className="flex flex-wrap gap-1 mb-3">
+                            <div className="flex flex-wrap items-center gap-2 mb-4">
                               {project.tags.slice(0, 3).map((tag) => (
                                 <span
                                   key={`${project.title}-${tag}`}
-                                  className="px-2 py-0.5 rounded-md bg-white/5 border border-[#ffffff]/10 text-white/50 text-xs"
+                                  className="inline-flex items-center justify-center h-7 px-3 rounded-full border text-xs font-medium whitespace-nowrap"
+                                  style={{ background: 'rgba(15, 23, 42, 0.9)', borderColor: 'rgba(148, 163, 184, 0.24)', color: '#CBD5E1' }}
                                 >
                                   {tag}
                                 </span>
                               ))}
                             </div>
 
-                            {/* Action Links */}
-                            <div className="flex flex-row flex-wrap items-center justify-between gap-3 mt-3 pt-4 border-t border-white/10">
-                              <Link
-                                to={project.link}
-                                className="inline-flex items-center gap-2 text-[#d1d5db] hover:text-white transition-colors text-xs group/link"
+                            <div className="mt-auto pt-1">
+                              <span
+                                className="inline-flex items-center gap-2 font-semibold text-[#22D3EE] group-hover:text-[#06B6D4] group-active:text-[#06B6D4] transition-colors"
+                                style={{ fontSize: 'clamp(14px, 1vw, 16px)' }}
                               >
-                                <span>View Case Study</span>
-                                <ArrowRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
-                              </Link>
-                              {project.liveUrl && (
-                                <a
-                                  href={project.liveUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-2 text-[#ffffff] hover:text-[#d1d5db] transition-colors text-xs"
-                                >
-                                  <span>Visit Live Platform</span>
-                                  <ArrowRight className="w-3 h-3" />
-                                </a>
-                              )}
+                                <span>View More</span>
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                              </span>
                             </div>
                           </div>
-                        </div>
+                        </Link>
                       </div>
                     ))}
                   </div>
@@ -682,7 +652,7 @@ export function HomePage() {
               </div>
 
               {/* View All Button */}
-              <div className="text-center mt-8">
+              <div className="text-center mt-5">
                 <Link
                   to="/portfolio/"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-black font-semibold hover:bg-white/90 transition-all duration-300 hover:scale-105"
@@ -697,7 +667,7 @@ export function HomePage() {
           </section>
 
           {/* Premium Minimal Testimonials Section */}
-          <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: Theme.SECTION_BG }}>
+          <section className="pt-16 pb-20 sm:pt-20 sm:pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: Theme.SECTION_BG }}>
             <div className="max-w-7xl mx-auto">
 
               {/* Section Header - Centered */}
@@ -738,12 +708,9 @@ export function HomePage() {
                     <div className="h-full p-8 rounded-2xl border transition-all duration-300" style={{ background: 'rgba(255, 255, 255, 0.02)', borderColor: Theme.BORDER_SUBTLE, backdropFilter: 'blur(10px)' }}>
                       <div className="mb-4"><QuoteIcon /></div>
                       <p className="text-base mb-8" style={{ color: Theme.TEXT_QUOTE, lineHeight: 1.8 }}>{t.quote}</p>
-                      <div className="flex items-center gap-4 mt-4 pt-8 border-t" style={{ borderColor: Theme.BORDER_SUBTLE }}>
-                        <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold text-white" style={{ background: t.avatarGradient }}>{t.initials}</div>
-                        <div>
-                          <div className="font-semibold text-[15px]" style={{ color: Theme.TEXT_FAFAFA }}>{t.name}</div>
-                          <div className="text-[13px]" style={{ color: Theme.TEXT_MUTED }}>{t.role}</div>
-                        </div>
+                      <div className="mt-4 pt-8 border-t" style={{ borderColor: Theme.BORDER_SUBTLE }}>
+                        <div className="font-semibold text-[15px]" style={{ color: Theme.TEXT_FAFAFA }}>{t.name}</div>
+                        <div className="text-[13px] mt-1" style={{ color: Theme.TEXT_MUTED }}>{t.role}</div>
                       </div>
                     </div>
                   </motion.div>
@@ -753,7 +720,7 @@ export function HomePage() {
           </section>
 
           {/* Why Jashom - Benefits Section */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${homePageData.BLOG_CARD_BG} 0%, ${Theme.SECTION_BG} 100%)` }}>
+          <section className="pt-24 pb-8 sm:pt-28 sm:pb-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${homePageData.BLOG_CARD_BG} 0%, ${Theme.SECTION_BG} 100%)` }}>
             {/* Subtle background glow */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
@@ -818,7 +785,7 @@ export function HomePage() {
               >
                 <Link
                   to="/contact/"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer border-0 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
+                  className="ui-btn ui-btn--lg transition-all duration-300 cursor-pointer border-0 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
                   style={homePageData.CTA_GRADIENT_STYLE}
                 >
                   <span>Start Your AI Transformation</span>
@@ -833,7 +800,7 @@ export function HomePage() {
 
           {/* Latest Blogs Section - hidden when SHOW_BLOG_SECTION is false; enable in src/config/featureFlags.ts when you have blogs */}
           {SHOW_BLOG_SECTION && (
-          <section className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: '#0B0F14' }}>
+          <section className="pt-8 pb-8 sm:pt-10 sm:pb-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: '#0B0F14' }}>
             {/* Background decoration */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-20 right-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
@@ -994,7 +961,7 @@ export function HomePage() {
               >
                 <Link
                   to="/blogs/"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-240 hover:bg-[rgba(34,211,238,0.18)] hover:border-[rgba(34,211,238,0.5)] hover:-translate-y-0.5"
+                  className="ui-btn ui-btn--lg transition-all duration-240 hover:bg-[rgba(34,211,238,0.18)] hover:border-[rgba(34,211,238,0.5)] hover:-translate-y-0.5"
                   style={homePageData.VIEW_ALL_BTN_STYLE}
                 >
                   <span>View All</span>
@@ -1009,7 +976,7 @@ export function HomePage() {
           {SHOW_BLOG_SECTION && <div className="premium-divider" />}
 
           {/* Contact Form Section - Premium Layout */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${Theme.SECTION_BG} 0%, ${homePageData.BLOG_CARD_BG} 100%)` }}>
+          <section className="pt-12 pb-20 sm:pt-14 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${Theme.SECTION_BG} 0%, ${homePageData.BLOG_CARD_BG} 100%)` }}>
             <div className="max-w-7xl mx-auto">
               {/* Header */}
               <motion.div
@@ -1049,12 +1016,12 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="relative"
+                className="ui-form-shell relative"
                 style={Theme.FORM_MAX_WIDTH}
               >
                 <div className="absolute inset-0 pointer-events-none" style={Theme.FORM_GLOW_STYLE} />
 
-                <div className="relative w-full" style={Theme.FORM_CONTAINER_STYLE}>
+                <div className="ui-form-card relative w-full" style={Theme.FORM_CONTAINER_STYLE}>
                   <form onSubmit={handleFormSubmit} style={Theme.FORM_LAYOUT}>
                     <div className="grid grid-cols-1 md:grid-cols-2" style={Theme.FORM_GRID_GAP}>
                       {homePageData.homeContactFormFields.map((field) => (
@@ -1075,7 +1042,7 @@ export function HomePage() {
                       <motion.button
                         type="submit"
                         disabled={homeContactSubmitting}
-                        className="px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="ui-btn ui-btn--lg transition-all duration-300 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                         style={Theme.SUBMIT_BTN_STYLE}
                         whileHover={homeContactSubmitting ? undefined : { y: -2, ...Theme.SUBMIT_BTN_HOVER }}
                         whileTap={homeContactSubmitting ? undefined : { scale: 0.98 }}
@@ -1093,13 +1060,19 @@ export function HomePage() {
           <section className="py-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               <motion.div
-                className="glass-effect rounded-2xl p-6 sm:p-8 md:p-12 border border-[#ffffff]/30 text-center relative overflow-hidden"
+                className="rounded-2xl p-6 sm:p-8 md:p-12 border text-center relative overflow-hidden"
+                style={{
+                  background: homePageData.BLOG_CARD_BG,
+                  borderColor: Theme.BORDER_SUBTLE
+                }}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
                 {/* Background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#ffffff]/10 to-[#d1d5db]/10 pointer-events-none" />
+                <div className="absolute inset-0 pointer-events-none" style={{
+                  background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.08) 0%, rgba(15, 23, 42, 0.35) 100%)'
+                }} />
 
                 <div className="relative z-10">
                   <h2 className="mb-3 sm:mb-4 text-gradient text-xl sm:text-2xl md:text-3xl px-2">Ready to Accelerate Your AI Journey?</h2>
@@ -1112,13 +1085,13 @@ export function HomePage() {
                       href="https://calendly.com/jaydave-jashom/new-meeting"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-black border border-white text-white hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 text-sm sm:text-base cursor-pointer"
+                      className="ui-btn ui-btn--lg w-full sm:w-auto bg-black border border-white text-white hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer"
                     >
                       Request a Demo
                     </a>
                     <Link
                       to="/portfolio/"
-                      className="inline-block w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-white/5 border border-[#ffffff]/30 text-white hover:bg-white/10 transition-all duration-300 text-sm sm:text-base cursor-pointer"
+                      className="ui-btn ui-btn--lg w-full sm:w-auto bg-white/5 border border-[#ffffff]/30 text-white hover:bg-white/10 transition-all duration-300 cursor-pointer"
                     >
                       View Case Studies
                     </Link>

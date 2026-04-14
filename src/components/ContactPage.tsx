@@ -224,7 +224,7 @@ export function ContactPage() {
                   {/* CTA Button */}
                   <a
                     href="#contact-form"
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:opacity-90 hover:scale-105"
+                    className="ui-btn ui-btn--lg transition-all duration-300 hover:opacity-90 hover:scale-105"
                     style={CTA_HERO_STYLE}
                   >
                     Get in Touch
@@ -292,7 +292,7 @@ export function ContactPage() {
                   </motion.div>
 
                   {/* RIGHT SIDE - Glassmorphism Contact Form */}
-                  <motion.div {...MOTION_FADE_RIGHT}>
+                  <motion.div {...MOTION_FADE_RIGHT} className="w-full">
                     <div className="mb-20">
                       <h3 className="text-3xl font-bold mb-4" style={HEADING_WHITE_STYLE}>
                         Get in touch
@@ -302,7 +302,11 @@ export function ContactPage() {
                       </p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form
+                      onSubmit={handleSubmit}
+                      className="space-y-4 rounded-2xl border p-6 sm:p-8"
+                      style={{ background: 'rgba(17, 24, 39, 0.45)', borderColor: 'rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(10px)' }}
+                    >
                       {formFieldsConfig.map((field) => {
                         const isFocused = focusedField === field.name;
                         const inputStyle = { ...INPUT_BASE_STYLE, ...(isFocused ? INPUT_FOCUSED : INPUT_BLUR) };
@@ -341,7 +345,7 @@ export function ContactPage() {
                       {/* Submit Button */}
                       <motion.button
                         type="submit"
-                        className="font-semibold text-sm transition-all duration-300 px-6 py-3 rounded-xl"
+                        className="ui-btn ui-btn--lg font-semibold transition-all duration-300"
                         style={SUBMIT_BUTTON_STYLE}
                         whileHover={{ scale: 1.02, ...SUBMIT_BUTTON_HOVER }}
                         whileTap={{ scale: 0.98 }}

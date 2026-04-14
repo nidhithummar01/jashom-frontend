@@ -150,7 +150,7 @@ export function NewAboutUsPage() {
 
         {/* About Section - aligned with hero */}
         <section
-          className="pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-32 lg:pb-24 mb-20"
+          className="pt-24 pb-16 sm:pt-28 mb-16 sm:pb-20 lg:pt-32 lg:pb-24 mb-20"
           style={{
             background: 'linear-gradient(180deg, #0B0F14 0%, #0F1419 100%)'
           }}
@@ -231,14 +231,14 @@ export function NewAboutUsPage() {
         </section>
 
         {/* Stats Section - same container alignment */}
-        <section className="pt-20 pb-16 sm:pt-24 sm:pb-20 lg:pt-28 lg:pb-24 bg-black">
+        <section className="pt-36 pb-16 sm:pt-40 sm:pb-20 lg:pt-44 lg:pb-24 bg-black">
           <div className="about-page-container ">
             <motion.div
               variants={staggerContainer}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
             >
               {/* Team Image - Spans 2 rows on desktop */}
               <motion.div
@@ -461,7 +461,7 @@ export function NewAboutUsPage() {
 
         {/* Vision & Mission - one row, two cards side by side */}
         <section
-          className="py-20 sm:py-24 lg:py-32"
+          className="py-20 sm:py-24 lg:py-32 mt"
           style={{
             background: 'linear-gradient(180deg, #0B0F14 0%, #000000 100%)'
           }}
@@ -476,9 +476,9 @@ export function NewAboutUsPage() {
                 transition={{ duration: 0.5 }}
                 className="group relative rounded-2xl px-8 py-10 sm:px-10 sm:py-12 lg:px-12 lg:py-14 h-full flex flex-col"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(34, 211, 238, 0.2)',
-                  boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2)'
+                  background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
+                  border: '1px solid rgba(34, 211, 238, 0.24)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0, 0, 0.24)'
                 }}
               >
                 <div className="absolute top-0  left-8 sm:left-10 lg:left-12 w-12 h-0.5 rounded-full" />
@@ -499,9 +499,9 @@ export function NewAboutUsPage() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="group relative rounded-2xl px-8 py-10 sm:px-10 sm:py-12 lg:px-12 lg:py-14 h-full flex flex-col"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(34, 211, 238, 0.2)',
-                  boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2)'
+                  background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
+                  border: '1px solid rgba(34, 211, 238, 0.24)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0, 0, 0.24)'
                 }}
               >
                 <div className="absolute top-0 left-8 sm:left-10 lg:left-12 w-12 h-0.5 rounded-full" />
@@ -589,8 +589,8 @@ export function NewAboutUsPage() {
                 viewport={{ once: true }}
                 className="p-8 md:p-12 xl:p-16 flex flex-col justify-center min-h-[600px]"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)',
-                  borderLeft: '1px solid rgba(34, 211, 238, 0.3)'
+                  background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
+                  borderLeft: '1px solid rgba(34, 211, 238, 0.24)'
                 }}
               >
                 <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-8 md:mb-12" style={{ color: '#22D3EE' }}>

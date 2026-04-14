@@ -67,7 +67,11 @@ function CapabilityMatrixCard({
   const card = (
     <motion.div
       className={`flex gap-4 border rounded-xl p-6 ${centered ? 'w-[400px] md:max-w-[calc(50%-1rem)]' : ''}`}
-      style={{ borderColor: styles.CARD_BORDER }}
+      style={{
+        borderColor: styles.CARD_BORDER,
+        background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0, 0, 0.24)',
+      }}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}

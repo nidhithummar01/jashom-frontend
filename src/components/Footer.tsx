@@ -91,7 +91,7 @@ export function Footer() {
               </p>
             </div>
 
-            {/* Address + Map */}
+            {/* Address */}
             <div className="mt-8 md:mt-12 lg:mt-16">
               <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
                 Address
@@ -103,31 +103,6 @@ export function Footer() {
                 <div>Shivam 2, AMBA BUSINESS PARK, 414,</div>
                 <div>Adalaj, Gujarat 382421</div>
               </div>
-
-              {/* Map - Jashom Technologies office */}
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=Jashom+Technologies+Shivam+2+AMBA+BUSINESS+PARK+414+Adalaj+Gujarat+382421"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] block"
-                style={{
-                  border: '1px solid rgba(34, 211, 238, 0.2)',
-                  boxShadow: '0 4px 20px rgba(34, 211, 238, 0.1)',
-                  height: '140px'
-                }}
-                aria-label="Open Jashom Technologies office in Google Maps"
-              >
-                <iframe
-                  src="https://www.google.com/maps?q=Jashom+Technologies+Shivam+2+AMBA+BUSINESS+PARK+414+Adalaj+Gujarat+382421&output=embed"
-                  width="100%"
-                  height="140"
-                  style={{ border: 0, pointerEvents: 'none' }}
-                  allowFullScreen={false}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Jashom Technologies Office"
-                />
-              </a>
             </div>
           </div>
 

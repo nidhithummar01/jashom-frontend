@@ -106,9 +106,9 @@ export const homePageData = {
   ] as const,
 
   testimonialsData: [
-    { quote: `"Jashom's GPU optimization reduced our inference latency by 73%. The team's expertise in CUDA programming is unmatched."`, initials: 'DC', name: 'David Chen', role: 'VP Engineering, Apex AI', avatarGradient: GRADIENT_EMERALD_CYAN },
-    { quote: `"The AI automation solutions delivered by Jashom transformed our workflow. We achieved 5x faster processing with their custom ML pipeline."`, initials: 'MR', name: 'Maria Rodriguez', role: 'CTO, DataFlow Systems', avatarGradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)' },
-    { quote: `"Outstanding DevSecOps implementation. Jashom's team integrated security seamlessly into our CI/CD pipeline without compromising speed."`, initials: 'EW', name: 'Emily Watson', role: 'Head of Security, TechCorp', avatarGradient: 'linear-gradient(135deg, #22D3EE, #34D399)' },
+    { quote: `"Jashom's GPU optimization reduced our inference latency by 73%. The team's expertise in CUDA programming is unmatched."`, initials: 'AD', name: 'Alexander D.', role: 'Founder, 20+ years of experience.', avatarGradient: GRADIENT_EMERALD_CYAN },
+    { quote: `"The AI automation solutions delivered by Jashom transformed our workflow. We achieved 5x faster processing with their custom ML pipeline."`, initials: 'RT', name: 'Ricky T.', role: 'CTO, 15+ years of experience.', avatarGradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)' },
+    { quote: `"Outstanding DevSecOps implementation. Jashom's team integrated security seamlessly into our CI/CD pipeline without compromising speed."`, initials: 'JB', name: 'Jimmy B.', role: 'VP Engineering, 10+ years of experience.', avatarGradient: 'linear-gradient(135deg, #22D3EE, #34D399)' },
   ] as const,
 
   benefitsData: [
