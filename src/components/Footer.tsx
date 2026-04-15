@@ -41,11 +41,9 @@ export function Footer() {
     { label: 'Legal', path: '/terms/' },
   ];
 
-  const quickLinks: { label: string; path: string }[] = [
+  const resourcesLinks: { label: string; path: string }[] = [
     ...(SHOW_BLOG_SECTION ? [{ label: 'Blog', path: '/blogs/' }] : []),
     { label: 'Case Studies', path: '/portfolio/' },
-    { label: 'Whitepapers', path: '/resources/' },
-    { label: 'System Status', path: '/news/' },
   ];
 
   /** Lucide for crisp, uniform sizing; PNG only where no brand icon exists (Reddit). */
@@ -179,7 +177,7 @@ export function Footer() {
               </div>
             </div>
             <div>
-              <h4 className={colHeading} style={{ fontSize :'18px' }}>Follow Us</h4>
+              <h4 className={colHeading} style={{ fontSize :'18px' }}>Quick Links</h4>
               <div className="mt-2 flex flex-wrap gap-4 sm:gap-5">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -266,11 +264,11 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 5 — Quick Links */}
+          {/* Column 5 — Resources */}
           <div className="min-w-0 lg:pl-2">
-            <h4 className={colHeading} style={{ fontSize :'18px' }}>Quick Links</h4>
+            <h4 className={colHeading} style={{ fontSize :'18px' }}>Resources</h4>
             <ul className="space-y-2.5">
-              {quickLinks.map((link) => (
+              {resourcesLinks.map((link) => (
                 <li key={link.path + link.label}>
                   <NavLink
                     to={link.path}
