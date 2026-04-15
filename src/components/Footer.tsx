@@ -113,9 +113,9 @@ export function Footer() {
         }
       `}</style>
       <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-10 xl:px-12">
-        <div className="jashom-footer__main pb-16 mb-16 md:mb-20 lg:mb-24 md:pb-20 lg:pb-24">
+        <div className="jashom-footer__main pl-4 pb-16 mb-16 md:mb-20 lg:mb-24 md:pb-20 lg:pb-24">
           {/* Column 1 — Brand + Address */}
-          <div className="min-w-0 lg:pr-2">
+          <div className="min-w-0 mb-8 lg:pr-2">
             <Link to="/" className="mb-4 inline-flex items-center" aria-label="Jashom home">
               <motion.img
                 src="/jashom-logo-header-70px.png"
@@ -125,11 +125,12 @@ export function Footer() {
                 transition={{ duration: 0.2 }}
               />
             </Link>
-            <p className="mb-6 max-w-[250px]  text-sm leading-relaxed sm:text-[15px]" style={{ color: MUTED }}>
+            <p className="mb-6 max-w-[250px] text-sm leading-relaxed sm:text-[15px]" style={{ color: MUTED }}></p>
+            <p className="mb-8  max-w-[250px] text-lg leading-relaxed" style={{ color: MUTED }}>
               Empowering businesses with modern GPU optimization and CUDA development for high-performance computing.
             </p>
             <div className="mt-6 mb-2">
-              <h4 className={colHeading} style={{ fontSize: '16px', marginBottom: 0 }}>
+              <h4 className={colHeading} style={{ fontSize: '18px', marginBottom: 0 }}>
                 Address
               </h4>
             </div>
@@ -137,21 +138,19 @@ export function Footer() {
               href={MAPS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group mb-6 flex items-start gap-2 text-sm leading-relaxed transition-colors duration-200"
+              className="group mb-6 flex items-start gap-2 text-lg text-sm leading-relaxed transition-colors duration-200"
               style={{ color: MUTED }}
               aria-label="Open address in Google Maps"
             >
-              <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0" style={{ color: ACCENT }} />
-              <div className="space-y-0.5">
-                <div className="font-semibold transition-colors duration-200 group-hover:text-[#22D3EE]">
+              <MapPin className="mt-0.5 h-4 w-4 text-2xl  flex-shrink-0" style={{ color: ACCENT }} />
+              <div className="space-y-0.5 text-lg">
+                <div className="font-semibold text-sm transition-colors duration-200 group-hover:text-[#22D3EE]">
                   Ahmedabad, India
                 </div>
-                <div className="transition-colors duration-200 group-hover:text-[#22D3EE]">
-                  Shivam 2, AMBA BUSINESS PARK, 414,
+                <div className="transition-colors text-sm duration-200 group-hover:text-[#22D3EE]">
+                  Shivam 2, AMBA BUSINESS PARK, 414, Adalaj, Gujarat 382421
                 </div>
-                <div className="transition-colors duration-200 group-hover:text-[#22D3EE]">
-                  Adalaj, Gujarat 382421
-                </div>
+               
               </div>
             </a>
           </div>
@@ -159,8 +158,8 @@ export function Footer() {
           {/* Column 2 — Contact + Social */}
           <div className="min-w-0 space-y-7  lg:pr-2">
             <div>
-              <h4 className={colHeading} style={{ fontSize :'16px' }}>Get in Touch</h4>
-              <div className="space-y-2.5 gap-6 mb-6">
+              <h4 className={colHeading} style={{ fontSize :'18px' }}>Get in Touch</h4>
+              <div className="space-y-2.5 gap-6 mb-8">
                 <a
                   href="tel:+919023906363"
                   className="flex items-start gap-3 text-sm transition-colors group"
@@ -180,7 +179,7 @@ export function Footer() {
               </div>
             </div>
             <div>
-              <h4 className={colHeading} style={{ fontSize :'16px' }}>Follow Us</h4>
+              <h4 className={colHeading} style={{ fontSize :'18px' }}>Follow Us</h4>
               <div className="mt-2 flex flex-wrap gap-4 sm:gap-5">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -229,7 +228,7 @@ export function Footer() {
 
           {/* Column 3 — Services */}
           <div className="min-w-0 lg:px-1">
-            <h4 className={colHeading} style={{ fontSize :'16px' }}>Services</h4>
+            <h4 className={colHeading} style={{ fontSize :'18px' }}>Services</h4>
             <ul className="space-y-2.5 hover:text-[] ">
               {servicesLinks.map((link) => (
                 <li key={link.path}>
@@ -249,7 +248,7 @@ export function Footer() {
 
           {/* Column 4 — Company */}
           <div className="min-w-0 lg:px-1">
-            <h4 className={colHeading} style={{ fontSize :'16px' }}>Company</h4>
+            <h4 className={colHeading} style={{ fontSize :'18px' }}>Company</h4>
             <ul className="space-y-2.5">
               {companyLinks.map((link) => (
                 <li key={link.path}>
@@ -269,7 +268,7 @@ export function Footer() {
 
           {/* Column 5 — Quick Links */}
           <div className="min-w-0 lg:pl-2">
-            <h4 className={colHeading} style={{ fontSize :'16px' }}>Quick Links</h4>
+            <h4 className={colHeading} style={{ fontSize :'18px' }}>Quick Links</h4>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.path + link.label}>

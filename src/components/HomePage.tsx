@@ -13,7 +13,10 @@ import {
   Calendar,
   Clock,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Sparkles,
+  Cpu,
+  Zap
 } from 'lucide-react';
 import * as Theme from '../constants/theme';
 import { SHOW_BLOG_SECTION } from '../config/featureFlags';
@@ -307,60 +310,55 @@ export function HomePage() {
           <section
             className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
             style={{
-              background: 'radial-gradient(ellipse at top, rgba(34, 211, 238, 0.15) 0%, rgba(11, 15, 20, 0.95) 50%, #0B0F14 100%)',
+              background: 'transparent',
               position: 'relative'
             }}
           >
-            {/* Animated background elements */}
-            <div className="absolute inset-0 opacity-30">
-              <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-emerald-500/20 to-transparent rounded-full blur-3xl animate-pulse"></div>
-              <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-violet-500/20 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-            </div>
-
             <div className="max-w-7xl mx-auto relative z-10">
-              <motion.div
-                className="text-center mb-12 sm:mb-16"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
+              <div className="text-center mb-12 sm:mb-16">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold" style={{ color: Theme.TEXT_FAFAFA, fontFamily: 'Inter, sans-serif', letterSpacing: '-0.025em' }}>
                   What We <span style={{ color: Theme.ACCENT_COLOR }}>Do</span>
                 </h2>
-              </motion.div>
+                <p className="mx-auto mt-4 max-w-2xl text-sm sm:text-base" style={{ color: Theme.TEXT_MUTED }}>
+                  We engineer performance-first systems with measurable impact, from low-level GPU tuning to production-ready CUDA acceleration.
+                </p>
+              </div>
 
-              <motion.div
-                className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 lg:gap-16"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-              >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
                 {homePageData.whatWeDoData.map((item) => {
                   const isEmerald = item.colorKey === 'emerald';
                   const rgb = isEmerald ? '34, 211, 238' : '124, 58, 237';
                   const color = isEmerald ? Theme.ACCENT_COLOR : homePageData.VIOLET_COLOR;
+                  const Icon = isEmerald ? Cpu : Zap;
                   return (
-                    <motion.div
+                    <div
                       key={item.title}
-                      className="space-y-4 max-w-xl p-8 rounded-2xl transition-all duration-300"
+                      className="group relative max-w-xl overflow-hidden rounded-3xl p-8 sm:p-9 transition-all duration-300"
                       style={{
-                        background: `linear-gradient(135deg, rgba(${rgb}, 0.05) 0%, rgba(${rgb}, 0.02) 100%)`,
-                        border: `1px solid rgba(${rgb}, 0.1)`,
+                        background: `linear-gradient(160deg, rgba(${rgb}, 0.16) 0%, rgba(7, 11, 18, 0.92) 42%, rgba(${rgb}, 0.08) 100%)`,
+                        border: `1px solid rgba(${rgb}, 0.25)`,
                         backdropFilter: 'blur(10px)'
                       }}
-                      whileHover={{
-                        scale: 1.02,
-                        boxShadow: `0 20px 60px rgba(${rgb}, 0.2)`,
-                        borderColor: `rgba(${rgb}, 0.3)`
-                      }}
                     >
-                      <h3 className="text-xl sm:text-2xl font-bold" style={{ color, fontFamily: 'Inter, sans-serif', letterSpacing: '-0.02em' }}>{item.title}</h3>
-                      <p className="text-base sm:text-lg leading-loose" style={{ color: '#B0B0B0', fontFamily: 'Inter, sans-serif', lineHeight: 1.8 }}>{item.description}</p>
-                    </motion.div>
+                      <div
+                        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                        style={{ background: `radial-gradient(circle at 100% 0%, rgba(${rgb}, 0.22), transparent 42%)` }}
+                      />
+                      <div className="relative z-10 mb-6 flex items-center justify-between">
+                        <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold tracking-wide" style={{ color, background: `rgba(${rgb}, 0.15)`, border: `1px solid rgba(${rgb}, 0.35)` }}>
+                          <Sparkles className="h-3.5 w-3.5" />
+                          High Performance
+                        </div>
+                        <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: `rgba(${rgb}, 0.15)`, border: `1px solid rgba(${rgb}, 0.35)` }}>
+                          <Icon className="h-5 w-5" style={{ color }} />
+                        </div>
+                      </div>
+                      <h3 className="relative z-10 text-xl sm:text-2xl font-bold" style={{ color, fontFamily: 'Inter, sans-serif', letterSpacing: '-0.02em' }}>{item.title}</h3>
+                      <p className="relative z-10 mt-4 text-base sm:text-lg leading-loose" style={{ color: '#C0C6D0', fontFamily: 'Inter, sans-serif', lineHeight: 1.8 }}>{item.description}</p>
+                    </div>
                   );
                 })}
-              </motion.div>
+              </div>
             </div>
           </section>
 
@@ -372,50 +370,46 @@ export function HomePage() {
               position: 'relative'
             }}
           >
+            <div className="pointer-events-none absolute inset-0 opacity-20">
+              <div className="absolute -top-24 -left-20 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
+              <div className="absolute -bottom-24 -right-20 h-72 w-72 rounded-full bg-violet-500/20 blur-3xl" />
+            </div>
             <div className="max-w-7xl mx-auto relative z-10">
               {/* Section Header */}
-              <motion.div
-                className="text-center mb-16"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
+              <div className="text-center mb-16">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: Theme.ACCENT_COLOR }}>
                   Which Services We Provide
                 </h2>
                 <p className="text-lg max-w-2xl mx-auto" style={{ color: Theme.TEXT_MUTED }}>
                   Explore our specialized GPU and CUDA development services
                 </p>
-              </motion.div>
+              </div>
 
               {/* Service Cards Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-6xl mx-auto">
-                {homePageData.servicesProvideData.map((item, i) => {
+                {homePageData.servicesProvideData.map((item) => {
                   const isEmerald = item.colorKey === 'emerald';
                   const rgb = isEmerald ? '34, 211, 238' : '124, 58, 237';
                   const color = isEmerald ? Theme.ACCENT_COLOR : homePageData.VIOLET_COLOR;
                   const Icon = item.Icon;
                   return (
-                    <motion.div
+                    <div
                       key={item.title}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
-                      className="rounded-2xl p-6 transition-all duration-300 group relative w-full flex flex-col"
-                      style={{ background: 'rgba(30, 41, 59, 0.6)', border: `1px solid rgba(${rgb}, 0.2)`, backdropFilter: 'blur(10px)' }}
+                      className="rounded-2xl p-6 transition-all duration-300 group relative w-full flex flex-col overflow-hidden"
+                      style={{ background: `linear-gradient(155deg, rgba(${rgb},0.14) 0%, rgba(15,23,42,0.85) 45%, rgba(${rgb},0.08) 100%)`, border: `1px solid rgba(${rgb}, 0.28)`, backdropFilter: 'blur(12px)', boxShadow: `0 16px 45px rgba(${rgb}, 0.16)` }}
                     >
-                      <div className="w-12 h-12 rounded-xl mb-6 flex items-center justify-center" style={{ background: `rgba(${rgb}, 0.15)`, border: `1px solid rgba(${rgb}, 0.3)` }}>
+                      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: `radial-gradient(circle at 100% 0%, rgba(${rgb},0.24), transparent 48%)` }} />
+                      <div className="relative z-10 w-12 h-12 rounded-xl mb-6 flex items-center justify-center" style={{ background: `rgba(${rgb}, 0.15)`, border: `1px solid rgba(${rgb}, 0.3)` }}>
                         <Icon className="w-6 h-6" style={{ color }} />
                       </div>
-                      <h3 className="text-xl font-bold mb-3" style={{ color }}>{item.title}</h3>
-                      <p className="text-base mb-6 leading-relaxed" style={{ color: Theme.TEXT_MUTED }}>{item.description}</p>
-                      <div className="w-full mt-auto text-right">
-                        <a href={item.href} className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5" style={item.buttonStyle}>
+                      <h3 className="relative z-10 text-xl font-bold mb-3" style={{ color }}>{item.title}</h3>
+                      <p className="relative z-10 text-base mb-6 leading-relaxed" style={{ color: '#C3CBD8' }}>{item.description}</p>
+                      <div className="relative z-10 w-full mt-auto text-right">
+                        <a href={item.href} className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(34,211,238,0.35)]" style={item.buttonStyle}>
                           Explore Service →
                         </a>
                       </div>
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>
