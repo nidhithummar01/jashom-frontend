@@ -1,3 +1,4 @@
+import * as Theme from '../../../constants/theme';
 import {
   CaseStudyArticleLayout,
   CaseStudySection,
@@ -14,7 +15,7 @@ export function LLMInferenceOptimizationCaseStudy() {
         keywords:
           'LLM inference optimization, CUDA kernel, TensorRT, INT8 quantization, RAG, GPU cluster',
       }}
-      badge="Case Study 1 · Enterprise AI · LLM Deployment · Engaged Project"
+      badge="Case Study"
       title="LLM Inference Optimization on Constrained GPU Infrastructure"
       hardware="Multi-node GPU cluster (12 distributed nodes)"
       executiveSummary="A client required deployment of a 13B parameter language model on constrained GPU infrastructure with strict power efficiency limits. Jashom re-engineered the full inference path - from CUDA kernel-level optimizations through dynamic quantization and adaptive batching - to deliver 42% higher throughput and 37% lower GPU power consumption, with no measurable degradation in model accuracy. The resulting system was deployed across 12 distributed nodes running real-time RAG queries, at one-third of the original projected cost."
@@ -51,8 +52,9 @@ export function LLMInferenceOptimizationCaseStudy() {
 
       <CaseStudySection title="Technical Approach">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="rounded-xl border p-6 space-y-3" style={{ borderColor: 'rgba(34, 211, 238, 0.3)' }}>
-            <h3 className="text-lg font-semibold mb-2" style={{ color: '#22D3EE' }}>
+          <div className="p-6 space-y-3 transition-shadow duration-300 hover:shadow-[0_16px_44px_rgba(34,211,238,0.12)]"
+            style={Theme.GLASS_ARTICLE_CARD}>
+            <h3 className="text-lg font-semibold mb-2" style={{ color: Theme.ACCENT_COLOR }}>
               Phase 1: Profiling and Bottleneck Identification
             </h3>
             <p>
@@ -63,8 +65,9 @@ export function LLMInferenceOptimizationCaseStudy() {
               precision modes.
             </p>
           </div>
-          <div className="rounded-xl border p-6 space-y-3" style={{ borderColor: 'rgba(34, 211, 238, 0.3)' }}>
-            <h3 className="text-lg font-semibold mb-2" style={{ color: '#22D3EE' }}>
+          <div className="p-6 space-y-3 transition-shadow duration-300 hover:shadow-[0_16px_44px_rgba(34,211,238,0.12)]"
+            style={Theme.GLASS_ARTICLE_CARD}>
+            <h3 className="text-lg font-semibold mb-2" style={{ color: Theme.ACCENT_COLOR }}>
               Phase 2: Custom CUDA Kernel Development
             </h3>
             <p className="mb-2">We implemented custom CUDA kernels targeting the identified bottlenecks:</p>
@@ -74,8 +77,9 @@ export function LLMInferenceOptimizationCaseStudy() {
               <li>Optimized memory access patterns aligned to L2 cache boundaries for the client&apos;s specific GPU architecture</li>
             </ul>
           </div>
-          <div className="rounded-xl border p-6 space-y-3" style={{ borderColor: 'rgba(34, 211, 238, 0.3)' }}>
-            <h3 className="text-lg font-semibold mb-2" style={{ color: '#22D3EE' }}>
+          <div className="p-6 space-y-3 transition-shadow duration-300 hover:shadow-[0_16px_44px_rgba(34,211,238,0.12)]"
+            style={Theme.GLASS_ARTICLE_CARD}>
+            <h3 className="text-lg font-semibold mb-2" style={{ color: Theme.ACCENT_COLOR }}>
               Phase 3: Dynamic Quantization - INT8 / FP16
             </h3>
             <p>
@@ -87,8 +91,9 @@ export function LLMInferenceOptimizationCaseStudy() {
               distribution, not a generic benchmark.
             </p>
           </div>
-          <div className="rounded-xl border p-6 space-y-3" style={{ borderColor: 'rgba(34, 211, 238, 0.3)' }}>
-            <h3 className="text-lg font-semibold mb-2" style={{ color: '#22D3EE' }}>
+          <div className="p-6 space-y-3 transition-shadow duration-300 hover:shadow-[0_16px_44px_rgba(34,211,238,0.12)]"
+            style={Theme.GLASS_ARTICLE_CARD}>
+            <h3 className="text-lg font-semibold mb-2" style={{ color: Theme.ACCENT_COLOR }}>
               Phase 4: TensorRT Inference Re-Engineering
             </h3>
             <p>
@@ -98,8 +103,9 @@ export function LLMInferenceOptimizationCaseStudy() {
               client&apos;s hardware and precision requirements.
             </p>
           </div>
-          <div className="rounded-xl border p-6 space-y-3" style={{ borderColor: 'rgba(34, 211, 238, 0.3)' }}>
-            <h3 className="text-lg font-semibold mb-2" style={{ color: '#22D3EE' }}>
+          <div className="p-6 space-y-3 transition-shadow duration-300 hover:shadow-[0_16px_44px_rgba(34,211,238,0.12)]"
+            style={Theme.GLASS_ARTICLE_CARD}>
+            <h3 className="text-lg font-semibold mb-2" style={{ color: Theme.ACCENT_COLOR }}>
               Phase 5: Adaptive Batching Scheduler
             </h3>
             <p>
@@ -111,8 +117,9 @@ export function LLMInferenceOptimizationCaseStudy() {
               of a production service.
             </p>
           </div>
-          <div className="rounded-xl border p-6 space-y-3" style={{ borderColor: 'rgba(34, 211, 238, 0.3)' }}>
-            <h3 className="text-lg font-semibold mb-2" style={{ color: '#22D3EE' }}>
+          <div className="p-6 space-y-3 transition-shadow duration-300 hover:shadow-[0_16px_44px_rgba(34,211,238,0.12)]"
+            style={Theme.GLASS_ARTICLE_CARD}>
+            <h3 className="text-lg font-semibold mb-2" style={{ color: Theme.ACCENT_COLOR }}>
               Phase 6: Distributed Deployment
             </h3>
             <p className="mb-0">

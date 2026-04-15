@@ -31,7 +31,7 @@ function getNavClasses(light?: boolean, contactOutline?: boolean) {
   const textClass = light ? 'text-[#333333] hover:text-gray-600' : 'text-white hover:text-gray-300';
   const activeText = light ? 'text-[#333333]' : 'text-white';
   const indicatorClass = light ? 'bg-[#333333]' : 'bg-white';
-  const outlineClass = contactOutline ? 'border border-[#3B82F6] rounded-lg px-3 py-1.5 hover:bg-[#3B82F6]/10' : '';
+  const outlineClass = contactOutline ? 'rounded-lg px-3 py-1.5' : '';
 
   return { textClass, activeText, indicatorClass, outlineClass };
 }

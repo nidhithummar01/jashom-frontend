@@ -8,6 +8,11 @@ import type { Blog, BlogContentSection } from '../api/blogs';
 import * as Theme from '../constants/theme';
 import { homePageData } from './HomePage/data';
 
+/** Blog detail author line — static (not from API). */
+const BLOG_PAGE_AUTHOR_NAME = 'Jay Dave';
+/** Company LinkedIn (same as Footer social). */
+const JASHOM_LINKEDIN_COMPANY_URL = 'https://www.linkedin.com/company/jashom/';
+
 function formatDate(iso: string | null): string {
   if (!iso) return '';
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -23,6 +28,97 @@ function getInitials(name: string | null): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return `${parts[0][0] ?? ''}${parts[parts.length - 1][0] ?? ''}`.toUpperCase();
+}
+
+/** When the section title references CPU, GPU, and TPU, show a real comparison table instead of a cramped screenshot image. */
+function shouldShowBuiltinCpuGpuTpuTable(title: string | undefined): boolean {
+  const t = (title ?? '').toLowerCase();
+  return ['cpu', 'gpu', 'tpu'].every((w) => t.includes(w));
+}
+
+const BLOG_CPU_GPU_TPU_ROWS: ReadonlyArray<{
+  feature: string;
+  cpu: string;
+  gpu: string;
+  tpu: string;
+}> = [
+  {
+    feature: 'Primary purpose',
+    cpu: 'General serial workloads, OS, orchestration, and control logic',
+    gpu: 'Massively parallel math (graphics, deep learning, HPC)',
+    tpu: 'Matrix-heavy ML training & inference (systolic arrays)',
+  },
+  {
+    feature: 'Architecture',
+    cpu: 'Few powerful cores, large caches, branch-heavy code',
+    gpu: 'Thousands of smaller cores, high memory bandwidth',
+    tpu: 'Specialized for multiply-accumulate in fixed patterns',
+  },
+  {
+    feature: 'AI training performance',
+    cpu: 'Poor for large models; mainly preprocessing & orchestration',
+    gpu: 'Excellent for most frameworks and model sizes',
+    tpu: 'Very strong for large-batch training in supported stacks',
+  },
+  {
+    feature: 'Parallel processing',
+    cpu: 'Limited parallelism; optimized for latency',
+    gpu: 'Massive parallelism across threads / warps',
+    tpu: 'Structured batch parallelism for matrix units',
+  },
+  {
+    feature: 'Availability',
+    cpu: 'Every device',
+    gpu: 'Workstations to datacenters (NVIDIA, AMD, cloud)',
+    tpu: 'Cloud (e.g. Google) and select dedicated hardware',
+  },
+  {
+    feature: 'Cost',
+    cpu: 'Lowest per general-purpose capability',
+    gpu: 'Moderate–high; strong perf per watt for parallel work',
+    tpu: 'Usage-based cloud pricing; best when workload fits TPU',
+  },
+  {
+    feature: 'Best use cases',
+    cpu: 'Business logic, light inference, data prep',
+    gpu: 'Training, inference, rendering, simulation',
+    tpu: 'Large-scale training when frameworks & ops fit TPU',
+  },
+  {
+    feature: 'Framework compatibility',
+    cpu: 'Universal',
+    gpu: 'CUDA, ROCm, OpenCL; all major ML frameworks',
+    tpu: 'Strong with TensorFlow/JAX/XLA-oriented pipelines',
+  },
+];
+
+function BlogHardwareComparisonTable() {
+  return (
+    <div className="blog-comparison-table-wrap" role="region" aria-label="CPU, GPU, and TPU comparison">
+      <div className="blog-comparison-table-scroll">
+        <table className="blog-comparison-table">
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col">CPU</th>
+              <th scope="col">GPU</th>
+              <th scope="col">TPU</th>
+            </tr>
+          </thead>
+          <tbody>
+            {BLOG_CPU_GPU_TPU_ROWS.map((row) => (
+              <tr key={row.feature}>
+                <th scope="row">{row.feature}</th>
+                <td>{row.cpu}</td>
+                <td>{row.gpu}</td>
+                <td>{row.tpu}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
 export function BlogDetailPage() {
@@ -78,7 +174,6 @@ export function BlogDetailPage() {
     sections.length > 0
       ? sections
       : [{ id: 'blog-top', title: 'Overview' }];
-  const authorDisplayName = blog.author_name ?? 'Jashom Team';
 
   useEffect(() => {
     if (sections.length === 0) return;
@@ -144,7 +239,7 @@ export function BlogDetailPage() {
 
       {/* Hero - padding so content starts below fixed navbar */}
       <section
-        className="relative overflow-hidden px-4 sm:px-6 lg:px-8 pb-20 blog-detail-hero"
+        className="relative overflow-hidden px-4 sm:px-6 lg:px-8 pb-10 sm:pb-12 blog-detail-hero"
       >
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 items-stretch gap-10">
@@ -194,7 +289,7 @@ export function BlogDetailPage() {
                   <Calendar className="w-5 h-5" style={{ color: '#9CA3AF' }} />
                   <span style={{ color: '#9CA3AF' }}>{formatDate(blog.published_at)}</span>
                 </div>
-                {blog.author_name && <span style={{ color: '#9CA3AF' }}>{blog.author_name}</span>}
+                <span style={{ color: '#9CA3AF' }}>{BLOG_PAGE_AUTHOR_NAME}</span>
               </motion.div>
             </div>
 
@@ -274,10 +369,10 @@ export function BlogDetailPage() {
                   <h3 className="blog-sidebar-title">Author</h3>
                   <div className="blog-author-card">
                     <div className="blog-author-avatar">
-                      <span className="blog-author-initials">{getInitials(authorDisplayName)}</span>
+                      <span className="blog-author-initials">{getInitials(BLOG_PAGE_AUTHOR_NAME)}</span>
                     </div>
                     <div>
-                      <div className="blog-author-name">{authorDisplayName}</div>
+                      <div className="blog-author-name">{BLOG_PAGE_AUTHOR_NAME}</div>
                       <div className="blog-author-role">Author, Jashom</div>
                     </div>
                   </div>
@@ -298,11 +393,11 @@ export function BlogDetailPage() {
                       <span>X (Twitter)</span>
                     </a>
                     <a
-                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`}
+                      href={JASHOM_LINKEDIN_COMPANY_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="blog-share-btn"
-                      aria-label="Share on LinkedIn"
+                      aria-label="Jashom on LinkedIn"
                     >
                       <Share2 className="blog-share-icon" />
                       <span>LinkedIn</span>
@@ -487,12 +582,12 @@ export function BlogDetailPage() {
       </section>
 
       <style>{`
-        .blog-detail-hero { min-height: 420px; padding-top: 13rem; }
-        @media (max-width: 768px) { .blog-detail-hero { min-height: 360px; padding-top: 11rem; } }
+        .blog-detail-hero { min-height: 380px; padding-top: 10rem; }
+        @media (max-width: 768px) { .blog-detail-hero { min-height: 320px; padding-top: 8.5rem; } }
 
         .blog-detail-content-section {
           position: relative;
-          padding-top: 5rem;
+          padding-top: 2.5rem;
           padding-bottom: 5rem;
           background: linear-gradient(180deg, rgba(15, 23, 42, 0.16) 0%, rgba(11, 15, 20, 0) 100%);
         }
@@ -598,21 +693,117 @@ export function BlogDetailPage() {
         .blog-related-arrow { width: 13px; height: 13px; color: #22D3EE; }
         .blog-related-empty { color: #9CA3AF; font-size: 0.8rem; line-height: 1.5; margin: 0; }
 
-        .blog-detail-section-images { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
-        /* API/admin images: full-width large square (1080×1080 / 1400×1400), no column squeeze */
+        .blog-detail-section-images { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
+        .blog-detail-figure {
+          margin: 0;
+          padding: 0.65rem;
+          border-radius: 16px;
+          background: linear-gradient(165deg, rgba(17, 24, 39, 0.88) 0%, rgba(11, 15, 20, 0.82) 100%);
+          border: 1px solid rgba(34, 211, 238, 0.22);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 10px 32px rgba(0, 0, 0, 0.28);
+        }
+        .blog-detail-figure-inner {
+          overflow-x: auto;
+          border-radius: 12px;
+          -webkit-overflow-scrolling: touch;
+        }
+        /* Natural aspect ratio — wide diagrams & table screenshots are no longer cropped to a square */
         .blog-detail-img {
           display: block;
           width: 100%;
-          min-width: 400px;
-          max-width: 1080px;
+          max-width: 100%;
+          min-width: 0;
           height: auto;
-          aspect-ratio: 1 / 1;
-          object-fit: cover;
-          border-radius: 16px;
-          box-shadow: 0 4px 20px rgba(34, 211, 238, 0.2);
+          object-fit: contain;
+          border-radius: 12px;
+          box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
         }
-        @media (min-width: 900px) { .blog-detail-img { max-width: 1200px; } }
-        @media (min-width: 1200px) { .blog-detail-img { max-width: 1400px; } }
+        .blog-comparison-table-wrap {
+          margin: 1.25rem 0 0.25rem;
+          border-radius: 16px;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(34, 211, 238, 0.22) 0%, rgba(34, 211, 238, 0.05) 100%);
+          box-shadow: 0 14px 42px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+        .blog-comparison-table-scroll {
+          overflow-x: auto;
+          border-radius: 15px;
+          background: linear-gradient(168deg, rgba(15, 23, 42, 0.96) 0%, rgba(11, 15, 20, 0.94) 100%);
+          border: 1px solid rgba(34, 211, 238, 0.2);
+          -webkit-overflow-scrolling: touch;
+        }
+        .blog-comparison-table {
+          width: 100%;
+          min-width: 720px;
+          border-collapse: collapse;
+          font-size: 0.9375rem;
+        }
+        .blog-comparison-table thead th {
+          text-align: left;
+          padding: 0.9rem 1rem;
+          background: rgba(34, 211, 238, 0.12);
+          color: #22d3ee;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          border-bottom: 1px solid rgba(34, 211, 238, 0.28);
+        }
+        .blog-comparison-table tbody th[scope='row'] {
+          text-align: left;
+          padding: 0.8rem 1rem;
+          color: #f3f4f6;
+          font-weight: 600;
+          background: rgba(17, 24, 39, 0.65);
+          border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+          width: 20%;
+          vertical-align: top;
+        }
+        .blog-comparison-table td {
+          padding: 0.8rem 1rem;
+          color: #d1d5db;
+          border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+          vertical-align: top;
+          line-height: 1.55;
+        }
+        .blog-comparison-table tbody tr:nth-child(even) td { background: rgba(15, 23, 42, 0.4); }
+        .blog-comparison-table tbody tr:hover td { background: rgba(34, 211, 238, 0.07); }
+        .blog-comparison-table tbody tr:last-child th,
+        .blog-comparison-table tbody tr:last-child td { border-bottom: none; }
+        /* HTML tables pasted into section body */
+        .blog-section-content .blog-table-scroll {
+          overflow-x: auto;
+          margin: 1.25rem 0;
+          border-radius: 14px;
+          border: 1px solid rgba(34, 211, 238, 0.18);
+          background: rgba(15, 23, 42, 0.45);
+          -webkit-overflow-scrolling: touch;
+        }
+        .blog-section-content table:not(.blog-comparison-table) {
+          width: 100%;
+          min-width: 520px;
+          border-collapse: collapse;
+          font-size: 0.9375rem;
+        }
+        .blog-section-content table:not(.blog-comparison-table) th {
+          text-align: left;
+          padding: 0.75rem 0.9rem;
+          background: rgba(34, 211, 238, 0.1);
+          color: #e5e7eb;
+          font-weight: 600;
+          border-bottom: 1px solid rgba(34, 211, 238, 0.22);
+        }
+        .blog-section-content table:not(.blog-comparison-table) td {
+          padding: 0.7rem 0.9rem;
+          color: #d1d5db;
+          border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        .blog-section-content img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 12px;
+          display: block;
+          margin: 1rem 0;
+          box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+        }
         .blog-section-shell {
           width: 100%;
           background: linear-gradient(180deg, rgba(17, 24, 39, 0.62) 0%, rgba(15, 23, 42, 0.5) 100%);
@@ -628,6 +819,7 @@ export function BlogDetailPage() {
         .blog-section-content p { color: #D1D5DB; line-height: 1.8; margin-bottom: 1.25rem; font-size: 1.0625rem; }
         .blog-section-content ul { list-style-type: disc; padding-left: 2rem; margin-bottom: 1.25rem; }
         .blog-section-content li { color: #D1D5DB; margin-bottom: 0.5rem; line-height: 1.8; }
+        .blog-section-with-images .blog-comparison-table-wrap { margin-top: 0.75rem; }
         article .blog-section-content strong,
         article .blog-section-content b,
         .blog-section-content strong,
@@ -652,6 +844,9 @@ function BlogSection({
 }: BlogSectionProps) {
   const id = slugifyId(section.title ?? '', index);
   const hasImages = !!section.images && section.images.length > 0;
+  const showBuiltinCpuGpuTpuTable = shouldShowBuiltinCpuGpuTpuTable(section.title);
+  const showSectionImages = hasImages && !showBuiltinCpuGpuTpuTable;
+  const sectionLayoutClass = showSectionImages || showBuiltinCpuGpuTpuTable ? 'blog-section-with-images' : '';
 
   return (
     <div id={id} className="mb-16">
@@ -673,7 +868,7 @@ function BlogSection({
             {section.title}
           </h2>
         )}
-        <div className={hasImages ? 'blog-section-with-images' : ''}>
+        <div className={sectionLayoutClass}>
           {section.content && (
             <div
               className="blog-section-content"
@@ -681,15 +876,15 @@ function BlogSection({
               style={{ lineHeight: 1.8, color: '#D1D5DB' }}
             />
           )}
-          {hasImages && section.images && (
+          {showBuiltinCpuGpuTpuTable && <BlogHardwareComparisonTable />}
+          {showSectionImages && section.images && (
             <div className="blog-detail-section-images">
               {section.images.map((img) => (
-                <img
-                  key={`${img.url}-${img.alt ?? ''}`}
-                  src={img.url}
-                  alt={img.alt ?? ''}
-                  className="blog-detail-img"
-                />
+                <figure key={`${img.url}-${img.alt ?? ''}`} className="blog-detail-figure">
+                  <div className="blog-detail-figure-inner">
+                    <img src={img.url} alt={img.alt ?? ''} className="blog-detail-img" loading="lazy" />
+                  </div>
+                </figure>
               ))}
             </div>
           )}

@@ -20,7 +20,7 @@ export const PORTFOLIO_PAGE_CONTENT = {
     subtitle: 'Real engagements: LLM inference optimization, GPU orchestration, cloud fine-tuning, and hardware telemetry.',
     items: [
       {
-        badge: 'Case Study 1 · Enterprise AI · LLM Deployment',
+        badge: 'Case Study',
         title: 'LLM Inference Optimization on Constrained GPU Infrastructure',
         summary:
           '42% higher throughput, 37% lower power, 12 distributed nodes. Full inference path re-engineering with CUDA kernels, TensorRT, and adaptive batching.',
@@ -28,7 +28,7 @@ export const PORTFOLIO_PAGE_CONTENT = {
         to: '/portfolio/case-study/llm-inference-optimization/',
       },
       {
-        badge: 'Case Study 2 · Infrastructure · GPU Operations',
+        badge: 'Case Study',
         title: 'GPU Workload Orchestration Framework on Rocky Linux 9.7',
         summary:
           'Demo-ready in 5 days: REST API, VRAM-aware scheduling, Docker isolation, full audit trail. RTX 3090 + Rocky Linux 9.7.',
@@ -36,7 +36,7 @@ export const PORTFOLIO_PAGE_CONTENT = {
         to: '/portfolio/case-study/gpu-workload-orchestration/',
       },
       {
-        badge: 'Case Study 3 · AI Engineering · Cloud Infrastructure',
+        badge: 'Case Study',
         title: 'Cloud GPU Fine-Tuning Strategy for Production LLM Deployment',
         summary:
           'Tiered strategy 7B–70B+ models: LoRA/QLoRA, Axolotl, DeepSpeed. Provider-agnostic cloud GPU; dataset to production in days.',
@@ -44,7 +44,7 @@ export const PORTFOLIO_PAGE_CONTENT = {
         to: '/portfolio/case-study/cloud-gpu-fine-tuning/',
       },
       {
-        badge: 'Case Study 4 · Infrastructure Monitoring · GPU Data Centers',
+        badge: 'Case Study',
         title: 'Real-Time GPU Server Hardware Telemetry via Redfish BMC',
         summary:
           'Live dashboard every 30s: power, temperature, fan RPM from Lambda Scalar BMCs. HTTPS, Basic Auth, scoped SSL bypass.',

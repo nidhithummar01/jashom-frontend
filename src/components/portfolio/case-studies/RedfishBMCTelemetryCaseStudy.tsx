@@ -14,7 +14,7 @@ export function RedfishBMCTelemetryCaseStudy() {
         keywords:
           'Redfish, BMC, GPU telemetry, Lambda Scalar, Supermicro AST2600, hardware monitoring',
       }}
-      badge="Case Study 4 · Infrastructure Monitoring · GPU Data Centers · Platform Engineering"
+      badge="Case Study"
       title="Real-Time GPU Server Hardware Telemetry via Redfish BMC Integration"
       hardware="Lambda Scalar GPU Servers · Supermicro AST2600 BMC · Electron / Node.js"
       executiveSummary="Jashom extended a device management platform (Cosmic) to support real-time hardware telemetry from GPU server BMCs (Baseboard Management Controllers) via the Redfish API. The integration enables live dashboard updates every 30 seconds showing GPU server power consumption, CPU and GPU temperatures, and fan speeds - without touching the main OS. The implementation required fixing three critical bugs in the existing HTTP executor and adding structured support for BMC device types."

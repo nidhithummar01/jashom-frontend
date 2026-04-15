@@ -16,7 +16,7 @@ const SPACING = {
   sectionMarginBottom: 'mb-16',
   sectionHeadingMarginBottom: 'mb-6',
   sectionContentGap: 'space-y-6',
-  tableMarginY: 'my-6',
+  tableMarginY: 'mt-8 mb-6',
 } as const;
 
 export type CaseStudyStat = { value: string; label: string };
@@ -141,15 +141,24 @@ export function CaseStudyTable({
   headers: string[];
   rows: string[][];
 }>) {
+  const rowBorder = `1px solid rgba(${Theme.ACCENT_RGB}, 0.14)`;
   return (
-    <div className={`overflow-x-auto rounded-xl border ${SPACING.tableMarginY}`} style={{ borderColor: Theme.BORDER_SUBTLE }}>
-      <table className="w-full text-left text-sm">
+    <div
+      className={`not-prose overflow-x-auto ${SPACING.tableMarginY} p-5 sm:p-6 md:p-7`}
+      style={Theme.GLASS_ARTICLE_CARD}
+    >
+      <table className="w-full border-collapse text-left text-sm sm:text-[15px]">
         <thead>
-          <tr style={{ background: `rgba(${Theme.ACCENT_RGB}, 0.08)` }}>
+          <tr
+            style={{
+              background: `linear-gradient(180deg, rgba(${Theme.ACCENT_RGB}, 0.12) 0%, rgba(${Theme.ACCENT_RGB}, 0.05) 100%)`,
+              borderBottom: `1px solid rgba(${Theme.ACCENT_RGB}, 0.2)`,
+            }}
+          >
             {headers.map((h) => (
               <th
                 key={h}
-                className="px-4 py-3 font-semibold whitespace-nowrap"
+                className="px-4 py-4 text-left font-semibold whitespace-nowrap sm:px-6 sm:py-[1.125rem]"
                 style={{ color: Theme.TEXT_FAFAFA }}
               >
                 {h}
@@ -158,17 +167,23 @@ export function CaseStudyTable({
           </tr>
         </thead>
         <tbody>
-          {rows.map((row) => {
+          {rows.map((row, rowIndex) => {
             const rowKey = row.join('|') || `row-${row.length}`;
             const cellsWithHeaders = headers.map((header, colIndex) => ({ header, cell: row[colIndex] ?? '' }));
             return (
               <tr
                 key={rowKey}
-                className="border-t"
-                style={{ borderColor: Theme.BORDER_SUBTLE }}
+                style={{
+                  borderTop: rowIndex === 0 ? undefined : rowBorder,
+                  background: rowIndex % 2 === 1 ? 'rgba(15, 23, 42, 0.35)' : 'transparent',
+                }}
               >
                 {cellsWithHeaders.map(({ header, cell }) => (
-                  <td key={`${header}-${cell}`} className="px-4 py-3" style={{ color: Theme.TEXT_QUOTE }}>
+                  <td
+                    key={`${header}-${cell}`}
+                    className="px-4 py-4 align-top leading-relaxed sm:px-6 sm:py-[1.125rem]"
+                    style={{ color: Theme.TEXT_QUOTE }}
+                  >
                     {cell}
                   </td>
                 ))}

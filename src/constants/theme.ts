@@ -25,6 +25,14 @@ export const HERO_BG_TOP = { backgroundSize: 'cover' as const, backgroundPositio
 export const OVERLAY_DARK = 'rgba(11, 15, 20, 0.4)';
 export const OVERVIEW_BADGE = { background: `rgba(${ACCENT_RGB}, 0.1)`, border: `1px solid rgba(${ACCENT_RGB}, 0.3)` } as const;
 export const KEY_STAT_BOX = { background: BENEFIT_CARD_BG, border: `1px solid rgba(${ACCENT_RGB}, 0.2)` } as const;
+/** Same visual language as BlogDetailPage `.blog-section-shell` — long-form / case study content cards */
+export const GLASS_ARTICLE_CARD: React.CSSProperties = {
+  background: 'linear-gradient(180deg, rgba(17, 24, 39, 0.62) 0%, rgba(15, 23, 42, 0.5) 100%)',
+  border: `1px solid rgba(${ACCENT_RGB}, 0.16)`,
+  borderRadius: '18px',
+  boxShadow: '0 14px 38px rgba(0, 0, 0, 0.22)',
+  backdropFilter: 'blur(10px)',
+};
 export const IMAGE_SHADOW_ACCENT = { boxShadow: `0 20px 60px rgba(${ACCENT_RGB}, 0.3)` } as const;
 export const IMAGE_SHADOW_ACCENT_ALT = { borderRadius: '20px', boxShadow: `0 20px 60px rgba(${ACCENT_RGB}, 0.25), 0 0 40px rgba(${ACCENT_RGB}, 0.1)` } as const;
 export const CTA_HERO_STYLE = { background: ACCENT_COLOR, color: TEXT_WHITE, boxShadow: `0 4px 14px 0 rgba(${ACCENT_RGB}, 0.4)` } as const;

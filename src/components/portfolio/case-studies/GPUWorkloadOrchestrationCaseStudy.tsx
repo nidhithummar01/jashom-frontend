@@ -14,7 +14,7 @@ export function GPUWorkloadOrchestrationCaseStudy() {
         keywords:
           'GPU orchestration, Rocky Linux, FastAPI, VRAM scheduling, Docker, NVIDIA Container Toolkit',
       }}
-      badge="Case Study 2 · Infrastructure Engineering · GPU Operations · Prototype → Production System"
+      badge="Case Study"
       title="GPU Workload Orchestration Framework on Rocky Linux 9.7"
       hardware="NVIDIA RTX 3090 · Rocky Linux 9.7 · Docker + NVIDIA Container Toolkit"
       executiveSummary="Jashom designed and built a demo-ready GPU workload orchestration system from the ground up in under five working days. The system accepts jobs via a REST API, schedules them against GPU availability and VRAM constraints, executes them inside isolated Docker containers, and returns structured logs with full exit codes and audit trails. Built on Rocky Linux 9.7 with an NVIDIA RTX 3090, the system provides the complete infrastructure foundation for production GPU job management."

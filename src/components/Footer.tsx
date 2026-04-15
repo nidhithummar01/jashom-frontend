@@ -1,269 +1,340 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Phone, Mail } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { Phone, Mail, Linkedin, Instagram, Youtube, MapPin } from 'lucide-react';
 import { SHOW_BLOG_SECTION } from '../config/featureFlags';
+
+const ACCENT = '#22D3EE';
+const MUTED = '#9CA3AF';
+const BG = '#0a0a0a';
+const MAPS_URL =
+  'https://www.google.com/maps?cid=14003985891872718787&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYASAA&hl=en-US&source=embed';
+
+/** Matches reference: small caps section labels */
+const colHeading =
+  'text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-white mb-3 sm:mb-4';
+
+const linkClass =
+  'text-[13px] sm:text-sm leading-snug transition-colors duration-200 block';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
-  const footerLinks = {
-    company: [
-      { label: 'About Us', path: '/about-us/' },
-      { label: 'Company Brochure', path: '/brochure/' },
-      { label: 'Case Studies', path: '/portfolio/' },
-      { label: 'Contact Us', path: '/contact/' }
-    ],
-    services: [
-      { label: 'GPU Optimization Service', path: '/gpu-optimization-service/' },
-      { label: 'CUDA Development Service', path: '/cuda-development-service/' },
-      { label: 'Hire CUDA Developer', path: '/hire-cuda-developer/' }
-    ],
-    resources: [
-      ...(SHOW_BLOG_SECTION ? [{ label: 'Blog', path: '/blogs/' }] : []),
-      { label: 'Case Studies', path: '/portfolio/' },
-      // Documentation page is currently removed (blank). Re-add when ready.
-    ],
-    legal: [
-      { label: 'Privacy Policy', path: '/privacy/' },
-      { label: 'Terms of Service', path: '/terms/' },
-      { label: 'Cookie Policy', path: '/cookies/' },
-      { label: 'Security Policy', path: '/security/' }
-    ]
-  };
+  const getFooterLinkStyle = (isActive: boolean, key: string) => ({
+    color: isActive || hoveredLink === key ? ACCENT : MUTED,
+  });
 
-  const socialLinks = [
-    { 
-      href: 'https://www.linkedin.com/company/jashom/', 
+  const servicesLinks = [
+    { label: 'GPU Optimization Service', path: '/gpu-optimization-service/' },
+    { label: 'CUDA Development Service', path: '/cuda-development-service/' },
+    { label: 'Hire CUDA Developer', path: '/hire-cuda-developer/' },
+    { label: 'Edge Inference', path: '/solutions/' },
+  ];
+
+  const companyLinks = [
+    { label: 'About Us', path: '/about-us/' },
+    { label: 'Company Brochure', path: '/brochure/' },
+    { label: 'Contact Us', path: '/contact/' },
+    { label: 'Careers', path: '/careers/' },
+    { label: 'Legal', path: '/terms/' },
+  ];
+
+  const quickLinks: { label: string; path: string }[] = [
+    ...(SHOW_BLOG_SECTION ? [{ label: 'Blog', path: '/blogs/' }] : []),
+    { label: 'Case Studies', path: '/portfolio/' },
+    { label: 'Whitepapers', path: '/resources/' },
+    { label: 'System Status', path: '/news/' },
+  ];
+
+  /** Lucide for crisp, uniform sizing; PNG only where no brand icon exists (Reddit). */
+  const socialLinks: (
+    | { href: string; label: string; Icon: LucideIcon; brandColor: string }
+    | { href: string; label: string; image: string }
+  )[] = [
+    {
+      href: 'https://www.linkedin.com/company/jashom/',
       label: 'LinkedIn',
-      image: '/images/social-media/linkedin.png.png'
+      Icon: Linkedin,
+      brandColor: '#0A66C2',
     },
-    { 
-      href: 'https://www.instagram.com/jashomtechnologies_', 
+    {
+      href: 'https://www.instagram.com/jashomtechnologies_',
       label: 'Instagram',
-      image: '/images/social-media/instagram.png.png'
+      Icon: Instagram,
+      brandColor: '#E1306C',
     },
-    { 
-      href: 'https://youtube.com/@infojashom', 
+    {
+      href: 'https://youtube.com/@infojashom',
       label: 'YouTube',
-      image: '/images/social-media/youtube.png.png'
+      Icon: Youtube,
+      brandColor: '#FF0000',
     },
-    { 
-      href: 'https://reddit.com/r/jashom', 
+    {
+      href: 'https://reddit.com/r/jashom',
       label: 'Reddit',
-      image: '/images/social-media/reddit.png.png'
-    }
+      image: '/images/social-media/reddit.png.png',
+    },
   ];
 
   return (
-    <footer 
-      className="relative overflow-hidden mb-2" 
-      style={{ 
-        background: '#0a0a0a',
+    <footer
+      className="relative mb-0 w-full overflow-x-hidden pt-16 pb-12 sm:pt-20 sm:pb-14 md:pt-24 md:pb-16 lg:pb-20"
+      style={{
+        background: BG,
         borderTop: '1px solid rgba(34, 211, 238, 0.15)',
-        paddingTop: '3rem'
       }}
       role="contentinfo"
       aria-label="Site footer"
     >
-      <div className="max-w-7xl mx-auto">
-        
-        {/* Main Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_2fr] gap-8 md:gap-10 lg:gap-12 xl:gap-16 mb-12 pb-8 px-4 md:px-8 lg:px-12">
-          
-          {/* COLUMN 1: Logo + Description + Address + Map */}
-          <div className="flex flex-col">
-            {/* Logo + Description */}
-            <div>
-              <Link to="/" className="inline-block mb-5" aria-label="Jashom home">
-                <motion.img
-                  src="/jashom-logo-header-70px.png"
-                  alt="Jashom"
-                  className="h-14 w-auto"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.2 }}
-                />
-              </Link>
-              <p 
-                className="text-base leading-relaxed"
-                style={{ color: '#9CA3AF' }}
-              >
-                Empowering businesses with modern GPU optimization and CUDA development for high-performance computing.
-              </p>
-            </div>
-
-            {/* Address */}
-            <div className="mt-8 md:mt-12 lg:mt-16">
-              <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
+      {/* Explicit 5-col grid (scoped CSS) — Tailwind lg:1024px often missed at ~900px / zoomed devtools */}
+      <style>{`
+        .jashom-footer__main {
+          display: grid;
+          width: 100%;
+          gap: 2rem 0.9rem;
+          grid-template-columns: 1fr;
+          align-items: start;
+          padding-bottom: '80px ';
+        }
+        @media (min-width: 768px) {
+          .jashom-footer__main {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            column-gap: 0.95rem;
+            row-gap: 1.75rem;
+          }
+        }
+        @media (min-width: 1280px) {
+          .jashom-footer__main {
+            column-gap: 1.5rem;
+            row-gap: 2rem;
+          }
+        }
+      `}</style>
+      <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-10 xl:px-12">
+        <div className="jashom-footer__main pb-16 mb-16 md:mb-20 lg:mb-24 md:pb-20 lg:pb-24">
+          {/* Column 1 — Brand + Address */}
+          <div className="min-w-0 lg:pr-2">
+            <Link to="/" className="mb-4 inline-flex items-center" aria-label="Jashom home">
+              <motion.img
+                src="/jashom-logo-header-70px.png"
+                alt="Jashom"
+                className="h-12 w-auto max-w-[200px] object-contain object-left sm:h-14"
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.2 }}
+              />
+            </Link>
+            <p className="mb-6 max-w-[250px]  text-sm leading-relaxed sm:text-[15px]" style={{ color: MUTED }}>
+              Empowering businesses with modern GPU optimization and CUDA development for high-performance computing.
+            </p>
+            <div className="mt-6 mb-2">
+              <h4 className={colHeading} style={{ fontSize: '16px', marginBottom: 0 }}>
                 Address
               </h4>
-              <div className="text-sm mb-4 space-y-1" style={{ color: '#9CA3AF', lineHeight: '1.7' }}>
-                <div className="font-semibold" style={{ color: '#22D3EE' }}>
+            </div>
+            <a
+              href={MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mb-6 flex items-start gap-2 text-sm leading-relaxed transition-colors duration-200"
+              style={{ color: MUTED }}
+              aria-label="Open address in Google Maps"
+            >
+              <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0" style={{ color: ACCENT }} />
+              <div className="space-y-0.5">
+                <div className="font-semibold transition-colors duration-200 group-hover:text-[#22D3EE]">
                   Ahmedabad, India
                 </div>
-                <div>Shivam 2, AMBA BUSINESS PARK, 414,</div>
-                <div>Adalaj, Gujarat 382421</div>
+                <div className="transition-colors duration-200 group-hover:text-[#22D3EE]">
+                  Shivam 2, AMBA BUSINESS PARK, 414,
+                </div>
+                <div className="transition-colors duration-200 group-hover:text-[#22D3EE]">
+                  Adalaj, Gujarat 382421
+                </div>
+              </div>
+            </a>
+          </div>
+
+          {/* Column 2 — Contact + Social */}
+          <div className="min-w-0 space-y-7  lg:pr-2">
+            <div>
+              <h4 className={colHeading} style={{ fontSize :'16px' }}>Get in Touch</h4>
+              <div className="space-y-2.5 gap-6 mb-6">
+                <a
+                  href="tel:+919023906363"
+                  className="flex items-start gap-3 text-sm transition-colors group"
+                  style={{ color: MUTED }}
+                >
+                  <Phone className="mt-0.5 h-4 w-4 flex-shrink-0" style={{ color: ACCENT }} />
+                  <span className="group-hover:text-[#22D3EE]">+91 90239 06363</span>
+                </a>
+                <a
+                  href="mailto:info@jashom.com"
+                  className="flex items-start gap-3 text-sm transition-colors group"
+                  style={{ color: MUTED }}
+                >
+                  <Mail className="mt-0.5 h-4 w-4 flex-shrink-0" style={{ color: ACCENT }} />
+                  <span className="group-hover:text-[#22D3EE]">info@jashom.com</span>
+                </a>
+              </div>
+            </div>
+            <div>
+              <h4 className={colHeading} style={{ fontSize :'16px' }}>Follow Us</h4>
+              <div className="mt-2 flex flex-wrap gap-4 sm:gap-5">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors duration-200 hover:border-[rgba(34,211,238,0.35)] sm:h-10 sm:w-10"
+                    style={{
+                      background: 'rgba(255,255,255,0.06)',
+                      borderColor: 'rgba(255,255,255,0.1)',
+                    }}
+                    animate={{ y: [0, -6, 0] }}
+                    whileTap={{ scale: 0.96 }}
+                    transition={{
+                      duration: 0.8,
+                      ease: 'easeInOut',
+                      repeat: Infinity,
+                      repeatType: 'loop',
+                      delay: index * 0.12,
+                    }}
+                    aria-label={social.label}
+                  >
+                    {'image' in social ? (
+                      <img
+                        src={social.image}
+                        alt=""
+                        width={24}
+                        height={24}
+                        className="h-[18px] w-[18px] max-h-full max-w-full object-contain sm:h-5 sm:w-5"
+                        draggable={false}
+                      />
+                    ) : (
+                      <social.Icon
+                        className="h-[18px] w-[18px] shrink-0 sm:h-5 sm:w-5"
+                        style={{ color: social.brandColor }}
+                        strokeWidth={1.75}
+                        aria-hidden
+                      />
+                    )}
+                  </motion.a>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* RIGHT SIDE: Grid with Get in Touch, Company, Services, Quick Links, Resources */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12">
-            
-            {/* Get in Touch + Company + Services */}
-            <div className="flex flex-col">
-              {/* Get in Touch */}
-              <div>
-                <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
-                  Get in Touch
-                </h4>
-                <div className="space-y-4">
-                  <a 
-                    href="tel:+919023906363"
-                    className="flex items-center gap-3 text-base transition-colors group"
-                    style={{ color: '#9CA3AF' }}
+          {/* Column 3 — Services */}
+          <div className="min-w-0 lg:px-1">
+            <h4 className={colHeading} style={{ fontSize :'16px' }}>Services</h4>
+            <ul className="space-y-2.5 hover:text-[] ">
+              {servicesLinks.map((link) => (
+                <li key={link.path}>
+                  <NavLink
+                    to={link.path}
+                    className={linkClass}
+                    style={({ isActive }) => getFooterLinkStyle(isActive, link.path)}
+                    onMouseEnter={() => setHoveredLink(link.path)}
+                    onMouseLeave={() => setHoveredLink(null)}
                   >
-                    <Phone className="w-4 h-4 flex-shrink-0" style={{ color: '#22D3EE' }} />
-                    <span className="group-hover:text-[#22D3EE]">+91 90239 06363</span>
-                  </a>
-                  <a 
-                    href="mailto:info@jashom.com"
-                    className="flex items-center gap-3 text-base transition-colors group"
-                    style={{ color: '#9CA3AF' }}
+                    {link.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4 — Company */}
+          <div className="min-w-0 lg:px-1">
+            <h4 className={colHeading} style={{ fontSize :'16px' }}>Company</h4>
+            <ul className="space-y-2.5">
+              {companyLinks.map((link) => (
+                <li key={link.path}>
+                  <NavLink
+                    to={link.path}
+                    className={linkClass}
+                    style={({ isActive }) => getFooterLinkStyle(isActive, link.path)}
+                    onMouseEnter={() => setHoveredLink(link.path)}
+                    onMouseLeave={() => setHoveredLink(null)}
                   >
-                    <Mail className="w-4 h-4 flex-shrink-0" style={{ color: '#22D3EE' }} />
-                    <span className="group-hover:text-[#22D3EE]">info@jashom.com</span>
-                  </a>
-                </div>
-              </div>
+                    {link.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-              {/* Company */}
-              <div className="mt-8 md:mt-12 lg:mt-16">
-                <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
-                  Company
-                </h4>
-                <ul className="space-y-2.5">
-                  {footerLinks.company.map((link, index) => (
-                    <li key={index}>
-                      <Link
-                        to={link.path}
-                        className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
-                        style={{ color: '#9CA3AF' }}
-                        onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
-                        onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
-                      >
-                        &gt; {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Services */}
-              <div className="mt-8 md:mt-12 lg:mt-16">
-                <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
-                  Services
-                </h4>
-                <ul className="space-y-2.5">
-                  {footerLinks.services.map((link, index) => (
-                    <li key={index}>
-                      <Link
-                        to={link.path}
-                        className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
-                        style={{ color: '#9CA3AF' }}
-                        onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
-                        onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
-                      >
-                        &gt; {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Quick Links + Resources */}
-            <div className="flex flex-col">
-              {/* Quick Links (Social) */}
-              <div>
-                <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
-                  Quick Links
-                </h4>
-                <div className="flex items-center gap-3">
-                  {socialLinks.map((social, index) => (
-                    <motion.a
-                      key={index}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block transition-all duration-300"
-                      whileHover={{ 
-                        scale: 1.1
-                      }}
-                      aria-label={social.label}
-                    >
-                      <img 
-                        src={social.image}
-                        alt={social.label}
-                        style={{ 
-                          objectFit: 'contain', 
-                          width: social.label === 'Reddit' ? '32px' : '38px', 
-                          height: social.label === 'Reddit' ? '32px' : '38px',
-                          display: 'block',
-                          background: 'transparent'
-                        }}
-                      />
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
-
-              {/* Resources */}
-              <div className="mt-8 md:mt-12 lg:mt-16">
-                <h4 className="text-2xl font-bold mb-6 uppercase tracking-wide" style={{ color: '#FFFFFF' }}>
-                  Resources
-                </h4>
-                <ul className="space-y-2.5">
-                  {footerLinks.resources.map((link, index) => (
-                    <li key={index}>
-                      <Link
-                        to={link.path}
-                        className="text-base transition-colors inline-block hover:translate-x-1 duration-200"
-                        style={{ color: '#9CA3AF' }}
-                        onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
-                        onMouseLeave={(e) => e.currentTarget.style.color = '#9CA3AF'}
-                      >
-                        &gt; {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+          {/* Column 5 — Quick Links */}
+          <div className="min-w-0 lg:pl-2">
+            <h4 className={colHeading} style={{ fontSize :'16px' }}>Quick Links</h4>
+            <ul className="space-y-2.5">
+              {quickLinks.map((link) => (
+                <li key={link.path + link.label}>
+                  <NavLink
+                    to={link.path}
+                    className={linkClass}
+                    style={({ isActive }) => getFooterLinkStyle(isActive, link.path)}
+                    onMouseEnter={() => setHoveredLink(link.path)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                  >
+                    {link.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Divider */}
-        <div 
-          className="border-t mb-8"
-          style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
-        />
-
-        {/* Bottom Bar */}
-        <div className="flex flex-wrap items-center justify-center gap-3 text-sm px-4">
-          {footerLinks.legal.map((link, index) => (
-            <Link
-              key={index}
-              to={link.path}
-              className="transition-colors"
-              style={{ color: '#FFFFFF' }}
-              onMouseEnter={(e) => e.currentTarget.style.color = '#22D3EE'}
-              onMouseLeave={(e) => e.currentTarget.style.color = '#FFFFFF'}
+        <div
+          className="flex flex-col  gap-4 border-t mb-3 justify-between border-[rgba(255,255,255,0.08)] pt-6 pb-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:pt-7 md:gap-6 md:pt-8 md:pb-3 lg:pt-9"
+        >
+          <p
+            className="order-2 max-w-2xl mt-6  text-center text-[11px] leading-relaxed sm:text-left sm:text-xs lg:order-1"
+            style={{ color: MUTED }}
+          >
+            © {currentYear} Jashom GPU Optimization. All rights reserved. Engineered for peak performance.
+          </p>
+          <nav
+            className="order-1 mt-6 flex gap-6 flex-wrap items-center justify-center gap-x-3 gap-y-1  text-[11px] sm:order-2 sm:justify-end sm:gap-x-5 sm:text-xs"
+            aria-label="Legal"
+          >
+            <NavLink
+              to="/privacy/"
+              className="shrink-0 py-1 transition-colors"
+              style={({ isActive }) => getFooterLinkStyle(isActive, '/privacy/')}
+              onMouseEnter={() => setHoveredLink('/privacy/')}
+              onMouseLeave={() => setHoveredLink(null)}
             >
-              {link.label}
-            </Link>
-          ))}
-          <span className="hidden sm:inline" style={{ color: '#4B5563' }}>|</span>
-          <span className="w-full sm:w-auto text-center" style={{ color: '#FFFFFF' }}>© {currentYear} Jashom. All Rights Reserved.</span>
+              Privacy Policy
+            </NavLink>
+            <span className="text-[#4B5563]" aria-hidden>
+              ·
+            </span>
+            <NavLink
+              to="/terms/"
+              className="shrink-0 py-1 transition-colors"
+              style={({ isActive }) => getFooterLinkStyle(isActive, '/terms/')}
+              onMouseEnter={() => setHoveredLink('/terms/')}
+              onMouseLeave={() => setHoveredLink(null)}
+            >
+              Terms of Service
+            </NavLink>
+            <span className="text-[#4B5563]" aria-hidden>
+              ·
+            </span>
+            <NavLink
+              to="/security/"
+              className="shrink-0 py-1 transition-colors"
+              style={({ isActive }) => getFooterLinkStyle(isActive, '/security/')}
+              onMouseEnter={() => setHoveredLink('/security/')}
+              onMouseLeave={() => setHoveredLink(null)}
+            >
+              Security
+            </NavLink>
+          </nav>
         </div>
       </div>
     </footer>

@@ -1,3 +1,4 @@
+import * as Theme from '../../../constants/theme';
 import {
   CaseStudyArticleLayout,
   CaseStudySection,
@@ -14,7 +15,7 @@ export function CloudGPUFineTuningCaseStudy() {
         keywords:
           'LLM fine-tuning, LoRA, QLoRA, cloud GPU, Axolotl, DeepSpeed, 7B 70B models',
       }}
-      badge="Case Study 3 · AI Engineering · Cloud Infrastructure · Strategy + Execution"
+      badge="Case Study"
       title="Cloud GPU Fine-Tuning Strategy for Production LLM Deployment"
       hardware="Cloud GPU Fleet: RTX 4090 / A100 / H100 (provider-agnostic)"
       executiveSummary="Jashom developed and implemented a comprehensive cloud GPU fine-tuning strategy for a client needing to deploy custom language models at scale. The engagement covered hardware selection, fine-tuning method selection, framework configuration, training execution, and production deployment packaging - across model sizes from 7B to 70B+ parameters. The strategy reduced per-run costs by selecting parameter-efficient methods precisely matched to each use case and hardware tier."
@@ -43,8 +44,11 @@ export function CloudGPUFineTuningCaseStudy() {
 
       <CaseStudySection title="Strategic Framework Delivered">
         <div className="space-y-8">
-          <div className="rounded-xl p-6 border" style={{ borderColor: 'rgba(34, 211, 238, 0.25)' }}>
-            <h3 className="text-lg font-semibold mb-4" style={{ color: '#22D3EE' }}>
+          <div
+            className="p-6 transition-shadow duration-300 hover:shadow-[0_16px_44px_rgba(34,211,238,0.12)]"
+            style={Theme.GLASS_ARTICLE_CARD}
+          >
+            <h3 className="text-lg font-semibold mb-4" style={{ color: Theme.ACCENT_COLOR }}>
               Tier 1: Rapid Prototyping (7B–13B Models)
             </h3>
             <CaseStudyTable
@@ -58,8 +62,11 @@ export function CloudGPUFineTuningCaseStudy() {
               ]}
             />
           </div>
-          <div className="rounded-xl p-6 border" style={{ borderColor: 'rgba(34, 211, 238, 0.25)' }}>
-            <h3 className="text-lg font-semibold mb-4" style={{ color: '#22D3EE' }}>
+          <div
+            className="p-6 transition-shadow duration-300 hover:shadow-[0_16px_44px_rgba(34,211,238,0.12)]"
+            style={Theme.GLASS_ARTICLE_CARD}
+          >
+            <h3 className="text-lg font-semibold mb-4" style={{ color: Theme.ACCENT_COLOR }}>
               Tier 2: Production Fine-Tuning (13B–40B Models)
             </h3>
             <CaseStudyTable
@@ -73,8 +80,11 @@ export function CloudGPUFineTuningCaseStudy() {
               ]}
             />
           </div>
-          <div className="rounded-xl p-6 border" style={{ borderColor: 'rgba(34, 211, 238, 0.25)' }}>
-            <h3 className="text-lg font-semibold mb-4" style={{ color: '#22D3EE' }}>
+          <div
+            className="p-6 transition-shadow duration-300 hover:shadow-[0_16px_44px_rgba(34,211,238,0.12)]"
+            style={Theme.GLASS_ARTICLE_CARD}
+          >
+            <h3 className="text-lg font-semibold mb-4" style={{ color: Theme.ACCENT_COLOR }}>
               Tier 3: Large-Scale Training (70B Models)
             </h3>
             <CaseStudyTable
