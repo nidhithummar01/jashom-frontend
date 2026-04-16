@@ -272,10 +272,10 @@ export function ContactPage() {
                         <span className="text-3xl">🇮🇳</span>
                         <div>
                           <p className="text-lg leading-relaxed" style={{ ...MUTED_STYLE, marginBottom: '0' }}>
-                            414, Satyam-2, Amba Business Park
+                            414, Shivam 2, AMBA BUSINESS PARK,
                           </p>
                           <p className="text-lg leading-relaxed" style={{ ...MUTED_STYLE, marginTop: '18px', marginBottom: '0' }}>
-                            ATPL, Adalaj, Gujarat, India
+                            Adalaj, Gujarat 382421
                           </p>
                         </div>
                       </div>

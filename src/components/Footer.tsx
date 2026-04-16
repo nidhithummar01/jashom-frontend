@@ -123,8 +123,7 @@ export function Footer() {
                 transition={{ duration: 0.2 }}
               />
             </Link>
-            <p className="mb-6 max-w-[250px] text-sm leading-relaxed sm:text-[15px]" style={{ color: MUTED }}></p>
-            <p className="mb-8  max-w-[250px] text-lg leading-relaxed" style={{ color: MUTED }}>
+            <p className="mb-8 max-w-[250px] text-sm leading-relaxed" style={{ color: MUTED }}>
               Empowering businesses with modern GPU optimization and CUDA development for high-performance computing.
             </p>
             <div className="mt-6 mb-2">
@@ -146,7 +145,7 @@ export function Footer() {
                   Ahmedabad, India
                 </div>
                 <div className="transition-colors text-sm duration-200 group-hover:text-[#22D3EE]">
-                  Shivam 2, AMBA BUSINESS PARK, 414, Adalaj, Gujarat 382421
+                414, Shivam 2, AMBA BUSINESS PARK, Adalaj, Gujarat 382421
                 </div>
                
               </div>

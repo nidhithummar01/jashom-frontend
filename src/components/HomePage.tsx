@@ -333,7 +333,7 @@ export function HomePage() {
                   return (
                     <div
                       key={item.title}
-                      className="group relative max-w-xl overflow-hidden rounded-3xl p-8 sm:p-9 transition-all duration-300"
+                      className="group relative max-w-xl overflow-hidden rounded-2xl p-8 sm:p-9 transition-all duration-300"
                       style={{
                         background: `linear-gradient(160deg, rgba(${rgb}, 0.16) 0%, rgba(7, 11, 18, 0.92) 42%, rgba(${rgb}, 0.08) 100%)`,
                         border: `1px solid rgba(${rgb}, 0.25)`,
