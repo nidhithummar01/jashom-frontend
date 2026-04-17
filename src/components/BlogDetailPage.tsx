@@ -10,8 +10,8 @@ import { homePageData } from './HomePage/data';
 
 /** Blog detail author line — static (not from API). */
 const BLOG_PAGE_AUTHOR_NAME = 'Jay Dave';
-/** Company LinkedIn (same as Footer social). */
-const JASHOM_LINKEDIN_COMPANY_URL = 'https://www.linkedin.com/company/jashom/';
+/** LinkedIn share endpoint for the current article URL. */
+const LINKEDIN_SHARE_URL_BASE = 'https://www.linkedin.com/sharing/share-offsite/?url=';
 
 function formatDate(iso: string | null): string {
   if (!iso) return '';
@@ -228,6 +228,9 @@ export function BlogDetailPage() {
   }
 
   const heroImage = blog.featured_image_url ?? '/images/service-hero-bg.jpg';
+  const currentPageUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const encodedCurrentPageUrl = encodeURIComponent(currentPageUrl);
+  const encodedBlogTitle = encodeURIComponent(blog.title);
 
   return (
     <div className="min-h-screen" style={{ background: pageBackground }}>
@@ -383,7 +386,7 @@ export function BlogDetailPage() {
                   <h3 className="blog-sidebar-title">Share</h3>
                   <div className="blog-share-buttons">
                     <a
-                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`}
+                      href={`https://twitter.com/intent/tweet?text=${encodedBlogTitle}&url=${encodedCurrentPageUrl}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="blog-share-btn"
@@ -393,11 +396,11 @@ export function BlogDetailPage() {
                       <span>X (Twitter)</span>
                     </a>
                     <a
-                      href={JASHOM_LINKEDIN_COMPANY_URL}
+                      href={`${LINKEDIN_SHARE_URL_BASE}${encodedCurrentPageUrl}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="blog-share-btn"
-                      aria-label="Jashom on LinkedIn"
+                      aria-label="Share on LinkedIn"
                     >
                       <Share2 className="blog-share-icon" />
                       <span>LinkedIn</span>

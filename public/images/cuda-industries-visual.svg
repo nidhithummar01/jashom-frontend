@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="">
+  <defs>
+    <linearGradient id="ciBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="ciGlow" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.22"/>
+      <stop offset="55%" stop-color="#0891B2" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ciEdge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#6366F1" stop-opacity="0.35"/>
+    </linearGradient>
+    <filter id="ciBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.5" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="600" height="600" rx="24" fill="url(#ciBg)"/>
+  <rect width="600" height="600" rx="24" fill="url(#ciGlow)"/>
+  <rect x="1" y="1" width="598" height="598" rx="23" fill="none" stroke="url(#ciEdge)" stroke-opacity="0.35" stroke-width="1"/>
+
+  <!-- Central compute node -->
+  <g transform="translate(300 300)">
+    <circle r="88" fill="#020617" stroke="#22D3EE" stroke-opacity="0.35" stroke-width="1.5"/>
+    <circle r="64" fill="none" stroke="#22D3EE" stroke-opacity="0.15" stroke-width="1"/>
+    <rect x="-36" y="-36" width="72" height="72" rx="10" fill="#0c4a6e" fill-opacity="0.35" stroke="#22D3EE" stroke-opacity="0.45"/>
+    <g fill="#22D3EE" fill-opacity="0.35">
+      <rect x="-24" y="-24" width="14" height="14" rx="2"/>
+      <rect x="-6" y="-24" width="14" height="14" rx="2"/>
+      <rect x="12" y="-24" width="14" height="14" rx="2"/>
+      <rect x="-24" y="-6" width="14" height="14" rx="2"/>
+      <rect x="-6" y="-6" width="14" height="14" rx="2"/>
+      <rect x="12" y="-6" width="14" height="14" rx="2"/>
+      <rect x="-24" y="12" width="14" height="14" rx="2"/>
+      <rect x="-6" y="12" width="14" height="14" rx="2"/>
+      <rect x="12" y="12" width="14" height="14" rx="2"/>
+    </g>
+  </g>
+
+  <!-- Orbiting industry nodes + links -->
+  <g fill="none" stroke="#22D3EE" stroke-opacity="0.25" stroke-width="1.2" filter="url(#ciBlur)">
+    <path d="M300 212 L300 168 M388 300 L432 300 M300 388 L300 432 M212 300 L168 300"/>
+    <path d="M300 212 L360 148 M388 300 L452 240 M300 388 L360 452 M212 300 L148 240"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#94A3B8" text-anchor="middle">
+    <rect x="228" y="108" width="144" height="44" rx="10" fill="#0f172a" stroke="#22D3EE" stroke-opacity="0.3"/>
+    <text x="300" y="128" fill="#E2E8F0">AI / ML</text>
+    <text x="300" y="144" fill="#64748B" font-size="9" font-weight="500">Training &amp; inference</text>
+
+    <rect x="432" y="278" width="132" height="44" rx="10" fill="#0f172a" stroke="#22D3EE" stroke-opacity="0.3"/>
+    <text x="498" y="298" fill="#E2E8F0">Science</text>
+    <text x="498" y="314" fill="#64748B" font-size="9" font-weight="500">HPC &amp; research</text>
+
+    <rect x="228" y="448" width="144" height="44" rx="10" fill="#0f172a" stroke="#22D3EE" stroke-opacity="0.3"/>
+    <text x="300" y="468" fill="#E2E8F0">Media</text>
+    <text x="300" y="484" fill="#64748B" font-size="9" font-weight="500">Rendering &amp; analysis</text>
+
+    <rect x="36" y="278" width="132" height="44" rx="10" fill="#0f172a" stroke="#22D3EE" stroke-opacity="0.3"/>
+    <text x="102" y="298" fill="#E2E8F0">Finance</text>
+    <text x="102" y="314" fill="#64748B" font-size="9" font-weight="500">Risk &amp; trading</text>
+  </g>
+
+  <circle cx="300" cy="300" r="4" fill="#22D3EE" fill-opacity="0.8"/>
+</svg>

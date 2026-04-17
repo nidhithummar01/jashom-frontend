@@ -4,9 +4,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { buildContactPayloadFromState, submitContact } from '../api/contact';
 import { SEO as Seo } from './SEO';
-
-const SECTION_BG = '#0B0F14';
-const BORDER_WHITE_10 = 'rgba(255, 255, 255, 0.1)';
 const STAT_ICON_BOX = 'w-14 h-14 rounded flex items-center justify-center flex-shrink-0';
 const STAT_ICON_BG = { background: '#22D3EE' };
 const DIVIDER_CLASS = 'hidden sm:block w-px h-16';
@@ -43,10 +40,10 @@ const STEP_NUM_BG = { background: '#22D3EE' };
 const whyHireCardsData: { title: string; description: string; src: string; alt: string; imageStyle?: React.CSSProperties }[] = [
   { title: 'High-Quality Engineering Standards', description: 'Our developers observe the best practices of coding and performance to provide stable and maintainable solutions for the GPU.', src: '/images/cuda-quality-code.jpg.jpg', alt: 'Quality Code' },
   { title: 'Strong Data Security & Confidentiality', description: 'Our business works under the broad NDAs and safe development procedures to maintain the delicate business logic and intellectual property.', src: '/images/cuda-nda.jpg.jpg', alt: 'NDA Agreement' },
-  { title: 'Proven GPU Development Experience', description: 'Our group has practical experience in the fields of AI, analytics, simulation, and high-performance computing.', src: '/images/cuda-verified.jpg.jpg', alt: 'Certified Developer' },
+  { title: 'Proven GPU Development Experience', description: 'Our group has practical experience in the fields of AI, analytics, simulation, and high-performance computing.', src: '/logos/hire-1.jpeg', alt: 'Certified Developer' },
   { title: 'Cost-Optimized Resource Allocation', description: 'Dependent employment platforms make sure that you only spend what is needed for your project.', src: '/images/cuda-cost.jpg.jpg', alt: 'Cost Reduction', imageStyle: { objectPosition: 'center 40%' } },
-  { title: 'Senior-Level Technical Expertise', description: 'Our CUDA engineers have a combination of architectural and practical experience with the implementation of the efficient use of GPUs.', src: '/images/cuda-experience.jpg.jpg', alt: 'High Experience Team' },
-  { title: 'Rapid Onboarding Process', description: 'We also make sure that we deploy resources as fast as possible, and this makes your project pick up without any unnecessary delays.', src: '/images/cuda-onboarding.jpg.jpg', alt: 'Quick Onboarding' },
+  { title: 'Senior-Level Technical Expertise', description: 'Our CUDA engineers have a combination of architectural and practical experience with the implementation of the efficient use of GPUs.', src: '/logos/hire-2.jpeg', alt: 'High Experience Team' },
+  { title: 'Rapid Onboarding Process', description: 'We also make sure that we deploy resources as fast as possible, and this makes your project pick up without any unnecessary delays.', src: '/logos/hire-3.jpeg', alt: 'Quick Onboarding' },
 ];
 
 const engagementModelsData = [
@@ -57,7 +54,6 @@ const engagementModelsData = [
 ];
 
 const WHY_HIRE_CARD_IMG_STYLE = { borderRadius: '12px 12px 0 0' as const, boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)' };
-const WHY_HIRE_GRADIENT = 'linear-gradient(to bottom, transparent 60%, rgba(11, 15, 20, 0.4) 100%)';
 
 const whyChooseBenefitsData: { title: string; description: string; pathD?: string }[] = [
   { title: 'High-Impact GPU Acceleration', description: 'We re-architect compute workflows to achieve the maximum amount of parallel performance, providing huge improvements in processing time on AI, analytics, and simulation workloads.', pathD: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z' },
@@ -68,8 +64,15 @@ const whyChooseBenefitsData: { title: string; description: string; pathD?: strin
   { title: 'Performance-Oriented Cost Strategy', description: 'We maximize compute usage and assigning GPU resources to minimize infrastructure wastage and maximize investment.', pathD: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' },
 ];
 
-const BENEFIT_CARD_STYLE = { background: 'rgba(34, 211, 238, 0.05)', borderColor: 'rgba(34, 211, 238, 0.3)' };
-const BENEFIT_ICON_BOX_STYLE = { background: 'rgba(34, 211, 238, 0.1)', border: '1px solid rgba(34, 211, 238, 0.3)' };
+const BENEFIT_CARD_STYLE = {
+  background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
+  borderColor: 'rgba(34, 211, 238, 0.24)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0, 0, 0.24)',
+} as const;
+const BENEFIT_ICON_BOX_STYLE = {
+  background: 'rgba(34, 211, 238, 0.12)',
+  border: '1px solid rgba(34, 211, 238, 0.28)',
+} as const;
 const BADGE_FAQ = { background: 'rgba(34, 211, 238, 0.05)', borderColor: 'rgba(34, 211, 238, 0.2)' } as const;
 const FAQ_ITEM_STYLE = {
   background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.62) 0%, rgba(10, 20, 34, 0.8) 100%)',
@@ -83,7 +86,6 @@ const REVIEW_CARD_STYLE = {
   boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0, 0, 0.24)'
 } as const;
 const STAR_PATH_D = 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z';
-const ENGAGEMENT_CARD_BG = 'rgba(34, 211, 238, 0.05)';
 const RELATED_SERVICE_CARD_STYLE = {
   background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
   border: '1px solid rgba(34, 211, 238, 0.24)',
@@ -121,14 +123,6 @@ const relatedServicesData = [
   { title: 'CUDA Development Service', description: 'Build high-performance parallel applications with expert CUDA development tailored for speed, scalability and precision.', href: '/cuda-development-service' },
 ];
 
-const hireFormFieldsConfig: { name: 'fullName' | 'email' | 'company' | 'phone' | 'hiringModel' | 'message'; label: string; type: 'text' | 'email' | 'tel' | 'select' | 'textarea'; placeholder?: string; required?: boolean; rows?: number; options?: { value: string; label: string }[] }[] = [
-  { name: 'fullName', label: 'Full Name *', type: 'text', placeholder: 'John Doe', required: true },
-  { name: 'email', label: 'Email Address *', type: 'email', placeholder: 'john@company.com', required: true },
-  { name: 'phone', label: 'Phone Number', type: 'tel', placeholder: '+1 (555) 000-0000' },
-  { name: 'company', label: 'Company Name', type: 'text', placeholder: 'Your Company' },
-  { name: 'hiringModel', label: 'Preferred Hiring Model *', type: 'select', required: true, options: [{ value: '', label: 'Select a hiring model' }, { value: 'hourly', label: 'Hourly Basis' }, { value: 'monthly', label: 'Monthly Basis' }, { value: 'fixed', label: 'Fixed Price Project' }, { value: 'not-sure', label: 'Not Sure Yet' }] },
-  { name: 'message', label: 'Project Requirements *', type: 'textarea', placeholder: 'Tell us about your project, timeline, and specific CUDA expertise needed...', required: true, rows: 4 },
-];
 
 const FEATURE_ICON_BOX_STYLE = { background: 'rgba(34, 211, 238, 0.1)' } as const;
 
@@ -593,10 +587,12 @@ export function HireCudaDeveloperPage() {
               >
                 <div className="absolute inset-0">
                   <img
-                    src="/images/cuda-cta-bg.jpg.jpg"
-                    alt="CUDA Background"
+                    src="/images/cta-gpu-innovation-bg.svg"
+                    alt=""
                     className="w-full h-full object-cover"
                     style={{ objectPosition: 'center center' }}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
 

@@ -130,9 +130,9 @@ const GPU_WHY: readonly WhyChooseItem[] = [
 ];
 
 const GPU_TESTIMONIALS: readonly TestimonialItem[] = [
-  { quote: '"Their graphics processing optimization experience minimized our processing latency. The CUDA execution benefits were fast and quantifiable."', initials: 'AD', name: 'Alexander D.', role: 'Founder, 20+ years of experience.', avatarGradient: GRADIENT_EMERALD_CYAN },
-  { quote: '"Our AI training pipeline became significantly faster after their optimization work. Clear performance gains with reduced infrastructure strain."', initials: 'RT', name: 'Ricky T.', role: 'CTO, 15+ years of experience.', avatarGradient: GRADIENT_EMERALD_CYAN },
-  { quote: '"We hired their CUDA developers for complex optimization tasks. The results were stable, scalable, and production-ready."', initials: 'JB', name: 'Jimmy B.', role: 'VP Engineering, 10+ years of experience.', avatarGradient: GRADIENT_EMERALD_CYAN },
+  { quote: '"Their graphics processing optimization experience minimized our processing latency. The CUDA execution benefits were fast and quantifiable."', initials: 'AM', name: 'Arjun Mehta', role: 'Director of Engineering, NovaAI Labs', avatarGradient: GRADIENT_EMERALD_CYAN },
+  { quote: '"Our AI training pipeline became significantly faster after their optimization work. Clear performance gains with reduced infrastructure strain."', initials: 'SA', name: 'Sofia Alvarez', role: 'CTO, Quantix Systems', avatarGradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)' },
+  { quote: '"We hired their CUDA developers for complex optimization tasks. The results were stable, scalable, and production-ready."', initials: 'DB', name: 'Daniel Brooks', role: 'Chief Operating Officer, CoreTech Solutions', avatarGradient: 'linear-gradient(135deg, #22D3EE, #34D399)' },
 ];
 
 const GPU_FAQ: readonly FaqItem[] = [

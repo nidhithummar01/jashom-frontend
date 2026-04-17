@@ -452,18 +452,17 @@ export function HomePage() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
-                  className="w-full flex items-center justify-center"
+                  className="w-full flex items-center justify-center md:justify-start"
                 >
-                  {/* 2x2 Logo Grid - Clean and transparent */}
-                  <div className="grid grid-cols-2 gap-8 sm:gap-10 md:gap-12">
+                  <div className="grid w-full max-w-[480px] grid-cols-2 gap-x-8 gap-y-10 sm:gap-x-10 sm:gap-y-12 md:gap-x-12 md:gap-y-14">
                     {homePageData.trustedLogosData.map((logo) => (
                       <motion.div
                         key={logo.alt}
-                        className="flex items-center justify-center p-4"
-                        whileHover={{ scale: 1.1, y: -5 }}
-                        transition={{ type: "spring", stiffness: 300 }}
+                        className="group flex min-h-[64px] sm:min-h-[72px] items-center justify-center px-3 py-2"
+                        whileHover={{ scale: 1.03 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 24 }}
                       >
-                        <img src={logo.src} alt={logo.alt} width={128} height={48} className={logo.className} />
+                        <img src={logo.src} alt={logo.alt} width={160} height={56} className={logo.className} loading="lazy" decoding="async" />
                       </motion.div>
                     ))}
                   </div>

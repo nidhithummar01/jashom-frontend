@@ -4,6 +4,10 @@ import { ACCENT_COLOR, GRADIENT_EMERALD_CYAN, TEXT_FAFAFA, TEXT_WHITE } from '..
 
 const LOGO_BASE_CLASS = 'w-auto object-contain filter brightness-90 hover:brightness-110 transition-all duration-300';
 
+/** Trusted-by section: same visual weight in uniform cards */
+const TRUSTED_LOGO_IMG_CLASS =
+  'h-auto max-h-10 w-auto max-w-[min(100%,160px)] sm:max-h-12 sm:max-w-[180px] object-contain object-center mx-auto opacity-[0.95] transition-opacity duration-300 group-hover:opacity-100';
+
 export type { HomeContactFormData };
 
 export type PortfolioProject = {
@@ -92,16 +96,16 @@ export const homePageData = {
   ] as const,
 
   trustedLogosData: [
-    { src: '/logos/nvidia.png', alt: 'NVIDIA', className: `h-10 sm:h-12 ${LOGO_BASE_CLASS}` },
-    { src: '/logos/aws.png', alt: 'AWS', className: `h-10 sm:h-12 ${LOGO_BASE_CLASS}` },
-    { src: '/logos/goggle cloud.png', alt: 'Google Cloud', className: `h-10 sm:h-12 ${LOGO_BASE_CLASS}` },
-    { src: '/logos/microsoft-azure.png', alt: 'Microsoft Azure', className: `h-12 sm:h-14 ${LOGO_BASE_CLASS}` },
+    { src: '/logos/nvidia.svg', alt: 'NVIDIA', className: TRUSTED_LOGO_IMG_CLASS },
+    { src: '/logos/aws-new.png', alt: 'AWS', className: TRUSTED_LOGO_IMG_CLASS },
+    { src: '/logos/goggle cloud.png', alt: 'Google Cloud', className: TRUSTED_LOGO_IMG_CLASS },
+    { src: '/logos/microsoft-azure.png', alt: 'Microsoft Azure', className: TRUSTED_LOGO_IMG_CLASS },
   ] as const,
 
   trustedMetricsData: [
-    { value: '$20bn', description: 'worth investment portfolios managed', from: 'from-blue-500/10', to: 'to-blue-600/5', border: 'border-blue-500/20', hoverBorder: 'hover:border-blue-400/40', valueGradient: 'from-blue-400 to-blue-200' },
-    { value: '10x', description: 'faster pharmaceutical market analytics', from: 'from-purple-500/10', to: 'to-purple-600/5', border: 'border-purple-500/20', hoverBorder: 'hover:border-purple-400/40', valueGradient: 'from-purple-400 to-purple-200' },
-    { value: '20M+', description: 'customers enjoying AI-powered shopping', from: 'from-blue-500/10', to: 'to-cyan-600/5', border: 'border-cyan-500/20', hoverBorder: 'hover:border-cyan-400/40', valueGradient: 'from-cyan-400 to-cyan-200' },
+    { value: '5M', description: 'worth investment portfolios managed', from: 'from-blue-500/10', to: 'to-blue-600/5', border: 'border-blue-500/20', hoverBorder: 'hover:border-blue-400/40', valueGradient: 'from-blue-400 to-blue-200' },
+    { value: '2X', description: 'faster market analytics', from: 'from-purple-500/10', to: 'to-purple-600/5', border: 'border-purple-500/20', hoverBorder: 'hover:border-purple-400/40', valueGradient: 'from-purple-400 to-purple-200' },
+    { value: '10M', description: 'customers enjoying AI-powered shopping', from: 'from-blue-500/10', to: 'to-cyan-600/5', border: 'border-cyan-500/20', hoverBorder: 'hover:border-cyan-400/40', valueGradient: 'from-cyan-400 to-cyan-200' },
     { value: '$50K', description: 'saved annually with DevOps', from: 'from-green-500/10', to: 'to-green-600/5', border: 'border-green-500/20', hoverBorder: 'hover:border-green-400/40', valueGradient: 'from-green-400 to-green-200' },
   ] as const,
 
