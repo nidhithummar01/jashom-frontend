@@ -19,6 +19,183 @@ type ServicePageData = {
 
 type Props = { data: ServicePageData; variant: ServicePageVariant };
 
+type ContentSlice = (typeof SERVICE_PAGE_CONTENT)[ServicePageVariant];
+
+const GPU_CUDA_CARD_GRADIENT = {
+  background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
+  border: '1px solid rgba(34, 211, 238, 0.3)',
+  backdropFilter: 'blur(10px)',
+  WebkitBackdropFilter: 'blur(10px)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 28px rgba(0, 0, 0, 0.25)',
+} as const;
+
+const GPU_CUDA_BENEFIT_STYLE = {
+  background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
+  borderColor: 'rgba(34, 211, 238, 0.3)',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 28px rgba(0, 0, 0, 0.25)',
+} as const;
+
+function getServiceCardTheme(variant: ServicePageVariant) {
+  const isGpuOrCuda = variant === 'gpu' || variant === 'cuda';
+  if (isGpuOrCuda) {
+    return {
+      serviceCardStyle: GPU_CUDA_CARD_GRADIENT,
+      serviceCardTitleColor: Theme.TEXT_FAFAFA,
+      serviceCardDescColor: Theme.TEXT_MUTED,
+      benefitCardStyle: GPU_CUDA_BENEFIT_STYLE,
+    };
+  }
+  return {
+    serviceCardStyle: { background: Theme.CARD_BG_LIGHT },
+    serviceCardTitleColor: '#000000',
+    serviceCardDescColor: Theme.CARD_DESC_GRAY,
+    benefitCardStyle: { background: Theme.BENEFIT_CARD_BG },
+  };
+}
+
+function ServicePageIndustrySection({
+  variant,
+  c,
+  industryItems,
+}: Readonly<{ variant: ServicePageVariant; c: ContentSlice; industryItems: readonly string[] }>) {
+  if (!c.industryTitle || !c.industryIntro) return null;
+
+  if (variant === 'cuda') {
+    return (
+      <section className="py-20 px-3 sm:px-5 lg:px-8 relative overflow-hidden" style={{ background: Theme.SECTION_BG }}>
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-blue-500 mix-blend-multiply blur-3xl filter" />
+          <div className="absolute bottom-20 right-10 h-72 w-72 rounded-full bg-purple-500 mix-blend-multiply blur-3xl filter" />
+        </div>
+        <div className={`${Theme.SECTION_CONTAINER} relative z-10`}>
+            <motion.div {...Theme.MOTION_FADE_UP_20} className="mb-10 text-center sm:mb-12">
+              <div className="mb-4 inline-block rounded-full px-4 py-2" style={Theme.OVERVIEW_BADGE}>
+                <p className="text-sm uppercase tracking-wider" style={{ color: Theme.ACCENT_COLOR }}>
+                  Industries
+                </p>
+              </div>
+              <h2 className="text-4xl font-bold leading-tight text-white sm:text-5xl whitespace-pre-line">{c.industryTitle}</h2>
+              <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-white/75 sm:text-lg">{c.industryIntro}</p>
+            </motion.div>
+            <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">
+              <motion.div {...Theme.MOTION_FADE_UP_20} className="min-w-0">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4">
+                  {industryItems.map((label) => (
+                    <div
+                      key={label}
+                      className="flex items-start gap-3.5 rounded-xl border border-cyan-500/15 bg-gradient-to-br from-slate-900/85 to-slate-950/70 px-4 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-all duration-300 hover:border-cyan-500/35 sm:px-5 sm:py-4"
+                    >
+                      <div
+                        className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
+                        style={Theme.CHECK_ICON_BG}
+                      >
+                        <CheckIcon />
+                      </div>
+                      <span className="text-base font-medium leading-snug text-white sm:text-[17px] sm:leading-relaxed">{label}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+              <motion.div
+                {...Theme.MOTION_FADE_SCALE}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="flex w-full shrink-0 justify-center pt-2 md:justify-end md:pt-0"
+              >
+                <div
+                  className="relative aspect-square h-[148px] w-[148px] overflow-hidden rounded-2xl border border-cyan-500/20 sm:h-[160px] sm:w-[160px]"
+                  style={{
+                    background: 'linear-gradient(155deg, rgba(15, 23, 42, 0.95) 0%, rgba(8, 15, 30, 0.98) 100%)',
+                    ...Theme.IMAGE_SHADOW_ACCENT,
+                    boxShadow: `${Theme.IMAGE_SHADOW_ACCENT.boxShadow}, inset 0 1px 0 rgba(34, 211, 238, 0.08)`,
+                  }}
+                >
+                  <img
+                    src="/images/cuda-industries-visual.svg"
+                    alt=""
+                    className="h-full w-full object-contain object-center p-2 sm:p-2.5"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </motion.div>
+            </div>
+        </div>
+      </section>
+    );
+  }
+
+  const hasIndustryImage = Boolean(c.industryImage);
+  const gridClass = hasIndustryImage
+    ? 'grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-12 lg:gap-16 xl:gap-20'
+    : 'mx-auto max-w-4xl text-center';
+  const motionTextClass = hasIndustryImage ? 'text-center lg:text-left' : '';
+  const accentBarClass = hasIndustryImage ? 'mx-auto lg:mx-0' : 'mx-auto';
+  const introClass = hasIndustryImage ? 'mx-auto max-w-2xl lg:mx-0' : 'mx-auto max-w-2xl';
+  const itemsGridClass = hasIndustryImage ? 'w-full' : 'mx-auto max-w-3xl text-left';
+
+  return (
+    <section className="py-20 px-3 sm:px-5 lg:px-8 relative overflow-hidden" style={{ background: Theme.SECTION_BG }}>
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-blue-500 mix-blend-multiply blur-3xl filter" />
+        <div className="absolute bottom-20 right-10 h-72 w-72 rounded-full bg-purple-500 mix-blend-multiply blur-3xl filter" />
+      </div>
+      <div className={`${Theme.SECTION_CONTAINER} relative z-10`}>
+        <div className={gridClass}>
+          <motion.div {...Theme.MOTION_FADE_UP_20} className={motionTextClass}>
+            <div className={`mb-4 h-1 w-14 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 ${accentBarClass}`} />
+            <h2 className="mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl whitespace-pre-line">{c.industryTitle}</h2>
+            <p className={`mb-8 text-base leading-relaxed text-white/75 sm:text-lg sm:leading-relaxed ${introClass}`}>{c.industryIntro}</p>
+            <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 ${itemsGridClass}`}>
+              {industryItems.map((label) => (
+                <div
+                  key={label}
+                  className="flex items-start gap-3 rounded-xl border border-cyan-500/15 bg-gradient-to-br from-slate-900/85 to-slate-950/70 px-4 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-all duration-300 hover:border-cyan-500/35 hover:shadow-[0_16px_48px_rgba(34,211,238,0.06)]"
+                >
+                  <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style={Theme.CHECK_ICON_BG}>
+                    <CheckIcon />
+                  </div>
+                  <span className="text-sm leading-snug text-white/95 sm:text-base">{label}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+          {c.industryImage ? (
+            <motion.div {...Theme.MOTION_FADE_SCALE} transition={{ duration: 0.6, delay: 0.2 }} className="relative w-full">
+              <div className="relative overflow-hidden rounded-2xl border border-cyan-500/15 shadow-2xl">
+                <img
+                  src={c.industryImage.src}
+                  alt={c.industryImage.alt}
+                  className="h-auto w-full object-cover"
+                  style={Theme.IMAGE_SHADOW_ACCENT_ALT}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </motion.div>
+          ) : null}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ServicePageSubmitButton({ submitting }: Readonly<{ submitting: boolean }>) {
+  const motionWhileHover = submitting ? undefined : { y: -2, ...Theme.SUBMIT_BTN_HOVER };
+  const motionWhileTap = submitting ? undefined : { scale: 0.98 };
+  return (
+    <motion.button
+      type="submit"
+      disabled={submitting}
+      className="ui-btn ui-btn--lg transition-all duration-300 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+      style={Theme.SUBMIT_BTN_STYLE}
+      whileHover={motionWhileHover}
+      whileTap={motionWhileTap}
+    >
+      {submitting ? 'Sending…' : 'Send Message'}
+    </motion.button>
+  );
+}
+
 /** Factory so page components don't duplicate the same return/SEO pattern; use for CUDA and GPU pages. */
 export function createServicePage(data: ServicePageData, variant: ServicePageVariant) {
   return function ServicePage() {
@@ -31,26 +208,12 @@ export function ServicePageLayout({ data, variant }: Readonly<Props>) {
   const { formData, handleChange, handleSubmit, submitting, submitError } = useServicePageForm();
   const heroBgStyle = c.heroImageStyle === 'top' ? Theme.HERO_BG_TOP : Theme.HERO_BG_CENTER;
   const heroFilter = variant === 'cuda' ? 'brightness(1.2)' : 'brightness(1.3)';
-  const serviceCardStyle =
-    variant === 'gpu' || variant === 'cuda'
-      ? {
-          background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
-          border: '1px solid rgba(34, 211, 238, 0.3)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 28px rgba(0, 0, 0, 0.25)',
-        }
-      : { background: Theme.CARD_BG_LIGHT };
-  const serviceCardTitleColor = variant === 'gpu' || variant === 'cuda' ? Theme.TEXT_FAFAFA : '#000000';
-  const serviceCardDescColor = variant === 'gpu' || variant === 'cuda' ? Theme.TEXT_MUTED : Theme.CARD_DESC_GRAY;
-  const benefitCardStyle =
-    variant === 'gpu' || variant === 'cuda'
-      ? {
-          background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)',
-          borderColor: 'rgba(34, 211, 238, 0.3)',
-          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 28px rgba(0, 0, 0, 0.25)',
-        }
-      : { background: Theme.BENEFIT_CARD_BG };
+  const { serviceCardStyle, serviceCardTitleColor, serviceCardDescColor, benefitCardStyle } = getServiceCardTheme(variant);
+  const faqIntroSubtitle =
+    variant === 'cuda'
+      ? 'Common questions about hiring CUDA developers from Jashom'
+      : 'Common questions about GPU optimization services from Jashom';
+  const formCtaHighlight = variant === 'cuda' ? 'CUDA Development' : 'GPU Optimization';
 
   return (
     <div className="min-h-screen" style={{ background: Theme.SECTION_BG }}>
@@ -141,137 +304,7 @@ export function ServicePageLayout({ data, variant }: Readonly<Props>) {
         </div>
       </section>
 
-      {c.industryTitle && c.industryIntro && (
-        <section
-          className={`py-20 px-3 sm:px-5 lg:px-8 relative overflow-hidden`}
-          style={{ background: Theme.SECTION_BG }}
-        >
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-blue-500 mix-blend-multiply blur-3xl filter" />
-            <div className="absolute bottom-20 right-10 h-72 w-72 rounded-full bg-purple-500 mix-blend-multiply blur-3xl filter" />
-          </div>
-          <div className={`${Theme.SECTION_CONTAINER} relative z-10`}>
-            {variant === 'cuda' ? (
-              <>
-                <motion.div {...Theme.MOTION_FADE_UP_20} className="mb-10 text-center sm:mb-12">
-                  <div className="mb-4 inline-block rounded-full px-4 py-2" style={Theme.OVERVIEW_BADGE}>
-                    <p className="text-sm uppercase tracking-wider" style={{ color: Theme.ACCENT_COLOR }}>
-                      Industries
-                    </p>
-                  </div>
-                  <h2 className="text-4xl font-bold leading-tight text-white sm:text-5xl whitespace-pre-line">{c.industryTitle}</h2>
-                  <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-white/75 sm:text-lg">{c.industryIntro}</p>
-                </motion.div>
-                <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">
-                  <motion.div {...Theme.MOTION_FADE_UP_20} className="min-w-0">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4">
-                      {data.industryItems.map((label) => (
-                        <div
-                          key={label}
-                          className="flex items-start gap-3.5 rounded-xl border border-cyan-500/15 bg-gradient-to-br from-slate-900/85 to-slate-950/70 px-4 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-all duration-300 hover:border-cyan-500/35 sm:px-5 sm:py-4"
-                        >
-                          <div
-                            className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
-                            style={Theme.CHECK_ICON_BG}
-                          >
-                            <CheckIcon />
-                          </div>
-                          <span className="text-base font-medium leading-snug text-white sm:text-[17px] sm:leading-relaxed">
-                            {label}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                  <motion.div
-                    {...Theme.MOTION_FADE_SCALE}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="flex w-full shrink-0 justify-center pt-2 md:justify-end md:pt-0"
-                  >
-                    <div
-                      className="relative aspect-square h-[148px] w-[148px] overflow-hidden rounded-2xl border border-cyan-500/20 sm:h-[160px] sm:w-[160px]"
-                      style={{
-                        background: 'linear-gradient(155deg, rgba(15, 23, 42, 0.95) 0%, rgba(8, 15, 30, 0.98) 100%)',
-                        ...Theme.IMAGE_SHADOW_ACCENT,
-                        boxShadow: `${Theme.IMAGE_SHADOW_ACCENT.boxShadow}, inset 0 1px 0 rgba(34, 211, 238, 0.08)`,
-                      }}
-                    >
-                      <img
-                        src="/images/cuda-industries-visual.svg"
-                        alt=""
-                        className="h-full w-full object-contain object-center p-2 sm:p-2.5"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                  </motion.div>
-                </div>
-              </>
-            ) : (
-              <div
-                className={
-                  c.industryImage
-                    ? 'grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-12 lg:gap-16 xl:gap-20'
-                    : 'mx-auto max-w-4xl text-center'
-                }
-              >
-                <motion.div
-                  {...Theme.MOTION_FADE_UP_20}
-                  className={c.industryImage ? 'text-center lg:text-left' : ''}
-                >
-                  <div
-                    className={`mb-4 h-1 w-14 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 ${
-                      c.industryImage ? 'mx-auto lg:mx-0' : 'mx-auto'
-                    }`}
-                  />
-                  <h2 className="mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl whitespace-pre-line">{c.industryTitle}</h2>
-                  <p
-                    className={`mb-8 text-base leading-relaxed text-white/75 sm:text-lg sm:leading-relaxed ${
-                      c.industryImage ? 'mx-auto max-w-2xl lg:mx-0' : 'mx-auto max-w-2xl'
-                    }`}
-                  >
-                    {c.industryIntro}
-                  </p>
-                  <div
-                    className={`grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 ${
-                      c.industryImage ? 'w-full' : 'mx-auto max-w-3xl text-left'
-                    }`}
-                  >
-                    {data.industryItems.map((label) => (
-                      <div
-                        key={label}
-                        className="flex items-start gap-3 rounded-xl border border-cyan-500/15 bg-gradient-to-br from-slate-900/85 to-slate-950/70 px-4 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-all duration-300 hover:border-cyan-500/35 hover:shadow-[0_16px_48px_rgba(34,211,238,0.06)]"
-                      >
-                        <div
-                          className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
-                          style={Theme.CHECK_ICON_BG}
-                        >
-                          <CheckIcon />
-                        </div>
-                        <span className="text-sm leading-snug text-white/95 sm:text-base">{label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-                {c.industryImage ? (
-                  <motion.div {...Theme.MOTION_FADE_SCALE} transition={{ duration: 0.6, delay: 0.2 }} className="relative w-full">
-                    <div className="relative overflow-hidden rounded-2xl border border-cyan-500/15 shadow-2xl">
-                      <img
-                        src={c.industryImage.src}
-                        alt={c.industryImage.alt}
-                        className="h-auto w-full object-cover"
-                        style={Theme.IMAGE_SHADOW_ACCENT_ALT}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                  </motion.div>
-                ) : null}
-              </div>
-            )}
-          </div>
-        </section>
-      )}
+      <ServicePageIndustrySection variant={variant} c={c} industryItems={data.industryItems} />
 
       <DividerLine />
 
@@ -506,9 +539,7 @@ export function ServicePageLayout({ data, variant }: Readonly<Props>) {
               Frequently Asked Questions
             </h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: Theme.TEXT_MUTED, lineHeight: 1.7 }}>
-              {variant === 'cuda'
-                ? 'Common questions about hiring CUDA developers from Jashom'
-                : 'Common questions about GPU optimization services from Jashom'}
+              {faqIntroSubtitle}
             </p>
           </motion.div>
 
@@ -552,7 +583,7 @@ export function ServicePageLayout({ data, variant }: Readonly<Props>) {
                 <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Get In Touch</span>
               </motion.div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight" style={{ color: Theme.TEXT_FAFAFA, letterSpacing: '-0.025em' }}>
-                Get Started with <span style={Theme.GRADIENT_TEXT_STYLE}>{variant === 'cuda' ? 'CUDA Development' : 'GPU Optimization'}</span>
+                Get Started with <span style={Theme.GRADIENT_TEXT_STYLE}>{formCtaHighlight}</span>
               </h2>
               <p className="text-base sm:text-lg mb-4 leading-relaxed max-w-2xl mx-auto" style={{ color: Theme.TEXT_MUTED }}>Fill out the form and our team will get back to you within 24 hours.</p>
             </motion.div>
@@ -574,16 +605,7 @@ export function ServicePageLayout({ data, variant }: Readonly<Props>) {
                     </p>
                   )}
                   <div className="flex justify-center sm:justify-start">
-                    <motion.button
-                      type="submit"
-                      disabled={submitting}
-                      className="ui-btn ui-btn--lg transition-all duration-300 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-                      style={Theme.SUBMIT_BTN_STYLE}
-                      whileHover={submitting ? undefined : { y: -2, ...Theme.SUBMIT_BTN_HOVER }}
-                      whileTap={submitting ? undefined : { scale: 0.98 }}
-                    >
-                      {submitting ? 'Sending…' : 'Send Message'}
-                    </motion.button>
+                    <ServicePageSubmitButton submitting={submitting} />
                   </div>
                 </form>
               </div>
