@@ -94,7 +94,7 @@ const BLOG_CPU_GPU_TPU_ROWS: ReadonlyArray<{
 
 function BlogHardwareComparisonTable() {
   return (
-    <div className="blog-comparison-table-wrap" role="region" aria-label="CPU, GPU, and TPU comparison">
+    <section className="blog-comparison-table-wrap" aria-label="CPU, GPU, and TPU comparison">
       <div className="blog-comparison-table-scroll">
         <table className="blog-comparison-table">
           <thead>
@@ -117,7 +117,7 @@ function BlogHardwareComparisonTable() {
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
   );
 }
 
