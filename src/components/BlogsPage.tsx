@@ -21,14 +21,14 @@ export function BlogsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: '#0B0F14' }}>
+    <div className="min-h-screen" style={{ background: Theme.SECTION_BG }}>
       <Seo
         title="Blog | Jashom - AI & GPU Optimization Expertise"
         description="Explore the latest blog posts, case studies, and news from Jashom. Stay informed about AI, GPU optimization, CUDA development, and enterprise technology trends."
         keywords="AI blog, GPU optimization, CUDA development, case studies, technology news, machine learning, enterprise AI"
       />
 
-      {/* Hero Section - background image like other pages */}
+      {/* Hero */}
       <section
         className="relative overflow-hidden"
         style={{
@@ -39,13 +39,14 @@ export function BlogsPage() {
           backgroundRepeat: 'no-repeat',
         }}
       >
-        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0" style={{ background: Theme.HERO_OVERLAY_GRADIENT }} />
+        <div className="absolute inset-0" style={{ background: 'rgba(8, 14, 24, 0.72)' }} />
+        <div className="absolute inset-0 opacity-15">
+          <div className="absolute top-24 left-10 h-72 w-72 rounded-full bg-blue-500 mix-blend-multiply blur-3xl filter" />
+          <div className="absolute bottom-20 right-10 h-72 w-72 rounded-full bg-purple-500 mix-blend-multiply blur-3xl filter" />
+        </div>
         <div
-          className="absolute inset-0"
-          style={{ background: 'rgba(11, 15, 20, 0.88)' }}
-        />
-        <div
-          className="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8"
+          className={`${Theme.SECTION_CONTAINER} relative z-10 px-4 sm:px-6 lg:px-8`}
           style={{ paddingTop: '13rem', paddingBottom: '4rem' }}
         >
           <motion.div
@@ -55,35 +56,44 @@ export function BlogsPage() {
             className="text-center"
           >
             <motion.div
-              className="inline-block mb-6 px-4 py-2 rounded-full border border-[rgba(16,185,129,0.25)] bg-[rgba(16,185,129,0.08)]"
+              className="inline-block mb-6 px-4 py-2 rounded-full border"
+              style={Theme.BADGE_STYLE}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <span className="text-[#22D3EE] font-semibold text-sm">Blog</span>
+              <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Blogs</span>
             </motion.div>
             <h1
-              className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
-              style={{ color: '#FAFAFA', letterSpacing: '-0.025em', textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}
+              className="font-bold mb-6"
+              style={{
+                color: Theme.TEXT_FAFAFA,
+                letterSpacing: '-0.03em',
+                lineHeight: 1.08,
+                fontSize: 'clamp(2.4rem, 4.2vw, 3.7rem)',
+                textShadow: '0 2px 22px rgba(0,0,0,0.55)',
+              }}
             >
-              Latest <span style={{ color: '#22D3EE' }}>Blog</span>
+              Latest <span style={{ color: Theme.ACCENT_COLOR }}>Blogs</span>
             </h1>
-            <p className="text-lg sm:text-xl max-w-3xl mx-auto" style={{ color: '#D1D5DB', lineHeight: 1.7 }}>
+            <p className="text-base sm:text-lg max-w-3xl mx-auto" style={{ color: Theme.TEXT_MUTED, lineHeight: 1.8 }}>
               Stay informed with the latest trends, best practices, and success stories in AI, GPU optimization, and enterprise technology.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Blog Grid - from API (extra top spacing after hero) */}
-      <section className="pt-16 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2
-            className="text-2xl sm:text-3xl font-bold mb-16 text-center"
-            style={{ color: '#22D3EE', letterSpacing: '-0.025em' }}
-          >
-            All Blogs
-          </h2>
+      {/* Blog Grid */}
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.SECTION_BG }}>
+        <div className={`${Theme.SECTION_CONTAINER} px-4 sm:px-6 lg:px-8`}>
+          <motion.div {...Theme.MOTION_FADE_UP_20} className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: Theme.TEXT_FAFAFA, letterSpacing: '-0.025em' }}>
+              All articles
+            </h2>
+            <p className="max-w-2xl mx-auto text-sm sm:text-base" style={{ color: Theme.TEXT_MUTED, lineHeight: 1.8 }}>
+              Practical guidance, engineering insights, and case-study learnings from the Jashom team.
+            </p>
+          </motion.div>
           {loading && (
             <div className="text-center py-20" style={{ color: '#9CA3AF' }}>
               <div className="inline-block animate-spin rounded-full h-10 w-10 border-2 border-[#22D3EE] border-t-transparent mb-4" />
@@ -111,7 +121,7 @@ export function BlogsPage() {
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   className={`group relative overflow-hidden rounded-2xl ${
                     blog.is_featured ? 'md:col-span-2 lg:col-span-1' : ''
-                  } ${index === 0 ? 'lg:row-span-2' : ''}`}
+                  }`}
                 >
                   <Link
                     to={`/blogs/${blog.slug}/`}
@@ -119,7 +129,7 @@ export function BlogsPage() {
                     style={{ ['--accent' as string]: Theme.ACCENT_COLOR } as CSSProperties}
                   >
                     <div
-                      className="relative h-full min-h-[320px] rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-[1.02] flex flex-col"
+                      className="relative h-full min-h-[320px] rounded-2xl overflow-hidden transition-all duration-500 group-hover:translate-y-[-2px] flex flex-col"
                       style={{
                         background: blog.featured_image_url ? undefined : homePageData.BLOG_CARD_BG,
                         border: homePageData.BLOG_CARD_BORDER,
@@ -142,8 +152,15 @@ export function BlogsPage() {
                       />
 
                       <div className="absolute top-4 left-4 z-10">
-                        <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={homePageData.BLOG_BADGE_STYLE}>
-                          Blog
+                        <div
+                          className="inline-block px-3 py-1 rounded-full text-xs font-semibold"
+                          style={{
+                            ...homePageData.BLOG_BADGE_STYLE,
+                            border: '1px solid rgba(34, 211, 238, 0.22)',
+                            background: 'rgba(8, 14, 24, 0.55)',
+                          }}
+                        >
+                          Insight
                         </div>
                       </div>
 
@@ -167,10 +184,12 @@ export function BlogsPage() {
                               <Calendar className="w-3.5 h-3.5" />
                               <span>{formatBlogDate(blog.published_at)}</span>
                             </div>
-                            <div className="flex items-center gap-1.5">
-                              <Clock className="w-3.5 h-3.5" />
-                              <span>— min read</span>
-                            </div>
+                            {typeof blog.reading_time_minutes === 'number' ? (
+                              <div className="flex items-center gap-1.5">
+                                <Clock className="w-3.5 h-3.5" />
+                                <span>{blog.reading_time_minutes} min read</span>
+                              </div>
+                            ) : null}
                           </div>
 
                           <div
@@ -197,25 +216,17 @@ export function BlogsPage() {
           )}
 
           {/* Load More Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mt-16 sm:mt-20"
-          >
-            <button
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-[#FAFAFA] transition-all duration-240 border border-[rgba(16,185,129,0.35)] bg-[rgba(16,185,129,0.12)] hover:bg-[rgba(16,185,129,0.18)] hover:border-[rgba(16,185,129,0.5)] hover:-translate-y-0.5"
-            >
-              <span>Load More Blogs</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+          <motion.div {...Theme.MOTION_FADE_UP_20} className="text-center mt-16 sm:mt-20">
+            <Link to="/contact/" className="ui-btn ui-btn--lg transition-all duration-300 hover:opacity-95" style={Theme.CTA_SIMPLE}>
+              Subscribe / Collaborate <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
           </motion.div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: '#0B0F14' }}>
-        <div className="max-w-4xl mx-auto">
+      <section className={Theme.SECTION_CLASS} style={{ background: Theme.SECTION_BG }}>
+        <div className={`${Theme.SECTION_CONTAINER} px-4 sm:px-6 lg:px-8`}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -223,25 +234,27 @@ export function BlogsPage() {
             className="text-center"
           >
             <motion.div
-              className="inline-block mb-4 px-4 py-2 rounded-full border border-[rgba(16,185,129,0.25)] bg-[rgba(16,185,129,0.08)]"
+              className="inline-block mb-4 px-4 py-2 rounded-full border"
+              style={Theme.BADGE_STYLE}
             >
-              <span className="text-[#22D3EE] font-semibold text-sm">GET IN TOUCH</span>
+              <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Get in touch</span>
             </motion.div>
             
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: '#FAFAFA', letterSpacing: '-0.025em' }}>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: Theme.TEXT_FAFAFA, letterSpacing: '-0.025em' }}>
               Have a Question or Project in Mind?
             </h2>
             
-            <p className="text-lg mb-8 max-w-2xl mx-auto" style={{ color: '#9CA3AF', lineHeight: 1.7 }}>
+            <p className="text-base sm:text-lg mb-8 max-w-2xl mx-auto" style={{ color: Theme.TEXT_MUTED, lineHeight: 1.8 }}>
               Let's discuss how we can help you leverage AI and GPU computing to transform your business. Our team is ready to answer your questions.
             </p>
             
             <Link
               to="/contact/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#22D3EE] to-[#06B6D4] shadow-[0_8px_32px_rgba(34,211,238,0.4)] hover:from-[#06B6D4] hover:to-[#06B6D4] hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)] hover:-translate-y-0.5"
+              className="ui-btn ui-btn--lg transition-all duration-300 hover:opacity-95"
+              style={Theme.CTA_SIMPLE}
             >
               <span>Contact Us</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </motion.div>
         </div>

@@ -47,6 +47,7 @@ export interface Blog {
   featured_image_url: string | null;
   featured_image_alt: string | null;
   content_sections: BlogContentSection[];
+  reading_time_minutes?: number | null;
   is_featured?: boolean;
   created_at?: string;
   updated_at?: string;
