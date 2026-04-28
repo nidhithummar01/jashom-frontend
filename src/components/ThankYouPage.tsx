@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { SEO } from './SEO';
-import { CheckCircle, ArrowRight, Home, Mail, MessageCircle } from 'lucide-react';
+import { CheckCircle, ArrowRight, Home } from 'lucide-react';
 
 export function ThankYouPage() {
   return (
