@@ -32,7 +32,7 @@ export function BlogsPage() {
       <section
         className="relative overflow-hidden"
         style={{
-          minHeight: '420px',
+          minHeight: '520px',
           backgroundImage: 'url(/images/blog.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -40,14 +40,34 @@ export function BlogsPage() {
         }}
       >
         <div className="absolute inset-0" style={{ background: Theme.HERO_OVERLAY_GRADIENT }} />
-        <div className="absolute inset-0" style={{ background: 'rgba(8, 14, 24, 0.72)' }} />
-        <div className="absolute inset-0 opacity-15">
+        <div className="absolute inset-0" style={{ background: 'rgba(8, 14, 24, 0.74)' }} />
+
+        {/* subtle tech grid */}
+        <div
+          className="absolute inset-0 opacity-[0.16]"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)',
+            backgroundSize: '68px 68px',
+            maskImage: 'radial-gradient(circle at 50% 25%, black 0%, transparent 70%)',
+            WebkitMaskImage: 'radial-gradient(circle at 50% 25%, black 0%, transparent 70%)',
+          }}
+        />
+
+        {/* glow blobs */}
+        <div className="absolute inset-0 opacity-20">
           <div className="absolute top-24 left-10 h-72 w-72 rounded-full bg-blue-500 mix-blend-multiply blur-3xl filter" />
           <div className="absolute bottom-20 right-10 h-72 w-72 rounded-full bg-purple-500 mix-blend-multiply blur-3xl filter" />
         </div>
+
+        {/* bottom fade into page bg */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-40"
+          style={{ background: 'linear-gradient(180deg, rgba(11,15,20,0) 0%, rgba(11,15,20,0.85) 55%, rgba(11,15,20,1) 100%)' }}
+        />
         <div
           className={`${Theme.SECTION_CONTAINER} relative z-10 px-4 sm:px-6 lg:px-8`}
-          style={{ paddingTop: '13rem', paddingBottom: '4rem' }}
+          style={{ paddingTop: '11.5rem', paddingBottom: '4.5rem' }}
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -55,30 +75,49 @@ export function BlogsPage() {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <motion.div
-              className="inline-block mb-6 px-4 py-2 rounded-full border"
-              style={Theme.BADGE_STYLE}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem' }}>Blogs</span>
-            </motion.div>
-            <h1
-              className="font-bold mb-6"
+            <div
+              className="mx-auto max-w-4xl rounded-3xl border px-6 py-10 sm:px-10 sm:py-12"
               style={{
-                color: Theme.TEXT_FAFAFA,
-                letterSpacing: '-0.03em',
-                lineHeight: 1.08,
-                fontSize: 'clamp(2.4rem, 4.2vw, 3.7rem)',
-                textShadow: '0 2px 22px rgba(0,0,0,0.55)',
+                background: 'rgba(8, 14, 24, 0.40)',
+                borderColor: 'rgba(34, 211, 238, 0.16)',
+                boxShadow: '0 26px 70px rgba(0,0,0,0.52), inset 0 1px 0 rgba(255,255,255,0.04)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
               }}
             >
-              Latest <span style={{ color: Theme.ACCENT_COLOR }}>Blogs</span>
-            </h1>
-            <p className="text-base sm:text-lg max-w-3xl mx-auto" style={{ color: Theme.TEXT_MUTED, lineHeight: 1.8 }}>
-              Stay informed with the latest trends, best practices, and success stories in AI, GPU optimization, and enterprise technology.
-            </p>
+              <motion.div
+                className="inline-flex items-center gap-3 mb-7 px-6 py-2.5 rounded-full border"
+                style={Theme.BADGE_STYLE}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.12 }}
+              >
+                <span style={{ color: Theme.ACCENT_COLOR, fontWeight: 600, fontSize: '0.875rem', letterSpacing: '0.02em' }}>Insights</span>
+                <span className="text-white/35 px-1.5">•</span>
+                <span className="text-white/70 text-sm tracking-wide">AI</span>
+                <span className="text-white/25">•</span>
+                <span className="text-white/70 text-sm tracking-wide">GPU</span>
+                <span className="text-white/25">•</span>
+                <span className="text-white/70 text-sm tracking-wide">CUDA</span>
+              </motion.div>
+
+              <h1
+                className="font-bold mb-5"
+                style={{
+                  color: Theme.TEXT_FAFAFA,
+                  letterSpacing: '-0.035em',
+                  lineHeight: 1.08,
+                  fontSize: 'clamp(2.35rem, 4.3vw, 3.85rem)',
+                  textShadow: '0 2px 22px rgba(0,0,0,0.55)',
+                }}
+              >
+                Latest <span style={{ color: Theme.ACCENT_COLOR }}>Blogs</span>
+              </h1>
+              <div className="mx-auto mb-6 h-1 w-16 rounded-full" style={{ background: 'linear-gradient(90deg, #22D3EE 0%, #3B82F6 100%)' }} />
+              <p className="text-base sm:text-lg max-w-3xl mx-auto" style={{ color: Theme.TEXT_MUTED, lineHeight: 1.85 }}>
+                Practical guidance, best practices, and real engineering learnings across AI systems, GPU optimization, and enterprise technology.
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
