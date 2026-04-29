@@ -5,7 +5,9 @@ import { useState } from 'react';
 import { buildContactPayloadFromForm, submitContact } from '../api/contact';
 import {
   Mail,
-  Phone
+  Phone,
+  MapPin,
+  CheckCircle2
 } from 'lucide-react';
 
 const staggerContainer = {
@@ -106,6 +108,21 @@ export function NewAboutUsPage() {
               background: 'linear-gradient(to right, rgba(11, 15, 20, 0.95) 0%, rgba(11, 15, 20, 0.85) 40%, rgba(11, 15, 20, 0.6) 70%, rgba(11, 15, 20, 0.4) 100%)'
             }}
           ></div>
+          <div className="absolute inset-0 opacity-15 pointer-events-none">
+            <div className="absolute -top-24 left-1/2 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-cyan-500 mix-blend-multiply blur-3xl filter" />
+            <div className="absolute bottom-[-140px] right-[-140px] h-[520px] w-[520px] rounded-full bg-blue-500 mix-blend-multiply blur-3xl filter" />
+            <div className="absolute top-[35%] left-[-180px] h-[520px] w-[520px] rounded-full bg-purple-500 mix-blend-multiply blur-3xl filter" />
+          </div>
+          <div
+            className="absolute inset-0 opacity-[0.12] pointer-events-none"
+            style={{
+              backgroundImage:
+                'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
+              backgroundSize: '72px 72px',
+              maskImage: 'radial-gradient(circle at 35% 30%, black 0%, transparent 70%)',
+              WebkitMaskImage: 'radial-gradient(circle at 35% 30%, black 0%, transparent 70%)',
+            }}
+          />
 
           {/* Content - aligned with section container */}
           <div className="relative z-10 flex items-center overflow-x-hidden">
@@ -117,18 +134,29 @@ export function NewAboutUsPage() {
                 className="text-left"
                 style={{ maxWidth: '620px' }}
               >
+                <div
+                  className="inline-flex items-center gap-2 rounded-full border px-4 py-2 mb-6"
+                  style={{ borderColor: 'rgba(34,211,238,0.28)', background: 'rgba(34,211,238,0.10)' }}
+                >
+                  <span className="text-sm font-semibold tracking-wide" style={{ color: '#22D3EE' }}>About</span>
+                  <span className="text-white/35">•</span>
+                  <span className="text-white/70 text-sm">GPU Optimization • CUDA • HPC</span>
+                </div>
+
                 {/* Heading */}
                 <h1
                   className="font-bold text-white leading-tight"
                   style={{
-                    fontSize: 'clamp(28px, 4vw, 48px)',
+                    fontSize: 'clamp(34px, 4.2vw, 56px)',
                     textShadow: '0 4px 20px rgba(0, 0, 0, 0.8)',
-                    letterSpacing: '-0.02em',
-                    marginBottom: '32px'
+                    letterSpacing: '-0.03em',
+                    marginBottom: '18px',
+                    lineHeight: 1.06
                   }}
                 >
                   About Jashom
                 </h1>
+                <div className="h-1 w-16 rounded-full mb-7" style={{ background: 'linear-gradient(90deg, #22D3EE 0%, #3B82F6 100%)' }} />
 
                 {/* Paragraph */}
                 <p
@@ -137,12 +165,40 @@ export function NewAboutUsPage() {
                     fontSize: 'clamp(17px, 2vw, 20px)',
                     lineHeight: '1.75',
                     textShadow: '0 2px 10px rgba(0, 0, 0, 0.6)',
-                    marginBottom: '0',
+                    marginBottom: '26px',
                     maxWidth: '560px'
                   }}
                 >
                   We are developing and designing superior-level GPU systems to transform ideas which are rich in compute into scalable, production-ready solutions that are designed to perform in the real world.
                 </p>
+
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                  <button
+                    onClick={() => {
+                      const formSection = document.getElementById('contact-form');
+                      formSection?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="px-8 py-3 rounded-xl font-semibold transition-all duration-300"
+                    style={{
+                      background: 'linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%)',
+                      color: '#FFFFFF',
+                      boxShadow: '0 10px 30px rgba(34, 211, 238, 0.35)'
+                    }}
+                  >
+                    Talk to our team
+                  </button>
+                  <button
+                    onClick={() => navigate('/portfolio/')}
+                    className="px-8 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-white/10"
+                    style={{
+                      background: 'transparent',
+                      color: '#FFFFFF',
+                      border: '1px solid rgba(255,255,255,0.16)'
+                    }}
+                  >
+                    View case studies
+                  </button>
+                </div>
               </motion.div>
             </div>
           </div>
@@ -593,40 +649,60 @@ export function NewAboutUsPage() {
                   borderLeft: '1px solid rgba(34, 211, 238, 0.24)'
                 }}
               >
-                <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-8 md:mb-12" style={{ color: '#22D3EE' }}>
-                  Values We Deliver
-                </h2>
+                <div className="mb-8 md:mb-12">
+                  <p className="text-sm font-semibold tracking-wide uppercase mb-3" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                    What you can expect
+                  </p>
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold" style={{ color: '#FAFAFA', letterSpacing: '-0.025em' }}>
+                    Values we deliver
+                  </h2>
+                </div>
 
-                <div className="space-y-8 md:space-y-10">
-                  {/* Performance-Driven Innovation */}
-                  <div className="space-y-3">
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold" style={{ color: '#FAFAFA' }}>
-                      Performance-Driven Innovation
-                    </h3>
-                    <p className="leading-relaxed text-sm md:text-base lg:text-lg" style={{ color: '#D1D5DB' }}>
-                      We use state-of-the-art CUDA programming and optimization of the use of the GPUs to develop quantifiable speed gains in the challenging workloads.
-                    </p>
-                  </div>
-
-                  {/* Workload-Specific Engineering */}
-                  <div className="space-y-3">
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold" style={{ color: '#FAFAFA' }}>
-                      Workload-Specific Engineering
-                    </h3>
-                    <p className="leading-relaxed text-sm md:text-base lg:text-lg" style={{ color: '#D1D5DB' }}>
-                      Each of the systems is tailored to your data flow, compute intensity, and scalability needs in order to optimize it.
-                    </p>
-                  </div>
-
-                  {/* Transparent Collaboration */}
-                  <div className="space-y-3">
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold" style={{ color: '#FAFAFA' }}>
-                      Transparent Collaboration
-                    </h3>
-                    <p className="leading-relaxed text-sm md:text-base lg:text-lg" style={{ color: '#D1D5DB' }}>
-                      Every phase of development is directed by clear communication, benchmarking reports and shared performance measures.
-                    </p>
-                  </div>
+                <div className="grid grid-cols-1 gap-5">
+                  {[
+                    {
+                      title: 'Performance-driven innovation',
+                      desc: 'Kernel-level CUDA engineering and GPU optimization that produces measurable throughput and latency gains.',
+                    },
+                    {
+                      title: 'Workload-specific engineering',
+                      desc: 'Systems tailored to your data flow, compute profile, and scaling targets—optimized with profiling, not assumptions.',
+                    },
+                    {
+                      title: 'Transparent collaboration',
+                      desc: 'Clear communication, benchmarking reports, and shared performance metrics across every milestone.',
+                    },
+                  ].map((v) => (
+                    <div
+                      key={v.title}
+                      className="rounded-2xl border p-5 md:p-6"
+                      style={{
+                        background: 'rgba(8, 14, 24, 0.36)',
+                        borderColor: 'rgba(255,255,255,0.10)',
+                        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03)',
+                      }}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl border"
+                          style={{
+                            background: 'linear-gradient(135deg, rgba(34,211,238,0.16) 0%, rgba(6,182,212,0.10) 100%)',
+                            borderColor: 'rgba(34, 211, 238, 0.26)',
+                          }}
+                        >
+                          <CheckCircle2 className="h-5 w-5" style={{ color: '#22D3EE' }} />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="text-lg md:text-xl font-bold" style={{ color: '#FAFAFA' }}>
+                            {v.title}
+                          </h3>
+                          <p className="mt-2 text-sm md:text-base leading-relaxed" style={{ color: '#D1D5DB' }}>
+                            {v.desc}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </motion.div>
             </div>
@@ -657,23 +733,29 @@ export function NewAboutUsPage() {
                 viewport={{ once: true }}
                 className="rounded-2xl h-full flex flex-col"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)'
+                  background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.64) 0%, rgba(10, 20, 34, 0.82) 100%)',
+                  border: '1px solid rgba(34, 211, 238, 0.18)',
+                  boxShadow: '0 20px 50px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255,255,255,0.04)'
                 }}
               >
                 <div className="space-y-8 p-8 md:p-10">
                   <div>
-                    <p className="text-sm mb-4" style={{ color: '#9CA3AF' }}>Contact Us</p>
-                    <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6" style={{ color: '#FAFAFA' }}>
+                    <div className="inline-flex items-center gap-2 rounded-full border px-4 py-2 mb-5" style={{ borderColor: 'rgba(34, 211, 238, 0.24)', background: 'rgba(34, 211, 238, 0.08)' }}>
+                      <span className="text-xs font-semibold tracking-wide uppercase" style={{ color: '#22D3EE' }}>Contact us</span>
+                    </div>
+                    <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4" style={{ color: '#FAFAFA', letterSpacing: '-0.02em', lineHeight: 1.3 }}>
                       Jashom is ready to help you grow.
                     </h2>
+                    <p className="text-sm md:text-base leading-relaxed" style={{ color: '#D1D5DB' }}>
+                      Share your goals with our team and we will help you identify the fastest, most practical way forward.
+                    </p>
                   </div>
 
                   {/* Our Office */}
                   <div className="space-y-6">
                     <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">Our Office</h3>
 
-                    <div className="flex items-start gap-3">
+                    <div className="flex items-start gap-3 rounded-xl border px-4 py-4" style={{ borderColor: 'rgba(255,255,255,0.10)', background: 'rgba(8, 14, 24, 0.35)' }}>
                       <img
                         src="/images/inidan.flag.jpg"
                         alt="India"
@@ -692,7 +774,19 @@ export function NewAboutUsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3 pt-4">
+                    <div className="space-y-4 pt-2">
+                      <a
+                        href="https://www.google.com/maps?q=SATYAM%201%20414%20AMBA%20BUSINESS%20PARK%20B%2FH%20TRI%20MANDIR%20ADALAJ%20382421%20Dist%20Gandhinagar%20Gujarat"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 text-sm md:text-base transition-colors hover:text-white"
+                        style={{ color: '#9CA3AF' }}
+                      >
+                        <MapPin className="w-4 h-4" style={{ color: '#22D3EE' }} />
+                        Open location in Google Maps
+                      </a>
+
+                    <div className="flex items-center gap-3">
                       <Mail className="w-5 h-5" style={{ color: '#22D3EE' }} />
                       <a
                         href="mailto:info@jashom.com"
@@ -710,6 +804,7 @@ export function NewAboutUsPage() {
                       >
                         +91 90239 06363
                       </a>
+                    </div>
                     </div>
 
                     <div className="pt-6">
@@ -741,8 +836,9 @@ export function NewAboutUsPage() {
                 viewport={{ once: true }}
                 className="rounded-2xl h-full flex flex-col"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)'
+                  background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.64) 0%, rgba(10, 20, 34, 0.82) 100%)',
+                  border: '1px solid rgba(34, 211, 238, 0.18)',
+                  boxShadow: '0 20px 50px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255,255,255,0.04)'
                 }}
               >
                 <div className="space-y-6 p-8 md:p-10">

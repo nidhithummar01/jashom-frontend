@@ -201,6 +201,10 @@ export function ContactPage() {
               className="absolute inset-0"
               style={{ background: HERO_OVERLAY_GRADIENT }}
             />
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-cyan-500 mix-blend-multiply blur-3xl filter" />
+              <div className="absolute bottom-20 right-10 h-72 w-72 rounded-full bg-blue-500 mix-blend-multiply blur-3xl filter" />
+            </div>
 
             {/* Content - Premium Spacing */}
             <div className="relative z-10 min-h-screen flex items-center">
@@ -212,6 +216,9 @@ export function ContactPage() {
                   className="text-left"
                   style={{ maxWidth: '620px' }}
                 >
+                  <div className="inline-flex mb-5 rounded-full border px-4 py-2" style={{ borderColor: 'rgba(34,211,238,0.28)', background: 'rgba(34,211,238,0.10)' }}>
+                    <span className="text-sm font-semibold tracking-wide" style={{ color: ACCENT_COLOR }}>Get in touch</span>
+                  </div>
                   {/* Heading */}
                   <h1 className="font-bold text-white leading-tight" style={HERO_H1_STYLE}>
                     Contact Jashom
@@ -228,7 +235,7 @@ export function ContactPage() {
                     className="ui-btn ui-btn--lg transition-all duration-300 hover:opacity-90 hover:scale-105"
                     style={CTA_HERO_STYLE}
                   >
-                    Get in Touch
+                    Book Consultation
                   </a>
                 </motion.div>
               </div>
@@ -241,8 +248,19 @@ export function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 xl:gap-20 items-start">
 
                   {/* LEFT SIDE - Info */}
-                  <motion.div {...MOTION_FADE_LEFT}>
-                    <h2 className="text-4xl sm:text-5xl font-bold mb-8 leading-tight" style={HEADING_WHITE_STYLE}>
+                  <motion.div
+                    {...MOTION_FADE_LEFT}
+                    className="rounded-2xl border p-6 sm:p-8"
+                    style={{
+                      background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.62) 0%, rgba(10, 20, 34, 0.82) 100%)',
+                      borderColor: 'rgba(34, 211, 238, 0.18)',
+                      boxShadow: '0 18px 50px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255,255,255,0.04)',
+                    }}
+                  >
+                    <h2
+                      className="text-3xl sm:text-4xl font-bold mb-6"
+                      style={{ ...HEADING_WHITE_STYLE, lineHeight: 1.2, letterSpacing: '-0.02em' }}
+                    >
                       Our consultants bring deep technical expertise and{' '}
                       <span style={ACCENT_STYLE}>production-grade execution</span>.
                     </h2>
@@ -254,16 +272,16 @@ export function ContactPage() {
                     />
 
                     {/* Get in touch heading */}
-                    <h3 className="text-3xl font-bold mb-6" style={HEADING_WHITE_STYLE}>
+                    <h3 className="text-2xl sm:text-3xl font-bold mb-5" style={HEADING_WHITE_STYLE}>
                       Get in touch with our GPU experts
                     </h3>
 
-                    <p className="text-lg mb-16" style={MUTED_STYLE}>
+                    <p className="text-base sm:text-lg mb-12" style={MUTED_STYLE}>
                       We have CUDA consultants who will look at your needs and get back to you within two business days.
                     </p>
 
                     {/* Our Office Heading */}
-                    <h3 className="text-3xl font-bold mb-6 mt-8" style={HEADING_WHITE_STYLE}>
+                    <h3 className="text-2xl sm:text-3xl font-bold mb-5 mt-6" style={HEADING_WHITE_STYLE}>
                       Our Office
                     </h3>
 
@@ -296,8 +314,8 @@ export function ContactPage() {
                   </motion.div>
 
                   {/* RIGHT SIDE - Glassmorphism Contact Form */}
-                  <motion.div {...MOTION_FADE_RIGHT} className="w-full">
-                    <div className="mb-20">
+                  <motion.div {...MOTION_FADE_RIGHT} className="w-full rounded-2xl border p-6 sm:p-8" style={{ background: 'linear-gradient(160deg, rgba(20, 36, 56, 0.62) 0%, rgba(10, 20, 34, 0.82) 100%)', borderColor: 'rgba(34, 211, 238, 0.18)', boxShadow: '0 18px 50px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255,255,255,0.04)' }}>
+                    <div className="mb-10">
                       <h3 className="text-3xl font-bold mb-4" style={HEADING_WHITE_STYLE}>
                         Get in touch
                       </h3>
@@ -309,7 +327,7 @@ export function ContactPage() {
                     <form
                       onSubmit={handleSubmit}
                       className="space-y-4 rounded-2xl border p-6 sm:p-8"
-                      style={{ background: 'rgba(17, 24, 39, 0.45)', borderColor: 'rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(10px)' }}
+                      style={{ background: 'rgba(8, 14, 24, 0.45)', borderColor: 'rgba(255, 255, 255, 0.10)', backdropFilter: 'blur(10px)' }}
                     >
                       {formFieldsConfig.map((field) => {
                         const isFocused = focusedField === field.name;
