@@ -681,10 +681,13 @@ export function NewAboutUsPage() {
                       />
                       <div>
                         <p className="text-white/90 leading-relaxed text-sm md:text-base lg:text-lg">
-                          414, Satyam-2, Amba Business Park,
+                          SATYAM 1, 414,
                         </p>
                         <p className="text-white/90 leading-relaxed text-sm md:text-base lg:text-lg">
-                          ATPL, Adalaj, Gujarat, India
+                          AMBA BUSINESS PARK, B/H TRI MANDIR,
+                        </p>
+                        <p className="text-white/90 leading-relaxed text-sm md:text-base lg:text-lg">
+                          ADALAJ 382421, Dist Gandhinagar Gujarat
                         </p>
                       </div>
                     </div>
@@ -702,10 +705,10 @@ export function NewAboutUsPage() {
                     <div className="flex items-center gap-3">
                       <Phone className="w-5 h-5" style={{ color: '#22D3EE' }} />
                       <a
-                        href="tel:+919854412744"
+                        href="tel:+919023906363"
                         className="text-white/90 hover:text-white transition-colors text-sm md:text-base lg:text-lg"
                       >
-                        +91 985 441 2744
+                        +91 90239 06363
                       </a>
                     </div>
 

@@ -167,8 +167,9 @@ export function ContactPage() {
     telephone: '90239 06363',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '414, Shivam 2, AMBA BUSINESS PARK',
+      streetAddress: 'SATYAM 1, 414, AMBA BUSINESS PARK, B/H TRI MANDIR',
       addressLocality: 'Adalaj',
+      addressRegion: 'Gujarat',
       postalCode: '382421',
       addressCountry: 'IN'
     },
@@ -272,10 +273,13 @@ export function ContactPage() {
                         <span className="text-3xl">🇮🇳</span>
                         <div>
                           <p className="text-lg leading-relaxed" style={{ ...MUTED_STYLE, marginBottom: '0' }}>
-                            414, Shivam 2, AMBA BUSINESS PARK,
+                            SATYAM 1, 414, AMBA BUSINESS PARK,
                           </p>
                           <p className="text-lg leading-relaxed" style={{ ...MUTED_STYLE, marginTop: '18px', marginBottom: '0' }}>
-                            Adalaj, Gujarat 382421
+                            B/H TRI MANDIR, ADALAJ 382421
+                          </p>
+                          <p className="text-lg leading-relaxed" style={{ ...MUTED_STYLE, marginTop: '18px', marginBottom: '0' }}>
+                            Dist Gandhinagar, Gujarat, India
                           </p>
                         </div>
                       </div>
@@ -369,7 +373,7 @@ export function ContactPage() {
                   style={MAP_CONTAINER_STYLE}
                 >
                   <iframe
-                    src="https://www.google.com/maps?q=Jashom+Technologies+Shivam+2+AMBA+BUSINESS+PARK+414+Adalaj+Gujarat+382421&output=embed"
+                    src="https://www.google.com/maps?q=SATYAM%201%20414%20AMBA%20BUSINESS%20PARK%20B%2FH%20TRI%20MANDIR%20ADALAJ%20382421%20Dist%20Gandhinagar%20Gujarat&output=embed"
                     width="100%"
                     height="100%"
                     style={MAP_IFRAME_STYLE}

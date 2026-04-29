@@ -145,7 +145,7 @@ export function Footer() {
                   Ahmedabad, India
                 </div>
                 <div className="transition-colors text-sm duration-200 group-hover:text-[#22D3EE]">
-                414, Shivam 2, AMBA BUSINESS PARK, Adalaj, Gujarat 382421
+                SATYAM 1, 414, AMBA BUSINESS PARK, B/H TRI MANDIR, ADALAJ 382421, Dist Gandhinagar Gujarat
                 </div>
                
               </div>
