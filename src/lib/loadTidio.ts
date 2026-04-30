@@ -1,5 +1,5 @@
 /** Tidio chat bundle — fixed HTTPS origin; vendor updates file so SRI is not maintained. */
-const TIDIO_SRC = 'https://code.tidio.co/l1k0czafg1ylrp4862vjcronz9re151y.js'
+const TIDIO_SRC = 'https://code.tidio.co/mxqxswfmlz9wyv4paggyjhqvejzm1vmd.js'
 
 /** Loads Tidio after idle (same timing as previous index.html async script). */
 export function loadTidio(): void {
