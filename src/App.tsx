@@ -10,7 +10,6 @@ import { CookieConsent } from './components/CookieConsent';
 import { AnimatePresence } from 'motion/react';
 
 // Lazy load heavy components for better performance
-const SolutionsPage = lazy(() => import('./components/SolutionsPage').then(module => ({ default: module.SolutionsPage })));
 const CapabilityMatrixPage = lazy(() => import('./components/CapabilityMatrixPage').then(module => ({ default: module.CapabilityMatrixPage })));
 const PortfolioPage = lazy(() => import('./components/PortfolioPage').then(module => ({ default: module.PortfolioPage })));
 const BlogsPage = lazy(() => import('./components/BlogsPage').then(module => ({ default: module.BlogsPage })));
@@ -94,7 +93,6 @@ function AnimatedRoutes() {
       <Suspense fallback={<LoadingFallback />}>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
-          <Route path="/solutions/" element={<PageTransition><SolutionsPage /></PageTransition>} />
           <Route path="/capability/" element={<PageTransition><CapabilityMatrixPage /></PageTransition>} />
           <Route path="/portfolio/" element={<PageTransition><PortfolioPage /></PageTransition>} />
           <Route path="/blogs/" element={<PageTransition><BlogsPage /></PageTransition>} />

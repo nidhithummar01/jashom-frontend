@@ -176,6 +176,54 @@ function injectBlogPrerenderLinks(html, blogs) {
   return replaceBetween(html, idx, idx, '\n' + links + '\n    ');
 }
 
+/**
+ * Apply per-route meta (title/description/prerender h1) if configured.
+ * Keeping this in one place avoids Sonar "duplicated lines" on root + route generation.
+ */
+function applyRouteMeta(html, routePath) {
+  const meta = ROUTE_META && ROUTE_META[routePath];
+  if (!meta) return html;
+  let out = html;
+  if (meta.title) out = replaceTitle(out, meta.title);
+  if (meta.description) out = replaceMetaDescription(out, meta.description);
+  if (meta.h1) out = replacePrerenderH1(out, meta.h1);
+  return out;
+}
+
+function applyRouteSchemas(html, routePath) {
+  // Contact page: replace home schemas with ProfessionalService only (so view-source shows correct schema)
+  if (routePath !== '/contact/') return html;
+  return injectSchemaScripts(removeLdJsonScripts(html), [CONTACT_SCHEMA]);
+}
+
+function buildRouteHtml(baseHtml, routePath) {
+  const canonical = routePath === '/' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${routePath}`;
+  let html = replaceCanonicalHref(baseHtml, canonical);
+  html = applyRouteMeta(html, routePath);
+  html = applyRouteSchemas(html, routePath);
+  return html;
+}
+
+function writeRouteIndexHtml(routePath, html) {
+  const outFile =
+    routePath === '/'
+      ? path.join(DIST, 'index.html')
+      : path.join(DIST, routePath.slice(1, -1), 'index.html'); // strip leading/trailing slash
+  fs.mkdirSync(path.dirname(outFile), { recursive: true });
+  fs.writeFileSync(outFile, html);
+}
+
+function verifyCanonicals(checks) {
+  for (const [dirSegments, expectedHref] of checks) {
+    const filePath = path.join(DIST, dirSegments, 'index.html');
+    const content = fs.readFileSync(filePath, 'utf8');
+    if (!content.includes(`href="${expectedHref}"`)) {
+      console.error('scripts/canonical-per-route.cjs: verification failed for', dirSegments, '- expected href', expectedHref);
+      process.exit(1);
+    }
+  }
+}
+
 // Use www.jashom.com; normalize any old new.jashom.com from env to live domain
 const SITE_ORIGIN = (process.env.SITE_ORIGIN || process.env.VITE_SITE_URL || 'https://www.jashom.com')
   .toString()
@@ -319,7 +367,6 @@ const ROUTE_META = {
 // Static routes only (no :slug or params). Must have leading and trailing slash.
 const STATIC_ROUTES = [
   '/',
-  '/solutions/',
   '/capability/',
   '/portfolio/',
   '/blogs/',
@@ -375,13 +422,6 @@ const STATIC_ROUTES = [
   '/services/product-engineering/',
   '/services/custom-development/',
   '/services/micro-saas/',
-  '/solutions/healthtech/',
-  '/solutions/supply-chain/',
-  '/solutions/fintech/',
-  '/solutions/environmenttech/',
-  '/solutions/legal-and-tax/',
-  '/solutions/retail-tech/',
-  '/solutions/foodtech/',
   '/ai-for-industry/sales/',
   '/ai-for-industry/legal/',
   '/ai-for-industry/accounting/',
@@ -419,38 +459,15 @@ async function main() {
   const blogRoutes = (blogs || []).filter((b) => b && b.slug).map((b) => '/blogs/' + b.slug + '/');
   indexHtml = injectBlogPrerenderLinks(indexHtml, blogs);
 
-  const allRoutes = [...STATIC_ROUTES, ...blogRoutes];
-  const rootCanonical = `${SITE_ORIGIN}/`;
+  const allRoutes = Array.from(new Set([...STATIC_ROUTES, ...blogRoutes]));
 
   // 1) Update root index.html
-  let rootHtml = replaceCanonicalHref(indexHtml, rootCanonical);
-  if (ROUTE_META['/']) {
-    rootHtml = replaceTitle(rootHtml, ROUTE_META['/'].title);
-    rootHtml = replaceMetaDescription(rootHtml, ROUTE_META['/'].description);
-    rootHtml = replacePrerenderH1(rootHtml, ROUTE_META['/'].h1);
-  }
-  fs.writeFileSync(indexPath, rootHtml);
+  writeRouteIndexHtml('/', buildRouteHtml(indexHtml, '/'));
 
   // 2) For each non-root route (static + blogs), write path/index.html with correct canonical
   for (const routePath of allRoutes) {
     if (routePath === '/') continue;
-    const dirSegments = routePath.slice(1, -1); // e.g. 'gpu-optimization-service' or 'portfolio/case-study/...'
-    const dir = path.join(DIST, dirSegments);
-    fs.mkdirSync(dir, { recursive: true });
-    const pathCanonical = `${SITE_ORIGIN}${routePath}`;
-    let pathHtml = replaceCanonicalHref(indexHtml, pathCanonical);
-    if (ROUTE_META[routePath]) {
-      pathHtml = replaceTitle(pathHtml, ROUTE_META[routePath].title);
-      pathHtml = replaceMetaDescription(pathHtml, ROUTE_META[routePath].description);
-      pathHtml = replacePrerenderH1(pathHtml, ROUTE_META[routePath].h1);
-    }
-    // Contact page: replace home schemas with ProfessionalService only (so view-source shows correct schema)
-    if (routePath === '/contact/') {
-      pathHtml = removeLdJsonScripts(pathHtml);
-      pathHtml = injectSchemaScripts(pathHtml, [CONTACT_SCHEMA]);
-    }
-    const outPath = path.join(dir, 'index.html');
-    fs.writeFileSync(outPath, pathHtml);
+    writeRouteIndexHtml(routePath, buildRouteHtml(indexHtml, routePath));
   }
 
   // 3) Verify key routes so build fails if something is wrong (e.g. deploy with stale dist)
@@ -459,14 +476,7 @@ async function main() {
     ['cuda-development-service', `${SITE_ORIGIN}/cuda-development-service/`],
     ['contact', `${SITE_ORIGIN}/contact/`],
   ];
-  for (const [dirSegments, expectedHref] of checkPaths) {
-    const filePath = path.join(DIST, dirSegments, 'index.html');
-    const content = fs.readFileSync(filePath, 'utf8');
-    if (!content.includes(`href="${expectedHref}"`)) {
-      console.error('scripts/canonical-per-route.cjs: verification failed for', dirSegments, '- expected href', expectedHref);
-      process.exit(1);
-    }
-  }
+  verifyCanonicals(checkPaths);
 
   console.log('Canonical per-route: updated root +', allRoutes.length - 1, 'paths (' + blogRoutes.length + ' blogs, verified)');
 }

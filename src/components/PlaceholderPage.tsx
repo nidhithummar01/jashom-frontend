@@ -56,10 +56,6 @@ export function PlaceholderPage({ title, description }: PlaceholderPageProps) {
           <div className="mt-16 pt-8 border-t border-white/10">
             <p className="text-white/60 mb-6">Meanwhile, explore our other pages:</p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/solutions/" className="text-[#d1d5db] hover:text-white transition-colors">
-                Solutions
-              </Link>
-              <span className="text-white/20">•</span>
               <Link to="/services/" className="text-[#d1d5db] hover:text-white transition-colors">
                 Services
               </Link>

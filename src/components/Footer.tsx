@@ -30,7 +30,6 @@ export function Footer() {
     { label: 'GPU Optimization Service', path: '/gpu-optimization-service/' },
     { label: 'CUDA Development Service', path: '/cuda-development-service/' },
     { label: 'Hire CUDA Developer', path: '/hire-cuda-developer/' },
-    { label: 'Edge Inference', path: '/solutions/' },
   ];
 
   const companyLinks = [

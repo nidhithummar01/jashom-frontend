@@ -273,21 +273,7 @@ export function Navigation() {
       ]
     },
     */
-    // COMMENTED OUT - Solutions temporarily hidden from UI but preserved in codebase
-    /*
-    {
-      label: 'Solutions',
-      dropdown: [
-        { path: '/solutions/healthtech/', label: 'HealthTech' },
-        { path: '/solutions/supply-chain/', label: 'Supply Chain' },
-        { path: '/solutions/fintech/', label: 'FinTech' },
-        { path: '/solutions/environmenttech/', label: 'EnvironmentTech' },
-        { path: '/solutions/legal-and-tax/', label: 'Legal & Tax' },
-        { path: '/solutions/retail-tech/', label: 'RetailTech' },
-        { path: '/solutions/foodtech/', label: 'FoodTech' }
-      ]
-    },
-    */
+    // Solutions removed
     // COMMENTED OUT - AI for Industry temporarily hidden from UI but preserved in codebase
     /*
     {
@@ -441,23 +427,9 @@ export function Navigation() {
                   >
                     {item.dropdown ? (
                       <div>
-                        {item.label === 'Solutions' ? (
-                          <Link
-                            to="/solutions/"
-                            onClick={handleLinkClick}
-                            style={mobileLeftStyle}
-                            className={`block py-3 px-4 sm:px-6 rounded-lg transition-all min-h-[44px] !flex !w-full !justify-start items-center !text-left text-sm sm:text-base font-medium ${location.pathname === '/solutions'
-                              ? 'text-white bg-white/10'
-                              : 'text-white hover:bg-white/10 hover:text-white'
-                              }`}
-                          >
-                            {item.label}
-                          </Link>
-                        ) : (
-                          <div className="py-3 px-4 text-white/60 text-sm font-medium">
-                            {item.label}
-                          </div>
-                        )}
+                        <div className="py-3 px-4 text-white/60 text-sm font-medium">
+                          {item.label}
+                        </div>
                         <div className="flex flex-col items-stretch">
                           {item.dropdown.map((subItem, subIndex) => {
                             const hasSubItems = (subItem as any).subItems && (subItem as any).subItems.length > 0;
