@@ -94,6 +94,183 @@ export function HomePage() {
   const canGoPrev = currentSlide > 0;
   const canGoNext = currentSlide < maxSlide;
 
+  const HERO_BADGE_STYLE = {
+    background: 'rgba(17, 24, 39, 0.4)',
+    backdropFilter: 'blur(12px)',
+    borderColor: 'rgba(34, 211, 238, 0.2)',
+  } as const;
+  const HERO_TITLE_STYLE = {
+    color: Theme.TEXT_FAFAFA,
+    fontWeight: 700,
+    letterSpacing: '-0.03em',
+    lineHeight: 1.15,
+  } as const;
+  const HERO_DESC_STYLE = {
+    color: Theme.TEXT_GRAY,
+    lineHeight: 1.8,
+    textShadow: '0 2px 10px rgba(0,0,0,0.9)',
+  } as const;
+  const HERO_DESCRIPTION =
+    'We assist companies in unleashing the power of the current hardware, whether it is through high-level optimization of graphics cards or scalable parallel computing. Our developers have expertise in NVIDIA GPU optimization, CUDA acceleration, and production-ready AI systems that are used to deliver quantifiable improvements.';
+
+  function renderHeroContent(animated: boolean) {
+    const Badge = animated ? motion.div : 'div';
+    const Title = animated ? motion.h1 : 'h1';
+    const Desc = animated ? motion.p : 'p';
+    const Ctas = animated ? motion.div : 'div';
+
+    return (
+      <div>
+        <Badge
+          className="inline-block mb-6 px-4 py-2 rounded-full border"
+          style={HERO_BADGE_STYLE}
+          {...(animated
+            ? { initial: { opacity: 0, scale: 0.8 }, animate: { opacity: 1, scale: 1 }, transition: { delay: 0.2 } }
+            : {})}
+        >
+          <span style={{ color: Theme.TEXT_GRAY }}>Next-Gen AI Solutions</span>
+        </Badge>
+
+        <Title
+          className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl px-2 sm:px-0"
+          style={HERO_TITLE_STYLE}
+          {...(animated
+            ? { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: 0.3 } }
+            : {})}
+        >
+          Powering High-Performance AI with Precision GPU Engineering
+        </Title>
+
+        <Desc
+          className="mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base px-4 sm:px-0"
+          style={HERO_DESC_STYLE}
+          {...(animated ? { initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { delay: 0.4 } } : {})}
+        >
+          {HERO_DESCRIPTION}
+        </Desc>
+
+        <Ctas
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full px-4 sm:px-0"
+          {...(animated
+            ? { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: 0.5 } }
+            : {})}
+        >
+          <Link
+            to="/contact/"
+            className="ui-btn ui-btn--lg w-auto max-w-xs border text-center cursor-pointer transition-all duration-240 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
+            style={homePageData.CTA_GRADIENT_STYLE}
+          >
+            Start Your AI Transformation
+          </Link>
+          <a
+            href="https://calendly.com/jaydave-jashom/new-meeting"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ui-btn ui-btn--lg w-auto max-w-xs border text-center cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
+            style={{
+              background: 'rgba(255, 255, 255, 0.04)',
+              borderColor: 'rgba(255, 255, 255, 0.12)',
+              color: Theme.TEXT_FAFAFA,
+            }}
+          >
+            Schedule a Meeting
+          </a>
+        </Ctas>
+      </div>
+    );
+  }
+
+  const renderProjectSlide = (project: (typeof homePageData.portfolioProjects)[number]) => (
+    <div
+      key={project.link}
+      className="flex-shrink-0"
+      style={{
+        width:
+          cardsPerView === 1
+            ? '100%'
+            : `calc(${100 / cardsPerView}% - ${(24 * (cardsPerView - 1)) / cardsPerView}px)`,
+      }}
+    >
+      <Link
+        to={project.link}
+        className="block rounded-2xl border h-full flex flex-col transition-all duration-300 group overflow-hidden hover:border-[#06B6D4] focus-visible:border-[#06B6D4] active:border-[#06B6D4] focus-visible:ring-2 focus-visible:ring-[#06B6D4]/40"
+        style={{
+          background: 'linear-gradient(180deg, rgba(8, 12, 22, 0.95) 0%, rgba(7, 10, 18, 0.98) 100%)',
+          borderColor: 'rgba(255, 255, 255, 0.16)',
+        }}
+      >
+        <div className="px-4 sm:px-5 pt-4 sm:pt-5">
+          <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.72)' }}>
+            {project.industry}
+          </p>
+        </div>
+        {project.image && (
+          <div className="relative overflow-hidden px-3 sm:px-4 pt-3 sm:pt-4">
+            <img
+              src={project.image}
+              alt={project.title}
+              width={400}
+              height={180}
+              className="w-full object-cover rounded-2xl"
+              style={{ height: '210px' }}
+            />
+          </div>
+        )}
+
+        <div className="p-4 sm:p-5 flex flex-col flex-grow">
+          <p className="text-sm mb-3" style={{ color: 'rgba(255, 255, 255, 0.72)' }}>
+            {project.industry}
+          </p>
+          <h3
+            className="font-bold text-white mb-4 leading-tight line-clamp-2 uppercase"
+            style={{ fontSize: 'clamp(20px, 1.6vw, 28px)', letterSpacing: '-0.02em' }}
+          >
+            {project.title}
+          </h3>
+
+          <div className="flex flex-wrap items-center gap-2 mb-4">
+            {project.tags.slice(0, 3).map((tag) => (
+              <span
+                key={`${project.title}-${tag}`}
+                className="inline-flex items-center justify-center h-7 px-3 rounded-full border text-xs font-medium whitespace-nowrap"
+                style={{
+                  background: 'rgba(15, 23, 42, 0.9)',
+                  borderColor: 'rgba(148, 163, 184, 0.24)',
+                  color: '#CBD5E1',
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-auto pt-1">
+            <span
+              className="inline-flex items-center gap-2 font-semibold text-[#22D3EE] group-hover:text-[#06B6D4] group-active:text-[#06B6D4] transition-colors"
+              style={{ fontSize: 'clamp(14px, 1vw, 16px)' }}
+            >
+              <span>View More</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </span>
+          </div>
+        </div>
+      </Link>
+    </div>
+  );
+
+  function renderCarouselTrack() {
+    return (
+      <div
+        className="flex gap-4 sm:gap-6 transition-transform duration-500 ease-in-out"
+        style={{
+          transform: `translateX(-${currentSlide * (100 / cardsPerView + (cardsPerView === 1 ? 0 : 24 / cardsPerView))}%)`,
+        }}
+      >
+        {homePageData.portfolioProjects.map(renderProjectSlide)}
+      </div>
+    );
+  }
+
   const corporationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Corporation',
@@ -167,137 +344,14 @@ export function HomePage() {
             <div className="relative z-[10] max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               {isMobile ? (
                 /* Mobile: static hero for faster LCP and lower TBT (no motion) */
-                <div>
-                  <div
-                    className="inline-block mb-6 px-4 py-2 rounded-full border"
-                    style={{
-                      background: 'rgba(17, 24, 39, 0.4)',
-                      backdropFilter: 'blur(12px)',
-                      borderColor: 'rgba(34, 211, 238, 0.2)'
-                    }}
-                  >
-                    <span style={{ color: Theme.TEXT_GRAY }}>Next-Gen AI Solutions</span>
-                  </div>
-                  <h1
-                    className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl px-2 sm:px-0"
-                    style={{
-                      color: Theme.TEXT_FAFAFA,
-                      fontWeight: 700,
-                      letterSpacing: '-0.03em',
-                      lineHeight: 1.15
-                    }}
-                  >
-                    Powering High-Performance AI with Precision GPU Engineering
-                  </h1>
-                  <p
-                    className="mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base px-4 sm:px-0"
-                    style={{
-                      color: Theme.TEXT_GRAY,
-                      lineHeight: 1.8,
-                      textShadow: '0 2px 10px rgba(0,0,0,0.9)'
-                    }}
-                  >
-                    We assist companies in unleashing the power of the current hardware, whether it is through high-level optimization of graphics cards or scalable parallel computing. Our developers have expertise in NVIDIA GPU optimization, CUDA acceleration, and production-ready AI systems that are used to deliver quantifiable improvements.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full px-4 sm:px-0">
-                    <Link
-                      to="/contact/"
-                      className="ui-btn ui-btn--lg w-auto max-w-xs border text-center cursor-pointer transition-all duration-240 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
-                      style={homePageData.CTA_GRADIENT_STYLE}
-                    >
-                      Start Your AI Transformation
-                    </Link>
-                    <a
-                      href="https://calendly.com/jaydave-jashom/new-meeting"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ui-btn ui-btn--lg w-auto max-w-xs border text-center cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.04)',
-                        borderColor: 'rgba(255, 255, 255, 0.12)',
-                        color: Theme.TEXT_FAFAFA
-                      }}
-                    >
-                      Schedule a Meeting
-                    </a>
-                  </div>
-                </div>
+                renderHeroContent(false)
               ) : (
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
                 >
-                  <motion.div
-                    className="inline-block mb-6 px-4 py-2 rounded-full border"
-                    style={{
-                      background: 'rgba(17, 24, 39, 0.4)',
-                      backdropFilter: 'blur(12px)',
-                      borderColor: 'rgba(34, 211, 238, 0.2)'
-                    }}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <span style={{ color: Theme.TEXT_GRAY }}>Next-Gen AI Solutions</span>
-                  </motion.div>
-
-                  <motion.h1
-                    className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl px-2 sm:px-0"
-                    style={{
-                      color: Theme.TEXT_FAFAFA,
-                      fontWeight: 700,
-                      letterSpacing: '-0.03em',
-                      lineHeight: 1.15
-                    }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    Powering High-Performance AI with Precision GPU Engineering
-                  </motion.h1>
-
-                  <motion.p
-                    className="mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base px-4 sm:px-0"
-                    style={{
-                      color: Theme.TEXT_GRAY,
-                      lineHeight: 1.8,
-                      textShadow: '0 2px 10px rgba(0,0,0,0.9)'
-                    }}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    We assist companies in unleashing the power of the current hardware, whether it is through high-level optimization of graphics cards or scalable parallel computing. Our developers have expertise in NVIDIA GPU optimization, CUDA acceleration, and production-ready AI systems that are used to deliver quantifiable improvements.
-                  </motion.p>
-
-                  <motion.div
-                    className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full px-4 sm:px-0"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    <Link
-                      to="/contact/"
-                      className="ui-btn ui-btn--lg w-auto max-w-xs border text-center cursor-pointer transition-all duration-240 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(34,211,238,0.6)]"
-                      style={homePageData.CTA_GRADIENT_STYLE}
-                    >
-                      Start Your AI Transformation
-                    </Link>
-                    <a
-                      href="https://calendly.com/jaydave-jashom/new-meeting"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ui-btn ui-btn--lg w-auto max-w-xs border text-center cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.04)',
-                        borderColor: 'rgba(255, 255, 255, 0.12)',
-                        color: Theme.TEXT_FAFAFA
-                      }}
-                    >
-                      Schedule a Meeting
-                    </a>
-                  </motion.div>
+                  {renderHeroContent(true)}
                 </motion.div>
               )}
             </div>
@@ -581,80 +635,7 @@ export function HomePage() {
 
                   {/* Carousel Wrapper */}
                   <div className="flex-1 min-w-0 overflow-hidden">
-                    {/* Carousel Track - Transform Based */}
-                    <div
-                      className="flex gap-4 sm:gap-6 transition-transform duration-500 ease-in-out"
-                      style={{
-                        transform: `translateX(-${currentSlide * (100 / cardsPerView + (cardsPerView === 1 ? 0 : 24 / cardsPerView))}%)`
-                      }}
-                    >
-                      {homePageData.portfolioProjects.map((project) => (
-                        <div
-                          key={project.link}
-                          className="flex-shrink-0"
-                          style={{
-                            width: cardsPerView === 1
-                              ? '100%'
-                              : `calc(${100 / cardsPerView}% - ${(24 * (cardsPerView - 1)) / cardsPerView}px)`
-                          }}
-                        >
-                          <Link
-                            to={project.link}
-                            className="block rounded-2xl border h-full flex flex-col transition-all duration-300 group overflow-hidden hover:border-[#06B6D4] focus-visible:border-[#06B6D4] active:border-[#06B6D4] focus-visible:ring-2 focus-visible:ring-[#06B6D4]/40"
-                            style={{
-                              background: 'linear-gradient(180deg, rgba(8, 12, 22, 0.95) 0%, rgba(7, 10, 18, 0.98) 100%)',
-                              borderColor: 'rgba(255, 255, 255, 0.16)'
-                            }}
-                          >
-                            <div className="px-4 sm:px-5 pt-4 sm:pt-5">
-                              <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.72)' }}>{project.industry}</p>
-                            </div>
-                            {/* Image - Edge-to-edge at top with increased height */}
-                            {project.image && (
-                              <div className="relative overflow-hidden px-3 sm:px-4 pt-3 sm:pt-4">
-                                <img
-                                  src={project.image}
-                                  alt={project.title}
-                                  width={400}
-                                  height={180}
-                                  className="w-full object-cover rounded-2xl"
-                                  style={{ height: '210px' }}
-                                />
-                              </div>
-                            )}
-
-                            <div className="p-4 sm:p-5 flex flex-col flex-grow">
-                              <p className="text-sm mb-3" style={{ color: 'rgba(255, 255, 255, 0.72)' }}>{project.industry}</p>
-                              <h3 className="font-bold text-white mb-4 leading-tight line-clamp-2 uppercase" style={{ fontSize: 'clamp(20px, 1.6vw, 28px)', letterSpacing: '-0.02em' }}>
-                                {project.title}
-                              </h3>
-
-                              <div className="flex flex-wrap items-center gap-2 mb-4">
-                                {project.tags.slice(0, 3).map((tag) => (
-                                  <span
-                                    key={`${project.title}-${tag}`}
-                                    className="inline-flex items-center justify-center h-7 px-3 rounded-full border text-xs font-medium whitespace-nowrap"
-                                    style={{ background: 'rgba(15, 23, 42, 0.9)', borderColor: 'rgba(148, 163, 184, 0.24)', color: '#CBD5E1' }}
-                                  >
-                                    {tag}
-                                  </span>
-                                ))}
-                              </div>
-
-                              <div className="mt-auto pt-1">
-                                <span
-                                  className="inline-flex items-center gap-2 font-semibold text-[#22D3EE] group-hover:text-[#06B6D4] group-active:text-[#06B6D4] transition-colors"
-                                  style={{ fontSize: 'clamp(14px, 1vw, 16px)' }}
-                                >
-                                  <span>View More</span>
-                                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                </span>
-                              </div>
-                            </div>
-                          </Link>
-                        </div>
-                      ))}
-                    </div>
+                    {renderCarouselTrack()}
                   </div>
 
                   {/* Right Arrow - in document flow, always visible */}
@@ -674,80 +655,7 @@ export function HomePage() {
 
                 {/* Mobile carousel (full width, with side padding so overlay arrows don't cover content) */}
                 <div className="sm:hidden w-full overflow-hidden px-12">
-                  {/* Carousel Track - Transform Based */}
-                  <div
-                    className="flex gap-4 sm:gap-6 transition-transform duration-500 ease-in-out"
-                    style={{
-                      transform: `translateX(-${currentSlide * (100 / cardsPerView + (cardsPerView === 1 ? 0 : 24 / cardsPerView))}%)`
-                    }}
-                  >
-                    {homePageData.portfolioProjects.map((project) => (
-                      <div
-                        key={project.link}
-                        className="flex-shrink-0"
-                        style={{
-                          width: cardsPerView === 1
-                            ? '100%'
-                            : `calc(${100 / cardsPerView}% - ${(24 * (cardsPerView - 1)) / cardsPerView}px)`
-                        }}
-                      >
-                        <Link
-                          to={project.link}
-                          className="block rounded-2xl border h-full flex flex-col transition-all duration-300 group overflow-hidden hover:border-[#06B6D4] focus-visible:border-[#06B6D4] active:border-[#06B6D4] focus-visible:ring-2 focus-visible:ring-[#06B6D4]/40"
-                          style={{
-                            background: 'linear-gradient(180deg, rgba(8, 12, 22, 0.95) 0%, rgba(7, 10, 18, 0.98) 100%)',
-                            borderColor: 'rgba(255, 255, 255, 0.16)'
-                          }}
-                        >
-                          <div className="px-4 sm:px-5 pt-4 sm:pt-5">
-                            <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.72)' }}>{project.industry}</p>
-                          </div>
-                          {/* Image - Edge-to-edge at top with increased height */}
-                          {project.image && (
-                            <div className="relative overflow-hidden px-3 sm:px-4 pt-3 sm:pt-4">
-                              <img
-                                src={project.image}
-                                alt={project.title}
-                                width={400}
-                                height={180}
-                                className="w-full object-cover rounded-2xl"
-                                style={{ height: '210px' }}
-                              />
-                            </div>
-                          )}
-
-                          <div className="p-4 sm:p-5 flex flex-col flex-grow">
-                            <p className="text-sm mb-3" style={{ color: 'rgba(255, 255, 255, 0.72)' }}>{project.industry}</p>
-                            <h3 className="font-bold text-white mb-4 leading-tight line-clamp-2 uppercase" style={{ fontSize: 'clamp(20px, 1.6vw, 28px)', letterSpacing: '-0.02em' }}>
-                              {project.title}
-                            </h3>
-
-                            <div className="flex flex-wrap items-center gap-2 mb-4">
-                              {project.tags.slice(0, 3).map((tag) => (
-                                <span
-                                  key={`${project.title}-${tag}`}
-                                  className="inline-flex items-center justify-center h-7 px-3 rounded-full border text-xs font-medium whitespace-nowrap"
-                                  style={{ background: 'rgba(15, 23, 42, 0.9)', borderColor: 'rgba(148, 163, 184, 0.24)', color: '#CBD5E1' }}
-                                >
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-
-                            <div className="mt-auto pt-1">
-                              <span
-                                className="inline-flex items-center gap-2 font-semibold text-[#22D3EE] group-hover:text-[#06B6D4] group-active:text-[#06B6D4] transition-colors"
-                                style={{ fontSize: 'clamp(14px, 1vw, 16px)' }}
-                              >
-                                <span>View More</span>
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                              </span>
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    ))}
-                  </div>
+                  {renderCarouselTrack()}
                 </div>
               </div>
 
