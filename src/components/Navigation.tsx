@@ -201,6 +201,7 @@ export function Navigation() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [openSubMenus, setOpenSubMenus] = useState<{ [key: string]: boolean }>({});
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const mobileLeftStyle = { justifyContent: 'flex-start', textAlign: 'left' as const };
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -313,13 +314,16 @@ export function Navigation() {
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 pt-4 px-4 sm:px-6"
+        className="fixed top-0 left-0 right-0 z-50 pt-3 sm:pt-4 px-4 sm:px-6"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
       >
       {/* Logo + badha options ek j pill ma */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between" style={{ minHeight: 56 }}>
+      <div
+        className={`w-full max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 ${isOpen ? 'py-2 rounded-full border border-white/15 bg-black/85 shadow-lg' : 'py-0'} md:py-0 md:bg-transparent md:border-0 md:shadow-none md:backdrop-blur-none md:rounded-none`}
+        style={{ minHeight: 56 }}
+      >
         {/* Left: mobile par logo (content width), desktop par khali (pill center rahe) */}
         <div className="flex justify-start min-w-0 md:flex-1">
           <Link to="/" className="flex items-center flex-shrink-0 md:hidden">
@@ -418,7 +422,7 @@ export function Navigation() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/50 z-40 md:hidden"
+                className="fixed inset-0 bg-black/75 z-40 md:hidden"
                 onClick={handleLinkClick}
               />
               <motion.div
@@ -426,10 +430,10 @@ export function Navigation() {
                 animate={{ opacity: 1, height: 'auto', maxHeight: 'calc(100vh - 5rem)' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
-                className="md:hidden border-t border-[#333333] mt-2 relative z-50 bg-black"
+                className="md:hidden mt-2 relative z-50 bg-black border border-white/10 rounded-2xl overflow-hidden"
                 style={{ maxHeight: 'calc(100vh - 5rem)', overflowY: 'auto' }}
               >
-                <div className="pb-4 space-y-1 pt-2">
+                <div className="pb-4 space-y-1 pt-2 text-left">
                 {navItems.map((item) => (
                   <motion.div
                     key={item.label}
@@ -441,7 +445,8 @@ export function Navigation() {
                           <Link
                             to="/solutions/"
                             onClick={handleLinkClick}
-                            className={`block py-3 px-4 sm:px-6 rounded-lg transition-all min-h-[44px] flex items-center text-sm sm:text-base font-medium ${location.pathname === '/solutions'
+                            style={mobileLeftStyle}
+                            className={`block py-3 px-4 sm:px-6 rounded-lg transition-all min-h-[44px] !flex !w-full !justify-start items-center !text-left text-sm sm:text-base font-medium ${location.pathname === '/solutions'
                               ? 'text-white bg-white/10'
                               : 'text-white hover:bg-white/10 hover:text-white'
                               }`}
@@ -453,85 +458,91 @@ export function Navigation() {
                             {item.label}
                           </div>
                         )}
-                        {item.dropdown.map((subItem, subIndex) => {
-                          const hasSubItems = (subItem as any).subItems && (subItem as any).subItems.length > 0;
-                          const subMenuKey = `${item.label}-${subItem.label}-${subIndex}`;
-                          
-                          if (hasSubItems && item.label === 'Services') {
-                            // Services: Click-based behavior for mobile - show only clicked category
-                            const isOpen = openSubMenus[subMenuKey];
-                            const hasOpenCategory = Object.values(openSubMenus).some(v => v === true);
-                            
-                            // If a category is open, only show that category and its sub-items
-                            if (hasOpenCategory && !isOpen) {
-                              return null; // Hide other categories when one is open
+                        <div className="flex flex-col items-stretch">
+                          {item.dropdown.map((subItem, subIndex) => {
+                            const hasSubItems = (subItem as any).subItems && (subItem as any).subItems.length > 0;
+                            const subMenuKey = `${item.label}-${subItem.label}-${subIndex}`;
+
+                            if (hasSubItems && item.label === 'Services') {
+                              // Services: Click-based behavior for mobile - show only clicked category
+                              const isOpen = openSubMenus[subMenuKey];
+                              const hasOpenCategory = Object.values(openSubMenus).some(v => v === true);
+
+                              // If a category is open, only show that category and its sub-items
+                              if (hasOpenCategory && !isOpen) {
+                                return null; // Hide other categories when one is open
+                              }
+
+                              return (
+                                <div key={subItem.label || subIndex}>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      // Close all other service categories, toggle this one
+                                      const newState: { [key: string]: boolean } = {};
+                                      if (!isOpen) {
+                                        newState[subMenuKey] = true;
+                                      }
+                                      setOpenSubMenus(newState);
+                                    }}
+                                    style={{ textAlign: 'left' }}
+                                    className={`w-full py-3 px-6 sm:px-8 rounded-lg transition-all min-h-[44px] !flex !justify-between items-center text-sm sm:text-base text-white hover:bg-white/10 ${isOpen ? 'bg-white/10' : ''}`}
+                                  >
+                                    <span>{subItem.label}</span>
+                                    <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                                  </button>
+                                  {isOpen && (
+                                    <div className="pl-4 flex flex-col items-stretch">
+                                      {(subItem as any).subItems.map((subSubItem: any) => (
+                                        <Link
+                                          key={subSubItem.path}
+                                          to={subSubItem.path}
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleLinkClick();
+                                          }}
+                                          style={mobileLeftStyle}
+                                          className={`!block py-3 px-6 sm:px-8 rounded-lg transition-all min-h-[44px] !flex !w-full !justify-start items-center !text-left text-sm sm:text-base ${location.pathname === subSubItem.path
+                                            ? 'text-white bg-white/10'
+                                            : 'text-white hover:bg-white/10 hover:text-white'
+                                            }`}
+                                        >
+                                          {subSubItem.label}
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              );
                             }
-                            
+
+                            if (!(subItem as any).path) return null;
                             return (
-                              <div key={subItem.label || subIndex}>
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    // Close all other service categories, toggle this one
-                                    const newState: { [key: string]: boolean } = {};
-                                    if (!isOpen) {
-                                      newState[subMenuKey] = true;
-                                    }
-                                    setOpenSubMenus(newState);
-                                  }}
-                                  className={`w-full py-3 px-6 sm:px-8 rounded-lg transition-all min-h-[44px] flex items-center justify-between text-sm sm:text-base text-white hover:bg-white/10 ${isOpen ? 'bg-white/10' : ''}`}
-                                >
-                                  <span>{subItem.label}</span>
-                                  <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-                                </button>
-                                {isOpen && (
-                                  <div className="pl-4">
-                                    {(subItem as any).subItems.map((subSubItem: any) => (
-                                      <Link
-                                        key={subSubItem.path}
-                                        to={subSubItem.path}
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          handleLinkClick();
-                                        }}
-                                        className={`block py-3 px-6 sm:px-8 rounded-lg transition-all min-h-[44px] flex items-center text-sm sm:text-base ${location.pathname === subSubItem.path
-                                          ? 'text-white bg-white/10'
-                                          : 'text-white hover:bg-white/10 hover:text-white'
-                                          }`}
-                                      >
-                                        {subSubItem.label}
-                                      </Link>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
+                              <Link
+                                key={(subItem as any).path}
+                                to={(subItem as any).path}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleLinkClick();
+                                }}
+                                style={mobileLeftStyle}
+                              className={`!block py-3 px-6 sm:px-8 rounded-lg transition-all min-h-[44px] !flex !w-full !justify-start items-center !text-left text-sm sm:text-base ${item.label === 'AI for Industry' ? 'whitespace-nowrap' : ''} ${location.pathname === (subItem as any).path
+                                  ? 'text-white bg-white/10'
+                                  : 'text-white hover:bg-white/10 hover:text-white'
+                                  }`}
+                              >
+                                {subItem.label}
+                              </Link>
                             );
-                          }
-                          
-                          if (!(subItem as any).path) return null;
-                          return (
-                            <Link
-                              key={(subItem as any).path}
-                              to={(subItem as any).path}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleLinkClick();
-                              }}
-                              className={`block py-3 px-6 sm:px-8 rounded-lg transition-all min-h-[44px] flex items-center text-sm sm:text-base ${item.label === 'AI for Industry' ? 'whitespace-nowrap' : ''} ${location.pathname === (subItem as any).path
-                                ? 'text-white bg-white/10'
-                                : 'text-white hover:bg-white/10 hover:text-white'
-                                }`}
-                            >
-                              {subItem.label}
-                            </Link>
-                          );
-                        })}
+                          })}
+                        </div>
                       </div>
                     ) : (
                       <Link
                         to={item.path}
                         onClick={handleLinkClick}
-                        className={`block py-3 px-4 sm:px-6 rounded-lg transition-all min-h-[44px] flex items-center text-sm sm:text-base cursor-pointer ${location.pathname === item.path
+                        style={mobileLeftStyle}
+                        className={`block py-3 px-4 sm:px-6 rounded-lg transition-all min-h-[44px] !flex !w-full !justify-start items-center !text-left text-sm sm:text-base cursor-pointer ${location.pathname === item.path
                           ? 'text-white bg-white/10'
                           : 'text-white hover:bg-white/10 hover:text-white'
                           }`}
@@ -549,7 +560,8 @@ export function Navigation() {
                     setIsContactModalOpen(true);
                     handleLinkClick();
                   }}
-                  className="flex items-center gap-3 py-3 px-4 sm:px-6 rounded-lg transition-all min-h-[44px] text-sm sm:text-base text-white hover:bg-white/10 hover:text-white w-full cursor-pointer"
+                  style={mobileLeftStyle}
+                  className="!flex !w-full !justify-start items-center gap-3 py-3 px-4 sm:px-6 rounded-lg transition-all min-h-[44px] !text-left text-sm sm:text-base text-white hover:bg-white/10 hover:text-white cursor-pointer"
                 >
                   <Send className="w-5 h-5" />
                   <span>Quick Contact</span>

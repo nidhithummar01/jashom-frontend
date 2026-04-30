@@ -536,23 +536,144 @@ export function HomePage() {
               </motion.div>
 
               {/* Controlled Carousel: arrows in flow so they are always visible */}
-              <div className="flex items-center gap-2 sm:gap-4">
-                {/* Left Arrow - in document flow, always visible */}
+              <div className="relative">
+                {/* Mobile arrows (overlay; don't steal width) */}
                 <button
                   onClick={goToPrev}
                   disabled={!canGoPrev}
-                  className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 border-2 border-white/30 shadow-xl ${canGoPrev
-                    ? 'bg-cyan-500 hover:bg-cyan-400 text-white cursor-pointer hover:scale-110 active:scale-95'
-                    : 'bg-gray-700 text-white/50 cursor-not-allowed opacity-60'
+                  className={`sm:hidden absolute left-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 border border-white/20 shadow-xl ${canGoPrev
+                    ? 'bg-black/70 text-white active:scale-95'
+                    : 'bg-black/40 text-white/40 cursor-not-allowed opacity-60'
                     }`}
                   aria-label="Previous slide"
                   type="button"
                 >
-                  <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={3} />
+                  <ChevronLeft className="w-6 h-6" strokeWidth={3} />
+                </button>
+                <button
+                  onClick={goToNext}
+                  disabled={!canGoNext}
+                  className={`sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 border border-white/20 shadow-xl ${canGoNext
+                    ? 'bg-black/70 text-white active:scale-95'
+                    : 'bg-black/40 text-white/40 cursor-not-allowed opacity-60'
+                    }`}
+                  aria-label="Next slide"
+                  type="button"
+                >
+                  <ChevronRight className="w-6 h-6" strokeWidth={3} />
                 </button>
 
-                {/* Carousel Wrapper */}
-                <div className="flex-1 min-w-0 overflow-hidden">
+                {/* Desktop/tablet layout: arrows in flow */}
+                <div className="hidden sm:flex items-center gap-2 sm:gap-4">
+                  {/* Left Arrow - in document flow, always visible */}
+                  <button
+                    onClick={goToPrev}
+                    disabled={!canGoPrev}
+                    className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 border-2 border-white/30 shadow-xl ${canGoPrev
+                      ? 'bg-cyan-500 hover:bg-cyan-400 text-white cursor-pointer hover:scale-110 active:scale-95'
+                      : 'bg-gray-700 text-white/50 cursor-not-allowed opacity-60'
+                      }`}
+                    aria-label="Previous slide"
+                    type="button"
+                  >
+                    <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={3} />
+                  </button>
+
+                  {/* Carousel Wrapper */}
+                  <div className="flex-1 min-w-0 overflow-hidden">
+                    {/* Carousel Track - Transform Based */}
+                    <div
+                      className="flex gap-4 sm:gap-6 transition-transform duration-500 ease-in-out"
+                      style={{
+                        transform: `translateX(-${currentSlide * (100 / cardsPerView + (cardsPerView === 1 ? 0 : 24 / cardsPerView))}%)`
+                      }}
+                    >
+                      {homePageData.portfolioProjects.map((project) => (
+                        <div
+                          key={project.link}
+                          className="flex-shrink-0"
+                          style={{
+                            width: cardsPerView === 1
+                              ? '100%'
+                              : `calc(${100 / cardsPerView}% - ${(24 * (cardsPerView - 1)) / cardsPerView}px)`
+                          }}
+                        >
+                          <Link
+                            to={project.link}
+                            className="block rounded-2xl border h-full flex flex-col transition-all duration-300 group overflow-hidden hover:border-[#06B6D4] focus-visible:border-[#06B6D4] active:border-[#06B6D4] focus-visible:ring-2 focus-visible:ring-[#06B6D4]/40"
+                            style={{
+                              background: 'linear-gradient(180deg, rgba(8, 12, 22, 0.95) 0%, rgba(7, 10, 18, 0.98) 100%)',
+                              borderColor: 'rgba(255, 255, 255, 0.16)'
+                            }}
+                          >
+                            <div className="px-4 sm:px-5 pt-4 sm:pt-5">
+                              <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.72)' }}>{project.industry}</p>
+                            </div>
+                            {/* Image - Edge-to-edge at top with increased height */}
+                            {project.image && (
+                              <div className="relative overflow-hidden px-3 sm:px-4 pt-3 sm:pt-4">
+                                <img
+                                  src={project.image}
+                                  alt={project.title}
+                                  width={400}
+                                  height={180}
+                                  className="w-full object-cover rounded-2xl"
+                                  style={{ height: '210px' }}
+                                />
+                              </div>
+                            )}
+
+                            <div className="p-4 sm:p-5 flex flex-col flex-grow">
+                              <p className="text-sm mb-3" style={{ color: 'rgba(255, 255, 255, 0.72)' }}>{project.industry}</p>
+                              <h3 className="font-bold text-white mb-4 leading-tight line-clamp-2 uppercase" style={{ fontSize: 'clamp(20px, 1.6vw, 28px)', letterSpacing: '-0.02em' }}>
+                                {project.title}
+                              </h3>
+
+                              <div className="flex flex-wrap items-center gap-2 mb-4">
+                                {project.tags.slice(0, 3).map((tag) => (
+                                  <span
+                                    key={`${project.title}-${tag}`}
+                                    className="inline-flex items-center justify-center h-7 px-3 rounded-full border text-xs font-medium whitespace-nowrap"
+                                    style={{ background: 'rgba(15, 23, 42, 0.9)', borderColor: 'rgba(148, 163, 184, 0.24)', color: '#CBD5E1' }}
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+
+                              <div className="mt-auto pt-1">
+                                <span
+                                  className="inline-flex items-center gap-2 font-semibold text-[#22D3EE] group-hover:text-[#06B6D4] group-active:text-[#06B6D4] transition-colors"
+                                  style={{ fontSize: 'clamp(14px, 1vw, 16px)' }}
+                                >
+                                  <span>View More</span>
+                                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                </span>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right Arrow - in document flow, always visible */}
+                  <button
+                    onClick={goToNext}
+                    disabled={!canGoNext}
+                    className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 border-2 border-white/30 shadow-xl ${canGoNext
+                      ? 'bg-cyan-500 hover:bg-cyan-400 text-white cursor-pointer hover:scale-110 active:scale-95'
+                      : 'bg-gray-700 text-white/50 cursor-not-allowed opacity-60'
+                    }`}
+                    aria-label="Next slide"
+                    type="button"
+                  >
+                    <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={3} />
+                  </button>
+                </div>
+
+                {/* Mobile carousel (full width, with side padding so overlay arrows don't cover content) */}
+                <div className="sm:hidden w-full overflow-hidden px-12">
                   {/* Carousel Track - Transform Based */}
                   <div
                     className="flex gap-4 sm:gap-6 transition-transform duration-500 ease-in-out"
@@ -628,20 +749,6 @@ export function HomePage() {
                     ))}
                   </div>
                 </div>
-
-                {/* Right Arrow - in document flow, always visible */}
-                <button
-                  onClick={goToNext}
-                  disabled={!canGoNext}
-                  className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 border-2 border-white/30 shadow-xl ${canGoNext
-                    ? 'bg-cyan-500 hover:bg-cyan-400 text-white cursor-pointer hover:scale-110 active:scale-95'
-                    : 'bg-gray-700 text-white/50 cursor-not-allowed opacity-60'
-                  }`}
-                  aria-label="Next slide"
-                  type="button"
-                >
-                  <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={3} />
-                </button>
               </div>
 
               {/* View All Button */}
