@@ -140,13 +140,9 @@ export function Footer() {
             >
               <MapPin className="mt-0.5 h-4 w-4 text-2xl  flex-shrink-0" style={{ color: ACCENT }} />
               <div className="space-y-0.5 text-lg">
-                <div className="font-semibold text-sm transition-colors duration-200 group-hover:text-[#22D3EE]">
-                  Ahmedabad, India
+                <div className="transition-colors text-sm font-semibold duration-200 group-hover:text-[#22D3EE]">
+                  SATYAM 1, 414, AMBA BUSINESS PARK, B/H TRI MANDIR, ADALAJ 382421, Dist Gandhinagar Gujarat
                 </div>
-                <div className="transition-colors text-sm duration-200 group-hover:text-[#22D3EE]">
-                SATYAM 1, 414, AMBA BUSINESS PARK, B/H TRI MANDIR, ADALAJ 382421, Dist Gandhinagar Gujarat
-                </div>
-               
               </div>
             </a>
           </div>

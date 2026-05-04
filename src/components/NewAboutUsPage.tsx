@@ -758,7 +758,7 @@ export function NewAboutUsPage() {
                     <div className="flex items-start gap-3 rounded-xl border px-4 py-4" style={{ borderColor: 'rgba(255,255,255,0.10)', background: 'rgba(8, 14, 24, 0.35)' }}>
                       <img
                         src="/images/inidan.flag.jpg"
-                        alt="India"
+                        alt="Flag"
                         className="w-8 h-6 object-cover rounded mt-1"
                       />
                       <div>

@@ -182,7 +182,7 @@ export function BrochurePage() {
     const contact = {
       email: 'info@jashom.com',
       phone: '+91 90239 06363',
-      address: 'SATYAM 1, 414, AMBA BUSINESS PARK, B/H TRI MANDIR, ADALAJ 382421, Dist Gandhinagar Gujarat, India',
+      address: 'SATYAM 1, 414, AMBA BUSINESS PARK, B/H TRI MANDIR, ADALAJ 382421, Dist Gandhinagar Gujarat',
     };
 
     return {

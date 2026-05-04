@@ -110,7 +110,7 @@ export function DividerLine() {
 }
 
 export function renderOfficeCardIcon(type: 'address' | 'email' | 'phone') {
-  if (type === 'address') return <img src="/images/inidan.flag.jpg" alt="India Flag" className="w-full h-full object-cover" />;
+  if (type === 'address') return <img src="/images/inidan.flag.jpg" alt="Flag" className="w-full h-full object-cover" />;
   if (type === 'email') {
     return (
       <svg className={OFFICE_ICON_SVG_CLASS} style={{ color: ACCENT_COLOR }} {...OFFICE_ICON_SVG_PROPS}>

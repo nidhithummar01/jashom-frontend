@@ -297,7 +297,7 @@ export function ContactPage() {
                             B/H TRI MANDIR, ADALAJ 382421
                           </p>
                           <p className="text-lg leading-relaxed" style={{ ...MUTED_STYLE, marginTop: '18px', marginBottom: '0' }}>
-                            Dist Gandhinagar, Gujarat, India
+                            Dist Gandhinagar, Gujarat
                           </p>
                         </div>
                       </div>

@@ -2,7 +2,7 @@ import type React from 'react';
 
 /** Shared address used by CUDA and GPU service page contact sections. */
 export const SERVICE_PAGE_ADDRESS =
-  'SATYAM 1,\n414,\nAMBA BUSINESS PARK,\nB/H TRI MANDIR,\nADALAJ 382421,\nDist Gandhinagar Gujarat,\nIndia';
+  'SATYAM 1,\n414,\nAMBA BUSINESS PARK,\nB/H TRI MANDIR,\nADALAJ 382421,\nDist Gandhinagar Gujarat';
 
 type FormFieldBase = {
   name: 'fullName' | 'email' | 'company' | 'phone' | 'message';
