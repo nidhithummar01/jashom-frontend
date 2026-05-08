@@ -163,7 +163,7 @@ export function HomePage() {
             Start Your AI Transformation
           </Link>
           <a
-            href="https://calendly.com/jaydave-jashom/new-meeting"
+            href="https://cal.id/jashom-technologies/30min"
             target="_blank"
             rel="noopener noreferrer"
             className="ui-btn ui-btn--lg w-auto max-w-xs border text-center cursor-pointer transition-all duration-240 hover:bg-white/10 hover:border-[rgba(34,211,238,0.4)] hover:-translate-y-px"
@@ -1090,7 +1090,7 @@ export function HomePage() {
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
                     <a
-                      href="https://calendly.com/jaydave-jashom/new-meeting"
+                      href="https://cal.id/jashom-technologies/30min"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="ui-btn ui-btn--lg w-full sm:w-auto bg-black border border-white text-white hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer"
