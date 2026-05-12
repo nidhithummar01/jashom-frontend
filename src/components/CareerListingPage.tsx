@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { SEO as Seo } from './SEO';
 import { useState } from 'react';
 import { careers, getAllDepartments } from '../data/careersData';
-import { MapPin, Clock, Users, ArrowRight } from 'lucide-react';
+import { MapPin, Clock, Users, ArrowRight, Briefcase } from 'lucide-react';
 
 const SECTION_BG = { black: '#000000', dark: '#0B0F14' } as const;
 const BENEFIT_CARD_STYLE = {
@@ -59,19 +59,24 @@ const LIST_ITEM_STYLE = { color: '#D1D5DB' as const, lineHeight: 1.6 };
 const BULLET_STYLE = { background: '#22D3EE' as const };
 const SECTION_TITLE_STYLE = { color: '#22D3EE' as const };
 
+/** Set to `true` when roles should appear on this page again. */
+const HAS_PUBLISHED_OPENINGS = false;
+
 export function CareerListingPage() {
   const [selectedDepartment, setSelectedDepartment] = useState('All');
-  const departments = getAllDepartments();
+  const publishedCareers = HAS_PUBLISHED_OPENINGS ? careers : [];
+  const departments = HAS_PUBLISHED_OPENINGS ? getAllDepartments() : [];
 
-  const filteredCareers = selectedDepartment === 'All' 
-    ? careers 
-    : careers.filter(career => career.department === selectedDepartment);
+  const filteredCareers =
+    selectedDepartment === 'All'
+      ? publishedCareers
+      : publishedCareers.filter((career) => career.department === selectedDepartment);
 
   return (
     <div className="min-h-screen" style={{ background: SECTION_BG.black }}>
       <Seo
-        title="Job Openings at Jashom | Explore Opportunities"
-        description="Explore current job openings at Jashom. Join our team of innovators building the future of AI and GPU computing."
+        title="Job Openings at Jashom | Careers"
+        description="Careers at Jashom. There are no open roles at the moment; you can still apply on the main careers page for future opportunities."
         keywords="job openings, careers, AI jobs, CUDA developer jobs, machine learning jobs, remote jobs"
       />
 
@@ -181,38 +186,101 @@ export function CareerListingPage() {
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG.black }}>
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-8"
-          >
-            <h2 className="text-2xl font-bold mb-6" style={{ color: '#FAFAFA' }}>
-              Categories
-            </h2>
-            
-            <div className="flex flex-wrap gap-3">
-              {departments.map((dept) => (
-                <button
-                  key={dept}
-                  onClick={() => setSelectedDepartment(dept)}
-                  className="px-6 py-2.5 rounded-full font-medium transition-all duration-300"
-                  style={selectedDepartment === dept ? DEPT_BUTTON_SELECTED : DEPT_BUTTON_UNSELECTED}
-                >
-                  {dept}
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Categories Section — only when there are published openings */}
+      {HAS_PUBLISHED_OPENINGS && (
+        <section className="py-12 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG.black }}>
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-8"
+            >
+              <h2 className="text-2xl font-bold mb-6" style={{ color: '#FAFAFA' }}>
+                Categories
+              </h2>
+
+              <div className="flex flex-wrap gap-3">
+                {departments.map((dept) => (
+                  <button
+                    key={dept}
+                    type="button"
+                    onClick={() => setSelectedDepartment(dept)}
+                    className="px-6 py-2.5 rounded-full font-medium transition-all duration-300"
+                    style={selectedDepartment === dept ? DEPT_BUTTON_SELECTED : DEPT_BUTTON_UNSELECTED}
+                  >
+                    {dept}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* Career Cards Grid */}
       <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG.black }}>
         <div className="max-w-7xl mx-auto">
+          {filteredCareers.length === 0 ? (
+            !HAS_PUBLISHED_OPENINGS ? (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="relative overflow-hidden rounded-2xl border p-8 sm:p-10"
+                style={{
+                  background: 'linear-gradient(180deg, rgba(17, 24, 39, 0.35) 0%, rgba(11, 15, 20, 0.55) 100%)',
+                  borderColor: 'rgba(255,255,255,0.12)',
+                  boxShadow: '0 24px 80px rgba(0,0,0,0.45)',
+                }}
+              >
+                <div
+                  className="pointer-events-none absolute -top-20 left-1/2 h-56 w-[520px] -translate-x-1/2 rounded-full blur-3xl"
+                  style={{
+                    background:
+                      'radial-gradient(circle, rgba(34, 211, 238, 0.18) 0%, rgba(34, 211, 238, 0.04) 35%, rgba(0,0,0,0) 70%)',
+                  }}
+                />
+                <div className="relative z-10 flex flex-col items-center text-center">
+                  <div
+                    className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border"
+                    style={{
+                      borderColor: 'rgba(34, 211, 238, 0.28)',
+                      background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.16) 0%, rgba(34, 211, 238, 0.04) 100%)',
+                    }}
+                  >
+                    <Briefcase className="h-8 w-8 text-[#22D3EE]" />
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: '#FAFAFA' }}>
+                    Currently no openings
+                  </h2>
+                  <p className="max-w-2xl text-sm sm:text-base leading-relaxed" style={{ color: 'rgba(250,250,250,0.72)' }}>
+                    We’re not hiring right now, but you can still submit your resume on the careers page for future opportunities.
+                  </p>
+                  <div className="mt-6">
+                    <Link
+                      to="/careers/#apply-form"
+                      className="ui-btn ui-btn--lg inline-flex border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#22D3EE] to-[#06B6D4] shadow-[0_10px_42px_rgba(34,211,238,0.35)] hover:shadow-[0_16px_60px_rgba(34,211,238,0.55)] hover:-translate-y-0.5"
+                      style={{ color: '#06121a' }}
+                    >
+                      Submit Resume
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center py-20"
+              >
+                <p className="text-xl" style={{ color: '#9CA3AF' }}>
+                  No openings found in this department.
+                </p>
+              </motion.div>
+            )
+          ) : (
           <div className="space-y-8">
             {filteredCareers.map((career, index) => (
               <motion.div
@@ -329,18 +397,6 @@ export function CareerListingPage() {
               </motion.div>
             ))}
           </div>
-
-          {/* No Results */}
-          {filteredCareers.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-20"
-            >
-              <p className="text-xl" style={{ color: '#9CA3AF' }}>
-                No openings found in this department.
-              </p>
-            </motion.div>
           )}
         </div>
       </section>
