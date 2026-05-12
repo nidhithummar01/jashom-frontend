@@ -123,7 +123,11 @@ function CareerListingDepartmentFilterEmpty() {
   );
 }
 
-function CareerListingPublishedCards({ items }: { items: Career[] }) {
+type CareerListingPublishedCardsProps = Readonly<{
+  items: readonly Career[];
+}>;
+
+function CareerListingPublishedCards({ items }: CareerListingPublishedCardsProps) {
   return (
     <div className="space-y-8">
       {items.map((career, index) => (
