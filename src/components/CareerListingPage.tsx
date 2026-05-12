@@ -1,8 +1,8 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { SEO as Seo } from './SEO';
-import { useState } from 'react';
-import { careers, getAllDepartments } from '../data/careersData';
+import { useState, type ReactNode } from 'react';
+import { careers, getAllDepartments, type Career } from '../data/careersData';
 import { MapPin, Clock, Users, ArrowRight, Briefcase } from 'lucide-react';
 
 const SECTION_BG = { black: '#000000', dark: '#0B0F14' } as const;
@@ -62,6 +62,170 @@ const SECTION_TITLE_STYLE = { color: '#22D3EE' as const };
 /** Set to `true` when roles should appear on this page again. */
 const HAS_PUBLISHED_OPENINGS = false;
 
+function CareerListingNoPublishedOpeningsCard() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="relative overflow-hidden rounded-2xl border p-8 sm:p-10"
+      style={{
+        background: 'linear-gradient(180deg, rgba(17, 24, 39, 0.35) 0%, rgba(11, 15, 20, 0.55) 100%)',
+        borderColor: 'rgba(255,255,255,0.12)',
+        boxShadow: '0 24px 80px rgba(0,0,0,0.45)',
+      }}
+    >
+      <div
+        className="pointer-events-none absolute -top-20 left-1/2 h-56 w-[520px] -translate-x-1/2 rounded-full blur-3xl"
+        style={{
+          background:
+            'radial-gradient(circle, rgba(34, 211, 238, 0.18) 0%, rgba(34, 211, 238, 0.04) 35%, rgba(0,0,0,0) 70%)',
+        }}
+      />
+      <div className="relative z-10 flex flex-col items-center text-center">
+        <div
+          className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border"
+          style={{
+            borderColor: 'rgba(34, 211, 238, 0.28)',
+            background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.16) 0%, rgba(34, 211, 238, 0.04) 100%)',
+          }}
+        >
+          <Briefcase className="h-8 w-8 text-[#22D3EE]" />
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: '#FAFAFA' }}>
+          Currently no openings
+        </h2>
+        <p className="max-w-2xl text-sm sm:text-base leading-relaxed" style={{ color: 'rgba(250,250,250,0.72)' }}>
+          We’re not hiring right now, but you can still submit your resume on the careers page for future opportunities.
+        </p>
+        <div className="mt-6">
+          <Link
+            to="/careers/#apply-form"
+            className="ui-btn ui-btn--lg inline-flex border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#22D3EE] to-[#06B6D4] shadow-[0_10px_42px_rgba(34,211,238,0.35)] hover:shadow-[0_16px_60px_rgba(34,211,238,0.55)] hover:-translate-y-0.5"
+            style={{ color: '#06121a' }}
+          >
+            Submit Resume
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function CareerListingDepartmentFilterEmpty() {
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
+      <p className="text-xl" style={{ color: '#9CA3AF' }}>
+        No openings found in this department.
+      </p>
+    </motion.div>
+  );
+}
+
+function CareerListingPublishedCards({ items }: { items: Career[] }) {
+  return (
+    <div className="space-y-8">
+      {items.map((career, index) => (
+        <motion.div
+          key={career.id}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+          className="group"
+        >
+          <div
+            className="relative rounded-3xl overflow-hidden transition-all duration-500 border border-[rgba(16,185,129,0.15)] shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:-translate-y-1 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.2)]"
+            style={CAREER_CARD_BG}
+          >
+            <div className="p-8 md:p-10">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-center gap-3 mb-4">
+                    <span className="px-4 py-1.5 rounded-full text-xs font-semibold" style={DEPT_PILL_STYLE}>
+                      {career.department}
+                    </span>
+                    <span className="px-4 py-1.5 rounded-full text-xs" style={POSTED_PILL_STYLE}>
+                      {career.postedDate}
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl md:text-3xl font-bold mb-3" style={{ color: '#FAFAFA', lineHeight: 1.3 }}>
+                    {career.title}
+                  </h3>
+
+                  <p className="text-base mb-6" style={{ color: '#D1D5DB', lineHeight: 1.7 }}>
+                    {career.description}
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-4 text-sm" style={{ color: '#9CA3AF' }}>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4" style={{ color: META_ICON_COLOR }} />
+                      <span>{career.location}</span>
+                    </div>
+                    <span>•</span>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4" style={{ color: META_ICON_COLOR }} />
+                      <span>{career.type}</span>
+                    </div>
+                    <span>•</span>
+                    <div className="flex items-center gap-2">
+                      <Users className="w-4 h-4" style={{ color: META_ICON_COLOR }} />
+                      <span>
+                        {career.openings} {career.openings === 1 ? 'Opening' : 'Openings'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <Link
+                  to={`/careers/apply?role=${encodeURIComponent(career.title)}`}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 whitespace-nowrap cursor-pointer border-0"
+                  style={APPLY_BUTTON_STYLE}
+                  onMouseEnter={(e) => Object.assign(e.currentTarget.style, APPLY_BUTTON_HOVER)}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = APPLY_BUTTON_STYLE.background;
+                    e.currentTarget.style.boxShadow = APPLY_BUTTON_STYLE.boxShadow;
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <span>Apply Now</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+
+              <div style={DIVIDER_STYLE} />
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {careerContentSections.map((section) => (
+                  <div key={section.key}>
+                    <h4 className="text-lg font-semibold mb-4" style={SECTION_TITLE_STYLE}>
+                      {section.title}
+                    </h4>
+                    <ul className="space-y-3">
+                      {career[section.key].slice(0, 4).map((item) => (
+                        <li
+                          key={`${career.id}-${section.itemKey}-${item}`}
+                          className="flex items-start gap-3 text-sm"
+                          style={LIST_ITEM_STYLE}
+                        >
+                          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2" style={BULLET_STYLE} />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 export function CareerListingPage() {
   const [selectedDepartment, setSelectedDepartment] = useState('All');
   const publishedCareers = HAS_PUBLISHED_OPENINGS ? careers : [];
@@ -71,6 +235,15 @@ export function CareerListingPage() {
     selectedDepartment === 'All'
       ? publishedCareers
       : publishedCareers.filter((career) => career.department === selectedDepartment);
+
+  let careersGridContent: ReactNode;
+  if (filteredCareers.length > 0) {
+    careersGridContent = <CareerListingPublishedCards items={filteredCareers} />;
+  } else if (!HAS_PUBLISHED_OPENINGS) {
+    careersGridContent = <CareerListingNoPublishedOpeningsCard />;
+  } else {
+    careersGridContent = <CareerListingDepartmentFilterEmpty />;
+  }
 
   return (
     <div className="min-h-screen" style={{ background: SECTION_BG.black }}>
@@ -220,185 +393,7 @@ export function CareerListingPage() {
 
       {/* Career Cards Grid */}
       <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: SECTION_BG.black }}>
-        <div className="max-w-7xl mx-auto">
-          {filteredCareers.length === 0 ? (
-            !HAS_PUBLISHED_OPENINGS ? (
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="relative overflow-hidden rounded-2xl border p-8 sm:p-10"
-                style={{
-                  background: 'linear-gradient(180deg, rgba(17, 24, 39, 0.35) 0%, rgba(11, 15, 20, 0.55) 100%)',
-                  borderColor: 'rgba(255,255,255,0.12)',
-                  boxShadow: '0 24px 80px rgba(0,0,0,0.45)',
-                }}
-              >
-                <div
-                  className="pointer-events-none absolute -top-20 left-1/2 h-56 w-[520px] -translate-x-1/2 rounded-full blur-3xl"
-                  style={{
-                    background:
-                      'radial-gradient(circle, rgba(34, 211, 238, 0.18) 0%, rgba(34, 211, 238, 0.04) 35%, rgba(0,0,0,0) 70%)',
-                  }}
-                />
-                <div className="relative z-10 flex flex-col items-center text-center">
-                  <div
-                    className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border"
-                    style={{
-                      borderColor: 'rgba(34, 211, 238, 0.28)',
-                      background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.16) 0%, rgba(34, 211, 238, 0.04) 100%)',
-                    }}
-                  >
-                    <Briefcase className="h-8 w-8 text-[#22D3EE]" />
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: '#FAFAFA' }}>
-                    Currently no openings
-                  </h2>
-                  <p className="max-w-2xl text-sm sm:text-base leading-relaxed" style={{ color: 'rgba(250,250,250,0.72)' }}>
-                    We’re not hiring right now, but you can still submit your resume on the careers page for future opportunities.
-                  </p>
-                  <div className="mt-6">
-                    <Link
-                      to="/careers/#apply-form"
-                      className="ui-btn ui-btn--lg inline-flex border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#22D3EE] to-[#06B6D4] shadow-[0_10px_42px_rgba(34,211,238,0.35)] hover:shadow-[0_16px_60px_rgba(34,211,238,0.55)] hover:-translate-y-0.5"
-                      style={{ color: '#06121a' }}
-                    >
-                      Submit Resume
-                    </Link>
-                  </div>
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-center py-20"
-              >
-                <p className="text-xl" style={{ color: '#9CA3AF' }}>
-                  No openings found in this department.
-                </p>
-              </motion.div>
-            )
-          ) : (
-          <div className="space-y-8">
-            {filteredCareers.map((career, index) => (
-              <motion.div
-                key={career.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group"
-              >
-                <div
-                  className="relative rounded-3xl overflow-hidden transition-all duration-500 border border-[rgba(16,185,129,0.15)] shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:-translate-y-1 hover:border-[rgba(16,185,129,0.4)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.2)]"
-                  style={CAREER_CARD_BG}
-                >
-                  <div className="p-8 md:p-10">
-                    {/* Header Section */}
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
-                      <div className="flex-1">
-                        <div className="flex flex-wrap items-center gap-3 mb-4">
-                          <span
-                            className="px-4 py-1.5 rounded-full text-xs font-semibold"
-                            style={DEPT_PILL_STYLE}
-                          >
-                            {career.department}
-                          </span>
-                          <span
-                            className="px-4 py-1.5 rounded-full text-xs"
-                            style={POSTED_PILL_STYLE}
-                          >
-                            {career.postedDate}
-                          </span>
-                        </div>
-                        
-                        <h3
-                          className="text-2xl md:text-3xl font-bold mb-3"
-                          style={{ color: '#FAFAFA', lineHeight: 1.3 }}
-                        >
-                          {career.title}
-                        </h3>
-                        
-                        <p
-                          className="text-base mb-6"
-                          style={{ color: '#D1D5DB', lineHeight: 1.7 }}
-                        >
-                          {career.description}
-                        </p>
-
-                        {/* Meta Information */}
-                        <div className="flex flex-wrap items-center gap-4 text-sm" style={{ color: '#9CA3AF' }}>
-                          <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4" style={{ color: META_ICON_COLOR }} />
-                            <span>{career.location}</span>
-                          </div>
-                          <span>•</span>
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4" style={{ color: META_ICON_COLOR }} />
-                            <span>{career.type}</span>
-                          </div>
-                          <span>•</span>
-                          <div className="flex items-center gap-2">
-                            <Users className="w-4 h-4" style={{ color: META_ICON_COLOR }} />
-                            <span>{career.openings} {career.openings === 1 ? 'Opening' : 'Openings'}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Apply Button */}
-                      <Link
-                        to={`/careers/apply?role=${encodeURIComponent(career.title)}`}
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 whitespace-nowrap cursor-pointer border-0"
-                        style={APPLY_BUTTON_STYLE}
-                        onMouseEnter={(e) => Object.assign(e.currentTarget.style, APPLY_BUTTON_HOVER)}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = APPLY_BUTTON_STYLE.background;
-                          e.currentTarget.style.boxShadow = APPLY_BUTTON_STYLE.boxShadow;
-                          e.currentTarget.style.transform = 'translateY(0)';
-                        }}
-                      >
-                        <span>Apply Now</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </Link>
-                    </div>
-
-                    {/* Divider */}
-                    <div style={DIVIDER_STYLE} />
-
-                    {/* Content Sections */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                      {careerContentSections.map((section) => (
-                        <div key={section.key}>
-                          <h4 className="text-lg font-semibold mb-4" style={SECTION_TITLE_STYLE}>
-                            {section.title}
-                          </h4>
-                          <ul className="space-y-3">
-                            {career[section.key].slice(0, 4).map((item) => (
-                              <li
-                                key={`${career.id}-${section.itemKey}-${item}`}
-                                className="flex items-start gap-3 text-sm"
-                                style={LIST_ITEM_STYLE}
-                              >
-                                <span
-                                  className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2"
-                                  style={BULLET_STYLE}
-                                />
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          )}
-        </div>
+        <div className="max-w-7xl mx-auto">{careersGridContent}</div>
       </section>
     </div>
   );
