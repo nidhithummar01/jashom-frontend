@@ -15,26 +15,7 @@ interface JobOpening {
   type?: string;
 }
 
-const jobOpenings: JobOpening[] = [
-  {
-    id: 1,
-    title: 'Account Executive',
-    openings: 1,
-    description: 'We are seeking trustworthy candidates who work efficiently without sacrificing accuracy. Accountants can expect to work with multiple tasks with deadlines and provide transparent and complete reports to management. The ideal candidates will be innovative enough to suggest tailored solutions to common account problems.',
-    postedDays: 3,
-    location: 'Remote',
-    type: 'Full-time'
-  },
-  {
-    id: 2,
-    title: 'iPhone App Developer',
-    openings: 5,
-    description: 'Are you iOS geek!! Sounds familiar with Mac system and iOS development. Looking for challenging work, Career Growth and Personal growth as well!! Here is the great Opportunity knocking the door of success, open the door and grab it with Feel at Home and friendly work environment. Well we here to hear you!! Together with our development...',
-    postedDays: 5,
-    location: 'Remote / Hybrid',
-    type: 'Full-time'
-  }
-];
+const jobOpenings: JobOpening[] = [];
 
 export function CareersPage() {
   const navigate = useNavigate();
@@ -282,17 +263,72 @@ export function CareersPage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {jobOpenings.map((job, index) => (
-              <motion.div
-                key={job.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="rounded-2xl p-8 border transition-all duration-300 hover:shadow-lg"
-                style={{ background: 'transparent', borderColor: 'rgba(34, 211, 238, 0.3)' }}
-              >
+          {jobOpenings.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="relative overflow-hidden rounded-2xl border p-8 sm:p-10"
+              style={{
+                background: 'linear-gradient(180deg, rgba(17, 24, 39, 0.35) 0%, rgba(11, 15, 20, 0.55) 100%)',
+                borderColor: 'rgba(255,255,255,0.12)',
+                boxShadow: '0 24px 80px rgba(0,0,0,0.45)',
+              }}
+            >
+              {/* ambient glow */}
+              <div
+                className="pointer-events-none absolute -top-20 left-1/2 h-56 w-[520px] -translate-x-1/2 rounded-full blur-3xl"
+                style={{
+                  background:
+                    'radial-gradient(circle, rgba(34, 211, 238, 0.18) 0%, rgba(34, 211, 238, 0.04) 35%, rgba(0,0,0,0) 70%)',
+                }}
+              />
+              <div className="relative z-10 flex flex-col items-center text-center">
+                <div
+                  className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border"
+                  style={{
+                    borderColor: 'rgba(34, 211, 238, 0.28)',
+                    background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.16) 0%, rgba(34, 211, 238, 0.04) 100%)',
+                  }}
+                >
+                  <Briefcase className="h-8 w-8 text-[#22D3EE]" />
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: '#FAFAFA' }}>
+                  Currently no openings
+                </h3>
+                <p className="max-w-2xl text-sm sm:text-base leading-relaxed" style={{ color: 'rgba(250,250,250,0.72)' }}>
+                  We’re not hiring right now, but you can still submit your resume for future opportunities.
+                </p>
+
+                <div className="mt-6 flex flex-col sm:flex-row items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const el = document.getElementById('apply-form');
+                      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                    className="ui-btn ui-btn--lg w-full sm:w-auto border-0 cursor-pointer transition-all duration-300 bg-gradient-to-br from-[#22D3EE] to-[#06B6D4] shadow-[0_10px_42px_rgba(34,211,238,0.35)] hover:shadow-[0_16px_60px_rgba(34,211,238,0.55)] hover:-translate-y-0.5"
+                    style={{ color: '#06121a' }}
+                  >
+                    Submit Resume
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {jobOpenings.map((job, index) => (
+                <motion.div
+                  key={job.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="rounded-2xl p-8 border transition-all duration-300 hover:shadow-lg"
+                  style={{ background: 'transparent', borderColor: 'rgba(34, 211, 238, 0.3)' }}
+                >
                 {/* Job Header */}
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex-1">
@@ -448,8 +484,9 @@ export function CareersPage() {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
