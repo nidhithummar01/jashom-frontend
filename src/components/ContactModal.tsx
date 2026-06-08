@@ -118,14 +118,13 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         >
           {/* Dark Overlay Backdrop (60-70% opacity) */}
           <div className="absolute inset-0 bg-black/70" />
-          
-          {/* RIGHT SIDE Modal - Fixed positioning */}
+
+          {/* RIGHT SIDE Modal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, x: 100 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0.9, x: 100 }}
-            className="fixed top-1/2 -translate-y-1/2 w-full max-w-2xl glass-effect rounded-2xl border border-[#ffffff]/30 bg-black/95 shadow-2xl max-h-[90vh] overflow-y-auto sm:max-h-[85vh]"
-            style={{ right: '24px' }}
+            className="contact-modal-panel glass-effect rounded-2xl border border-[#ffffff]/30 bg-black/95 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button - Top Right */}
@@ -137,7 +136,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
               <X className="w-5 h-5 text-white" />
             </button>
 
-            <div className="p-6 sm:p-8">
+            <div className="p-5 pt-16 sm:p-8">
               {/* Header */}
               <div className="mb-6 sm:mb-8">
                 <h2 className="text-white text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Contact Us</h2>
@@ -162,8 +161,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   <p className="text-white/70">Redirecting to thank you page...</p>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div>
                       <label className="block text-white/80 mb-2 font-medium">Name *</label>
                       <input
@@ -193,7 +192,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div>
                       <label className="block text-white/80 mb-2 font-medium">Company</label>
                       <input
