@@ -30,6 +30,7 @@ export function Footer() {
     { label: 'GPU Optimization Service', path: '/gpu-optimization-service/' },
     { label: 'CUDA Development Service', path: '/cuda-development-service/' },
     { label: 'Hire CUDA Developer', path: '/hire-cuda-developer/' },
+    { label: 'Hire Rust Developer', path: '/hire-rust-developers/' },
   ];
 
   const companyLinks = [

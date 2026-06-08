@@ -40,6 +40,7 @@ const RedfishBMCTelemetryCaseStudy = lazy(() => import('./components/portfolio/c
 
 // Lazy load service pages (high priority for optimization)
 const HireCudaDeveloperPage = lazy(() => import('./components/HireCudaDeveloperPage').then(module => ({ default: module.HireCudaDeveloperPage })));
+const HireRustDevelopersPage = lazy(() => import('./components/HireRustDevelopersPage').then(module => ({ default: module.HireRustDevelopersPage })));
 const GPUOptimizationServicePage = lazy(() => import('./components/GPUOptimizationServicePage').then(module => ({ default: module.GPUOptimizationServicePage })));
 const CUDADevelopmentServicePage = lazy(() => import('./components/CUDADevelopmentServicePage').then(module => ({ default: module.CUDADevelopmentServicePage })));
 const ThankYouPage = lazy(() => import('./components/ThankYouPage').then(module => ({ default: module.ThankYouPage })));
@@ -121,6 +122,7 @@ function AnimatedRoutes() {
 
           {/* Service Routes - High Priority Pages */}
           <Route path="/hire-cuda-developer/" element={<PageTransition><HireCudaDeveloperPage /></PageTransition>} />
+          <Route path="/hire-rust-developers/" element={<PageTransition><HireRustDevelopersPage /></PageTransition>} />
           <Route path="/thank-you/" element={<PageTransition><ThankYouPage /></PageTransition>} />
           <Route path="/gpu-optimization-service/" element={<PageTransition><GPUOptimizationServicePage /></PageTransition>} />
           <Route path="/cuda-development-service/" element={<PageTransition><CUDADevelopmentServicePage /></PageTransition>} />

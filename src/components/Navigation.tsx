@@ -217,7 +217,8 @@ export function Navigation() {
     {
       label: 'Hire Expert',
       dropdown: [
-        { path: '/hire-cuda-developer/', label: 'Hire CUDA Developer' }
+        { path: '/hire-cuda-developer/', label: 'Hire CUDA Developer' },
+        { path: '/hire-rust-developers/', label: 'Hire Rust Developer' }
       ]
     },
     {

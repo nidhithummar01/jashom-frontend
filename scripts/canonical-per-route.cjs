@@ -257,6 +257,12 @@ const ROUTE_META = {
       'Looking to hire CUDA developers? Get skilled GPU programmers for NVIDIA CUDA projects, performance optimization, and custom parallel computing solutions.',
     h1: 'Hire CUDA Developers',
   },
+  '/hire-rust-developers/': {
+    title: 'Hire Rust Developers - Hire Best Expert Rust Developer - Jashom',
+    description:
+      'Hire dedicated Rust developers from Jashom to accelerate your project. Our experienced Rust engineers deliver reliable, secure, and efficient applications tailored to your business needs.',
+    h1: 'Hire Rust Developers',
+  },
   '/about-us/': {
     title: 'About Jashom | GPU Optimization & CUDA Development Experts',
     description:
@@ -390,6 +396,7 @@ const STATIC_ROUTES = [
   '/contact/',
   '/brochure/',
   '/hire-cuda-developer/',
+  '/hire-rust-developers/',
   '/thank-you/',
   '/gpu-optimization-service/',
   '/cuda-development-service/',
