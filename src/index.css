@@ -1835,6 +1835,10 @@
     overscroll-behavior: contain;
   }
 
+  .contact-modal-content {
+    padding: 4rem 1.25rem 1.25rem;
+  }
+
   @media (min-width: 640px) {
     .contact-modal-panel {
       top: 50%;
@@ -1845,6 +1849,10 @@
       max-height: none;
       overflow-y: visible;
       translate: 0 -50%;
+    }
+
+    .contact-modal-content {
+      padding: 4.5rem 3rem 2.5rem;
     }
   }
 

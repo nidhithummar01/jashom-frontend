@@ -136,7 +136,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
               <X className="w-5 h-5 text-white" />
             </button>
 
-            <div className="p-5 pt-16 sm:p-8">
+            <div className="contact-modal-content">
               {/* Header */}
               <div className="mb-6 sm:mb-8">
                 <h2 className="text-white text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Contact Us</h2>
