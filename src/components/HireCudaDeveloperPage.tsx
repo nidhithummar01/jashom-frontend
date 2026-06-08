@@ -1,13 +1,16 @@
 import { motion } from 'motion/react';
 import { Award, Zap, DollarSign, ArrowRight } from 'lucide-react';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { buildContactPayloadFromState, submitContact } from '../api/contact';
+import React from 'react';
 import { SEO as Seo } from './SEO';
-const STAT_ICON_BOX = 'w-14 h-14 rounded flex items-center justify-center flex-shrink-0';
-const STAT_ICON_BG = { background: '#22D3EE' };
-const DIVIDER_CLASS = 'hidden sm:block w-px h-16';
-const DIVIDER_STYLE = { background: '#555555' };
+import {
+  hireDividerClass,
+  hireDividerStyle,
+  hireFeatureIconBoxStyle,
+  hireFormInputStyle,
+  hireStatIconBg,
+  hireStatIconBoxClass,
+  useHireDeveloperForm,
+} from './hireDeveloperShared';
 
 const heroStatsData = [
   { Icon: Award, title: '15 Days Risk-Free', subtitle: 'Trial' },
@@ -92,7 +95,7 @@ const RELATED_SERVICE_CARD_STYLE = {
   boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0, 0, 0.24)'
 } as const;
 const RELATED_SERVICE_BTN_STYLE = { background: '#22D3EE', color: '#FFFFFF' } as const;
-const HIRE_FORM_INPUT_STYLE = { background: '#1F2937', borderColor: 'rgba(34, 211, 238, 0.3)', color: '#FAFAFA' } as const;
+const HIRE_FORM_INPUT_STYLE = hireFormInputStyle;
 
 const reviewsData: { quote: string; author: string; filledStars: number }[] = [
   { quote: '"Our GPU workloads were dramatically improved after working with this team. Their CUDA optimization strategy enhanced throughput and reduced system latency beyond expectations."', author: 'CTO, AI Solutions Firm', filledStars: 5 },
@@ -124,52 +127,10 @@ const relatedServicesData = [
 ];
 
 
-const FEATURE_ICON_BOX_STYLE = { background: 'rgba(34, 211, 238, 0.1)' } as const;
+const FEATURE_ICON_BOX_STYLE = hireFeatureIconBoxStyle;
 
 export function HireCudaDeveloperPage() {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    company: '',
-    phone: '',
-    hiringModel: '',
-    message: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setHireSubmitError(null);
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const [hireSubmitting, setHireSubmitting] = useState(false);
-  const [hireSubmitError, setHireSubmitError] = useState<string | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (hireSubmitting) return;
-    setHireSubmitError(null);
-    setHireSubmitting(true);
-    try {
-      const payload = buildContactPayloadFromState(
-        {
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          company: formData.company,
-          message: formData.message,
-          hiringModel: formData.hiringModel,
-        },
-        'Hire CUDA Developer page'
-      );
-      await submitContact(payload);
-      navigate('/thank-you/');
-    } catch (err: unknown) {
-      setHireSubmitError(err instanceof Error ? err.message : 'Failed to submit.');
-    } finally {
-      setHireSubmitting(false);
-    }
-  };
+  const { formData, handleChange, handleSubmit, hireSubmitting, hireSubmitError } = useHireDeveloperForm('Hire CUDA Developer page');
 
   return (
     <>
@@ -281,9 +242,9 @@ export function HireCudaDeveloperPage() {
                       const IconComponent = stat.Icon;
                       return (
                         <React.Fragment key={stat.title}>
-                          {i > 0 && <div className={DIVIDER_CLASS} style={DIVIDER_STYLE} />}
+                          {i > 0 && <div className={hireDividerClass} style={hireDividerStyle} />}
                           <div className="flex items-center gap-4">
-                            <div className={STAT_ICON_BOX} style={STAT_ICON_BG}>
+                            <div className={hireStatIconBoxClass} style={hireStatIconBg}>
                               <IconComponent className="w-7 h-7" style={{ color: '#FFFFFF' }} />
                             </div>
                             <div>

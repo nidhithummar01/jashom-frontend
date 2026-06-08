@@ -1,14 +1,17 @@
 import { motion } from 'motion/react';
 import { ArrowRight, Award, Code2, DollarSign, Shield, Zap } from 'lucide-react';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { buildContactPayloadFromState, submitContact } from '../api/contact';
+import React from 'react';
 import { SEO as Seo } from './SEO';
+import {
+  hireDividerClass,
+  hireDividerStyle,
+  hireFeatureIconBoxStyle,
+  hireFormInputStyle,
+  hireStatIconBg,
+  hireStatIconBoxClass,
+  useHireDeveloperForm,
+} from './hireDeveloperShared';
 
-const STAT_ICON_BOX = 'w-14 h-14 rounded flex items-center justify-center flex-shrink-0';
-const STAT_ICON_BG = { background: '#22D3EE' };
-const DIVIDER_CLASS = 'hidden sm:block w-px h-16';
-const DIVIDER_STYLE = { background: '#555555' };
 const PAGE_BG = '#0B0F14';
 const CARD_BG = 'linear-gradient(160deg, rgba(20, 36, 56, 0.72) 0%, rgba(10, 20, 34, 0.82) 100%)';
 const CARD_BORDER = 'rgba(34, 211, 238, 0.24)';
@@ -16,8 +19,8 @@ const CARD_SHADOW = 'inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 26px rgba(0, 0
 const ICON_BOX_STYLE = { background: 'rgba(34, 211, 238, 0.12)', border: '1px solid rgba(34, 211, 238, 0.28)' } as const;
 const FAQ_ITEM_STYLE = { background: CARD_BG, borderColor: CARD_BORDER, boxShadow: CARD_SHADOW } as const;
 const RELATED_SERVICE_BTN_STYLE = { background: '#22D3EE', color: '#FFFFFF' } as const;
-const HIRE_FORM_INPUT_STYLE = { background: '#1F2937', borderColor: 'rgba(34, 211, 238, 0.3)', color: '#FAFAFA' } as const;
-const FEATURE_ICON_BOX_STYLE = { background: 'rgba(34, 211, 238, 0.1)' } as const;
+const HIRE_FORM_INPUT_STYLE = hireFormInputStyle;
+const FEATURE_ICON_BOX_STYLE = hireFeatureIconBoxStyle;
 const CHEVRON_DOWN_D = 'M19 9l-7 7-7-7';
 
 const heroStatsData = [
@@ -262,38 +265,7 @@ function InfoCard({ title, description, index }: Readonly<{ title: string; descr
 }
 
 export function HireRustDevelopersPage() {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    company: '',
-    phone: '',
-    hiringModel: '',
-    message: '',
-  });
-  const [hireSubmitting, setHireSubmitting] = useState(false);
-  const [hireSubmitError, setHireSubmitError] = useState<string | null>(null);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setHireSubmitError(null);
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (hireSubmitting) return;
-    setHireSubmitError(null);
-    setHireSubmitting(true);
-    try {
-      const payload = buildContactPayloadFromState(formData, 'Hire Rust Developers page');
-      await submitContact(payload);
-      navigate('/thank-you/');
-    } catch (err: unknown) {
-      setHireSubmitError(err instanceof Error ? err.message : 'Failed to submit.');
-    } finally {
-      setHireSubmitting(false);
-    }
-  };
+  const { formData, handleChange, handleSubmit, hireSubmitting, hireSubmitError } = useHireDeveloperForm('Hire Rust Developers page');
 
   return (
     <>
@@ -368,9 +340,9 @@ export function HireRustDevelopersPage() {
                       const IconComponent = stat.Icon;
                       return (
                         <React.Fragment key={stat.title}>
-                          {i > 0 && <div className={DIVIDER_CLASS} style={DIVIDER_STYLE} />}
+                          {i > 0 && <div className={hireDividerClass} style={hireDividerStyle} />}
                           <div className="flex items-center gap-4">
-                            <div className={STAT_ICON_BOX} style={STAT_ICON_BG}>
+                            <div className={hireStatIconBoxClass} style={hireStatIconBg}>
                               <IconComponent className="w-7 h-7" style={{ color: '#FFFFFF' }} />
                             </div>
                             <div>

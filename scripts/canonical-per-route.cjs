@@ -232,6 +232,8 @@ const SITE_ORIGIN = (process.env.SITE_ORIGIN || process.env.VITE_SITE_URL || 'ht
 
 // Per-route Title/Description for view-source (static HTML) on key SEO pages.
 // Other pages fall back to whatever is in dist/index.html (runtime SEO still applies).
+const routeMeta = (title, description, h1) => ({ title, description, h1 });
+
 const ROUTE_META = {
   '/': {
     title: 'GPU Optimization Services | CUDA Development Company | Jashom',
@@ -257,12 +259,11 @@ const ROUTE_META = {
       'Looking to hire CUDA developers? Get skilled GPU programmers for NVIDIA CUDA projects, performance optimization, and custom parallel computing solutions.',
     h1: 'Hire CUDA Developers',
   },
-  '/hire-rust-developers/': {
-    title: 'Hire Rust Developers - Hire Best Expert Rust Developer - Jashom',
-    description:
-      'Hire dedicated Rust developers from Jashom to accelerate your project. Our experienced Rust engineers deliver reliable, secure, and efficient applications tailored to your business needs.',
-    h1: 'Hire Rust Developers',
-  },
+  '/hire-rust-developers/': routeMeta(
+    'Hire Rust Developers - Hire Best Expert Rust Developer - Jashom',
+    'Hire dedicated Rust developers from Jashom to accelerate your project. Our experienced Rust engineers deliver reliable, secure, and efficient applications tailored to your business needs.',
+    'Hire Rust Developers'
+  ),
   '/about-us/': {
     title: 'About Jashom | GPU Optimization & CUDA Development Experts',
     description:
