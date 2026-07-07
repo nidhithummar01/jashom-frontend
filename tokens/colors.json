@@ -1,0 +1,279 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Jashom color design tokens. Mirrors the CSS custom properties in src/app/globals.css. Each token's $value carries both theme modes; $extensions.css is the source-of-truth CSS variable and $extensions.tailwind is the class to use in markup. Do not hand-author new hex values in components — add a token here first, then wire it into globals.css.",
+
+  "color": {
+    "$description": "Semantic tokens. These change value between the light theme (default) and the dark theme (html.dark), and are re-declared locally inside .always-dark / .dark-nav bands.",
+
+    "background": {
+      "primary": {
+        "$type": "color",
+        "$value": { "light": "#F7F7F4", "dark": "#111113" },
+        "$description": "Page background.",
+        "$extensions": { "css": "--bg-primary", "tailwind": "bg-linen" }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": { "light": "#FFFFFF", "dark": "#17171A" },
+        "$description": "Card / raised surface background.",
+        "$extensions": { "css": "--bg-secondary", "tailwind": "bg-paper" }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": { "light": "#ECEAE4", "dark": "#202024" },
+        "$description": "Muted fill — hover states, chips, icon wells.",
+        "$extensions": { "css": "--bg-tertiary", "tailwind": "bg-tint" }
+      }
+    },
+
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": { "light": "#111113", "dark": "#E8E6DF" },
+        "$description": "Headings and primary body text.",
+        "$extensions": { "css": "--text-primary", "tailwind": "text-ink" }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": { "light": "#5E5D59", "dark": "#A3A29C" },
+        "$description": "Supporting copy, descriptions.",
+        "$extensions": { "css": "--text-secondary", "tailwind": "text-ink-2" }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": { "light": "#9B9994", "dark": "#71706B" },
+        "$description": "Captions, eyebrows, timestamps, disabled text.",
+        "$extensions": { "css": "--text-tertiary", "tailwind": "text-ink-3" }
+      }
+    },
+
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": { "light": "#E4E3DE", "dark": "#28282C" },
+        "$description": "Hairline dividers, card borders, table rules.",
+        "$extensions": { "css": "--border-default", "tailwind": "border-line" }
+      },
+      "button": {
+        "$type": "color",
+        "$value": { "light": "#7F7E79", "dark": "#A3A29C" },
+        "$description": "Button border color. CSS variable only — no Tailwind alias exists; reference var(--btn-border) directly.",
+        "$extensions": { "css": "--btn-border", "tailwind": null }
+      }
+    },
+
+    "accent": {
+      "cta": {
+        "$type": "color",
+        "$value": { "light": "#18181C", "dark": "#FFFFFF" },
+        "$description": "Primary call-to-action background / focus ring / text selection background.",
+        "$extensions": { "css": "--accent-cta", "tailwind": "bg-cta" }
+      }
+    }
+  },
+
+  "colorBrand": {
+    "$description": "Fixed brand tokens — constant across themes, used to build permanently-dark bands and dark-surface hover states (e.g. .card-neon).",
+
+    "carbon": {
+      "$type": "color",
+      "$value": "#111113",
+      "$description": "Near-black brand base.",
+      "$extensions": { "css": "--carbon", "tailwind": "bg-carbon" }
+    },
+    "graphite": {
+      "$type": "color",
+      "$value": "#1E1E22",
+      "$description": "Elevated dark surface.",
+      "$extensions": { "css": "--graphite", "tailwind": "bg-graphite" }
+    },
+    "warmWhite": {
+      "$type": "color",
+      "$value": "#E8E6DF",
+      "$description": "Warm off-white text/foreground on dark surfaces.",
+      "$extensions": { "css": "--warm-white", "tailwind": "text-warmwhite" }
+    },
+    "darkText2": {
+      "$type": "color",
+      "$value": "#A3A29C",
+      "$description": "Muted secondary text on dark surfaces.",
+      "$extensions": { "css": "--dark-text-2", "tailwind": "text-darkink2" }
+    },
+    "darkBorder": {
+      "$type": "color",
+      "$value": "#2C2C30",
+      "$description": "Border color on permanently-dark surfaces.",
+      "$extensions": { "css": "--dark-border", "tailwind": "border-darkline" }
+    }
+  },
+
+  "colorStatus": {
+    "$description": "Status / feedback colors.",
+
+    "success": {
+      "$type": "color",
+      "$value": "#4E7A5C",
+      "$extensions": { "css": "--success", "tailwind": null }
+    },
+    "error": {
+      "$type": "color",
+      "$value": "#B05757",
+      "$extensions": { "css": "--error", "tailwind": null }
+    }
+  },
+
+  "colorButton": {
+    "$description": "One-off named colors used by special 3D button variants. Not theme-dependent. Each has a base fill plus the two edge tones used to build the inset-shadow bevel (see .btn-success-3d / .btn-cyan-3d in globals.css).",
+
+    "nvidiaGreen": {
+      "base": { "$type": "color", "$value": "#76B900", "$description": "Fill — .btn-success-3d" },
+      "baseHover": { "$type": "color", "$value": "#82C800", "$description": "Fill on :hover" },
+      "highlight": { "$type": "color", "$value": "#A4E016", "$description": "Top/left inset bevel edge" },
+      "highlightHover": { "$type": "color", "$value": "#B2F026", "$description": "Top/left inset bevel edge on :hover" },
+      "shadowEdge": { "$type": "color", "$value": "#3D5E00", "$description": "Bottom/right inset bevel edge + border" }
+    },
+    "cyan": {
+      "base": { "$type": "color", "$value": "#00B8D4", "$description": "Fill — .btn-cyan-3d (cookie-consent Accept button)" },
+      "baseHover": { "$type": "color", "$value": "#00C8E6", "$description": "Fill on :hover" },
+      "highlight": { "$type": "color", "$value": "#33D6EC", "$description": "Top/left inset bevel edge" },
+      "highlightHover": { "$type": "color", "$value": "#4DE0F4", "$description": "Top/left inset bevel edge on :hover" },
+      "shadowEdge": { "$type": "color", "$value": "#006F80", "$description": "Bottom/right inset bevel edge + border" }
+    }
+  },
+
+  "colorSvg": {
+    "$description": "Illustration palette for the CAD/blueprint SVG diagrams (Hero, Services). Kept separate from the semantic UI tokens so illustrations stay legible in both themes — note the dark-mode values intentionally diverge from the equivalent UI token (e.g. svg.paper is lighter than bg.secondary in dark mode) so plates don't merge into the background.",
+
+    "ink": {
+      "$type": "color",
+      "$value": { "light": "#18181C", "dark": "#E8E6DF" },
+      "$description": "Primary stroke / fill.",
+      "$extensions": { "css": "--svg-ink" }
+    },
+    "graphite": {
+      "$type": "color",
+      "$value": { "light": "#1E1E22", "dark": "#2C2C30" },
+      "$description": "Secondary dark stroke / fill.",
+      "$extensions": { "css": "--svg-graphite" }
+    },
+    "paper": {
+      "$type": "color",
+      "$value": { "light": "#FFFFFF", "dark": "#1A1A1E" },
+      "$description": "Plate / block fill.",
+      "$extensions": { "css": "--svg-paper" }
+    },
+    "linen": {
+      "$type": "color",
+      "$value": { "light": "#F7F7F4", "dark": "#111113" },
+      "$description": "Screen / panel background fill.",
+      "$extensions": { "css": "--svg-linen" }
+    },
+    "tint": {
+      "$type": "color",
+      "$value": { "light": "#ECEAE4", "dark": "#202024" },
+      "$description": "Muted fill.",
+      "$extensions": { "css": "--svg-tint" }
+    },
+    "line": {
+      "$type": "color",
+      "$value": { "light": "#E4E3DE", "dark": "#38383C" },
+      "$description": "Grid lines / hairlines.",
+      "$extensions": { "css": "--svg-line" }
+    },
+    "gray": {
+      "$type": "color",
+      "$value": { "light": "#9B9994", "dark": "#71706B" },
+      "$description": "Diagram labels / captions.",
+      "$extensions": { "css": "--svg-gray" }
+    }
+  },
+
+  "colorEffect": {
+    "$description": "Non-solid color effects.",
+
+    "radialGlow": {
+      "$type": "color",
+      "$value": { "light": "rgba(24, 24, 28, 0.06)", "dark": "rgba(255, 255, 255, 0.035)" },
+      "$description": "Radial gradient glow behind Hero and Final CTA (.always-dark sections).",
+      "$extensions": { "css": "--radial-glow" }
+    },
+    "selectionBackground": {
+      "$type": "color",
+      "$value": "{color.accent.cta}",
+      "$description": "::selection background — resolves to the accent.cta token."
+    },
+    "selectionForeground": {
+      "$type": "color",
+      "$value": "{colorBrand.warmWhite}",
+      "$description": "::selection text color."
+    }
+  },
+
+  "colorPresets": {
+    "$description": "Named, full-palette presets available live in the Customizer (src/components/Customizer.tsx → COLOR_PRESETS). These are alternate theme packages a designer can select for exploration — not tokens consumed directly by components. 'current' and 'dark-version' are equivalent to the default light/dark theme above.",
+
+    "current": {
+      "name": "Current Version (Classic Sand)",
+      "isDark": false,
+      "background": "#F7F7F4",
+      "card": "#FFFFFF",
+      "text": "#111113",
+      "accent": "#18181C",
+      "border": "#E4E3DE"
+    },
+    "darkVersion": {
+      "name": "Dark Version (Obsidian Slate)",
+      "isDark": true,
+      "background": "#111113",
+      "card": "#17171A",
+      "text": "#E8E6DF",
+      "accent": "#FFFFFF",
+      "border": "#28282C"
+    },
+    "whiteTheme": {
+      "name": "Pure White Theme",
+      "isDark": false,
+      "background": "#FFFFFF",
+      "card": "#FFFFFF",
+      "text": "#111113",
+      "accent": "#18181C",
+      "border": "#E4E3DE"
+    },
+    "greyTheme": {
+      "name": "Slate Grey Theme",
+      "isDark": false,
+      "background": "#EAEAEA",
+      "card": "#F5F5F5",
+      "text": "#1A1A1A",
+      "accent": "#000000",
+      "border": "#D1D1D1"
+    },
+    "blackTheme": {
+      "name": "Deep Black Theme",
+      "isDark": true,
+      "background": "#000000",
+      "card": "#0D0D0D",
+      "text": "#FFFFFF",
+      "accent": "#FFFFFF",
+      "border": "#262626"
+    },
+    "blackWhite": {
+      "name": "Black & White Combination",
+      "isDark": false,
+      "background": "#FFFFFF",
+      "card": "#FFFFFF",
+      "text": "#000000",
+      "accent": "#000000",
+      "border": "#000000"
+    },
+    "blackCream": {
+      "name": "Black & Cream Combination",
+      "isDark": false,
+      "background": "#F7F7F4",
+      "card": "#F7F7F4",
+      "text": "#111113",
+      "accent": "#111113",
+      "border": "#E4E3DE"
+    }
+  }
+}

@@ -1,186 +1,127 @@
-import { useState, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { Link } from 'react-router-dom';
-import { motion } from 'motion/react';
-import { Cookie, X } from 'lucide-react';
+"use client";
 
-const STORAGE_KEY = 'jashom_cookie_consent';
-const PREFERENCES_KEY = 'jashom_cookie_preferences';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
 
-const CYAN = '#22D3EE';
-const CYAN_RGB = '34, 211, 238';
-
-/* Show banner immediately when consent not yet set */
-const COOKIE_BANNER_DELAY_MS = 0;
-
-export function CookieConsent() {
-  const [visible, setVisible] = useState(false);
-  const [mounted, setMounted] = useState(false);
+export default function CookieConsent() {
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    // Check local storage for consent
+    const consent = localStorage.getItem("jashom_cookie_consent");
+    if (!consent) {
+      // Delay showing the popup for a more natural feel
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
-  useEffect(() => {
-    if (!mounted) return;
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (!stored) timeoutId = setTimeout(() => setVisible(true), COOKIE_BANNER_DELAY_MS);
-    } catch {
-      timeoutId = setTimeout(() => setVisible(true), COOKIE_BANNER_DELAY_MS);
-    }
-    return () => { if (timeoutId) clearTimeout(timeoutId); };
-  }, [mounted]);
-
-  const allow = () => {
-    try {
-      localStorage.setItem(STORAGE_KEY, 'accepted');
-      localStorage.setItem(
-        PREFERENCES_KEY,
-        JSON.stringify({
-          necessary: true,
-          preferences: true,
-          statistics: true,
-          marketing: true,
-        })
-      );
-    } catch {
-      // ignore
-    }
-    setVisible(false);
+  const handleAccept = () => {
+    localStorage.setItem("jashom_cookie_consent", "accepted");
+    setIsVisible(false);
+    window.dispatchEvent(new Event("cookie-consent-changed"));
   };
 
-  const deny = () => {
-    try {
-      localStorage.setItem(STORAGE_KEY, 'denied');
-      localStorage.setItem(
-        PREFERENCES_KEY,
-        JSON.stringify({
-          necessary: true,
-          preferences: false,
-          statistics: false,
-          marketing: false,
-        })
-      );
-    } catch {
-      // ignore
-    }
-    setVisible(false);
+  const handleDecline = () => {
+    localStorage.setItem("jashom_cookie_consent", "declined");
+    setIsVisible(false);
+    window.dispatchEvent(new Event("cookie-consent-changed"));
   };
 
-  const close = () => deny();
+  const handleClose = () => {
+    // Just close for the current session without saving a permanent preference
+    setIsVisible(false);
+    window.dispatchEvent(new Event("cookie-consent-changed"));
+  };
 
-  const banner = (
-    <dialog
-      open={visible}
-      aria-label="Cookie consent"
-      className="cookie-consent-dialog w-full max-w-none border-0 p-0 m-0 shadow-none"
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        top: 'auto',
-        margin: 0,
-        maxHeight: 'none',
-        zIndex: 99999,
-        pointerEvents: 'auto',
-        background: 'transparent',
-      }}
-    >
-      <motion.div
-        initial={{ y: 48, opacity: 0, scale: 0.97 }}
-        animate={{ y: 0, opacity: 1, scale: 1 }}
-        transition={{ type: 'spring', damping: 24, stiffness: 220 }}
-        className="px-4 pb-4 md:px-6 md:pb-6"
-      >
-        <div
-            className="relative pointer-events-auto w-full max-w-4xl mx-auto rounded-2xl overflow-hidden"
-            style={{
-              background: 'linear-gradient(135deg, rgba(22, 36, 48, 0.78) 0%, rgba(10, 18, 28, 0.76) 100%)',
-              border: '1px solid rgba(255,255,255,0.2)',
-              boxShadow: `0 12px 40px -16px rgba(0,0,0,0.72), 0 0 0 1px rgba(${CYAN_RGB},0.12)`,
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-            }}
-          >
-            <div className="absolute inset-0 pointer-events-none" style={{
-              background: 'linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)'
-            }} />
-
-            <div className="relative z-10 pt-8 pb-9 pl-8 pr-5 md:pt-9 md:pb-10 md:pl-10 md:pr-6">
-              <div className="flex items-start gap-4">
-                <div
-                  className="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center"
-                  style={{
-                    background: `linear-gradient(135deg, rgba(${CYAN_RGB},0.28) 0%, rgba(${CYAN_RGB},0.1) 100%)`,
-                    border: `1px solid rgba(${CYAN_RGB},0.35)`,
-                  }}
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 15, scale: 0.98 }}
+          transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+          className="fixed bottom-6 right-6 z-50 w-full max-w-[330px] bg-paper border border-line rounded-[10px] p-[18px] shadow-[0_16px_40px_rgba(17,17,19,0.06)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.35)]"
+        >
+          <div className="flex justify-between items-start mb-3.5">
+            <div className="flex items-center gap-2.5">
+              {/* Retro Pixel Mascot SVG */}
+              <div className="flex-shrink-0 w-7 h-7 flex items-center justify-center bg-transparent">
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{ imageRendering: "pixelated" }}
                 >
-                  <Cookie className="w-7 h-7" style={{ color: CYAN }} strokeWidth={1.9} />
-                </div>
-                <div className="min-w-0">
-                  <h2 className="font-semibold text-white text-xl tracking-tight">
-                    This website uses cookies
-                  </h2>
-                  <p
-                    className="text-sm md:text-base leading-relaxed mt-1.5"
-                    style={{ color: 'rgba(255,255,255,0.82)' }}
-                  >
-                    We use cookies to personalise content and ads, to provide social media features and to
-                    analyse our traffic.{' '}
-                    <Link to="/cookies/" className="font-medium hover:opacity-90" style={{ color: CYAN }}>
-                      Cookie Policy
-                    </Link>
-                  </p>
-                </div>
+                  {/* Hat / Bandana */}
+                  <rect x="3" y="1" width="10" height="3" fill="#e8e6df" />
+                  <rect x="2" y="3" width="12" height="1" fill="#e8e6df" />
+                  <rect x="1" y="4" width="14" height="2" fill="#e8e6df" />
+
+                  {/* Face */}
+                  <rect x="3" y="6" width="10" height="5" fill="#2c2c30" />
+
+                  {/* Eyes (NVIDIA Green) */}
+                  <rect x="5" y="7" width="2" height="2" fill="#76b900" />
+                  <rect x="9" y="7" width="2" height="2" fill="#76b900" />
+
+                  {/* Mouth */}
+                  <rect x="6" y="10" width="4" height="1" fill="#e8e6df" />
+
+                  {/* Collars / Clothes */}
+                  <rect x="2" y="11" width="12" height="2" fill="#e8e6df" />
+                  <rect x="4" y="13" width="8" height="2" fill="#e8e6df" />
+                </svg>
               </div>
 
-              <div className="mt-5 mb-2 flex items-center justify-center gap-3">
-                <button
-                  type="button"
-                  onClick={allow}
-                  className="cursor-pointer min-w-[120px] px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:brightness-110 active:scale-[0.98] whitespace-nowrap"
-                  style={{
-                    cursor: 'pointer',
-                    background: `linear-gradient(135deg, ${CYAN} 0%, #06b6d4 100%)`,
-                    color: '#0a0a0a',
-                    boxShadow: `0 0 20px -4px rgba(${CYAN_RGB},0.52), 0 1px 0 0 rgba(255,255,255,0.14) inset`,
-                  }}
-                >
-                  Allow all
-                </button>
-                <button
-                  type="button"
-                  onClick={deny}
-                  className="cursor-pointer min-w-[120px] px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-white/[0.08] active:scale-[0.98] whitespace-nowrap"
-                  style={{
-                    cursor: 'pointer',
-                    background: 'rgba(16, 24, 36, 0.55)',
-                    color: 'rgba(255,255,255,0.9)',
-                    border: '1px solid rgba(255,255,255,0.24)',
-                  }}
-                >
-                  Deny
-                </button>
+              <div className="flex flex-col">
+                <span className="font-mono font-bold text-[0.9375rem] text-ink uppercase tracking-wide leading-none">
+                  Jashom
+                </span>
+                <span className="font-mono text-[0.625rem] text-ink-2 uppercase tracking-wider mt-0.5">
+                  Cookie Protocol
+                </span>
               </div>
-
-              <button
-                type="button"
-                onClick={close}
-                className="cursor-pointer absolute top-3 right-3 p-2 rounded-lg transition-colors duration-200 hover:bg-white/10"
-                style={{ cursor: 'pointer', color: 'rgba(255,255,255,0.58)' }}
-                aria-label="Close"
-              >
-                <X className="w-4 h-4" strokeWidth={2} />
-              </button>
             </div>
-          </div>
-      </motion.div>
-    </dialog>
-  );
 
-  if (!mounted || typeof document === 'undefined') return null;
-  return createPortal(banner, document.body);
+            <button
+              onClick={handleClose}
+              className="text-ink-2 hover:text-ink hover:bg-tint rounded-none transition-all duration-200 p-1.5"
+              aria-label="Close"
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <div className="mb-4.5">
+            <p className="font-mono text-[0.75rem] text-ink-2 leading-relaxed">
+              We use cookies to optimize CUDA telemetry, analyze cluster traffic, and accelerate GPU inference.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-2.5">
+            <button
+              onClick={handleAccept}
+              className="w-full btn btn-cyan-3d py-2 text-[0.8125rem] font-mono font-bold text-center"
+            >
+              ACCEPT COOKIES →
+            </button>
+            <button
+              onClick={handleDecline}
+              className="w-full py-2 text-[0.6875rem] font-mono text-ink-2 hover:text-ink hover:bg-tint rounded-none transition-all duration-200 cursor-pointer text-center flex items-center justify-center uppercase"
+            >
+              DECLINE & ACCELERATE
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }

@@ -1,0 +1,114 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import HeroIllustration from "@/components/HeroIllustration";
+import Magnetic from "@/components/motion/Magnetic";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const HEADLINE = ["Powering High-Performance AI", "with Precision GPU Engineering"];
+
+export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+
+  // Gentle parallax: content drifts up slower than the scroll
+  useEffect(() => {
+    if (reduced) return;
+    const ctx = gsap.context(() => {
+      gsap.to(contentRef.current, {
+        yPercent: -8,
+        opacity: 0.4,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, [reduced]);
+
+  return (
+    <section ref={sectionRef} id="hero" className="always-dark relative min-h-[65svh] flex flex-col overflow-clip">
+      <div
+        className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_-10%,var(--radial-glow),transparent_60%)]"
+        aria-hidden="true"
+      />
+
+      <div
+        ref={contentRef}
+        className="container-j relative flex-1 grid lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] gap-12 items-center pt-28 pb-10"
+      >
+        <div className="flex flex-col justify-center">
+          <motion.p
+            initial={{ opacity: 0, transform: reduced ? "none" : "translateY(16px)" }}
+            animate={{ opacity: 1, transform: "translateY(0px)" }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+            className="inline-flex w-fit items-center gap-2 bg-tint border border-line rounded-full px-4 py-1.5 text-[0.8125rem] text-ink-2 mb-8"
+          >
+            Next-Gen AI Solutions
+          </motion.p>
+
+          <h1 className="text-[clamp(1.6rem,2.5vw,2.1rem)] leading-[1.1] max-w-none">
+            {HEADLINE.map((line, i) => (
+              <span key={line} className="block overflow-clip">
+                <motion.span
+                  className="block sm:whitespace-nowrap"
+                  initial={{ transform: reduced ? "none" : "translateY(105%)" }}
+                  animate={{ transform: "translateY(0%)" }}
+                  transition={{ duration: 0.9, delay: 0.2 + i * 0.12, ease: [0.23, 1, 0.32, 1] }}
+                >
+                  {line}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0, transform: reduced ? "none" : "translateY(16px)" }}
+            animate={{ opacity: 1, transform: "translateY(0px)" }}
+            transition={{ duration: 0.7, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
+            className="mt-7 max-w-[58ch] text-[1.0625rem] text-ink-2"
+          >
+            We assist companies in unleashing the power of the current hardware, whether it is through high-level optimization of graphics cards or scalable parallel computing. Our developers have expertise in NVIDIA GPU optimization, CUDA acceleration, and production-ready AI systems that are used to deliver quantifiable improvements.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, transform: reduced ? "none" : "translateY(16px)" }}
+            animate={{ opacity: 1, transform: "translateY(0px)" }}
+            transition={{ duration: 0.7, delay: 0.72, ease: [0.23, 1, 0.32, 1] }}
+            className="mt-10 flex flex-col gap-6"
+          >
+            <div className="flex flex-wrap items-center gap-4">
+              <Magnetic strength={0.18}>
+                <a href="/contact/" className="btn btn-primary">
+                  Start Your AI Transformation
+                </a>
+              </Magnetic>
+              <a href="https://cal.id/jashom-technologies/30min" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                Schedule a Meeting
+              </a>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Isometric exploded-GPU illustration */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="hidden lg:block"
+        >
+          <HeroIllustration />
+        </motion.div>
+      </div>
+    </section>
+  );
+}

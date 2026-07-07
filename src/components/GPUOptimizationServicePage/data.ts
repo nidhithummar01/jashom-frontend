@@ -1,1 +1,0 @@
-export { gpuOptimizationPageData } from '../servicePageData';

@@ -1,0 +1,236 @@
+/* Jashom × Radix Themes — warm-neutral skin
+   Maps Radix tokens onto the brand cream / ink palette.
+   Scoped to .jashom-radix so the main version is untouched. */
+
+.jashom-radix {
+  /* Page canvas = brand cream */
+  --color-background: #f7f7f4;
+
+  /* Brand type: mono display, sans body via root layout font vars */
+  --default-font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --heading-font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  background: var(--color-background);
+  color: #111113;
+}
+
+/* Card / surface panels lean to paper white over the cream canvas */
+.jashom-radix .rt-Card {
+  --card-background-color: #ffffff;
+}
+
+/* Square the brand's hard-edge aesthetic onto Radix radius tokens */
+.jashom-radix {
+  --radius-1: 0px;
+  --radius-2: 0px;
+  --radius-3: 2px;
+  --radius-4: 2px;
+  --radius-5: 4px;
+  --radius-6: 6px;
+}
+
+/* Section rhythm helper to echo the brand --section-pad */
+.jashom-radix .j-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9b9994;
+}
+
+/* Dark band utility for hero / final CTA */
+.jashom-radix .j-dark-band {
+  background: #111113;
+  color: #e8e6df;
+
+  /* SVG illustration vars so animated schematics read on dark */
+  --svg-ink: #e8e6df;
+  --svg-graphite: #2c2c30;
+  --svg-paper: #1a1a1e;
+  --svg-linen: #111113;
+  --svg-tint: #202024;
+  --svg-line: #38383c;
+  --svg-gray: #71706b;
+  --text-secondary: #a3a29c;
+}
+.jashom-radix .j-dark-band .j-eyebrow {
+  color: #71706b;
+}
+
+/* ---- Button styling: brand 3D + mono uppercase ---- */
+.jashom-radix .rt-Button,
+.jashom-radix .rt-reset.rt-Button {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  transition:
+    transform 150ms cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 150ms cubic-bezier(0.25, 1, 0.5, 1),
+    background-color 180ms ease,
+    color 180ms ease;
+}
+.jashom-radix .rt-Button:where(.rt-variant-solid),
+.jashom-radix .rt-Button:where(.rt-variant-surface) {
+  box-shadow:
+    inset 0 -3px 0 0 rgba(255, 255, 255, 0.16),
+    inset -3px 0 0 0 rgba(255, 255, 255, 0.16),
+    0 2px 4px rgba(17, 17, 19, 0.15);
+}
+.jashom-radix .rt-Button:where(.rt-variant-outline) {
+  box-shadow:
+    inset 0 0 0 1px var(--gray-8),
+    inset 0 -3px 0 0 var(--gray-4),
+    0 2px 4px rgba(17, 17, 19, 0.05);
+}
+.jashom-radix .rt-Button:hover {
+  transform: translateY(-2px);
+}
+.jashom-radix .rt-Button:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.16),
+    0 1px 2px rgba(17, 17, 19, 0.1);
+}
+
+/* Dark-band button fixes — Radix surface/outline were near-invisible on ink */
+.jashom-radix .j-dark-band .rt-Button:where(.rt-variant-surface) {
+  background: #e8e6df;
+  color: #111113;
+  box-shadow:
+    inset 0 -3px 0 0 #c8c6bf,
+    inset -3px 0 0 0 #c8c6bf,
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.jashom-radix .j-dark-band .rt-Button:where(.rt-variant-surface):hover {
+  background: #f2f0e8;
+}
+.jashom-radix .j-dark-band .rt-Button:where(.rt-variant-outline) {
+  color: #e8e6df;
+  box-shadow:
+    inset 0 0 0 1px #5a5a5e,
+    inset 0 -3px 0 0 rgba(255, 255, 255, 0.06);
+}
+.jashom-radix .j-dark-band .rt-Button:where(.rt-variant-outline):hover {
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    inset 0 0 0 1px #a3a29c,
+    inset 0 -3px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Neon hover cards on top of Radix Card — override Radix bg + icon glow.
+   Reuses .card-neon / .neon-glyph / .neon-track keyframes from globals.css. */
+.jashom-radix .rt-Card.card-neon {
+  background: #ffffff;
+}
+@media (hover: hover) and (pointer: fine) {
+  .jashom-radix .rt-Card.card-neon:hover {
+    background: var(--carbon);
+    border-color: var(--dark-border);
+  }
+  .jashom-radix .rt-Card.card-neon:hover .neon-icon {
+    color: var(--warm-white) !important;
+  }
+  .jashom-radix .rt-Card.card-neon:hover .neon-icon svg {
+    filter: drop-shadow(0 0 6px rgba(232, 230, 223, 0.6));
+  }
+}
+
+/* Frontier Labs logo grid — 2 / 3 / 6 cols */
+@media (min-width: 768px) {
+  .jashom-radix .j-logo-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (min-width: 1024px) {
+  .jashom-radix .j-logo-grid { grid-template-columns: repeat(6, 1fr) !important; }
+}
+
+/* Supported languages grid — 2 / 3 / 5 cols */
+@media (min-width: 768px) {
+  .jashom-radix .j-lang-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (min-width: 1024px) {
+  .jashom-radix .j-lang-grid { grid-template-columns: repeat(5, 1fr) !important; }
+}
+
+/* Testimonials vertical stagger at lg */
+@media (min-width: 1024px) {
+  .jashom-radix .j-testi-grid > *:nth-child(2) { margin-top: 1.5rem; }
+  .jashom-radix .j-testi-grid > *:nth-child(3) { margin-top: 3rem; }
+}
+
+/* Why Jashom grid — 1 / 2 / 3 cols, hover tint + icon lift */
+@media (min-width: 640px) {
+  .jashom-radix .j-why-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (min-width: 1024px) {
+  .jashom-radix .j-why-grid { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .jashom-radix .j-why-cell { transition: background-color 220ms var(--ease-out); }
+  .jashom-radix .j-why-cell:hover { background: var(--bg-tertiary); }
+  .jashom-radix .j-why-cell:hover .j-why-icon { background: var(--bg-secondary); transform: translateY(-2px); transition: transform 220ms var(--ease-out), background-color 220ms var(--ease-out); }
+}
+
+/* Blog card image hover — color + zoom */
+@media (hover: hover) and (pointer: fine) {
+  .jashom-radix .j-blog-img { transition: filter 400ms var(--ease-out), transform 400ms var(--ease-out); }
+  .jashom-radix .j-blog-card:hover .j-blog-img { filter: grayscale(0) brightness(1); transform: scale(1.05); }
+}
+
+/* Services alternating row — visual moves to left on reversed rows (md+) */
+@media (min-width: 768px) {
+  .jashom-radix .j-svc-text { order: 2; }
+  .jashom-radix .j-svc-visual { order: 1; }
+}
+
+/* ---- Hero illustration variant animations ---- */
+.jashom-radix .j-hero-blink,
+.jashom-radix .j-hero-flow,
+.jashom-radix .j-hero-scan,
+.jashom-radix .j-hero-lane,
+.jashom-radix .j-hero-rise { transform-box: fill-box; }
+
+.jashom-radix .j-hero-fade { animation: j-hero-fade 420ms var(--ease-out); }
+@keyframes j-hero-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.jashom-radix .j-hero-blink { animation: j-hero-blink 2.2s ease-in-out infinite; }
+@keyframes j-hero-blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+.jashom-radix .j-hero-flow { animation: j-hero-flow 2.4s linear infinite; }
+@keyframes j-hero-flow { 0% { transform: translateX(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(120px); opacity: 0; } }
+
+.jashom-radix .j-hero-scan { animation: j-hero-scan 6s linear infinite; }
+@keyframes j-hero-scan { from { transform: translateX(0); } to { transform: translateX(470px); } }
+
+.jashom-radix .j-hero-lane { animation: j-hero-lane 3s linear infinite; }
+@keyframes j-hero-lane { 0% { transform: translateX(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(400px); opacity: 0; } }
+
+.jashom-radix .j-hero-rise { animation: j-hero-rise 700ms var(--ease-out) both; }
+@keyframes j-hero-rise { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .jashom-radix .j-hero-blink,
+  .jashom-radix .j-hero-flow,
+  .jashom-radix .j-hero-scan,
+  .jashom-radix .j-hero-lane,
+  .jashom-radix .j-hero-rise,
+  .jashom-radix .j-hero-fade { animation: none; }
+}
+
+/* Logo marquee */
+.jashom-radix .j-marquee {
+  display: flex;
+  width: max-content;
+  animation: j-marquee 36s linear infinite;
+}
+@keyframes j-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jashom-radix .j-marquee {
+    animation: none;
+    flex-wrap: wrap;
+  }
+}
