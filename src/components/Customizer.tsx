@@ -173,7 +173,7 @@ const SECTION_COLOR_MAP: Record<string, SectionColorEntry | null> = {
   black: [{"--bg-primary":"#000000","--bg-secondary":"#0D0D0D","--text-primary":"#FFFFFF","--text-secondary":"#FFFFFFb3","--text-tertiary":"#FFFFFF80","--border-default":"#262626","--accent-cta":"#FFFFFF"},"#000000","#FFFFFF","#262626",true],
 };
 
-function TabBtn({ id, label, activeTab, onSelect }: { id: "colors" | "fonts"; label: string; activeTab: string; onSelect: (t: "colors" | "fonts") => void }) {
+function TabBtn({ id, label, activeTab, onSelect }: { readonly id: "colors" | "fonts"; readonly label: string; readonly activeTab: string; readonly onSelect: (t: "colors" | "fonts") => void }) {
   return (
     <button onClick={() => onSelect(id)} className={`flex-1 py-3 font-mono text-[0.75rem] uppercase tracking-wider text-center border-b-2 transition-all duration-200 cursor-pointer ${activeTab === id ? "border-ink text-ink font-bold" : "border-transparent text-ink-3 hover:text-ink-2"}`}>{label}</button>
   );
