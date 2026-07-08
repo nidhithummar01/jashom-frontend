@@ -32,9 +32,6 @@ function JobCard({ job, onApply }: { job: Job; onApply: (job: Job) => void }) {
               <span className="font-mono text-[0.7rem] uppercase tracking-wider text-ink-3">{job.department}</span>
             )}
           </div>
-          <span className="font-mono text-[0.65rem] uppercase tracking-widest text-warmwhite bg-ink px-2 py-1 shrink-0">
-            Open
-          </span>
         </div>
 
         {/* Meta chips */}
