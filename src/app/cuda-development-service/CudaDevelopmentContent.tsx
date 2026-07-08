@@ -8,7 +8,10 @@ import Magnetic from "@/components/motion/Magnetic";
 import CudaHeroSvg from "./CudaHeroSvg";
 import CudaOverviewSvg from "./CudaOverviewSvg";
 import type { BlogPost } from "@/lib/blogs";
-import BlogPostCard from "@/components/BlogPostCard";
+import BenefitsList from "@/components/sections/BenefitsList";
+import TestimonialGrid from "@/components/sections/TestimonialGrid";
+import FaqAccordion from "@/components/sections/FaqAccordion";
+import RelatedBlogsSection from "@/components/sections/RelatedBlogsSection";
 
 const STATS = [
   { value: 100, prefix: "", suffix: "x", label: "Compute Throughput Increase" },
@@ -255,46 +258,7 @@ export default function CudaDevelopmentContent({ blogPosts = [] }: { readonly bl
           </div>
         </section>
 
-        {/* Benefits */}
-        <section className="section" id="benefits">
-          <div className="container-j">
-            <div className="max-w-2xl mb-10 md:mb-12">
-              <span className="font-mono text-[1rem] tracking-[0.25em] text-ink-3 uppercase font-medium">Benefits</span>
-              <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)] mt-2">Strategic Benefits of CUDA</SplitHeading>
-            </div>
-
-            <div className="flex flex-col border-t border-line">
-              {BENEFITS.map((b, i) => (
-                <div 
-                  key={b.title} 
-                  className="group grid md:grid-cols-12 gap-4 md:gap-8 py-8 px-4 border-b border-line hover:bg-tint/40 transition-colors duration-300 items-start"
-                >
-                  {/* Left Column: Number & Title */}
-                  <div className="md:col-span-4 flex gap-4 items-start">
-                    <span className="font-mono text-xs text-ink-3 tabular-nums pt-1">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="font-sans font-medium text-[1.125rem] text-ink leading-snug">
-                      {b.title}
-                    </h3>
-                  </div>
-
-                  {/* Right Column: Description */}
-                  <div className="md:col-span-8 flex justify-between items-start gap-4">
-                    <p className="text-[0.9375rem] text-ink-2 leading-relaxed max-w-[62ch]">
-                      {b.body}
-                    </p>
-                    <div className="hidden sm:block text-ink-3 group-hover:text-ink transform translate-x-[-10px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 pt-1">
-                      <svg width="18" height="18" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <BenefitsList heading="Strategic Benefits of CUDA" items={BENEFITS} />
 
         {/* Why trust */}
         <section className="section bg-paper border-y border-line" id="why">
@@ -330,81 +294,10 @@ export default function CudaDevelopmentContent({ blogPosts = [] }: { readonly bl
           </div>
         </section>
 
-        {/* Testimonials */}
-        <section className="section" id="testimonials">
-          <div className="container-j">
-            <div className="grid lg:grid-cols-12 gap-6 items-end mb-10 md:mb-12">
-              <div className="lg:col-span-8 flex flex-col gap-4">
-                <span className="font-mono text-[1rem] tracking-[0.25em] text-ink-3 uppercase font-medium">Client Testimonials</span>
-                <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Client Experiences</SplitHeading>
-                <Reveal><p className="text-ink-2 text-[1.0625rem] max-w-[55ch]">Proven Impact Across Industries</p></Reveal>
-              </div>
-            </div>
-            <div className="grid lg:grid-cols-3 gap-6">
-              {TESTIMONIALS.map((t, i) => (
-                <Reveal key={t.name} delay={i * 0.08} className="h-full">
-                  <figure className="h-full flex flex-col p-6 md:p-8 hover:bg-tint transition-all duration-300">
-                    <blockquote className="font-mono text-[18px] leading-[1.4] text-ink flex-1">&ldquo;{t.quote}&rdquo;</blockquote>
-                    <figcaption className="mt-6 pt-5 border-t border-line text-[0.9375rem]">
-                      <span className="text-ink font-medium">{t.name}</span>
-                      <span className="text-ink-2"> · {t.org}</span>
-                    </figcaption>
-                  </figure>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
+        <TestimonialGrid heading="Client Experiences" subtitle="Proven Impact Across Industries" items={TESTIMONIALS} />
 
-        {/* FAQ */}
-        <section className="section bg-paper border-y border-line" id="faq">
-          <div className="container-j">
-            <div className="max-w-2xl mb-10 md:mb-12 flex flex-col gap-4">
-              <span className="font-mono text-[1rem] tracking-[0.25em] text-ink-3 uppercase font-medium">FAQs</span>
-              <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Frequently Asked Questions</SplitHeading>
-              <Reveal><p className="text-ink-2 max-w-[58ch]">Common questions about hiring CUDA developers from Jashom</p></Reveal>
-            </div>
-            <div className="border-t border-line max-w-3xl">
-              {FAQS.map((f) => (
-                <details key={f.q} className="group border-b border-line">
-                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none py-5 text-ink font-medium">
-                    {f.q}
-                    <span className="text-ink-2 transition-transform duration-300 group-open:rotate-45" aria-hidden="true">+</span>
-                  </summary>
-                  <p className="text-ink-2 pb-5 max-w-[60ch]">{f.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Related Blogs */}
-        <section className="section border-t border-line" id="related-blogs">
-          <div className="container-j">
-            <div className="flex flex-wrap items-center justify-between gap-6 mb-12">
-              <div className="flex flex-col gap-2">
-                <span className="font-mono text-[1rem] tracking-[0.25em] text-ink-3 uppercase font-medium">Resources</span>
-                <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">
-                  Related Insights
-                </SplitHeading>
-              </div>
-              <Reveal>
-                <a
-                  href="/blogs/"
-                  className="border border-ink px-5 py-2.5 font-mono text-[0.75rem] uppercase tracking-wider hover:bg-ink hover:text-warmwhite transition-colors duration-300 font-medium"
-                >
-                  View All Insights
-                </a>
-              </Reveal>
-            </div>
-
-            <Stagger className="grid md:grid-cols-3 gap-6" itemClassName="h-full" step={0.07}>
-              {RELATED_BLOGS.map((p) => (
-                <BlogPostCard key={p.slug} post={p} />
-              ))}
-            </Stagger>
-          </div>
-        </section>
+        <FaqAccordion subtitle="Common questions about hiring CUDA developers from Jashom" items={FAQS} />
+        <RelatedBlogsSection posts={RELATED_BLOGS} />
       </main>
     </>
   );
