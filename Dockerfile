@@ -26,7 +26,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-RUN chmod -R 555 public .next/standalone && chmod -R 444 .next/static
+RUN chmod 555 server.js && chmod -R 555 public && chmod -R 444 .next/static
 
 USER nextjs
 
