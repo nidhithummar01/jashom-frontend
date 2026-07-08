@@ -10,40 +10,44 @@ export interface ContactHighlight { title: string; body: string; }
 export default function HireContactForm({
   heading,
   description,
-  highlights,
-  hiringOptions,
+  highlights = [],
+  hiringOptions = [],
   messagePlaceholder = "Tell us about your project and goals.",
   messageFallback = "",
   showPrivacyNote = false,
+  sectionClassName = "section",
 }: {
   readonly heading: string;
   readonly description: string;
-  readonly highlights: ContactHighlight[];
-  readonly hiringOptions: string[];
+  readonly highlights?: ContactHighlight[];
+  readonly hiringOptions?: string[];
   readonly messagePlaceholder?: string;
   readonly messageFallback?: string;
   readonly showPrivacyNote?: boolean;
+  readonly sectionClassName?: string;
 }) {
   const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   return (
-    <section className="section" id="contact">
+    <section className={sectionClassName} id="contact">
       <div className="container-j">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
           <div className="lg:col-span-5 flex flex-col gap-4">
             <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">{heading}</SplitHeading>
             <Reveal><p className="text-ink-2 max-w-[48ch]">{description}</p></Reveal>
-            <Reveal delay={0.1}>
-              <div className="mt-2 flex flex-col gap-5">
-                {highlights.map((h) => (
-                  <div key={h.title}>
-                    <p className="text-ink font-medium mb-1">{h.title}</p>
-                    <p className="text-[0.9375rem] text-ink-2">{h.body}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
+            {highlights.length > 0 && (
+              <Reveal delay={0.1}>
+                <div className="mt-2 flex flex-col gap-5">
+                  {highlights.map((h) => (
+                    <div key={h.title}>
+                      <p className="text-ink font-medium mb-1">{h.title}</p>
+                      <p className="text-[0.9375rem] text-ink-2">{h.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </Reveal>
+            )}
           </div>
           <div className="lg:col-span-7">
             {status === "sent" ? (
@@ -80,13 +84,15 @@ export default function HireContactForm({
                   <div className="flex flex-col gap-1.5"><label htmlFor="hcf-email" className="text-sm text-ink-2">Email Address *</label><input id="hcf-email" name="email" type="email" required autoComplete="email" className="field-j" placeholder="you@company.com" /></div>
                   <div className="flex flex-col gap-1.5"><label htmlFor="hcf-phone" className="text-sm text-ink-2">Phone Number</label><input id="hcf-phone" name="phone" type="tel" autoComplete="tel" className="field-j" placeholder="+91" /></div>
                   <div className="flex flex-col gap-1.5"><label htmlFor="hcf-company" className="text-sm text-ink-2">Company Name</label><input id="hcf-company" name="company" autoComplete="organization" className="field-j" placeholder="Company name" /></div>
-                  <div className="flex flex-col gap-1.5 sm:col-span-2">
-                    <label htmlFor="hcf-model" className="text-sm text-ink-2">Preferred Hiring Model</label>
-                    <select id="hcf-model" name="model" defaultValue="" className="field-j">
-                      <option value="" disabled>Select a hiring model</option>
-                      {hiringOptions.map((o) => (<option key={o} value={o}>{o}</option>))}
-                    </select>
-                  </div>
+                  {hiringOptions.length > 0 && (
+                    <div className="flex flex-col gap-1.5 sm:col-span-2">
+                      <label htmlFor="hcf-model" className="text-sm text-ink-2">Preferred Hiring Model</label>
+                      <select id="hcf-model" name="model" defaultValue="" className="field-j">
+                        <option value="" disabled>Select a hiring model</option>
+                        {hiringOptions.map((o) => (<option key={o} value={o}>{o}</option>))}
+                      </select>
+                    </div>
+                  )}
                   <div className="flex flex-col gap-1.5 sm:col-span-2"><label htmlFor="hcf-message" className="text-sm text-ink-2">Project Requirements</label><textarea id="hcf-message" name="message" rows={5} className="field-j resize-y" placeholder={messagePlaceholder} /></div>
                   <div className="sm:col-span-2 flex flex-col items-start gap-2">
                     {status === "error" && <p className="text-[0.8125rem] text-red-600">{errorMsg}</p>}

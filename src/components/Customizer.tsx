@@ -163,6 +163,22 @@ function ColorRow({ id, label, value, onChange }: {
   );
 }
 
+const CSS_VAR_KEYS = ["--bg-primary","--bg-secondary","--text-primary","--text-secondary","--text-tertiary","--border-default","--accent-cta"] as const;
+const ALWAYS_DARK_SECTIONS = new Set(["hero","final-cta","trust-stats"]);
+type SectionColorEntry = [Record<string, string>, string, string, string, boolean];
+const SECTION_COLOR_MAP: Record<string, SectionColorEntry | null> = {
+  default: null,
+  white: [{"--bg-primary":"#FFFFFF","--bg-secondary":"#F7F7F7","--text-primary":"#111113","--text-secondary":"#111113b3","--text-tertiary":"#11111380","--border-default":"#E4E3DE","--accent-cta":"#18181c"},"#FFFFFF","#111113","#E4E3DE",false],
+  grey:  [{"--bg-primary":"#EAEAEA","--bg-secondary":"#F5F5F5","--text-primary":"#1A1A1A","--text-secondary":"#1A1A1Ab3","--text-tertiary":"#1A1A1A80","--border-default":"#D1D1D1","--accent-cta":"#000000"},"#EAEAEA","#1A1A1A","#D1D1D1",false],
+  black: [{"--bg-primary":"#000000","--bg-secondary":"#0D0D0D","--text-primary":"#FFFFFF","--text-secondary":"#FFFFFFb3","--text-tertiary":"#FFFFFF80","--border-default":"#262626","--accent-cta":"#FFFFFF"},"#000000","#FFFFFF","#262626",true],
+};
+
+function TabBtn({ id, label, activeTab, onSelect }: { id: "colors" | "fonts"; label: string; activeTab: string; onSelect: (t: "colors" | "fonts") => void }) {
+  return (
+    <button onClick={() => onSelect(id)} className={`flex-1 py-3 font-mono text-[0.75rem] uppercase tracking-wider text-center border-b-2 transition-all duration-200 cursor-pointer ${activeTab === id ? "border-ink text-ink font-bold" : "border-transparent text-ink-3 hover:text-ink-2"}`}>{label}</button>
+  );
+}
+
 export default function Customizer() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"colors" | "fonts">("colors");
@@ -196,57 +212,21 @@ export default function Customizer() {
   const applySectionColor = (sectionId: string, color: string) => {
     const el = document.getElementById(sectionId);
     if (!el) return;
-
-    if (color === "default") {
-      el.style.removeProperty("--bg-primary");
-      el.style.removeProperty("--bg-secondary");
-      el.style.removeProperty("--text-primary");
-      el.style.removeProperty("--text-secondary");
-      el.style.removeProperty("--text-tertiary");
-      el.style.removeProperty("--border-default");
-      el.style.removeProperty("--accent-cta");
+    const entry = SECTION_COLOR_MAP[color];
+    if (!entry) {
+      CSS_VAR_KEYS.forEach((v) => el.style.removeProperty(v));
       el.style.backgroundColor = "";
       el.style.color = "";
       el.style.borderColor = "";
-      if (sectionId === "hero" || sectionId === "final-cta" || sectionId === "trust-stats") {
-        el.classList.add("always-dark");
-      }
-    } else if (color === "white") {
-      el.style.setProperty("--bg-primary", "#FFFFFF");
-      el.style.setProperty("--bg-secondary", "#F7F7F7");
-      el.style.setProperty("--text-primary", "#111113");
-      el.style.setProperty("--text-secondary", "#111113b3");
-      el.style.setProperty("--text-tertiary", "#11111380");
-      el.style.setProperty("--border-default", "#E4E3DE");
-      el.style.setProperty("--accent-cta", "#18181c");
-      el.style.backgroundColor = "#FFFFFF";
-      el.style.color = "#111113";
-      el.style.borderColor = "#E4E3DE";
-      el.classList.remove("always-dark");
-    } else if (color === "grey") {
-      el.style.setProperty("--bg-primary", "#EAEAEA");
-      el.style.setProperty("--bg-secondary", "#F5F5F5");
-      el.style.setProperty("--text-primary", "#1A1A1A");
-      el.style.setProperty("--text-secondary", "#1A1A1Ab3");
-      el.style.setProperty("--text-tertiary", "#1A1A1A80");
-      el.style.setProperty("--border-default", "#D1D1D1");
-      el.style.setProperty("--accent-cta", "#000000");
-      el.style.backgroundColor = "#EAEAEA";
-      el.style.color = "#1A1A1A";
-      el.style.borderColor = "#D1D1D1";
-      el.classList.remove("always-dark");
-    } else if (color === "black") {
-      el.style.setProperty("--bg-primary", "#000000");
-      el.style.setProperty("--bg-secondary", "#0D0D0D");
-      el.style.setProperty("--text-primary", "#FFFFFF");
-      el.style.setProperty("--text-secondary", "#FFFFFFb3");
-      el.style.setProperty("--text-tertiary", "#FFFFFF80");
-      el.style.setProperty("--border-default", "#262626");
-      el.style.setProperty("--accent-cta", "#FFFFFF");
-      el.style.backgroundColor = "#000000";
-      el.style.color = "#FFFFFF";
-      el.style.borderColor = "#262626";
-      el.classList.add("always-dark");
+      if (ALWAYS_DARK_SECTIONS.has(sectionId)) el.classList.add("always-dark");
+    } else {
+      const [vars, bg, text, border, dark] = entry;
+      Object.entries(vars).forEach(([k, v]) => el.style.setProperty(k, v));
+      el.style.backgroundColor = bg;
+      el.style.color = text;
+      el.style.borderColor = border;
+      if (dark) el.classList.add("always-dark");
+      else el.classList.remove("always-dark");
     }
   };
 
@@ -533,24 +513,8 @@ export default function Customizer() {
 
         {/* Tab switch buttons (Static) */}
         <div className="flex border-b border-line" style={{ flexShrink: 0 }}>
-          <button
-            onClick={() => setActiveTab("colors")}
-            className={`flex-1 py-3 font-mono text-[0.75rem] uppercase tracking-wider text-center border-b-2 transition-all duration-200 cursor-pointer ${activeTab === "colors"
-                ? "border-ink text-ink font-bold"
-                : "border-transparent text-ink-3 hover:text-ink-2"
-              }`}
-          >
-            Color Palette
-          </button>
-          <button
-            onClick={() => setActiveTab("fonts")}
-            className={`flex-1 py-3 font-mono text-[0.75rem] uppercase tracking-wider text-center border-b-2 transition-all duration-200 cursor-pointer ${activeTab === "fonts"
-                ? "border-ink text-ink font-bold"
-                : "border-transparent text-ink-3 hover:text-ink-2"
-              }`}
-          >
-            Typography
-          </button>
+          <TabBtn id="colors" label="Color Palette" activeTab={activeTab} onSelect={setActiveTab} />
+          <TabBtn id="fonts" label="Typography" activeTab={activeTab} onSelect={setActiveTab} />
         </div>
 
         {/* Scrollable content container — scroll trapped inside panel */}

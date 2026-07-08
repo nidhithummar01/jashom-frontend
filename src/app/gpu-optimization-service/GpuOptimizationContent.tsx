@@ -8,11 +8,11 @@ import Counter from "@/components/motion/Counter";
 import Magnetic from "@/components/motion/Magnetic";
 import GpuHeroSvg from "./GpuHeroSvg";
 import type { BlogPost } from "@/lib/blogs";
-import { submitContactForm } from "@/lib/submitContact";
 import BenefitsList from "@/components/sections/BenefitsList";
 import TestimonialGrid from "@/components/sections/TestimonialGrid";
 import FaqAccordion from "@/components/sections/FaqAccordion";
 import RelatedBlogsSection from "@/components/sections/RelatedBlogsSection";
+import HireContactForm from "@/components/sections/HireContactForm";
 
 /* ---- Source content (jashom.com/gpu-optimization-service) ---- */
 
@@ -483,8 +483,6 @@ function ProfilingSimulation() {
 
 export default function GpuOptimizationContent({ blogPosts = [] }: { readonly blogPosts?: BlogPost[] }) {
   const reduced = useReducedMotion();
-  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState("");
 
   const RELATED_BLOGS = blogPosts
     .filter((post) =>
@@ -907,75 +905,13 @@ export default function GpuOptimizationContent({ blogPosts = [] }: { readonly bl
         <FaqAccordion subtitle="Common questions about GPU optimization services from Jashom" items={FAQS} sectionClassName="section" />
         <RelatedBlogsSection posts={RELATED_BLOGS} />
 
-        {/* Contact */}
-        <section className="section bg-paper border-y border-line" id="contact">
-          <div className="container-j">
-            <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
-              <div className="lg:col-span-5 flex flex-col gap-4">
-                <span className="font-mono text-[1rem] tracking-[0.25em] text-ink-3 uppercase font-medium">Get In Touch</span>
-                <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Get Started with GPU Optimization</SplitHeading>
-                <Reveal>
-                  <p className="text-ink-2 max-w-[48ch]">Fill out the form and our team will get back to you within 24 hours.</p>
-                </Reveal>
-              </div>
-
-              <div className="lg:col-span-7">
-                {status === "sent" ? (
-                  <div className="h-full flex flex-col items-start justify-center bg-linen border border-line rounded-none p-10">
-                    <p className="font-mono text-3xl mb-3">Message received.</p>
-                    <p className="text-ink-2">Thank you — we&rsquo;ll get back to you within 24 hours.</p>
-                  </div>
-                ) : (
-                  <Reveal delay={0.08}>
-                    <form onSubmit={async (e) => {
-                        e.preventDefault();
-                        const fd = new FormData(e.currentTarget);
-                        setStatus("loading");
-                        try {
-                          await submitContactForm({
-                            fullName: fd.get("name") as string,
-                            email: fd.get("email") as string,
-                            phone: fd.get("phone") as string,
-                            company: fd.get("company") as string,
-                            message: (fd.get("message") as string) || "GPU Optimization enquiry",
-                          });
-                          setStatus("sent");
-                        } catch (err) {
-                          setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
-                          setStatus("error");
-                        }
-                      }} className="grid sm:grid-cols-2 gap-5">
-                      <div className="flex flex-col gap-1.5">
-                        <label htmlFor="name" className="text-sm text-ink-2">Full Name *</label>
-                        <input id="name" name="name" required autoComplete="name" className="field-j" placeholder="Your name" />
-                      </div>
-                      <div className="flex flex-col gap-1.5">
-                        <label htmlFor="email" className="text-sm text-ink-2">Email Address *</label>
-                        <input id="email" name="email" type="email" required autoComplete="email" className="field-j" placeholder="you@company.com" />
-                      </div>
-                      <div className="flex flex-col gap-1.5">
-                        <label htmlFor="company" className="text-sm text-ink-2">Company Name</label>
-                        <input id="company" name="company" autoComplete="organization" className="field-j" placeholder="Company name" />
-                      </div>
-                      <div className="flex flex-col gap-1.5">
-                        <label htmlFor="phone" className="text-sm text-ink-2">Phone Number</label>
-                        <input id="phone" name="phone" type="tel" autoComplete="tel" className="field-j" placeholder="+91" />
-                      </div>
-                      <div className="flex flex-col gap-1.5 sm:col-span-2">
-                        <label htmlFor="message" className="text-sm text-ink-2">Project Details *</label>
-                        <textarea id="message" name="message" rows={5} required className="field-j resize-y" placeholder="Tell us about your workload and performance targets." />
-                      </div>
-                      <div className="sm:col-span-2 flex flex-col items-end gap-2">
-                        {status === "error" && <p className="text-[0.8125rem] text-red-600">{errorMsg}</p>}
-                        <button type="submit" disabled={status === "loading"} className="btn btn-primary disabled:opacity-60">{status === "loading" ? "Sending…" : "Send Message"}</button>
-                      </div>
-                    </form>
-                  </Reveal>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
+        <HireContactForm
+          heading="Get Started with GPU Optimization"
+          description="Fill out the form and our team will get back to you within 24 hours."
+          messagePlaceholder="Tell us about your workload and performance targets."
+          messageFallback="GPU Optimization enquiry"
+          sectionClassName="section bg-paper border-y border-line"
+        />
       </main>
     </>
   );
