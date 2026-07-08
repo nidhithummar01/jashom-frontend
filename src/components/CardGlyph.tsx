@@ -5,7 +5,7 @@ export type GlyphVariant = "chip" | "nodes" | "tune" | "pulse" | "doc" | "wave" 
 
 const S = "var(--text-secondary)";
 
-export default function CardGlyph({ variant }: { variant: GlyphVariant }) {
+export default function CardGlyph({ variant }: { readonly variant: GlyphVariant }) {
   return (
     <svg
       className="neon-glyph"

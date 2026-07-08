@@ -6,12 +6,56 @@ import Magnetic from "@/components/motion/Magnetic";
 import type { BlogPost } from "@/lib/blogs";
 import { formatDate } from "@/lib/blogs";
 
+function BlogContent({ post }: { readonly post: BlogPost }) {
+  if (post.content) {
+    return (
+      <div
+        className="blog-content text-ink-2 leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
+    );
+  }
+
+  if (!post.content_sections || post.content_sections.length === 0) {
+    return null;
+  }
+
+  return (
+    <>
+      {post.content_sections.map((section) => (
+        <div key={section.title ?? section.content?.slice(0, 40)} className="flex flex-col gap-4">
+          {section.title && (
+            <h2 className="text-[1.25rem] md:text-[1.4rem] font-medium text-ink mt-4">
+              {section.title}
+            </h2>
+          )}
+          {section.content && (
+            <div
+              className="blog-content text-ink-2 leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: section.content }}
+            />
+          )}
+          {section.images && section.images.length > 0 && (
+            <div className="flex flex-col gap-3 my-2">
+              {section.images.map((img) => (
+                <div key={img.url} className="relative w-full overflow-hidden bg-tint">
+                  <img src={img.url} alt={img.alt ?? ""} className="w-full h-auto object-contain" />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </>
+  );
+}
+
 export default function BlogArticle({
   post,
   allPosts,
 }: {
-  post: BlogPost;
-  allPosts: BlogPost[];
+  readonly post: BlogPost;
+  readonly allPosts: BlogPost[];
 }) {
   const reduced = useReducedMotion();
 
@@ -59,7 +103,7 @@ export default function BlogArticle({
                 <div className="relative aspect-[16/9] w-full overflow-hidden bg-tint mb-4">
                   <img
                     src={post.featured_image_url}
-                    alt={post.featured_image_alt || post.title}
+                    alt={post.featured_image_alt ?? post.title}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -77,37 +121,7 @@ export default function BlogArticle({
               )}
 
               {/* Content — rendered as HTML from admin panel */}
-              {post.content ? (
-                <div
-                  className="blog-content text-ink-2 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
-                />
-              ) : post.content_sections && post.content_sections.length > 0 ? (
-                post.content_sections.map((section, i) => (
-                  <div key={i} className="flex flex-col gap-4">
-                    {section.title && (
-                      <h2 className="text-[1.25rem] md:text-[1.4rem] font-medium text-ink mt-4">
-                        {section.title}
-                      </h2>
-                    )}
-                    {section.content && (
-                      <div
-                        className="blog-content text-ink-2 leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: section.content }}
-                      />
-                    )}
-                    {section.images && section.images.length > 0 && (
-                      <div className="flex flex-col gap-3 my-2">
-                        {section.images.map((img, k) => (
-                          <div key={k} className="relative w-full overflow-hidden bg-tint">
-                            <img src={img.url} alt={img.alt || ""} className="w-full h-auto object-contain" />
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))
-              ) : null}
+              <BlogContent post={post} />
             </div>
 
             {/* Right Column: Sidebar related blogs */}
@@ -130,7 +144,7 @@ export default function BlogArticle({
                         {rp.featured_image_url ? (
                           <img
                             src={rp.featured_image_url}
-                            alt={rp.featured_image_alt || rp.title}
+                            alt={rp.featured_image_alt ?? rp.title}
                             className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
                           />
                         ) : (

@@ -82,7 +82,7 @@ const FAQS = [
   { q: "What hiring models are available for CUDA developers?", a: "You can hire CUDA developers on a full-time basis, part-time basis, hourly basis (time and material), and various other custom ability basis according to your project scope and performance needs." },
 ];
 
-function Cards({ items, cols = "sm:grid-cols-2 lg:grid-cols-3" }: { items: { title: string; body: string }[]; cols?: string }) {
+function Cards({ items, cols = "sm:grid-cols-2 lg:grid-cols-3" }: { readonly items: { title: string; body: string }[]; readonly cols?: string }) {
   return (
     <Stagger className={`grid ${cols} border-t border-line`} itemClassName="h-full" step={0.05}>
       {items.map((c) => (
@@ -646,7 +646,7 @@ export default function HireCudaContent() {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {REVIEWS.map((t, i) => (
-                <Reveal key={i} delay={i * 0.06} className="h-full">
+                <Reveal key={t.who} delay={i * 0.06} className="h-full">
                   <figure className="h-full flex flex-col p-6 md:p-8 hover:bg-tint transition-all duration-300 border border-line">
                     <blockquote className="font-mono text-[16px] leading-[1.45] text-ink flex-1">&ldquo;{t.quote}&rdquo;</blockquote>
                     <figcaption className="mt-6 pt-5 border-t border-line text-[0.9375rem] text-ink-2">{t.who}</figcaption>

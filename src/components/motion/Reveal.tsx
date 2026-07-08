@@ -3,10 +3,10 @@
 import { motion, useReducedMotion } from "motion/react";
 
 type RevealProps = {
-  children: React.ReactNode;
-  delay?: number;
-  y?: number;
-  className?: string;
+  readonly children: React.ReactNode;
+  readonly delay?: number;
+  readonly y?: number;
+  readonly className?: string;
 };
 
 /* Scroll-into-view fade-rise. Content is fully visible without JS;
@@ -28,10 +28,10 @@ export function Reveal({ children, delay = 0, y = 24, className }: RevealProps) 
 }
 
 type StaggerProps = {
-  children: React.ReactNode[];
-  className?: string;
-  itemClassName?: string;
-  step?: number;
+  readonly children: React.ReactNode[];
+  readonly className?: string;
+  readonly itemClassName?: string;
+  readonly step?: number;
 };
 
 /* Staggered list entrance — 60ms cascade between items. */
@@ -42,7 +42,7 @@ export function Stagger({ children, className, itemClassName, step = 0.06 }: Sta
     <div className={className}>
       {children.map((child, i) => (
         <motion.div
-          key={i}
+          key={`stagger-${i}`}
           className={itemClassName}
           initial={{ opacity: 0, transform: reduced ? "none" : "translateY(20px)" }}
           whileInView={{ opacity: 1, transform: "translateY(0px)" }}

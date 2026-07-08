@@ -315,16 +315,16 @@ export default function Customizer() {
   // Load configuration from localstorage on mount
   useEffect(() => {
     try {
-      const savedPreset = localStorage.getItem("customizer-color-preset") || "current";
-      const savedBg = localStorage.getItem("customizer-bg") || "#F7F7F4";
-      const savedCard = localStorage.getItem("customizer-card") || "#FFFFFF";
-      const savedText = localStorage.getItem("customizer-text") || "#111113";
-      const savedAccent = localStorage.getItem("customizer-accent") || "#18181c";
-      const savedBorder = localStorage.getItem("customizer-border") || "#e4e3de";
+      const savedPreset = localStorage.getItem("customizer-color-preset") ?? "current";
+      const savedBg = localStorage.getItem("customizer-bg") ?? "#F7F7F4";
+      const savedCard = localStorage.getItem("customizer-card") ?? "#FFFFFF";
+      const savedText = localStorage.getItem("customizer-text") ?? "#111113";
+      const savedAccent = localStorage.getItem("customizer-accent") ?? "#18181c";
+      const savedBorder = localStorage.getItem("customizer-border") ?? "#e4e3de";
       const savedDark = localStorage.getItem("customizer-dark") === "true";
 
-      const savedScale = parseFloat(localStorage.getItem("customizer-font-scale") || "1.0");
-      const savedFont = localStorage.getItem("customizer-font-preset") || "current";
+      const savedScale = parseFloat(localStorage.getItem("customizer-font-scale") ?? "1.0");
+      const savedFont = localStorage.getItem("customizer-font-preset") ?? "current";
 
       setSelectedColorPreset(savedPreset);
       setCustomBg(savedBg);
@@ -626,10 +626,11 @@ export default function Customizer() {
                 <div className="space-y-3">
                   {/* Background picker */}
                   <div className="flex items-center justify-between">
-                    <label className="font-mono text-[0.75rem] text-ink uppercase">Page Background</label>
+                    <label htmlFor="custom-bg" className="font-mono text-[0.75rem] text-ink uppercase">Page Background</label>
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-[0.6875rem] text-ink-2 select-all">{customBg}</span>
                       <input
+                        id="custom-bg"
                         type="color"
                         value={customBg}
                         onChange={(e) => handleCustomColorChange("bg", e.target.value)}
@@ -640,10 +641,11 @@ export default function Customizer() {
 
                   {/* Card Background picker */}
                   <div className="flex items-center justify-between">
-                    <label className="font-mono text-[0.75rem] text-ink uppercase">Card Background</label>
+                    <label htmlFor="custom-card" className="font-mono text-[0.75rem] text-ink uppercase">Card Background</label>
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-[0.6875rem] text-ink-2 select-all">{customCard}</span>
                       <input
+                        id="custom-card"
                         type="color"
                         value={customCard}
                         onChange={(e) => handleCustomColorChange("card", e.target.value)}
@@ -654,10 +656,11 @@ export default function Customizer() {
 
                   {/* Text picker */}
                   <div className="flex items-center justify-between">
-                    <label className="font-mono text-[0.75rem] text-ink uppercase">Primary Text</label>
+                    <label htmlFor="custom-text" className="font-mono text-[0.75rem] text-ink uppercase">Primary Text</label>
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-[0.6875rem] text-ink-2 select-all">{customText}</span>
                       <input
+                        id="custom-text"
                         type="color"
                         value={customText}
                         onChange={(e) => handleCustomColorChange("text", e.target.value)}
@@ -668,10 +671,11 @@ export default function Customizer() {
 
                   {/* Accent picker */}
                   <div className="flex items-center justify-between">
-                    <label className="font-mono text-[0.75rem] text-ink uppercase">Accent / CTA</label>
+                    <label htmlFor="custom-accent" className="font-mono text-[0.75rem] text-ink uppercase">Accent / CTA</label>
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-[0.6875rem] text-ink-2 select-all">{customAccent}</span>
                       <input
+                        id="custom-accent"
                         type="color"
                         value={customAccent}
                         onChange={(e) => handleCustomColorChange("accent", e.target.value)}
@@ -682,10 +686,11 @@ export default function Customizer() {
 
                   {/* Border picker */}
                   <div className="flex items-center justify-between">
-                    <label className="font-mono text-[0.75rem] text-ink uppercase">Borders</label>
+                    <label htmlFor="custom-border" className="font-mono text-[0.75rem] text-ink uppercase">Borders</label>
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-[0.6875rem] text-ink-2 select-all">{customBorder}</span>
                       <input
+                        id="custom-border"
                         type="color"
                         value={customBorder}
                         onChange={(e) => handleCustomColorChange("border", e.target.value)}
@@ -696,8 +701,9 @@ export default function Customizer() {
 
                   {/* Dark Mode toggle */}
                   <div className="flex items-center justify-between pt-2">
-                    <label className="font-mono text-[0.75rem] text-ink uppercase">Force Dark Mode</label>
+                    <label htmlFor="custom-dark" className="font-mono text-[0.75rem] text-ink uppercase">Force Dark Mode</label>
                     <input
+                      id="custom-dark"
                       type="checkbox"
                       checked={isDarkMode}
                       onChange={(e) => handleCustomColorChange("dark", e.target.checked ? "true" : "false")}

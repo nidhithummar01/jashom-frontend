@@ -20,7 +20,7 @@ function formatDate(d: string | null) {
   return new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
-function JobCard({ job, onApply }: { job: Job; onApply: (job: Job) => void }) {
+function JobCard({ job, onApply }: { readonly job: Job; readonly onApply: (job: Job) => void }) {
   return (
     <div className="border border-line bg-linen group flex flex-col gap-0 transition-all duration-300 hover:bg-paper">
       <div className="p-6 md:p-7 flex flex-col gap-3 flex-1">
@@ -84,7 +84,7 @@ function JobCard({ job, onApply }: { job: Job; onApply: (job: Job) => void }) {
   );
 }
 
-function ApplyModal({ job, onClose }: { job: Job; onClose: () => void }) {
+function ApplyModal({ job, onClose }: { readonly job: Job; readonly onClose: () => void }) {
   const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -112,12 +112,18 @@ function ApplyModal({ job, onClose }: { job: Job; onClose: () => void }) {
 
   return (
     <div
+      role="presentation"
       className="fixed inset-0 z-[200] bg-ink/50 backdrop-blur-[2px] flex items-end sm:items-center justify-center p-4"
       onClick={onClose}
+      onKeyDown={(e) => e.key === "Escape" && onClose()}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Apply for ${job.title}`}
         className="bg-linen border border-line w-full max-w-lg max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-start justify-between p-6 border-b border-line">
@@ -151,29 +157,29 @@ function ApplyModal({ job, onClose }: { job: Job; onClose: () => void }) {
             <form onSubmit={onSubmit} className="flex flex-col gap-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm text-ink-2">Full Name *</label>
-                  <input name="fullName" required className="field-j" placeholder="Your full name" />
+                  <label htmlFor="apply-fullName" className="text-sm text-ink-2">Full Name *</label>
+                  <input id="apply-fullName" name="fullName" required className="field-j" placeholder="Your full name" />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-sm text-ink-2">Email *</label>
-                  <input name="email" type="email" required className="field-j" placeholder="you@email.com" />
+                  <label htmlFor="apply-email" className="text-sm text-ink-2">Email *</label>
+                  <input id="apply-email" name="email" type="email" required className="field-j" placeholder="you@email.com" />
                 </div>
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm text-ink-2">Phone</label>
-                <input name="phone" type="tel" className="field-j" placeholder="+91 98765 43210" />
+                <label htmlFor="apply-phone" className="text-sm text-ink-2">Phone</label>
+                <input id="apply-phone" name="phone" type="tel" className="field-j" placeholder="+91 98765 43210" />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm text-ink-2">LinkedIn Profile URL</label>
-                <input name="linkedinUrl" type="url" className="field-j" placeholder="https://linkedin.com/in/yourname" />
+                <label htmlFor="apply-linkedin" className="text-sm text-ink-2">LinkedIn Profile URL</label>
+                <input id="apply-linkedin" name="linkedinUrl" type="url" className="field-j" placeholder="https://linkedin.com/in/yourname" />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm text-ink-2">Portfolio / GitHub URL</label>
-                <input name="portfolioUrl" type="url" className="field-j" placeholder="https://github.com/yourname" />
+                <label htmlFor="apply-portfolio" className="text-sm text-ink-2">Portfolio / GitHub URL</label>
+                <input id="apply-portfolio" name="portfolioUrl" type="url" className="field-j" placeholder="https://github.com/yourname" />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-sm text-ink-2">Cover Letter / Message</label>
-                <textarea name="coverLetter" rows={4} className="field-j resize-y" placeholder="Tell us why you're a great fit for this role…" />
+                <label htmlFor="apply-cover" className="text-sm text-ink-2">Cover Letter / Message</label>
+                <textarea id="apply-cover" name="coverLetter" rows={4} className="field-j resize-y" placeholder="Tell us why you're a great fit for this role…" />
               </div>
               {status === "error" && (
                 <p className="text-[0.8125rem] text-red-600">{errorMsg}</p>
@@ -192,7 +198,7 @@ function ApplyModal({ job, onClose }: { job: Job; onClose: () => void }) {
   );
 }
 
-export default function CareersContent({ jobs }: { jobs: Job[] }) {
+export default function CareersContent({ jobs }: { readonly jobs: Job[] }) {
   const reduced = useReducedMotion();
   const [applyingTo, setApplyingTo] = useState<Job | null>(null);
   const [generalFormStatus, setGeneralFormStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
@@ -220,6 +226,14 @@ export default function CareersContent({ jobs }: { jobs: Job[] }) {
       setGeneralFormStatus("error");
     }
   };
+
+  const openingsLabel = publishedJobs.length > 0
+    ? `See ${publishedJobs.length} Open Role${publishedJobs.length > 1 ? "s" : ""}`
+    : "See Openings";
+
+  const openingsDescription = publishedJobs.length > 0
+    ? `We have ${publishedJobs.length} open position${publishedJobs.length > 1 ? "s" : ""} right now. Click a role to apply.`
+    : "Explore opportunities to join our growing team";
 
   return (
     <>
@@ -251,7 +265,7 @@ export default function CareersContent({ jobs }: { jobs: Job[] }) {
             className="mt-10 flex flex-wrap gap-4">
             <Magnetic strength={0.18}>
               <a href="#openings" className="btn btn-primary">
-                {publishedJobs.length > 0 ? `See ${publishedJobs.length} Open Role${publishedJobs.length > 1 ? "s" : ""}` : "See Openings"}
+                {openingsLabel}
               </a>
             </Magnetic>
             <a href="#apply" className="btn btn-secondary">Submit Resume</a>
@@ -285,9 +299,7 @@ export default function CareersContent({ jobs }: { jobs: Job[] }) {
               <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Current Openings</SplitHeading>
               <Reveal>
                 <p className="text-ink-2 max-w-[58ch]">
-                  {publishedJobs.length > 0
-                    ? `We have ${publishedJobs.length} open position${publishedJobs.length > 1 ? "s" : ""} right now. Click a role to apply.`
-                    : "Explore opportunities to join our growing team"}
+                  {openingsDescription}
                 </p>
               </Reveal>
             </div>
@@ -329,32 +341,32 @@ export default function CareersContent({ jobs }: { jobs: Job[] }) {
                   <Reveal delay={0.08}>
                     <form onSubmit={handleGeneralSubmit} className="grid sm:grid-cols-2 gap-5">
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-sm text-ink-2">Full Name *</label>
-                        <input name="name" required className="field-j" placeholder="Your name" />
+                        <label htmlFor="gen-name" className="text-sm text-ink-2">Full Name *</label>
+                        <input id="gen-name" name="name" required className="field-j" placeholder="Your name" />
                       </div>
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-sm text-ink-2">Email Address *</label>
-                        <input name="email" type="email" required className="field-j" placeholder="you@email.com" />
+                        <label htmlFor="gen-email" className="text-sm text-ink-2">Email Address *</label>
+                        <input id="gen-email" name="email" type="email" required className="field-j" placeholder="you@email.com" />
                       </div>
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-sm text-ink-2">Phone Number</label>
-                        <input name="phone" type="tel" className="field-j" placeholder="+91" />
+                        <label htmlFor="gen-phone" className="text-sm text-ink-2">Phone Number</label>
+                        <input id="gen-phone" name="phone" type="tel" className="field-j" placeholder="+91" />
                       </div>
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-sm text-ink-2">Position / Role</label>
-                        <input name="position" className="field-j" placeholder="Role you're interested in" />
+                        <label htmlFor="gen-position" className="text-sm text-ink-2">Position / Role</label>
+                        <input id="gen-position" name="position" className="field-j" placeholder="Role you're interested in" />
                       </div>
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-sm text-ink-2">LinkedIn URL</label>
-                        <input name="linkedinUrl" type="url" className="field-j" placeholder="https://linkedin.com/in/..." />
+                        <label htmlFor="gen-linkedin" className="text-sm text-ink-2">LinkedIn URL</label>
+                        <input id="gen-linkedin" name="linkedinUrl" type="url" className="field-j" placeholder="https://linkedin.com/in/..." />
                       </div>
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-sm text-ink-2">Portfolio / GitHub</label>
-                        <input name="portfolio" type="url" className="field-j" placeholder="https://github.com/..." />
+                        <label htmlFor="gen-portfolio" className="text-sm text-ink-2">Portfolio / GitHub</label>
+                        <input id="gen-portfolio" name="portfolio" type="url" className="field-j" placeholder="https://github.com/..." />
                       </div>
                       <div className="flex flex-col gap-1.5 sm:col-span-2">
-                        <label className="text-sm text-ink-2">Message / Cover Letter</label>
-                        <textarea name="message" rows={5} className="field-j resize-y" placeholder="Tell us about yourself" />
+                        <label htmlFor="gen-message" className="text-sm text-ink-2">Message / Cover Letter</label>
+                        <textarea id="gen-message" name="message" rows={5} className="field-j resize-y" placeholder="Tell us about yourself" />
                       </div>
                       <div className="sm:col-span-2 flex flex-col gap-3 items-start">
                         {generalFormStatus === "error" && <p className="text-[0.8125rem] text-red-600">{generalErrorMsg}</p>}

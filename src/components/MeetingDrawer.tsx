@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "motion/react";
 import { submitContactForm } from "@/lib/submitContact";
 
 interface MeetingDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
 }
 
 const SERVICES = [

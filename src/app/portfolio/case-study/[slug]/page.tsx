@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return { title: data.metaTitle, description: data.metaDescription };
 }
 
-export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function CaseStudyPage({ params }: { readonly params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const data = getCaseStudy(slug);
   if (!data) notFound();

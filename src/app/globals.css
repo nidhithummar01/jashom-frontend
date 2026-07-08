@@ -73,7 +73,7 @@
   --svg-gray: #71706b;
 }
 
-@theme inline {
+@theme inline { /* NOSONAR */
   --color-linen: var(--bg-primary);
   --color-paper: var(--bg-secondary);
   --color-tint: var(--bg-tertiary);
@@ -458,14 +458,11 @@ body {
   right: 0;
   opacity: 0.5;
   pointer-events: none;
+  transition: opacity 380ms var(--ease-out), filter 420ms var(--ease-out);
 }
 
 .card-neon .neon-glyph * {
   transition: stroke 380ms var(--ease-out), fill 380ms var(--ease-out);
-}
-
-.card-neon .neon-glyph {
-  transition: opacity 380ms var(--ease-out), filter 420ms var(--ease-out);
 }
 
 .card-neon h3,

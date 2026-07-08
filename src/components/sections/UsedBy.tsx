@@ -61,19 +61,29 @@ const LOGO_POOL = [
   }
 ];
 
+function swapSlot(
+  targetSlot: number,
+  nextLogoIndex: number,
+  setSlots: React.Dispatch<React.SetStateAction<number[]>>,
+  setFadingSlots: React.Dispatch<React.SetStateAction<Record<number, boolean>>>,
+) {
+  setTimeout(() => {
+    setSlots(prev => { const next = [...prev]; next[targetSlot] = nextLogoIndex; return next; });
+    setTimeout(() => {
+      setFadingSlots(prev => { const next = { ...prev }; delete next[targetSlot]; return next; });
+    }, 50);
+  }, 500);
+}
+
 export default function UsedBy() {
   const [slots, setSlots] = useState([0, 1, 2, 3, 4, 5]);
   const [fadingSlots, setFadingSlots] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     const swapLogo = () => {
-      // Pick a random slot index (0 to 5)
       const targetSlot = Math.floor(Math.random() * 6);
-
-      // If that slot is already transitioning, wait for the next tick
       if (fadingSlots[targetSlot]) return;
 
-      // Find logo indices in LOGO_POOL that are not currently displayed in any slot
       const displayedIndices = new Set(slots);
       const availableIndices = Array.from({ length: LOGO_POOL.length }, (_, i) => i)
         .filter(i => !displayedIndices.has(i));
@@ -81,26 +91,8 @@ export default function UsedBy() {
       if (availableIndices.length === 0) return;
       const nextLogoIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
 
-      // Step 1: Fade out the target slot
       setFadingSlots(prev => ({ ...prev, [targetSlot]: true }));
-
-      // Step 2: Swap the logo source after fade-out transition finishes (500ms)
-      setTimeout(() => {
-        setSlots(prev => {
-          const next = [...prev];
-          next[targetSlot] = nextLogoIndex;
-          return next;
-        });
-
-        // Step 3: Fade the new logo back in
-        setTimeout(() => {
-          setFadingSlots(prev => {
-            const next = { ...prev };
-            delete next[targetSlot];
-            return next;
-          });
-        }, 50); // Small render tick delay
-      }, 500);
+      swapSlot(targetSlot, nextLogoIndex, setSlots, setFadingSlots);
     };
 
     // Staggered timer to trigger swaps at slightly randomized intervals
@@ -126,7 +118,7 @@ export default function UsedBy() {
             const logo = LOGO_POOL[logoIndex];
             return (
               <div
-                key={index}
+                key={logo.id}
                 className="group flex items-center justify-center py-8 px-6 min-h-[110px] md:min-h-[120px] border-r border-b border-line hover:bg-tint/50 transition-colors duration-300 cursor-default"
               >
                 <div

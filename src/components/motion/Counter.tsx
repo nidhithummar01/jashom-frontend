@@ -4,11 +4,11 @@ import { useEffect, useRef } from "react";
 import { useInView, useReducedMotion, animate } from "motion/react";
 
 type Props = {
-  value: number;
-  prefix?: string;
-  suffix?: string;
-  decimals?: number;
-  className?: string;
+  readonly value: number;
+  readonly prefix?: string;
+  readonly suffix?: string;
+  readonly decimals?: number;
+  readonly className?: string;
 };
 
 /* Count-up on first scroll into view. Renders the final value as

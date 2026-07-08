@@ -7,7 +7,7 @@ import Magnetic from "@/components/motion/Magnetic";
 import type { BlogPost } from "@/lib/blogs";
 import { formatDate } from "@/lib/blogs";
 
-export default function BlogsContent({ posts }: { posts: BlogPost[] }) {
+export default function BlogsContent({ posts }: { readonly posts: BlogPost[] }) {
   const reduced = useReducedMotion();
 
   return (
@@ -69,7 +69,7 @@ export default function BlogsContent({ posts }: { posts: BlogPost[] }) {
                       {p.featured_image_url ? (
                         <img
                           src={p.featured_image_url}
-                          alt={p.featured_image_alt || p.title}
+                          alt={p.featured_image_alt ?? p.title}
                           className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                         />
                       ) : (

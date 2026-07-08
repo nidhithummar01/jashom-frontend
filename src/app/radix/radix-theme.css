@@ -10,6 +10,14 @@
   --default-font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   --heading-font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
 
+  /* Square the brand's hard-edge aesthetic onto Radix radius tokens */
+  --radius-1: 0px;
+  --radius-2: 0px;
+  --radius-3: 2px;
+  --radius-4: 2px;
+  --radius-5: 4px;
+  --radius-6: 6px;
+
   background: var(--color-background);
   color: #111113;
 }
@@ -17,16 +25,6 @@
 /* Card / surface panels lean to paper white over the cream canvas */
 .jashom-radix .rt-Card {
   --card-background-color: #ffffff;
-}
-
-/* Square the brand's hard-edge aesthetic onto Radix radius tokens */
-.jashom-radix {
-  --radius-1: 0px;
-  --radius-2: 0px;
-  --radius-3: 2px;
-  --radius-4: 2px;
-  --radius-5: 4px;
-  --radius-6: 6px;
 }
 
 /* Section rhythm helper to echo the brand --section-pad */

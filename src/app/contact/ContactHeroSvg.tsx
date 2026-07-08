@@ -10,10 +10,14 @@ export default function ContactHeroSvg() {
       xmlns="http://www.w3.org/2000/svg" strokeLinecap="round" strokeLinejoin="round">
 
       {/* Signal rings from India HQ */}
-      {[40, 72, 108].map((r) => (
+      {[
+        { r: 40,  strokeWidth: 1.5, opacity: 0.6 },
+        { r: 72,  strokeWidth: 0.8, opacity: 0.35 },
+        { r: 108, strokeWidth: 0.8, opacity: 0.18 },
+      ].map(({ r, strokeWidth, opacity }) => (
         <circle key={r} cx="240" cy="190" r={r}
-          stroke={accent} strokeWidth={r === 40 ? 1.5 : 0.8}
-          opacity={r === 40 ? 0.6 : r === 72 ? 0.35 : 0.18} />
+          stroke={accent} strokeWidth={strokeWidth}
+          opacity={opacity} />
       ))}
 
       {/* HQ pin */}

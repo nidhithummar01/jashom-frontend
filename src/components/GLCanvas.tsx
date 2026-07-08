@@ -94,10 +94,10 @@ function hexToRgb(hex: string): [number, number, number] {
 }
 
 type Props = {
-  background?: string;
-  lineColor?: string;
-  lineAlpha?: number;
-  className?: string;
+  readonly background?: string;
+  readonly lineColor?: string;
+  readonly lineAlpha?: number;
+  readonly className?: string;
 };
 
 export default function GLCanvas({
@@ -218,6 +218,7 @@ export default function GLCanvas({
       ref={canvasRef}
       className={className}
       aria-hidden="true"
+      tabIndex={-1}
       style={{ width: "100%", height: "100%", display: "block" }}
     />
   );

@@ -14,7 +14,7 @@ const MONO = "var(--font-mono)";
 export function VariantBlueprint() {
   const cores = [0, 1, 2, 3].flatMap((r) => [0, 1, 2, 3].map((c) => ({ r, c })));
   return (
-    <svg viewBox="0 0 520 360" fill="none" className="w-full h-auto" role="img" aria-label="GPU CUDA core chip feeding an optimized data bus into an LLM">
+    <svg viewBox="0 0 520 360" fill="none" className="w-full h-auto" aria-hidden="true">
       <text x="20" y="28" fill={GRAY} fontSize="10" fontFamily={MONO} letterSpacing="1.5">GPU OPTIMIZATION // CUDA DEVELOPMENT</text>
 
       {/* Chip */}
@@ -72,7 +72,7 @@ export function VariantBlueprint() {
    Top: GPU Optimization latency profile. Bottom: CUDA parallel kernels. */
 export function VariantThroughput() {
   return (
-    <svg viewBox="0 0 520 360" fill="none" className="w-full h-auto" role="img" aria-label="GPU optimization latency curve and CUDA parallel kernel lanes">
+    <svg viewBox="0 0 520 360" fill="none" className="w-full h-auto" aria-hidden="true">
       {/* GPU OPTIMIZATION panel */}
       <text x="20" y="28" fill={GRAY} fontSize="10" fontFamily={MONO} letterSpacing="1.5">GPU OPTIMIZATION</text>
       <rect x="20" y="40" width="480" height="120" rx="3" stroke={LINE} strokeWidth="1" />
@@ -107,7 +107,7 @@ export function VariantCores() {
   const grid = [0, 1, 2, 3, 4, 5].flatMap((r) => [0, 1, 2, 3, 4, 5].map((c) => ({ r, c })));
   const bars = [38, 64, 96, 134, 178];
   return (
-    <svg viewBox="0 0 520 360" fill="none" className="w-full h-auto" role="img" aria-label="CUDA core lattice and GPU optimization performance gain bars">
+    <svg viewBox="0 0 520 360" fill="none" className="w-full h-auto" aria-hidden="true">
       {/* CUDA lattice */}
       <text x="40" y="60" fill={GRAY} fontSize="10" fontFamily={MONO} letterSpacing="1.5">CUDA DEVELOPMENT</text>
       {grid.map(({ r, c }) => {

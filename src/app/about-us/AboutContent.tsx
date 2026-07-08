@@ -83,12 +83,12 @@ export default function AboutContent() {
               </div>
               <div className="lg:col-span-8 flex flex-col gap-5">
                 {[
-                  "Our company deals with the design of the GPU architecture and the development of CUDA and optimization of data-intensive applications. We deal with startups, research laboratories, and businesses that require the efficiency of an extra level of computation beyond the CPU.",
-                  "Our group is a combination of advanced skills in CUDA programming, memory optimization and multi-GPU coordination to provide stable production ready systems. All solutions are designed based on workload profiling, benchmarking and performance tuning- not assumptions.",
-                  "We engineer scalable GPU systems that are used in AI training pipelines, real-time analytics, simulation engines, and scientific computing systems. We achieve this by designing a development strategy that ensures ultimate throughput, eminent latency, and efficient use of resources throughout the deployments.",
-                  "With proof-of-concept systems to enterprise-grade systems, we support organizations to leverage the full potential of parallel computing, and at the same time ensure reliability, security and maintainability.",
-                ].map((t, i) => (
-                  <Reveal key={i} delay={i * 0.06}><p className="text-ink-2 max-w-[66ch]">{t}</p></Reveal>
+                  { key: "design", text: "Our company deals with the design of the GPU architecture and the development of CUDA and optimization of data-intensive applications. We deal with startups, research laboratories, and businesses that require the efficiency of an extra level of computation beyond the CPU." },
+                  { key: "skills", text: "Our group is a combination of advanced skills in CUDA programming, memory optimization and multi-GPU coordination to provide stable production ready systems. All solutions are designed based on workload profiling, benchmarking and performance tuning- not assumptions." },
+                  { key: "systems", text: "We engineer scalable GPU systems that are used in AI training pipelines, real-time analytics, simulation engines, and scientific computing systems. We achieve this by designing a development strategy that ensures ultimate throughput, eminent latency, and efficient use of resources throughout the deployments." },
+                  { key: "enterprise", text: "With proof-of-concept systems to enterprise-grade systems, we support organizations to leverage the full potential of parallel computing, and at the same time ensure reliability, security and maintainability." },
+                ].map(({ key, text }, i) => (
+                  <Reveal key={key} delay={i * 0.06}><p className="text-ink-2 max-w-[66ch]">{text}</p></Reveal>
                 ))}
               </div>
             </div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 
-export type QuickAction = { label: string; href: string; external?: boolean };
+export type QuickAction = { readonly label: string; readonly href: string; readonly external?: boolean };
 
 /* Context-aware floating action button. Mirrors the Customizer trigger's visual
    language (w-12 h-12, bg-ink, square, shadow) but anchored bottom-left so the
@@ -12,7 +12,7 @@ export type QuickAction = { label: string; href: string; external?: boolean };
    Hidden below the sm breakpoint (as is the Customizer trigger) so the fixed
    buttons never obscure page content on narrow viewports; every action here
    is also reachable through the main nav. */
-export default function QuickActions({ actions, label = "Quick actions" }: { actions: QuickAction[]; label?: string }) {
+export default function QuickActions({ actions, label = "Quick actions" }: { readonly actions: QuickAction[]; readonly label?: string }) {
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
 

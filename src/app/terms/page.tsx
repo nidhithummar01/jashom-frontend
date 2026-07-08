@@ -134,7 +134,7 @@ export default function TermsOfServicePage() {
               {SECTIONS.map((section, idx) => {
                 const isOpen = !!openSections[idx];
                 return (
-                  <div key={idx} className="border-b border-line last:border-b-0">
+                  <div key={section.title} className="border-b border-line last:border-b-0">
                     <button
                       onClick={() => toggleSection(idx)}
                       className="w-full flex items-center justify-between py-5 text-left focus:outline-none group cursor-pointer"

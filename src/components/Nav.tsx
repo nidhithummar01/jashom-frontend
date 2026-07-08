@@ -21,7 +21,7 @@ const SERVICES = [
   },
 ];
 
-function ServiceIcon({ name }: { name: string }) {
+function ServiceIcon({ name }: { readonly name: string }) {
   const common = {
     width: 20,
     height: 20,
@@ -61,7 +61,7 @@ const LINKS = [
   { label: "Contact", href: "/contact/" },
 ];
 
-export default function Nav({ forceBg = false }: { forceBg?: boolean }) {
+export default function Nav({ forceBg = false }: { readonly forceBg?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);

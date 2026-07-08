@@ -272,27 +272,26 @@ function CudaSimulation() {
       {/* Simulation Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-line pb-4 mb-4 gap-2">
         <span className="text-ink font-bold flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-green-600 dark:bg-green-400 animate-pulse" />
-          CUDA_KERNEL_WORKER: RUNNING
+          <span className="w-2 h-2 rounded-full bg-green-600 dark:bg-green-400 animate-pulse"></span>
+          <span>CUDA_KERNEL_WORKER: RUNNING</span>
         </span>
         <span className="text-ink-3 uppercase text-[10px]">Blocks: 32 | Threads: 1024</span>
       </div>
 
       {/* Grid of Blocks */}
       <div className="grid grid-cols-8 gap-1.5 sm:gap-2 my-auto max-w-md mx-auto w-full">
-        {Array.from({ length: 32 }).map((_, i) => {
+        {Array.from({ length: 32 }, (_, i) => {
           const isActive = i === activeBlock;
           const isProcessed = i < activeBlock;
+          const blockClass = isActive
+            ? "bg-ink border-ink text-linen scale-105 shadow-sm"
+            : isProcessed
+              ? "bg-tint/40 border-line text-ink-2"
+              : "bg-paper border-line text-ink-3";
           return (
             <div
-              key={i}
-              className={`aspect-square border flex items-center justify-center transition-all duration-200 rounded-xs ${
-                isActive
-                  ? "bg-ink border-ink text-linen scale-105 shadow-sm"
-                  : isProcessed
-                  ? "bg-tint/40 border-line text-ink-2"
-                  : "bg-paper border-line text-ink-3"
-              }`}
+              key={`block-${i}`}
+              className={`aspect-square border flex items-center justify-center transition-all duration-200 rounded-xs ${blockClass}`}
             >
               <span className="text-[9px] font-bold">
                 {isActive ? "⚡" : String(i).padStart(2, "0")}
@@ -334,8 +333,8 @@ function MlSimulation() {
       {/* Simulation Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-line pb-4 mb-4 gap-2">
         <span className="text-ink font-bold flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-green-600 dark:bg-green-400 animate-pulse" />
-          PIPELINE_ENGINE: ACCELERATED
+          <span className="w-2 h-2 rounded-full bg-green-600 dark:bg-green-400 animate-pulse"></span>
+          <span>PIPELINE_ENGINE: ACCELERATED</span>
         </span>
         <span className="text-ink-3 uppercase text-[10px]">FP8 Tensor Core Mode</span>
       </div>
@@ -408,8 +407,8 @@ function ProfilingSimulation() {
       {/* Simulation Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-line pb-4 mb-4 gap-2">
         <span className="text-ink font-bold flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-green-600 dark:bg-green-400 animate-pulse" />
-          PROFILER: RUNNING
+          <span className="w-2 h-2 rounded-full bg-green-600 dark:bg-green-400 animate-pulse"></span>
+          <span>PROFILER: RUNNING</span>
         </span>
         <span className="text-ink-3 uppercase text-[10px]">Auto Optimization Sweep</span>
       </div>
@@ -480,7 +479,7 @@ function ProfilingSimulation() {
   );
 }
 
-export default function GpuOptimizationContent({ blogPosts = [] }: { blogPosts?: BlogPost[] }) {
+export default function GpuOptimizationContent({ blogPosts = [] }: { readonly blogPosts?: BlogPost[] }) {
   const reduced = useReducedMotion();
   const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -1024,7 +1023,7 @@ export default function GpuOptimizationContent({ blogPosts = [] }: { blogPosts?:
                     {p.featured_image_url ? (
                       <img
                         src={p.featured_image_url}
-                        alt={p.featured_image_alt || p.title}
+                        alt={p.featured_image_alt ?? p.title}
                         className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                       />
                     ) : (

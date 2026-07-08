@@ -6,7 +6,7 @@ import { Reveal, Stagger } from "@/components/motion/Reveal";
 import Magnetic from "@/components/motion/Magnetic";
 import type { Block, CaseStudy } from "./case-studies-data";
 
-function Table({ headers, rows }: { headers: string[]; rows: string[][] }) {
+function Table({ headers, rows }: { readonly headers: string[]; readonly rows: string[][] }) {
   return (
     <div className="overflow-x-auto border border-line">
       <table className="w-full text-left text-[0.875rem] border-collapse">
@@ -19,9 +19,9 @@ function Table({ headers, rows }: { headers: string[]; rows: string[][] }) {
         </thead>
         <tbody>
           {rows.map((r, i) => (
-            <tr key={i} className="border-b border-line last:border-b-0">
+            <tr key={r[0] ?? i} className="border-b border-line last:border-b-0">
               {r.map((c, j) => (
-                <td key={j} className={`p-3 align-top ${j === 0 ? "text-ink font-medium" : "text-ink-2"}`}>{c}</td>
+                <td key={`${r[0]}-${j}`} className={`p-3 align-top ${j === 0 ? "text-ink font-medium" : "text-ink-2"}`}>{c}</td>
               ))}
             </tr>
           ))}
@@ -31,14 +31,15 @@ function Table({ headers, rows }: { headers: string[]; rows: string[][] }) {
   );
 }
 
-function Blocks({ blocks }: { blocks: Block[] }) {
+function Blocks({ blocks }: { readonly blocks: Block[] }) {
   return (
     <div className="flex flex-col gap-4">
       {blocks.map((b, i) => {
-        if (b.t === "p") return <p key={i} className="text-ink-2 max-w-[68ch]">{b.text}</p>;
+        const key = b.t === "p" ? b.text?.slice(0, 30) : b.t === "sub" ? b.heading : `${b.t}-${i}`;
+        if (b.t === "p") return <p key={key} className="text-ink-2 max-w-[68ch]">{b.text}</p>;
         if (b.t === "bullets")
           return (
-            <ul key={i} className="flex flex-col gap-2.5">
+            <ul key={key} className="flex flex-col gap-2.5">
               {b.items.map((it) => (
                 <li key={it} className="flex gap-3 text-[0.9375rem] text-ink-2">
                   <span className="w-4 h-px bg-ink shrink-0 mt-3" aria-hidden="true" />
@@ -47,10 +48,10 @@ function Blocks({ blocks }: { blocks: Block[] }) {
               ))}
             </ul>
           );
-        if (b.t === "table") return <Table key={i} headers={b.headers} rows={b.rows} />;
+        if (b.t === "table") return <Table key={key} headers={b.headers} rows={b.rows} />;
         if (b.t === "sub")
           return (
-            <div key={i} className="flex flex-col gap-3 pt-2">
+            <div key={key} className="flex flex-col gap-3 pt-2">
               <h3 className="font-sans font-medium text-[1.0625rem] text-ink">{b.heading}</h3>
               <Blocks blocks={b.blocks} />
             </div>
@@ -61,7 +62,7 @@ function Blocks({ blocks }: { blocks: Block[] }) {
   );
 }
 
-export default function CaseStudyLayout({ data }: { data: CaseStudy }) {
+export default function CaseStudyLayout({ data }: { readonly data: CaseStudy }) {
   const reduced = useReducedMotion();
 
   return (
@@ -138,7 +139,7 @@ export default function CaseStudyLayout({ data }: { data: CaseStudy }) {
           <div className="container-j relative max-w-4xl">
             <SplitHeading className="text-[clamp(1.4rem,2.2vw,1.9rem)] text-ink mb-6">{data.outcome.heading}</SplitHeading>
             {data.outcome.paras.map((p, i) => (
-              <Reveal key={i} delay={i * 0.08}><p className="text-ink-2 max-w-[72ch] mb-4">{p}</p></Reveal>
+              <Reveal key={p.slice(0, 40)} delay={i * 0.08}><p className="text-ink-2 max-w-[72ch] mb-4">{p}</p></Reveal>
             ))}
             <Reveal delay={0.2}>
               <div className="mt-8 flex flex-wrap gap-4">

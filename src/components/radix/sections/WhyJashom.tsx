@@ -1,4 +1,4 @@
-import { Section, Container, Grid, Flex, Heading, Text, Button, Box } from "@radix-ui/themes";
+import { Section, Container, Flex, Heading, Text, Button, Box } from "@radix-ui/themes";
 import {
   LightningBoltIcon, RocketIcon, LockClosedIcon, TimerIcon,
   ChatBubbleIcon, BarChartIcon, ArrowRightIcon,

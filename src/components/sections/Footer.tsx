@@ -277,7 +277,7 @@ export default function Footer() {
               </button>
             </div>
 
-            <a href="#" className="hover:text-ink transition-colors duration-150">
+            <a href="#top" className="hover:text-ink transition-colors duration-150">
               Back to top ↑
             </a>
           </div>

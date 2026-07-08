@@ -2,7 +2,7 @@ import SplitHeading from "@/components/motion/SplitHeading";
 import { Reveal, Stagger } from "@/components/motion/Reveal";
 import Magnetic from "@/components/motion/Magnetic";
 
-function Icon({ name }: { name: string }) {
+function Icon({ name }: { readonly name: string }) {
   const common = {
     width: 24,
     height: 24,

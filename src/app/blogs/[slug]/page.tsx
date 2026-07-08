@@ -12,21 +12,21 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  readonly params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getBlogBySlug(slug);
   if (!post) return {};
   return {
-    title: post.meta_title || post.title,
-    description: post.meta_description || post.excerpt || undefined,
+    title: post.meta_title ?? post.title,
+    description: post.meta_description ?? post.excerpt ?? undefined,
   };
 }
 
 export default async function BlogPostPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  readonly params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
   const [post, allPosts] = await Promise.all([

@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://backend.jashom.com";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "https://backend.jashom.com";
 
 export interface ContentSection {
   title?: string;

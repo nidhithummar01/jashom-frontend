@@ -116,8 +116,7 @@ export default function HeroIllustration() {
       viewBox="0 0 860 540"
       fill="none"
       className="w-full h-auto"
-      role="img"
-      aria-label="Flat technical schematic of a GPU wafer showing CUDA Core array connected to an LLM block"
+      aria-hidden="true"
     >
       {/* Grid pattern definition */}
       <defs>

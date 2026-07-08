@@ -36,7 +36,7 @@ const company = [
   { label: "Career", href: "/careers/" },
 ];
 
-function Menu({ trigger, items }: { trigger: string; items: { label: string; href: string; desc?: string }[] }) {
+function Menu({ trigger, items }: { readonly trigger: string; readonly items: { readonly label: string; readonly href: string; readonly desc?: string }[] }) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>

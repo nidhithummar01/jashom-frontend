@@ -10,9 +10,9 @@ export default function Magnetic({
   strength = 0.25,
   className,
 }: {
-  children: React.ReactNode;
-  strength?: number;
-  className?: string;
+  readonly children: React.ReactNode;
+  readonly strength?: number;
+  readonly className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);

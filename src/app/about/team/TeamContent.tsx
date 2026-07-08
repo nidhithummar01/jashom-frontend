@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import SplitHeading from "@/components/motion/SplitHeading";
 import { Reveal, Stagger } from "@/components/motion/Reveal";
 
 const TEAM = [

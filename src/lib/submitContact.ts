@@ -1,5 +1,5 @@
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://backend.jashom.com";
+  process.env.NEXT_PUBLIC_API_URL ?? "https://backend.jashom.com";
 
 export interface ContactPayload {
   fullName: string;
@@ -19,6 +19,6 @@ export async function submitContactForm(
   });
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
-    throw new Error(data.error || `Request failed (${res.status})`);
+    throw new Error(data.error ?? `Request failed (${res.status})`);
   }
 }

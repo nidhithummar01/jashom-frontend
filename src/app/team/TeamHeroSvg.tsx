@@ -25,11 +25,11 @@ export default function TeamHeroSvg() {
       xmlns="http://www.w3.org/2000/svg" strokeLinecap="round" strokeLinejoin="round">
 
       {/* Edge lines */}
-      {edges.map(([a, b], i) => {
+      {edges.map(([a, b]) => {
         const from = members[a];
         const to = members[b];
         return (
-          <line key={i}
+          <line key={`${a}-${b}`}
             x1={from.x + 24} y1={from.y}
             x2={to.x - 24} y2={to.y}
             stroke={line} strokeWidth="1" strokeDasharray="4 3" />

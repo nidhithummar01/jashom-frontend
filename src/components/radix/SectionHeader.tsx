@@ -9,12 +9,12 @@ export function SectionHeader({
   align = "left",
   invert = false,
 }: {
-  icon?: ReactNode;
-  eyebrow?: string;
-  title: string;
-  intro?: string;
-  align?: "left" | "center";
-  invert?: boolean;
+  readonly icon?: ReactNode;
+  readonly eyebrow?: string;
+  readonly title: string;
+  readonly intro?: string;
+  readonly align?: "left" | "center";
+  readonly invert?: boolean;
 }) {
   const center = align === "center";
   return (

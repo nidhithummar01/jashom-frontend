@@ -39,7 +39,7 @@ export default async function Blog() {
                 {p.featured_image_url ? (
                   <img
                     src={p.featured_image_url}
-                    alt={p.featured_image_alt || p.title}
+                    alt={p.featured_image_alt ?? p.title}
                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                   />
                 ) : (

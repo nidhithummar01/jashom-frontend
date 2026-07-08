@@ -8,10 +8,17 @@ import { SplitText } from "gsap/SplitText";
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 type Props = {
-  as?: "h1" | "h2" | "h3" | "p";
-  children: React.ReactNode;
-  className?: string;
+  readonly as?: "h1" | "h2" | "h3" | "p";
+  readonly children: React.ReactNode;
+  readonly className?: string;
 };
+
+function revealLines(lines: Element[]) {
+  lines.forEach((line) => {
+    const parent = line.parentElement;
+    if (parent) parent.style.overflow = "visible";
+  });
+}
 
 /* GSAP SplitText line-mask reveal, triggered on scroll.
    Heading is visible by default; the split + animation only runs
@@ -34,26 +41,15 @@ export default function SplitHeading({ as: Tag = "h2", children, className }: Pr
         type: "lines",
         linesClass: "gsap-line-inner",
         mask: "lines",
-        autoSplit: true, // re-split if the container width changes before reveal
+        autoSplit: true,
         onSplit(self) {
           const tween = gsap.from(self.lines, {
             yPercent: 110,
             duration: 0.9,
             stagger: 0.09,
             ease: "expo.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              once: true,
-            },
-            onComplete() {
-              self.lines.forEach((line) => {
-                const parent = line.parentElement;
-                if (parent) {
-                  parent.style.overflow = "visible";
-                }
-              });
-            },
+            scrollTrigger: { trigger: el, start: "top 85%", once: true },
+            onComplete() { revealLines(self.lines as Element[]); },
           });
           trigger = tween.scrollTrigger ?? null;
           return tween;

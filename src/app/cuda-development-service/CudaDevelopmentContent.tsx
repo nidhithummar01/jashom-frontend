@@ -67,7 +67,7 @@ const FAQS = [
   { q: "Is ongoing CUDA performance tuning necessary?", a: "Yes. With the changing workloads, periodical profiling and optimization will ensure the efficiency is maintained and avoid any bottlenecks, keeping the utilization of the GPUs optimal over time." },
 ];
 
-export default function CudaDevelopmentContent({ blogPosts = [] }: { blogPosts?: BlogPost[] }) {
+export default function CudaDevelopmentContent({ blogPosts = [] }: { readonly blogPosts?: BlogPost[] }) {
   const reduced = useReducedMotion();
 
   const RELATED_BLOGS = blogPosts
@@ -410,7 +410,7 @@ export default function CudaDevelopmentContent({ blogPosts = [] }: { blogPosts?:
                     {p.featured_image_url ? (
                       <img
                         src={p.featured_image_url}
-                        alt={p.featured_image_alt || p.title}
+                        alt={p.featured_image_alt ?? p.title}
                         className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                       />
                     ) : (

@@ -104,7 +104,7 @@ export default function Footer() {
               <Link href="/privacy/" size="1" style={{ color: "#a3a29c" }}>Privacy Policy</Link>
               <Link href="/terms/" size="1" style={{ color: "#a3a29c" }}>Terms of Service</Link>
               <Link href="/security/" size="1" style={{ color: "#a3a29c" }}>Security</Link>
-              <Link href="#" size="1" style={{ color: "#a3a29c" }}>
+              <Link href="#top" size="1" style={{ color: "#a3a29c" }}>
                 <Flex align="center" gap="1">Back to top <ArrowUpIcon /></Flex>
               </Link>
             </Flex>
