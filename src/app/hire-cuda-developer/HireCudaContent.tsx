@@ -7,7 +7,6 @@ import { Reveal, Stagger } from "@/components/motion/Reveal";
 import Magnetic from "@/components/motion/Magnetic";
 import HireCudaHeroSvg from "./HireCudaHeroSvg";
 import { submitContactForm } from "@/lib/submitContact";
-
 const BADGES = ["15 Days Risk-Free Trial", "24x7 Technical Support", "On-Time Delivery"];
 
 const EXPERTISE = [
@@ -81,19 +80,6 @@ const FAQS = [
   { q: "Do you support multi-GPU or distributed GPU environments?", a: "Yes. Our work is scalable multi-GPU designs, where each workload is placed on multiple processors and devices communicate in a more efficient and optimal way to provide the performance of an enterprise." },
   { q: "What hiring models are available for CUDA developers?", a: "You can hire CUDA developers on a full-time basis, part-time basis, hourly basis (time and material), and various other custom ability basis according to your project scope and performance needs." },
 ];
-
-function Cards({ items, cols = "sm:grid-cols-2 lg:grid-cols-3" }: { readonly items: { title: string; body: string }[]; readonly cols?: string }) {
-  return (
-    <Stagger className={`grid ${cols} border-t border-line`} itemClassName="h-full" step={0.05}>
-      {items.map((c) => (
-        <div key={c.title} className="group h-full p-5 md:p-6 border-b border-line hover:bg-tint transition-all duration-300">
-          <h3 className="font-sans font-medium text-[1rem] text-ink mb-2">{c.title}</h3>
-          <p className="text-[0.875rem] text-ink-2">{c.body}</p>
-        </div>
-      ))}
-    </Stagger>
-  );
-}
 
 const ExpertiseVisual = ({ index }: { index: number }) => {
   switch (index) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import SplitHeading from "@/components/motion/SplitHeading";
 import { Reveal, Stagger } from "@/components/motion/Reveal";
@@ -87,6 +87,11 @@ function JobCard({ job, onApply }: { readonly job: Job; readonly onApply: (job: 
 function ApplyModal({ job, onClose }: { readonly job: Job; readonly onClose: () => void }) {
   const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    dialogRef.current?.showModal();
+  }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -111,20 +116,12 @@ function ApplyModal({ job, onClose }: { readonly job: Job; readonly onClose: () 
   };
 
   return (
-    <div
-      role="presentation"
-      className="fixed inset-0 z-[200] bg-ink/50 backdrop-blur-[2px] flex items-end sm:items-center justify-center p-4"
-      onClick={onClose}
-      onKeyDown={(e) => e.key === "Escape" && onClose()}
+    <dialog
+      ref={dialogRef}
+      aria-label={`Apply for ${job.title}`}
+      onClose={onClose}
+      className="bg-linen border border-line w-full max-w-lg max-h-[90vh] overflow-y-auto m-auto p-0 backdrop:bg-ink/50 backdrop:backdrop-blur-[2px]"
     >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label={`Apply for ${job.title}`}
-        className="bg-linen border border-line w-full max-w-lg max-h-[90vh] overflow-y-auto"
-        onClick={(e) => e.stopPropagation()}
-        onKeyDown={(e) => e.stopPropagation()}
-      >
         {/* Header */}
         <div className="flex items-start justify-between p-6 border-b border-line">
           <div>
@@ -193,8 +190,7 @@ function ApplyModal({ job, onClose }: { readonly job: Job; readonly onClose: () 
             </form>
           )}
         </div>
-      </div>
-    </div>
+    </dialog>
   );
 }
 
@@ -227,12 +223,13 @@ export default function CareersContent({ jobs }: { readonly jobs: Job[] }) {
     }
   };
 
-  const openingsLabel = publishedJobs.length > 0
-    ? `See ${publishedJobs.length} Open Role${publishedJobs.length > 1 ? "s" : ""}`
+  const jobCount = publishedJobs.length;
+  const plural = jobCount > 1 ? "s" : "";
+  const openingsLabel = jobCount > 0
+    ? `See ${jobCount} Open Role${plural}`
     : "See Openings";
-
-  const openingsDescription = publishedJobs.length > 0
-    ? `We have ${publishedJobs.length} open position${publishedJobs.length > 1 ? "s" : ""} right now. Click a role to apply.`
+  const openingsDescription = jobCount > 0
+    ? `We have ${jobCount} open position${plural} right now. Click a role to apply.`
     : "Explore opportunities to join our growing team";
 
   return (

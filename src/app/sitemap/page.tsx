@@ -27,7 +27,7 @@ const LEGAL_LINKS = [
   { title: "Security Policy", description: "Our approach to infrastructure security and incident response.", href: "/security/" },
 ];
 
-function LinkGroup({ title, links }: { title: string; links: { title: string; description: string; href: string }[] }) {
+function LinkGroup({ title, links }: { readonly title: string; readonly links: { readonly title: string; readonly description: string; readonly href: string }[] }) {
   return (
     <div className="mb-14">
       <h2 className="font-mono text-[0.875rem] uppercase tracking-wider text-ink-3 border-b border-line pb-2 mb-6">

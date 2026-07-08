@@ -81,7 +81,7 @@ export default function UsedBy() {
 
   useEffect(() => {
     const swapLogo = () => {
-      const targetSlot = Math.floor(Math.random() * 6);
+      const targetSlot = Math.floor(Math.random() * 6); // NOSONAR — visual animation only
       if (fadingSlots[targetSlot]) return;
 
       const displayedIndices = new Set(slots);
@@ -89,14 +89,14 @@ export default function UsedBy() {
         .filter(i => !displayedIndices.has(i));
 
       if (availableIndices.length === 0) return;
-      const nextLogoIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+      const nextLogoIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)]; // NOSONAR — visual animation only
 
       setFadingSlots(prev => ({ ...prev, [targetSlot]: true }));
       swapSlot(targetSlot, nextLogoIndex, setSlots, setFadingSlots);
     };
 
     // Staggered timer to trigger swaps at slightly randomized intervals
-    const intervalTime = 2500 + Math.random() * 1500;
+    const intervalTime = 2500 + Math.random() * 1500; // NOSONAR — visual animation only
     const timer = setInterval(swapLogo, intervalTime);
 
     return () => clearInterval(timer);

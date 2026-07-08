@@ -20,6 +20,17 @@ function revealLines(lines: Element[]) {
   });
 }
 
+function createRevealTween(self: SplitText, el: Element) {
+  return gsap.from(self.lines, {
+    yPercent: 110,
+    duration: 0.9,
+    stagger: 0.09,
+    ease: "expo.out",
+    scrollTrigger: { trigger: el, start: "top 85%", once: true },
+    onComplete() { revealLines(self.lines as Element[]); },
+  });
+}
+
 /* GSAP SplitText line-mask reveal, triggered on scroll.
    Heading is visible by default; the split + animation only runs
    once fonts are ready, so there's no flash of unstyled measurement. */
@@ -43,14 +54,7 @@ export default function SplitHeading({ as: Tag = "h2", children, className }: Pr
         mask: "lines",
         autoSplit: true,
         onSplit(self) {
-          const tween = gsap.from(self.lines, {
-            yPercent: 110,
-            duration: 0.9,
-            stagger: 0.09,
-            ease: "expo.out",
-            scrollTrigger: { trigger: el, start: "top 85%", once: true },
-            onComplete() { revealLines(self.lines as Element[]); },
-          });
+          const tween = createRevealTween(self, el);
           trigger = tween.scrollTrigger ?? null;
           return tween;
         },

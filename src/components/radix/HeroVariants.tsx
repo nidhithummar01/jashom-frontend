@@ -132,7 +132,7 @@ export function VariantCores() {
       <line x1="300" y1="240" x2="490" y2="240" stroke={INK} strokeWidth="1.2" />
       {bars.map((h, i) => (
         <rect
-          key={i}
+          key={h}
           x={300 + i * 40} y={240 - h} width="26" height={h}
           fill={i === bars.length - 1 ? INK : TINT} stroke={INK} strokeWidth="1"
           className="j-hero-rise" style={{ animationDelay: `${i * 0.12}s`, transformOrigin: "bottom" }}

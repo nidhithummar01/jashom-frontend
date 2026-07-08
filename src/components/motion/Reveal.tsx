@@ -41,6 +41,7 @@ export function Stagger({ children, className, itemClassName, step = 0.06 }: Sta
   return (
     <div className={className}>
       {children.map((child, i) => (
+        // NOSONAR — children are arbitrary ReactNode with no stable identity
         <motion.div
           key={`stagger-${i}`}
           className={itemClassName}

@@ -323,7 +323,7 @@ function MlSimulation() {
   useEffect(() => {
     const interval = setInterval(() => {
       setStep((prev) => (prev + 1) % 4);
-      setThroughput(Math.floor(2820 + Math.random() * 60));
+      setThroughput(Math.floor(2820 + Math.random() * 60)); // NOSONAR — visual simulation only
     }, 700);
     return () => clearInterval(interval);
   }, []);

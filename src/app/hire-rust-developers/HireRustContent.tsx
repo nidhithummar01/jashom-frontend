@@ -7,6 +7,7 @@ import { Reveal, Stagger } from "@/components/motion/Reveal";
 import Magnetic from "@/components/motion/Magnetic";
 import HireRustHeroSvg from "./HireRustHeroSvg";
 import { submitContactForm } from "@/lib/submitContact";
+import HireCards from "@/components/HireCards";
 
 const BADGES = [
   { label: "Flexible Hiring", sub: "Scalable engagement models" },
@@ -83,19 +84,6 @@ const FAQS = [
   { q: "Why should I hire Rust developers from Jashom?", a: "Jashom offers expert Rust developers, flexible engagement options, scalable development solutions, clear communication and reliable technical support for modern software projects." },
 ];
 
-function Cards({ items, cols = "sm:grid-cols-2 lg:grid-cols-3" }: { readonly items: { title: string; body: string }[]; readonly cols?: string }) {
-  return (
-    <Stagger className={`grid ${cols} border-t border-line`} itemClassName="h-full" step={0.05}>
-      {items.map((c) => (
-        <div key={c.title} className="group h-full p-5 md:p-6 border-b border-line hover:bg-tint transition-all duration-300">
-          <h3 className="font-sans font-medium text-[1rem] text-ink mb-2">{c.title}</h3>
-          <p className="text-[0.875rem] text-ink-2">{c.body}</p>
-        </div>
-      ))}
-    </Stagger>
-  );
-}
-
 export default function HireRustContent() {
   const reduced = useReducedMotion();
   const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
@@ -169,7 +157,7 @@ export default function HireRustContent() {
             <div className="max-w-2xl mb-10 md:mb-12">
               <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Technical Expertise of Our Rust Developers</SplitHeading>
             </div>
-            <Cards items={EXPERTISE} />
+            <HireCards items={EXPERTISE} />
           </div>
         </section>
 
@@ -199,7 +187,7 @@ export default function HireRustContent() {
               <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Why Businesses Choose Jashom for Rust Development</SplitHeading>
               <Reveal><p className="text-ink-2 max-w-[58ch]">Our engineering skills, scalable architecture and enterprise-centric execution all contribute to reliable Rust solutions.</p></Reveal>
             </div>
-            <Cards items={WHY_BUSINESSES} />
+            <HireCards items={WHY_BUSINESSES} />
           </div>
         </section>
 
@@ -210,7 +198,7 @@ export default function HireRustContent() {
               <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Flexible Hiring Models</SplitHeading>
               <Reveal><p className="text-ink-2 max-w-[58ch]">Select engagement options suited to project needs, business priorities and development timeframes.</p></Reveal>
             </div>
-            <Cards items={HIRING_MODELS} cols="sm:grid-cols-2 lg:grid-cols-4" />
+            <HireCards items={HIRING_MODELS} cols="sm:grid-cols-2 lg:grid-cols-4" />
           </div>
         </section>
 
@@ -231,7 +219,7 @@ export default function HireRustContent() {
               <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Why Choose Jashom for Rust Development?</SplitHeading>
               <Reveal><p className="text-ink-2 max-w-[58ch]">We support businesses to develop and design future-ready software systems using modern Rust engineering practices and scalable development strategy.</p></Reveal>
             </div>
-            <Cards items={WHY_CHOOSE} />
+            <HireCards items={WHY_CHOOSE} />
           </div>
         </section>
 
