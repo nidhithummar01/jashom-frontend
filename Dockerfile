@@ -9,6 +9,7 @@ RUN npm ci
 COPY . .
 ARG SITE_ORIGIN=https://new.jashom.com
 ENV NEXT_PUBLIC_SITE_ORIGIN=${SITE_ORIGIN}
+
 RUN npm run build
 
 # ---------- Runtime stage ----------
@@ -22,14 +23,17 @@ ENV PORT=8080
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
+# Copy required files
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 
-RUN chmod -R 555 public .next/standalone && chmod -R 444 .next/static
+# Permissions (safe)
+RUN chmod -R 555 public && chmod -R 444 .next
 
 USER nextjs
 
 EXPOSE 8080
 
-CMD ["node", "server.js"]
+CMD ["npm", "start"]
