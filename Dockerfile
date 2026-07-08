@@ -26,7 +26,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-RUN chmod -R 755 public .next/standalone .next/static
+RUN chmod -R 755 server.js public .next
 USER nextjs
 
 EXPOSE 8080
