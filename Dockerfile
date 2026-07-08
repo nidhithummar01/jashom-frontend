@@ -23,13 +23,15 @@ ENV PORT=8080
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
-# Copy required files
+# Copy required files (NO node_modules)
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 
-# Permissions (safe)
+# Install only production dependencies
+RUN npm install --omit=dev
+
+# Permissions
 RUN chmod -R 555 public && chmod -R 444 .next
 
 USER nextjs
