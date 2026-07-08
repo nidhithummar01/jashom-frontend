@@ -6,8 +6,10 @@ import SplitHeading from "@/components/motion/SplitHeading";
 import { Reveal, Stagger } from "@/components/motion/Reveal";
 import Magnetic from "@/components/motion/Magnetic";
 import HireCudaHeroSvg from "./HireCudaHeroSvg";
-import { submitContactForm } from "@/lib/submitContact";
 import { RELATED_SERVICES as RELATED } from "@/lib/relatedServices";
+import FaqAccordion, { type FaqItem } from "@/components/sections/FaqAccordion";
+import HireContactForm, { type ContactHighlight } from "@/components/sections/HireContactForm";
+import RelatedServicesSection from "@/components/sections/RelatedServicesSection";
 
 const BADGES = ["15 Days Risk-Free Trial", "24x7 Technical Support", "On-Time Delivery"];
 
@@ -61,7 +63,7 @@ const REVIEWS = [
   { quote: "Professional, responsive, and highly skilled in GPU computing. We achieved performance milestones much faster than anticipated.", who: "Product Engineering Manager" },
 ];
 
-const CONTACT_HIGHLIGHTS = [
+const CONTACT_HIGHLIGHTS: ContactHighlight[] = [
   { title: "Quick Response", body: "We respond to all inquiries within 24 hours" },
   { title: "No Obligation", body: "Free consultation with no commitment required" },
   { title: "Expert Matching", body: "We'll match you with developers suited to your project" },
@@ -69,7 +71,7 @@ const CONTACT_HIGHLIGHTS = [
 
 const HIRING_OPTIONS = ["Hourly Basis", "Monthly Basis", "Fixed Price Project", "Not Sure Yet"];
 
-const FAQS = [
+const FAQS: FaqItem[] = [
   { q: "Why should I hire a dedicated CUDA developer instead of a general developer?", a: "The CUDA developers are experts in the domain of the architecture of the GPUs, parallel computing, and optimization of performance. They reorganize algorithms with a specific execution in the GPU and provide much faster and more efficient performance in comparison to the general-purpose programming methods." },
   { q: "What types of projects require CUDA development expertise?", a: "AI/ML training, real-time data analytics, scientific simulations, computer vision, video processing, high-performance computing (HPC), and additional applications that rely on the acceleration provided by a graphics card are all applications that need CUDA skills." },
   { q: "How do CUDA developers improve application performance?", a: "They enhance the execution of the kernel, thread setup, memory, and the transfer of data between the CPU and the GPU. They remove bottlenecks and maximize throughput using profiling tools to get measurable performance improvements." },
@@ -172,8 +174,6 @@ const ExpertiseVisual = ({ index }: { index: number }) => {
 
 export default function HireCudaContent() {
   const reduced = useReducedMotion();
-  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState("");
   const [activeExpertise, setActiveExpertise] = useState(0);
 
   return (
@@ -640,117 +640,25 @@ export default function HireCudaContent() {
           </div>
         </section>
 
-        {/* Related services */}
-        <section className="section" id="related">
-          <div className="container-j">
-            <div className="max-w-2xl mb-10 md:mb-12 flex flex-col gap-4">
-              <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Explore Related GPU Services</SplitHeading>
-              <Reveal><p className="text-ink-2 max-w-[60ch]">Want to hire best CUDA developer experts? Browse some other complimentary GPU oriented services that can make the system even more performance-efficient and scalable.</p></Reveal>
-            </div>
-            <Stagger className="grid md:grid-cols-2 gap-6" step={0.08}>
-              {RELATED.map((r) => (
-                <div key={r.title} className="group flex flex-col p-6 md:p-8 border border-line hover:bg-tint transition-all duration-300">
-                  <h3 className="text-[1.25rem] font-medium mb-3">{r.title}</h3>
-                  <p className="text-ink-2 mb-6 flex-1">{r.body}</p>
-                  <a href={r.href} className="link-line text-ink font-medium text-[0.9375rem] w-fit">Know More →</a>
-                </div>
-              ))}
-            </Stagger>
-          </div>
-        </section>
+        <RelatedServicesSection
+          heading="Explore Related GPU Services"
+          subtitle="Want to hire best CUDA developer experts? Browse some other complimentary GPU oriented services that can make the system even more performance-efficient and scalable."
+          items={RELATED}
+        />
 
-        {/* FAQ */}
-        <section className="section bg-paper border-y border-line" id="faq">
-          <div className="container-j">
-            <div className="max-w-2xl mb-10 md:mb-12 flex flex-col gap-4">
-              <span className="font-mono text-[1rem] tracking-[0.25em] text-ink-3 uppercase font-medium">FAQs</span>
-              <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Frequently Asked Questions</SplitHeading>
-              <Reveal><p className="text-ink-2 max-w-[58ch]">Common questions about hiring CUDA developers from Jashom</p></Reveal>
-            </div>
-            <div className="border-t border-line max-w-3xl">
-              {FAQS.map((f) => (
-                <details key={f.q} className="group border-b border-line">
-                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none py-5 text-ink font-medium">
-                    {f.q}
-                    <span className="text-ink-2 transition-transform duration-300 group-open:rotate-45" aria-hidden="true">+</span>
-                  </summary>
-                  <p className="text-ink-2 pb-5 max-w-[60ch]">{f.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
+        <FaqAccordion
+          subtitle="Common questions about hiring CUDA developers from Jashom"
+          items={FAQS}
+        />
 
-        {/* Contact */}
-        <section className="section" id="contact">
-          <div className="container-j">
-            <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
-              <div className="lg:col-span-5 flex flex-col gap-4">
-                <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Get Started with Expert CUDA Developers</SplitHeading>
-                <Reveal><p className="text-ink-2 max-w-[48ch]">Fill out the form and our team will get back to you within 24 hours. Share your project requirements and we&rsquo;ll match you with the perfect CUDA developer for your needs.</p></Reveal>
-                <Reveal delay={0.1}>
-                  <div className="mt-2 flex flex-col gap-5">
-                    {CONTACT_HIGHLIGHTS.map((h) => (
-                      <div key={h.title}>
-                        <p className="text-ink font-medium mb-1">{h.title}</p>
-                        <p className="text-[0.9375rem] text-ink-2">{h.body}</p>
-                      </div>
-                    ))}
-                  </div>
-                </Reveal>
-              </div>
-              <div className="lg:col-span-7">
-                {status === "sent" ? (
-                  <div className="h-full flex flex-col items-start justify-center bg-linen border border-line rounded-none p-10">
-                    <p className="font-mono text-3xl mb-3">Request received.</p>
-                    <p className="text-ink-2">Thank you — we&rsquo;ll get back to you within 24 hours.</p>
-                  </div>
-                ) : (
-                  <Reveal delay={0.08}>
-                    <form onSubmit={async (e) => {
-                        e.preventDefault();
-                        const fd = new FormData(e.currentTarget);
-                        const model = fd.get("model") as string;
-                        const rawMsg = fd.get("message") as string;
-                        setStatus("loading");
-                        try {
-                          await submitContactForm({
-                            fullName: fd.get("name") as string,
-                            email: fd.get("email") as string,
-                            phone: fd.get("phone") as string,
-                            company: fd.get("company") as string,
-                            message: model ? `[Hiring Model: ${model}]\n\n${rawMsg}` : rawMsg,
-                          });
-                          setStatus("sent");
-                        } catch (err) {
-                          setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
-                          setStatus("error");
-                        }
-                      }} className="grid sm:grid-cols-2 gap-5">
-                      <div className="flex flex-col gap-1.5"><label htmlFor="name" className="text-sm text-ink-2">Full Name *</label><input id="name" name="name" required autoComplete="name" className="field-j" placeholder="Your name" /></div>
-                      <div className="flex flex-col gap-1.5"><label htmlFor="email" className="text-sm text-ink-2">Email Address *</label><input id="email" name="email" type="email" required autoComplete="email" className="field-j" placeholder="you@company.com" /></div>
-                      <div className="flex flex-col gap-1.5"><label htmlFor="phone" className="text-sm text-ink-2">Phone Number</label><input id="phone" name="phone" type="tel" autoComplete="tel" className="field-j" placeholder="+91" /></div>
-                      <div className="flex flex-col gap-1.5"><label htmlFor="company" className="text-sm text-ink-2">Company Name</label><input id="company" name="company" autoComplete="organization" className="field-j" placeholder="Company name" /></div>
-                      <div className="flex flex-col gap-1.5 sm:col-span-2">
-                        <label htmlFor="model" className="text-sm text-ink-2">Preferred Hiring Model *</label>
-                        <select id="model" name="model" required defaultValue="" className="field-j">
-                          <option value="" disabled>Select a hiring model</option>
-                          {HIRING_OPTIONS.map((o) => (<option key={o} value={o}>{o}</option>))}
-                        </select>
-                      </div>
-                      <div className="flex flex-col gap-1.5 sm:col-span-2"><label htmlFor="message" className="text-sm text-ink-2">Project Requirements *</label><textarea id="message" name="message" rows={5} required className="field-j resize-y" placeholder="Tell us about your project and performance targets." /></div>
-                      <div className="sm:col-span-2 flex flex-col gap-3 items-start">
-                        {status === "error" && <p className="text-[0.8125rem] text-red-600">{errorMsg}</p>}
-                        <button type="submit" disabled={status === "loading"} className="btn btn-primary disabled:opacity-60">{status === "loading" ? "Sending…" : "Submit Request"}</button>
-                        <p className="text-[0.8125rem] text-ink-3">By submitting this form, you agree to our privacy policy and terms of service.</p>
-                      </div>
-                    </form>
-                  </Reveal>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
+        <HireContactForm
+          heading="Get Started with Expert CUDA Developers"
+          description="Fill out the form and our team will get back to you within 24 hours. Share your project requirements and we'll match you with the perfect CUDA developer for your needs."
+          highlights={CONTACT_HIGHLIGHTS}
+          hiringOptions={HIRING_OPTIONS}
+          messagePlaceholder="Tell us about your project and performance targets."
+          showPrivacyNote
+        />
       </main>
     </>
   );

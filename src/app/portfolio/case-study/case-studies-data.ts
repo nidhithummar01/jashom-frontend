@@ -19,6 +19,13 @@ export type CaseStudy = {
   outcome: { heading: string; paras: string[] };
 };
 
+// Block helpers — collapse repeated multi-line object literals
+const p = (text: string): Block => ({ t: "p", text });
+const bullets = (items: string[]): Block => ({ t: "bullets", items });
+const sub = (heading: string, blocks: Block[]): Block => ({ t: "sub", heading, blocks });
+const tbl = (headers: string[], rows: string[][]): Block => ({ t: "table", headers, rows });
+const stat = (value: string, label: string) => ({ value, label });
+
 export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "llm-inference-optimization",
@@ -27,64 +34,62 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "LLM Inference Optimization on Constrained GPU Infrastructure",
     hardware: "Hardware: Multi-node GPU cluster (12 distributed nodes)",
     summary: "A client required deployment of a 13B parameter language model on constrained GPU infrastructure with strict power efficiency limits. Jashom re-engineered the full inference path - from CUDA kernel-level optimizations through dynamic quantization and adaptive batching - to deliver 42% higher throughput and 37% lower GPU power consumption, with no measurable degradation in model accuracy. The resulting system was deployed across 12 distributed nodes running real-time RAG queries, at one-third of the original projected cost.",
-    stats: [
-      { value: "42%", label: "Throughput Improvement" },
-      { value: "37%", label: "Power Reduction" },
-      { value: "3×", label: "Lower Operating Cost" },
-      { value: "12", label: "Distributed Nodes Deployed" },
-    ],
+    stats: [stat("42%", "Throughput Improvement"), stat("37%", "Power Reduction"), stat("3×", "Lower Operating Cost"), stat("12", "Distributed Nodes Deployed")],
     sections: [
       {
         heading: "The Challenge",
         blocks: [
-          { t: "p", text: "The client was operating a 13B parameter language model as the backbone of a customer-facing conversational AI product. The infrastructure was mid-range GPU hardware - capable in theory, but heavily under-utilized due to inefficiencies in the inference stack. Two constraints made the project technically demanding:" },
-          { t: "bullets", items: [
+          p("The client was operating a 13B parameter language model as the backbone of a customer-facing conversational AI product. The infrastructure was mid-range GPU hardware - capable in theory, but heavily under-utilized due to inefficiencies in the inference stack. Two constraints made the project technically demanding:"),
+          bullets([
             "Power budget: the deployment environment had strict per-rack power limits that the existing inference stack regularly exceeded under load",
             "Cost pressure: the client needed to scale from prototype to multi-node production at a cost that the existing per-query GPU spend made impossible",
-          ] },
-          { t: "p", text: "Standard optimization approaches - reducing batch size, switching frameworks - had already been attempted. The client needed kernel-level engineering to go further." },
+          ]),
+          p("Standard optimization approaches - reducing batch size, switching frameworks - had already been attempted. The client needed kernel-level engineering to go further."),
         ],
       },
       {
         heading: "Technical Approach",
         blocks: [
-          { t: "sub", heading: "Phase 1: Profiling and Bottleneck Identification", blocks: [
-            { t: "p", text: "Jashom conducted a full profiling pass using NVIDIA Nsight to map the inference execution graph. Key findings included excessive memory bandwidth consumption from unoptimized attention operations, high kernel launch overhead from non-fused operators, and underutilized tensor cores due to misaligned precision modes." },
-          ] },
-          { t: "sub", heading: "Phase 2: Custom CUDA Kernel Development", blocks: [
-            { t: "p", text: "We implemented custom CUDA kernels targeting the identified bottlenecks:" },
-            { t: "bullets", items: [
+          sub("Phase 1: Profiling and Bottleneck Identification", [
+            p("Jashom conducted a full profiling pass using NVIDIA Nsight to map the inference execution graph. Key findings included excessive memory bandwidth consumption from unoptimized attention operations, high kernel launch overhead from non-fused operators, and underutilized tensor cores due to misaligned precision modes."),
+          ]),
+          sub("Phase 2: Custom CUDA Kernel Development", [
+            p("We implemented custom CUDA kernels targeting the identified bottlenecks:"),
+            bullets([
               "Fused multi-head attention kernels reducing memory round-trips in the attention computation",
               "Operator fusion eliminating redundant kernel launches across transformer layers",
               "Optimized memory access patterns aligned to L2 cache boundaries for the client's specific GPU architecture",
-            ] },
-          ] },
-          { t: "sub", heading: "Phase 3: Dynamic Quantization - INT8 / FP16", blocks: [
-            { t: "p", text: "We implemented dynamic quantization across the model's linear layers using INT8 precision for weight storage with FP16 activations. This reduced the effective VRAM footprint of the model by approximately 40% while preserving the numerical range needed for accurate token prediction. Calibration was performed against a representative sample of the client's actual query distribution, not a generic benchmark." },
-          ] },
-          { t: "sub", heading: "Phase 4: TensorRT Inference Re-Engineering", blocks: [
-            { t: "p", text: "The inference path was re-implemented using TensorRT with layer fusion enabled across the full transformer stack. TensorRT's profiling-guided optimization selected the most efficient kernel implementations for each layer given the client's hardware and precision requirements." },
-          ] },
-          { t: "sub", heading: "Phase 5: Adaptive Batching Scheduler", blocks: [
-            { t: "p", text: "We designed an adaptive batching scheduler that dynamically adjusts batch size based on current GPU utilization and queue depth. Under light load, the scheduler runs smaller batches for lower latency. Under heavy load, it consolidates requests into larger batches to maximize throughput. This produced measurably higher GPU utilization across the variable load patterns of a production service." },
-          ] },
-          { t: "sub", heading: "Phase 6: Distributed Deployment", blocks: [
-            { t: "p", text: "The optimized inference stack was containerized and deployed across 12 distributed nodes with load balancing. Each node runs an independent inference replica behind a shared request router. The RAG (Retrieval-Augmented Generation) pipeline was integrated at the routing layer, allowing context retrieval to happen in parallel with inference scheduling." },
-          ] },
+            ]),
+          ]),
+          sub("Phase 3: Dynamic Quantization - INT8 / FP16", [
+            p("We implemented dynamic quantization across the model's linear layers using INT8 precision for weight storage with FP16 activations. This reduced the effective VRAM footprint of the model by approximately 40% while preserving the numerical range needed for accurate token prediction. Calibration was performed against a representative sample of the client's actual query distribution, not a generic benchmark."),
+          ]),
+          sub("Phase 4: TensorRT Inference Re-Engineering", [
+            p("The inference path was re-implemented using TensorRT with layer fusion enabled across the full transformer stack. TensorRT's profiling-guided optimization selected the most efficient kernel implementations for each layer given the client's hardware and precision requirements."),
+          ]),
+          sub("Phase 5: Adaptive Batching Scheduler", [
+            p("We designed an adaptive batching scheduler that dynamically adjusts batch size based on current GPU utilization and queue depth. Under light load, the scheduler runs smaller batches for lower latency. Under heavy load, it consolidates requests into larger batches to maximize throughput. This produced measurably higher GPU utilization across the variable load patterns of a production service."),
+          ]),
+          sub("Phase 6: Distributed Deployment", [
+            p("The optimized inference stack was containerized and deployed across 12 distributed nodes with load balancing. Each node runs an independent inference replica behind a shared request router. The RAG (Retrieval-Augmented Generation) pipeline was integrated at the routing layer, allowing context retrieval to happen in parallel with inference scheduling."),
+          ]),
         ],
       },
       {
         heading: "Results",
         blocks: [
-          { t: "table", headers: ["Metric", "Before Optimization", "After Jashom"], rows: [
-            ["Inference Throughput", "Baseline (100%)", "+42% (142%)"],
-            ["GPU Power Consumption", "Baseline (100%)", "−37% (63%)"],
-            ["VRAM Utilization per Model", "~22GB (full FP16)", "~13GB (INT8/FP16 mixed)"],
-            ["Cost per 1M Tokens", "Reference", "~3× reduction"],
-            ["Model Accuracy (BLEU vs. reference)", "Reference", "No measurable degradation"],
-            ["Deployment Nodes", "Prototype: 1 node", "Production: 12 nodes"],
-            ["RAG Query Latency (p50)", "Baseline", "Within latency SLA maintained"],
-          ] },
+          tbl(
+            ["Metric", "Before Optimization", "After Jashom"],
+            [
+              ["Inference Throughput", "Baseline (100%)", "+42% (142%)"],
+              ["GPU Power Consumption", "Baseline (100%)", "−37% (63%)"],
+              ["VRAM Utilization per Model", "~22GB (full FP16)", "~13GB (INT8/FP16 mixed)"],
+              ["Cost per 1M Tokens", "Reference", "~3× reduction"],
+              ["Model Accuracy (BLEU vs. reference)", "Reference", "No measurable degradation"],
+              ["Deployment Nodes", "Prototype: 1 node", "Production: 12 nodes"],
+              ["RAG Query Latency (p50)", "Baseline", "Within latency SLA maintained"],
+            ]
+          ),
         ],
       },
     ],
@@ -101,75 +106,73 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "GPU Workload Orchestration Framework on Rocky Linux 9.7",
     hardware: "Hardware: NVIDIA RTX 3090 · Rocky Linux 9.7 · Docker + NVIDIA Container Toolkit",
     summary: "Jashom designed and built a demo-ready GPU workload orchestration system from the ground up in under five working days. The system accepts jobs via a REST API, schedules them against GPU availability and VRAM constraints, executes them inside isolated Docker containers, and returns structured logs with full exit codes and audit trails. Built on Rocky Linux 9.7 with an NVIDIA RTX 3090, the system provides the complete infrastructure foundation for production GPU job management.",
-    stats: [
-      { value: "5", label: "Days to Demo-Ready" },
-      { value: "4", label: "API Endpoints Delivered" },
-      { value: "100%", label: "GPU Isolation Enforced" },
-      { value: "Full", label: "Audit Trail per Job" },
-    ],
+    stats: [stat("5", "Days to Demo-Ready"), stat("4", "API Endpoints Delivered"), stat("100%", "GPU Isolation Enforced"), stat("Full", "Audit Trail per Job")],
     sections: [
       {
         heading: "The Challenge",
         blocks: [
-          { t: "p", text: "The client needed a GPU job management system that could be demonstrated end-to-end, serve as a prototype foundation for production scaling, and enforce hard GPU isolation between concurrent workloads. Existing solutions were either too heavy (Kubernetes-based orchestration with significant infrastructure overhead) or too lightweight (shell scripts with no scheduling intelligence or audit capability)." },
-          { t: "p", text: "The requirements were specific: VRAM-aware scheduling, per-job GPU isolation using NVIDIA_VISIBLE_DEVICES, containerized execution, structured audit logs, and a REST API interface - all running on a single Rocky Linux 9.7 server with an RTX 3090." },
+          p("The client needed a GPU job management system that could be demonstrated end-to-end, serve as a prototype foundation for production scaling, and enforce hard GPU isolation between concurrent workloads. Existing solutions were either too heavy (Kubernetes-based orchestration with significant infrastructure overhead) or too lightweight (shell scripts with no scheduling intelligence or audit capability)."),
+          p("The requirements were specific: VRAM-aware scheduling, per-job GPU isolation using NVIDIA_VISIBLE_DEVICES, containerized execution, structured audit logs, and a REST API interface - all running on a single Rocky Linux 9.7 server with an RTX 3090."),
         ],
       },
       {
         heading: "Architecture Delivered",
         blocks: [
-          { t: "sub", heading: "Component 1: FastAPI REST API Server", blocks: [
-            { t: "p", text: "A production-grade FastAPI application providing three core endpoints:" },
-            { t: "bullets", items: [
+          sub("Component 1: FastAPI REST API Server", [
+            p("A production-grade FastAPI application providing three core endpoints:"),
+            bullets([
               "POST /jobs - Accepts job submissions with image, command, gpu_count, min_vram_mb, env, and volumes parameters. Returns job_id and initial status immediately.",
               "GET /jobs/{job_id} - Returns full job state: status, assigned GPUs, exit code, all timestamps.",
               "GET /jobs/{job_id}/logs - Returns captured stdout/stderr from the container run.",
-            ] },
-            { t: "p", text: "The API server runs as a systemd service (uvicorn), starts on boot, and restarts automatically on failure." },
-          ] },
-          { t: "sub", heading: "Component 2: VRAM-Aware Scheduler", blocks: [
-            { t: "p", text: "A polling scheduler loop (separate systemd service) implementing:" },
-            { t: "bullets", items: [
+            ]),
+            p("The API server runs as a systemd service (uvicorn), starts on boot, and restarts automatically on failure."),
+          ]),
+          sub("Component 2: VRAM-Aware Scheduler", [
+            p("A polling scheduler loop (separate systemd service) implementing:"),
+            bullets([
               "Queries nvidia-smi for real-time VRAM totals and current usage per GPU",
               "Calculates available VRAM as total − used for each GPU",
               "Selects GPUs where available VRAM ≥ job's min_vram_mb requirement",
               "Reserves selected GPUs before container launch - preventing double-allocation",
               "If no GPUs meet constraints, sleeps 2–5 seconds and retries - jobs queue gracefully",
-            ] },
-          ] },
-          { t: "sub", heading: "Component 3: Docker Container Runner", blocks: [
-            { t: "bullets", items: [
+            ]),
+          ]),
+          sub("Component 3: Docker Container Runner", [
+            bullets([
               "GPU isolation via --gpus \"device=N\" flag",
               "Containers launched with --rm for automatic cleanup",
               "stdout/stderr captured to logs/{job_id}.log",
               "Exit code recorded to SQLite on completion",
               "Configurable job timeout (default 30–60 minutes)",
-            ] },
-          ] },
-          { t: "sub", heading: "Component 4: SQLite Persistence & Audit Layer", blocks: [
-            { t: "table", headers: ["Field", "Description"], rows: [
-              ["job_id", "UUID - globally unique job identifier"],
-              ["status", "queued / running / succeeded / failed"],
-              ["image, command", "Exact Docker image and command submitted"],
-              ["gpu_count, min_vram_mb", "Resource requirements as submitted"],
-              ["assigned_gpu_indices", "Actual GPU indices assigned at runtime"],
-              ["exit_code", "Container process exit code"],
-              ["created_at, started_at, finished_at", "Full timestamp chain for auditability"],
-              ["log_path", "Path to job's stdout/stderr log file on disk"],
-            ] },
-          ] },
+            ]),
+          ]),
+          sub("Component 4: SQLite Persistence & Audit Layer", [
+            tbl(
+              ["Field", "Description"],
+              [
+                ["job_id", "UUID - globally unique job identifier"],
+                ["status", "queued / running / succeeded / failed"],
+                ["image, command", "Exact Docker image and command submitted"],
+                ["gpu_count, min_vram_mb", "Resource requirements as submitted"],
+                ["assigned_gpu_indices", "Actual GPU indices assigned at runtime"],
+                ["exit_code", "Container process exit code"],
+                ["created_at, started_at, finished_at", "Full timestamp chain for auditability"],
+                ["log_path", "Path to job's stdout/stderr log file on disk"],
+              ]
+            ),
+          ]),
         ],
       },
       {
         heading: "Delivery Timeline",
         blocks: [
-          { t: "bullets", items: [
+          bullets([
             "Day 1: Server access validated · NVIDIA drivers + CUDA verified · Docker + NVIDIA Container Toolkit installed · GPU container smoke test passing",
             "Day 2: FastAPI service running · SQLite schema created · POST /jobs storing queued jobs · GET endpoints operational",
             "Day 3: Docker runner implemented · Log capture working · Exit codes recorded · Container cleanup on completion",
             "Day 4: Scheduler loop running · VRAM-aware GPU selection · GPU reservation preventing double-allocation · Full job lifecycle tested",
             "Day 5: systemd services configured · README with demo steps · End-to-end demo working reliably · Audit trail verified",
-          ] },
+          ]),
         ],
       },
     ],
@@ -186,75 +189,79 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Cloud GPU Fine-Tuning Strategy for Production LLM Deployment",
     hardware: "Hardware: Cloud GPU Fleet: RTX 4090 / A100 / H100 (provider-agnostic)",
     summary: "Jashom developed and implemented a comprehensive cloud GPU fine-tuning strategy for a client needing to deploy custom language models at scale. The engagement covered hardware selection, fine-tuning method selection, framework configuration, training execution, and production deployment packaging - across model sizes from 7B to 70B+ parameters. The strategy reduced per-run costs by selecting parameter-efficient methods precisely matched to each use case and hardware tier.",
-    stats: [
-      { value: "7B–70B+", label: "Model Range" },
-      { value: "Tiered", label: "Strategy (3 Tiers)" },
-      { value: "Provider-agnostic", label: "Cloud GPU" },
-      { value: "Days", label: "Dataset to Deploy" },
-    ],
+    stats: [stat("7B–70B+", "Model Range"), stat("Tiered", "Strategy (3 Tiers)"), stat("Provider-agnostic", "Cloud GPU"), stat("Days", "Dataset to Deploy")],
     sections: [
       {
         heading: "The Challenge",
         blocks: [
-          { t: "p", text: "The client had AI use cases requiring custom model behavior - domain-specific knowledge, specialized response formats, particular reasoning patterns - that base models couldn't deliver. They needed a path from \"we have a dataset\" to \"we have a production model\" without building internal GPU infrastructure expertise or overspending on compute." },
-          { t: "p", text: "The key tension: the client's use cases ranged from rapid prototyping of small models to production fine-tuning of 70B parameter models. A single approach wouldn't work. A framework that matched method, hardware, and cost to each use case was required." },
+          p("The client had AI use cases requiring custom model behavior - domain-specific knowledge, specialized response formats, particular reasoning patterns - that base models couldn't deliver. They needed a path from \"we have a dataset\" to \"we have a production model\" without building internal GPU infrastructure expertise or overspending on compute."),
+          p("The key tension: the client's use cases ranged from rapid prototyping of small models to production fine-tuning of 70B parameter models. A single approach wouldn't work. A framework that matched method, hardware, and cost to each use case was required."),
         ],
       },
       {
         heading: "Strategic Framework Delivered",
         blocks: [
-          { t: "sub", heading: "Tier 1: Rapid Prototyping (7B–13B Models)", blocks: [
-            { t: "table", headers: ["Aspect", "Detail"], rows: [
-              ["GPU", "Single RTX 4090 (24GB VRAM)"],
-              ["Method", "QLoRA - 4-bit quantization enabling 7B models comfortably, 13B models workably"],
-              ["Framework", "Unsloth - 2–5× faster than standard fine-tuning, significantly reduced VRAM usage"],
-              ["Cost", "$2–8 per run (10k samples, 2–4 hours training)"],
-              ["Outcome", "Working fine-tuned model prototypes in under one business day"],
-            ] },
-          ] },
-          { t: "sub", heading: "Tier 2: Production Fine-Tuning (13B–40B Models)", blocks: [
-            { t: "table", headers: ["Aspect", "Detail"], rows: [
-              ["GPU", "2–4× A100 80GB or RTX 6000 Ada (96–192GB total VRAM)"],
-              ["Method", "LoRA / QLoRA matched to model size and VRAM availability"],
-              ["Framework", "Axolotl + DeepSpeed - production workloads, native FSDP support"],
-              ["Cost", "$15–80 per run"],
-              ["Outcome", "Production-quality fine-tuned models with full training metric history"],
-            ] },
-          ] },
-          { t: "sub", heading: "Tier 3: Large-Scale Training (70B Models)", blocks: [
-            { t: "table", headers: ["Aspect", "Detail"], rows: [
-              ["GPU", "4–8× A100 80GB or H100 80GB clusters"],
-              ["Method", "QLoRA or LoRA - full fine-tuning is not cost-effective at this scale"],
-              ["Framework", "Axolotl + DeepSpeed ZeRO-3 with CPU/NVMe offloading"],
-              ["Cost", "$50–200 per run"],
-              ["Outcome", "70B+ parameter models fine-tuned for production deployment at manageable cost"],
-            ] },
-          ] },
+          sub("Tier 1: Rapid Prototyping (7B–13B Models)", [
+            tbl(
+              ["Aspect", "Detail"],
+              [
+                ["GPU", "Single RTX 4090 (24GB VRAM)"],
+                ["Method", "QLoRA - 4-bit quantization enabling 7B models comfortably, 13B models workably"],
+                ["Framework", "Unsloth - 2–5× faster than standard fine-tuning, significantly reduced VRAM usage"],
+                ["Cost", "$2–8 per run (10k samples, 2–4 hours training)"],
+                ["Outcome", "Working fine-tuned model prototypes in under one business day"],
+              ]
+            ),
+          ]),
+          sub("Tier 2: Production Fine-Tuning (13B–40B Models)", [
+            tbl(
+              ["Aspect", "Detail"],
+              [
+                ["GPU", "2–4× A100 80GB or RTX 6000 Ada (96–192GB total VRAM)"],
+                ["Method", "LoRA / QLoRA matched to model size and VRAM availability"],
+                ["Framework", "Axolotl + DeepSpeed - production workloads, native FSDP support"],
+                ["Cost", "$15–80 per run"],
+                ["Outcome", "Production-quality fine-tuned models with full training metric history"],
+              ]
+            ),
+          ]),
+          sub("Tier 3: Large-Scale Training (70B Models)", [
+            tbl(
+              ["Aspect", "Detail"],
+              [
+                ["GPU", "4–8× A100 80GB or H100 80GB clusters"],
+                ["Method", "QLoRA or LoRA - full fine-tuning is not cost-effective at this scale"],
+                ["Framework", "Axolotl + DeepSpeed ZeRO-3 with CPU/NVMe offloading"],
+                ["Cost", "$50–200 per run"],
+                ["Outcome", "70B+ parameter models fine-tuned for production deployment at manageable cost"],
+              ]
+            ),
+          ]),
         ],
       },
       {
         heading: "Data Preparation Work",
         blocks: [
-          { t: "p", text: "Jashom applied structured data preparation protocols to the client's training datasets before any GPU compute was spent:" },
-          { t: "bullets", items: [
+          p("Jashom applied structured data preparation protocols to the client's training datasets before any GPU compute was spent:"),
+          bullets([
             "Consistency audit: enforced formatting standards across the full dataset",
             "Domain-expert validation pass: flagged low-quality or ambiguous examples for removal",
             "Deduplication: eliminated near-duplicate samples that inflate dataset size without adding learning signal",
             "Coverage analysis: identified gaps in use-case coverage and recommended targeted data collection",
-          ] },
-          { t: "p", text: "The principle applied throughout: model performance is determined more by data quality than volume. A 2,000-example high-quality dataset outperforms a 20,000-example noisy one." },
+          ]),
+          p("The principle applied throughout: model performance is determined more by data quality than volume. A 2,000-example high-quality dataset outperforms a 20,000-example noisy one."),
         ],
       },
       {
         heading: "Cloud Provider Strategy",
         blocks: [
-          { t: "p", text: "Jashom's provider-agnostic approach matches cloud GPU availability to training needs at any given time. The client's workloads were executed across multiple providers depending on GPU availability, pricing, and reserved vs. spot instance tradeoffs:" },
-          { t: "bullets", items: [
+          p("Jashom's provider-agnostic approach matches cloud GPU availability to training needs at any given time. The client's workloads were executed across multiple providers depending on GPU availability, pricing, and reserved vs. spot instance tradeoffs:"),
+          bullets([
             "AWS (A100/H100 instances) - production runs with SLA requirements",
             "Lambda Labs and CoreWeave - cost-optimized long-form training runs",
             "RunPod - rapid prototyping and experimentation at low hourly cost",
-          ] },
-          { t: "p", text: "All runs configured with frequent checkpointing to S3/GCS and immediate instance termination after training - minimizing idle compute cost." },
+          ]),
+          p("All runs configured with frequent checkpointing to S3/GCS and immediate instance termination after training - minimizing idle compute cost."),
         ],
       },
     ],
@@ -271,72 +278,70 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Real-Time GPU Server Hardware Telemetry via Redfish BMC Integration",
     hardware: "Hardware: Lambda Scalar GPU Servers · Supermicro AST2600 BMC · Electron / Node.js",
     summary: "Jashom extended a device management platform (Cosmic) to support real-time hardware telemetry from GPU server BMCs (Baseboard Management Controllers) via the Redfish API. The integration enables live dashboard updates every 30 seconds showing GPU server power consumption, CPU and GPU temperatures, and fan speeds - without touching the main OS. The implementation required fixing three critical bugs in the existing HTTP executor and adding structured support for BMC device types.",
-    stats: [
-      { value: "30s", label: "Dashboard Refresh" },
-      { value: "4", label: "Lambda Scalar Servers" },
-      { value: "Out-of-band", label: "No OS Dependency" },
-      { value: "HTTPS + Auth", label: "Redfish Compliant" },
-    ],
+    stats: [stat("30s", "Dashboard Refresh"), stat("4", "Lambda Scalar Servers"), stat("Out-of-band", "No OS Dependency"), stat("HTTPS + Auth", "Redfish Compliant")],
     sections: [
       {
         heading: "Context",
         blocks: [
-          { t: "p", text: "The customer lab operates four Lambda Scalar GPU servers, each equipped with a Supermicro AST2600 BMC chip. The BMC runs on a dedicated network port, independent of the main OS - providing hardware telemetry even when the server is powered off. It exposes a modern REST API (Redfish) over HTTPS, returning structured JSON for power, temperature, and fan metrics." },
-          { t: "p", text: "The target: all four servers' hardware health visible on a live dashboard, updating every 30 seconds, sourced directly from the BMC - not from software agents on the main OS." },
+          p("The customer lab operates four Lambda Scalar GPU servers, each equipped with a Supermicro AST2600 BMC chip. The BMC runs on a dedicated network port, independent of the main OS - providing hardware telemetry even when the server is powered off. It exposes a modern REST API (Redfish) over HTTPS, returning structured JSON for power, temperature, and fan metrics."),
+          p("The target: all four servers' hardware health visible on a live dashboard, updating every 30 seconds, sourced directly from the BMC - not from software agents on the main OS."),
         ],
       },
       {
         heading: "Technical Problem Identified",
         blocks: [
-          { t: "p", text: "The platform's existing HTTP metric executor had three blocking defects when used against a Redfish BMC:" },
-          { t: "table", headers: ["Bug #", "What Was Happening", "What Was Required"], rows: [
-            ["1 - Protocol", "URL built as http:// - Redfish only runs on HTTPS (port 443)", "Build URL as https:// by default for BMC connections"],
-            ["2 - Auth", "No Authorization header - BMC returns HTTP 401 on every request", "Base64-encode credentials and send as Authorization: Basic header"],
-            ["3 - TLS", "BMC uses self-signed certificate - Node.js fetch() throws UNABLE_TO_VERIFY_LEAF_SIGNATURE", "Bypass SSL verification scoped to BMC requests via undici Agent (not process-wide)"],
-          ] },
+          p("The platform's existing HTTP metric executor had three blocking defects when used against a Redfish BMC:"),
+          tbl(
+            ["Bug #", "What Was Happening", "What Was Required"],
+            [
+              ["1 - Protocol", "URL built as http:// - Redfish only runs on HTTPS (port 443)", "Build URL as https:// by default for BMC connections"],
+              ["2 - Auth", "No Authorization header - BMC returns HTTP 401 on every request", "Base64-encode credentials and send as Authorization: Basic header"],
+              ["3 - TLS", "BMC uses self-signed certificate - Node.js fetch() throws UNABLE_TO_VERIFY_LEAF_SIGNATURE", "Bypass SSL verification scoped to BMC requests via undici Agent (not process-wide)"],
+            ]
+          ),
         ],
       },
       {
         heading: "Solution Architecture",
         blocks: [
-          { t: "sub", heading: "HTTP Executor Rewrite", blocks: [
-            { t: "p", text: "The executeHTTPCommand function was rewritten to handle HTTPS by default, inject Basic Auth credentials from the device's stored connection profile (following the same pattern as the existing SSH executor), and apply per-request SSL bypass via undici Agent for BMC devices - preserving SSL verification for all other HTTPS requests made by the platform." },
-          ] },
-          { t: "sub", heading: "Why undici, not NODE_TLS_REJECT_UNAUTHORIZED", blocks: [
-            { t: "p", text: "Setting NODE_TLS_REJECT_UNAUTHORIZED = '0' is process-wide - it disables SSL verification for every HTTPS request in the Electron process, including connections to Anthropic API, update servers, and any other services. The undici Agent approach scopes the SSL bypass to a single request. This is the correct architecture for a production platform." },
-          ] },
-          { t: "sub", heading: "JSON Path Parser Hardening", blocks: [
-            { t: "bullets", items: [
+          sub("HTTP Executor Rewrite", [
+            p("The executeHTTPCommand function was rewritten to handle HTTPS by default, inject Basic Auth credentials from the device's stored connection profile (following the same pattern as the existing SSH executor), and apply per-request SSL bypass via undici Agent for BMC devices - preserving SSL verification for all other HTTPS requests made by the platform."),
+          ]),
+          sub("Why undici, not NODE_TLS_REJECT_UNAUTHORIZED", [
+            p("Setting NODE_TLS_REJECT_UNAUTHORIZED = '0' is process-wide - it disables SSL verification for every HTTPS request in the Electron process, including connections to Anthropic API, update servers, and any other services. The undici Agent approach scopes the SSL bypass to a single request. This is the correct architecture for a production platform."),
+          ]),
+          sub("JSON Path Parser Hardening", [
+            bullets([
               "Null guard added - prevents crashes when an intermediate key is undefined (common in varying Redfish firmware versions)",
               "Bracket notation normalization - converts PowerControl[0].PowerConsumedWatts to PowerControl.0.PowerConsumedWatts for consistent path traversal",
-            ] },
-          ] },
-          { t: "sub", heading: "New MetricName Types & Supermicro BMC Device Configuration", blocks: [
-            { t: "p", text: "Two new metric type identifiers added:" },
-            { t: "bullets", items: [
+            ]),
+          ]),
+          sub("New MetricName Types & Supermicro BMC Device Configuration", [
+            p("Two new metric type identifiers added:"),
+            bullets([
               "fan-speed (unit: RPM) - for BMC fan RPM readings",
               "gpu-slot-power (unit: W) - for per-GPU-slot power draw readings",
-            ] },
-            { t: "p", text: "New device type supermicro-bmc covering four metric streams:" },
-            { t: "bullets", items: [
+            ]),
+            p("New device type supermicro-bmc covering four metric streams:"),
+            bullets([
               "Total system power - /redfish/v1/Chassis/1/Power → PowerControl[0].PowerConsumedWatts (every 30s)",
               "CPU temperature - /redfish/v1/Chassis/1/Thermal → Temperatures[n].ReadingCelsius",
               "Fan speed - /redfish/v1/Chassis/1/Thermal → Fans[n].Reading in RPM (every 60s)",
               "GPU slot power - /redfish/v1/Chassis/1/Power → PowerControl[n].PowerConsumedWatts (where available)",
-            ] },
-          ] },
+            ]),
+          ]),
         ],
       },
       {
         heading: "Testing Approach",
         blocks: [
-          { t: "p", text: "The implementation was validated at four levels before hardware deployment:" },
-          { t: "bullets", items: [
+          p("The implementation was validated at four levels before hardware deployment:"),
+          bullets([
             "Unit tests (vitest): 30+ tests covering Auth encoding, URL construction, JSON path parsing, mock fetch behavior, and error handling - no hardware required",
             "Node.js one-liners: rapid sanity checks on JSON path traversal and Base64 encoding",
             "curl verification against real BMC: confirmed Redfish URL structure and verified array indices for Temperatures, Fans, and PowerControl entries on actual AST2600 hardware",
             "End-to-end Cosmic test: confirmed live watts values appearing on dashboard with 30-second refresh",
-          ] },
+          ]),
         ],
       },
     ],

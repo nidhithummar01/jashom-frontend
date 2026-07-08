@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import SplitHeading from "@/components/motion/SplitHeading";
 import { Reveal, Stagger } from "@/components/motion/Reveal";
 import Magnetic from "@/components/motion/Magnetic";
 import HireRustHeroSvg from "./HireRustHeroSvg";
-import { submitContactForm } from "@/lib/submitContact";
 import HireCards from "@/components/HireCards";
 import { RELATED_SERVICES as RELATED } from "@/lib/relatedServices";
+import FaqAccordion, { type FaqItem } from "@/components/sections/FaqAccordion";
+import HireContactForm, { type ContactHighlight } from "@/components/sections/HireContactForm";
+import RelatedServicesSection from "@/components/sections/RelatedServicesSection";
+import TestimonialGrid, { type Testimonial } from "@/components/sections/TestimonialGrid";
 
 const BADGES = [
   { label: "Flexible Hiring", sub: "Scalable engagement models" },
@@ -57,14 +59,13 @@ const WHY_CHOOSE = [
   { title: "Optimized Development Efficiency", body: "We improve turnaround using scalable coding practices, streamlined workflows, reusable architecture patterns and optimized engineering methods." },
 ];
 
-const REVIEWS = [
-  { quote: "With Rust expertise from Jashom, we improved backend reliability and delivered a safer production architecture.", who: "CTO, SaaS Platform" },
-  { quote: "Their engineering team quickly understood our infrastructure needs and helped us build a performant Rust-based service layer.", who: "VP Engineering, Cloud Company" },
-  { quote: "Clear communication, strong ownership and practical Rust architecture made the engagement smooth from start to finish.", who: "Product Lead, Technology Startup" },
+const REVIEWS: Testimonial[] = [
+  { quote: "With Rust expertise from Jashom, we improved backend reliability and delivered a safer production architecture.", name: "CTO", org: "SaaS Platform" },
+  { quote: "Their engineering team quickly understood our infrastructure needs and helped us build a performant Rust-based service layer.", name: "VP Engineering", org: "Cloud Company" },
+  { quote: "Clear communication, strong ownership and practical Rust architecture made the engagement smooth from start to finish.", name: "Product Lead", org: "Technology Startup" },
 ];
 
-
-const CONTACT_HIGHLIGHTS = [
+const CONTACT_HIGHLIGHTS: ContactHighlight[] = [
   { title: "Quick Response", body: "Project inquiries are answered within 24 hours." },
   { title: "Flexible Hiring", body: "Decide on engagement models to meet project requirements." },
   { title: "Expert Developers", body: "Work with experienced Rust engineers for modern software solutions." },
@@ -72,7 +73,7 @@ const CONTACT_HIGHLIGHTS = [
 
 const HIRING_OPTIONS = ["Full-Time", "Part-Time", "Time & Material", "Custom Model"];
 
-const FAQS = [
+const FAQS: FaqItem[] = [
   { q: "What makes Rust a good option for a new business application?", a: "Rust is memory safe, performance efficient and strongly suited to concurrency, making it popular for secure, fast and scalable applications. It is especially useful for modern backend systems, infrastructure software and high-performance applications." },
   { q: "Which industries benefit from Rust development services?", a: "Rust is widely used in SaaS, fintech, blockchain, cybersecurity, cloud infrastructure, gaming systems and enterprise backend solutions." },
   { q: "Can your Rust developers work with existing development teams?", a: "Absolutely. Our Rust developers can integrate with in-house development teams, external vendors and DevOps engineers using agile development workflows." },
@@ -83,8 +84,6 @@ const FAQS = [
 
 export default function HireRustContent() {
   const reduced = useReducedMotion();
-  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState("");
 
   return (
     <>
@@ -220,136 +219,32 @@ export default function HireRustContent() {
           </div>
         </section>
 
-        {/* Reviews */}
-        <section className="section bg-paper border-y border-line" id="reviews">
-          <div className="container-j">
-            <div className="max-w-2xl mb-10 md:mb-12 flex flex-col gap-4">
-              <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Trusted by Startups, SaaS Brands &amp; Technology Companies</SplitHeading>
-              <Reveal><p className="text-ink-2 text-[1.0625rem] max-w-[60ch]">With our expertise in Rust, businesses can build secure digital products, robust backend systems, cloud-ready solutions and scalable software architectures that promote sustainable growth.</p></Reveal>
-            </div>
-            <div className="grid lg:grid-cols-3 gap-6">
-              {REVIEWS.map((t, i) => (
-                <Reveal key={t.who} delay={i * 0.08} className="h-full">
-                  <figure className="h-full flex flex-col p-6 md:p-8 hover:bg-tint transition-all duration-300 border border-line">
-                    <blockquote className="font-mono text-[18px] leading-[1.4] text-ink flex-1">&ldquo;{t.quote}&rdquo;</blockquote>
-                    <figcaption className="mt-6 pt-5 border-t border-line text-[0.9375rem] text-ink-2">{t.who}</figcaption>
-                  </figure>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
+        <TestimonialGrid
+          heading="Trusted by Startups, SaaS Brands &amp; Technology Companies"
+          subtitle="With our expertise in Rust, businesses can build secure digital products, robust backend systems, cloud-ready solutions and scalable software architectures that promote sustainable growth."
+          items={REVIEWS}
+        />
 
-        {/* Related services */}
-        <section className="section" id="related">
-          <div className="container-j">
-            <div className="max-w-2xl mb-10 md:mb-12 flex flex-col gap-4">
-              <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Explore Related Development Services</SplitHeading>
-              <Reveal><p className="text-ink-2 max-w-[60ch]">Browse complementary GPU-oriented services that can make systems even more performance-efficient and scalable.</p></Reveal>
-            </div>
-            <Stagger className="grid md:grid-cols-2 gap-6" step={0.08}>
-              {RELATED.map((r) => (
-                <div key={r.title} className="group flex flex-col p-6 md:p-8 border border-line hover:bg-tint transition-all duration-300">
-                  <h3 className="text-[1.25rem] font-medium mb-3">{r.title}</h3>
-                  <p className="text-ink-2 mb-6 flex-1">{r.body}</p>
-                  <a href={r.href} className="link-line text-ink font-medium text-[0.9375rem] w-fit">Know More →</a>
-                </div>
-              ))}
-            </Stagger>
-          </div>
-        </section>
+        <RelatedServicesSection
+          heading="Explore Related Development Services"
+          subtitle="Browse complementary GPU-oriented services that can make systems even more performance-efficient and scalable."
+          items={RELATED}
+        />
 
-        {/* FAQ */}
-        <section className="section bg-paper border-y border-line" id="faq">
-          <div className="container-j">
-            <div className="max-w-2xl mb-10 md:mb-12 flex flex-col gap-4">
-              <span className="font-mono text-[1rem] tracking-[0.25em] text-ink-3 uppercase font-medium">FAQs</span>
-              <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Frequently Asked Questions</SplitHeading>
-              <Reveal><p className="text-ink-2 max-w-[58ch]">Common questions about hiring Rust developers from Jashom.</p></Reveal>
-            </div>
-            <div className="border-t border-line max-w-3xl">
-              {FAQS.map((f) => (
-                <details key={f.q} className="group border-b border-line">
-                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none py-5 text-ink font-medium">
-                    {f.q}
-                    <span className="text-ink-2 transition-transform duration-300 group-open:rotate-45" aria-hidden="true">+</span>
-                  </summary>
-                  <p className="text-ink-2 pb-5 max-w-[60ch]">{f.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
+        <FaqAccordion
+          subtitle="Common questions about hiring Rust developers from Jashom."
+          items={FAQS}
+          sectionClassName="section bg-paper border-y border-line"
+        />
 
-        {/* Contact */}
-        <section className="section" id="contact">
-          <div className="container-j">
-            <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
-              <div className="lg:col-span-5 flex flex-col gap-4">
-                <SplitHeading className="text-[clamp(1.6rem,2.5vw,2.1rem)]">Get Started with Expert Rust Developers</SplitHeading>
-                <Reveal><p className="text-ink-2 max-w-[48ch]">Let us know your project needs and we will get in touch within 24 hours. We will support you in hiring the best Rust developers that match your technical objectives, scalability requirements and development strategy.</p></Reveal>
-                <Reveal delay={0.1}>
-                  <div className="mt-2 flex flex-col gap-5">
-                    {CONTACT_HIGHLIGHTS.map((h) => (
-                      <div key={h.title}>
-                        <p className="text-ink font-medium mb-1">{h.title}</p>
-                        <p className="text-[0.9375rem] text-ink-2">{h.body}</p>
-                      </div>
-                    ))}
-                  </div>
-                </Reveal>
-              </div>
-              <div className="lg:col-span-7">
-                {status === "sent" ? (
-                  <div className="h-full flex flex-col items-start justify-center bg-linen border border-line rounded-none p-10">
-                    <p className="font-mono text-3xl mb-3">Request received.</p>
-                    <p className="text-ink-2">Thank you — we&rsquo;ll get back to you within 24 hours.</p>
-                  </div>
-                ) : (
-                  <Reveal delay={0.08}>
-                    <form onSubmit={async (e) => {
-                        e.preventDefault();
-                        const fd = new FormData(e.currentTarget);
-                        const model = fd.get("model") as string;
-                        const rawMsg = (fd.get("message") as string) || "";
-                        setStatus("loading");
-                        try {
-                          await submitContactForm({
-                            fullName: fd.get("name") as string,
-                            email: fd.get("email") as string,
-                            phone: fd.get("phone") as string,
-                            company: fd.get("company") as string,
-                            message: model ? `[Hiring Model: ${model}]\n\n${rawMsg}` : rawMsg || "Hire Rust Developer enquiry",
-                          });
-                          setStatus("sent");
-                        } catch (err) {
-                          setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
-                          setStatus("error");
-                        }
-                      }} className="grid sm:grid-cols-2 gap-5">
-                      <div className="flex flex-col gap-1.5"><label htmlFor="name" className="text-sm text-ink-2">Full Name *</label><input id="name" name="name" required autoComplete="name" className="field-j" placeholder="Your name" /></div>
-                      <div className="flex flex-col gap-1.5"><label htmlFor="email" className="text-sm text-ink-2">Email Address *</label><input id="email" name="email" type="email" required autoComplete="email" className="field-j" placeholder="you@company.com" /></div>
-                      <div className="flex flex-col gap-1.5"><label htmlFor="phone" className="text-sm text-ink-2">Phone Number</label><input id="phone" name="phone" type="tel" autoComplete="tel" className="field-j" placeholder="+91" /></div>
-                      <div className="flex flex-col gap-1.5"><label htmlFor="company" className="text-sm text-ink-2">Company Name</label><input id="company" name="company" autoComplete="organization" className="field-j" placeholder="Company name" /></div>
-                      <div className="flex flex-col gap-1.5 sm:col-span-2">
-                        <label htmlFor="model" className="text-sm text-ink-2">Preferred Hiring Model</label>
-                        <select id="model" name="model" defaultValue="" className="field-j">
-                          <option value="" disabled>Select a hiring model</option>
-                          {HIRING_OPTIONS.map((o) => (<option key={o} value={o}>{o}</option>))}
-                        </select>
-                      </div>
-                      <div className="flex flex-col gap-1.5 sm:col-span-2"><label htmlFor="message" className="text-sm text-ink-2">Project Requirements</label><textarea id="message" name="message" rows={5} className="field-j resize-y" placeholder="Tell us about your project and goals." /></div>
-                      <div className="sm:col-span-2 flex flex-col items-start gap-2">
-                        {status === "error" && <p className="text-[0.8125rem] text-red-600">{errorMsg}</p>}
-                        <button type="submit" disabled={status === "loading"} className="btn btn-primary disabled:opacity-60">{status === "loading" ? "Sending…" : "Submit Request"}</button>
-                      </div>
-                    </form>
-                  </Reveal>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
+        <HireContactForm
+          heading="Get Started with Expert Rust Developers"
+          description="Let us know your project needs and we will get in touch within 24 hours. We will support you in hiring the best Rust developers that match your technical objectives, scalability requirements and development strategy."
+          highlights={CONTACT_HIGHLIGHTS}
+          hiringOptions={HIRING_OPTIONS}
+          messagePlaceholder="Tell us about your project and goals."
+          messageFallback="Hire Rust Developer enquiry"
+        />
       </main>
     </>
   );

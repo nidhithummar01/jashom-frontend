@@ -2,63 +2,18 @@
 
 import React, { useState, useEffect } from "react";
 
-// Pool of 9 showcase logos with customized, balanced sizing to ensure visual weight is identical
-// Removed all dark:invert classes since the background is locked to white/light sand
+const logo = (id: string, name: string, url: string, cls: string) => ({ id, name, url, className: cls });
+
 const LOGO_POOL = [
-  {
-    id: "nvidia",
-    name: "NVIDIA",
-    url: "https://www.pngarts.com/files/10/Nvidia-Logo-PNG-Image-Transparent.png",
-    className: "h-14 md:h-16 w-auto object-contain scale-[1.4] origin-center"
-  },
-  {
-    id: "googlecloud",
-    name: "Google Cloud",
-    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Google_Cloud_logo.svg/3840px-Google_Cloud_logo.svg.png",
-    className: "h-8 md:h-10 w-auto object-contain"
-  },
-  {
-    id: "azure",
-    name: "Microsoft Azure",
-    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Microsoft_Azure_Logo.svg/3840px-Microsoft_Azure_Logo.svg.png",
-    className: "h-8 md:h-10 w-auto object-contain"
-  },
-  {
-    id: "aws",
-    name: "Amazon Web Services",
-    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/960px-Amazon_Web_Services_Logo.svg.png",
-    className: "h-11 md:h-13 w-auto object-contain"
-  },
-  {
-    id: "huggingface",
-    name: "Hugging Face",
-    url: "/brand-logo/Hugging-face.png",
-    className: "h-8 md:h-10 w-auto object-contain"
-  },
-  {
-    id: "chatgpt",
-    name: "ChatGPT",
-    url: "https://www.edigitalagency.com.au/wp-content/uploads/new-ChatGPT-logo-black-png-large-size.png",
-    className: "h-8 md:h-10 w-auto object-contain"
-  },
-  {
-    id: "gemini",
-    name: "Google Gemini",
-    url: "/brand-logo/gemini.png",
-    className: "h-8 md:h-10 w-auto object-contain"
-  },
-  {
-    id: "claude",
-    name: "Anthropic Claude",
-    url: "/brand-logo/clude.png",
-    className: "h-7 md:h-9 w-auto object-contain"
-  },
-  {
-    id: "ollama",
-    name: "Ollama",
-    url: "/brand-logo/ollama-logo.png",
-    className: "h-8 md:h-10 w-auto object-contain"
-  }
+  logo("nvidia", "NVIDIA", "https://www.pngarts.com/files/10/Nvidia-Logo-PNG-Image-Transparent.png", "h-14 md:h-16 w-auto object-contain scale-[1.4] origin-center"),
+  logo("googlecloud", "Google Cloud", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Google_Cloud_logo.svg/3840px-Google_Cloud_logo.svg.png", "h-8 md:h-10 w-auto object-contain"),
+  logo("azure", "Microsoft Azure", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Microsoft_Azure_Logo.svg/3840px-Microsoft_Azure_Logo.svg.png", "h-8 md:h-10 w-auto object-contain"),
+  logo("aws", "Amazon Web Services", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/960px-Amazon_Web_Services_Logo.svg.png", "h-11 md:h-13 w-auto object-contain"),
+  logo("huggingface", "Hugging Face", "/brand-logo/Hugging-face.png", "h-8 md:h-10 w-auto object-contain"),
+  logo("chatgpt", "ChatGPT", "https://www.edigitalagency.com.au/wp-content/uploads/new-ChatGPT-logo-black-png-large-size.png", "h-8 md:h-10 w-auto object-contain"),
+  logo("gemini", "Google Gemini", "/brand-logo/gemini.png", "h-8 md:h-10 w-auto object-contain"),
+  logo("claude", "Anthropic Claude", "/brand-logo/clude.png", "h-7 md:h-9 w-auto object-contain"),
+  logo("ollama", "Ollama", "/brand-logo/ollama-logo.png", "h-8 md:h-10 w-auto object-contain"),
 ];
 
 function swapSlot(
