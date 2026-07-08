@@ -235,140 +235,26 @@ const SITE_ORIGIN = (process.env.SITE_ORIGIN || process.env.VITE_SITE_URL || 'ht
 const routeMeta = (title, description, h1) => ({ title, description, h1 });
 
 const ROUTE_META = {
-  '/': {
-    title: 'GPU Optimization Services | CUDA Development Company | Jashom',
-    description:
-      'Jashom provides advanced GPU optimization, CUDA development, and high-performance computing solutions to accelerate AI, simulation, and enterprise workloads efficiently.',
-    h1: 'GPU Optimization Services',
-  },
-  '/gpu-optimization-service/': {
-    title: 'NVIDIA GPU Optimization Services | Optimize NVIDIA GPU Performance',
-    description:
-      'Improve speed and efficiency with expert NVIDIA GPU optimization services. We help businesses optimize NVIDIA GPU performance for AI, HPC, and data-intensive applications.',
-    h1: 'NVIDIA GPU Optimization Services',
-  },
-  '/cuda-development-service/': {
-    title: 'CUDA Development Services | Expert CUDA Developers for GPU Computing',
-    description:
-      'Hire experienced CUDA developers to build high-performance GPU applications. Jashom delivers scalable CUDA development solutions for AI, deep learning, and parallel computing.',
-    h1: 'CUDA Development Services',
-  },
-  '/hire-cuda-developer/': {
-    title: 'Hire CUDA Developers | Dedicated CUDA Programmers & GPU Experts',
-    description:
-      'Looking to hire CUDA developers? Get skilled GPU programmers for NVIDIA CUDA projects, performance optimization, and custom parallel computing solutions.',
-    h1: 'Hire CUDA Developers',
-  },
-  '/hire-rust-developers/': routeMeta(
-    'Hire Rust Developers - Hire Best Expert Rust Developer - Jashom',
-    'Hire dedicated Rust developers from Jashom to accelerate your project. Our experienced Rust engineers deliver reliable, secure, and efficient applications tailored to your business needs.',
-    'Hire Rust Developers'
-  ),
-  '/about-us/': {
-    title: 'About Jashom | GPU Optimization & CUDA Development Experts',
-    description:
-      'Learn about Jashom, a technology-driven company specializing in GPU optimization, NVIDIA CUDA development, and high-performance computing solutions for modern AI and enterprise applications.',
-    h1: 'About Jashom',
-  },
-  '/contact/': {
-    title: 'Contact Jashom | GPU & CUDA Development Consultation',
-    description:
-      'Get in touch with Jashom for expert GPU optimization and CUDA development services. Contact our team to discuss your performance challenges and project requirements.',
-    h1: 'Contact Jashom',
-  },
-
-  '/about/team/': {
-    title: 'Meet the Jashom Team | Experts in AI, Cloud & Digital Innovation',
-    description:
-      'Get to know the Jashom team experts in AI, cloud computing, and digital transformation driving innovation and scalable business solutions.',
-    h1: 'Meet the Jashom Team',
-  },
-
-  '/brochure/': {
-    title: 'Jashom Brochure | AI, Cloud & Digital Transformation Solutions',
-    description:
-      'Download the Jashom brochure to explore our AI driven solutions, cloud expertise, and digital transformation services for modern enterprises.',
-    h1: 'Jashom Brochure',
-  },
-
-  '/careers/': {
-    title: 'Careers at Jashom | Join Our AI & Technology Team',
-    description:
-      'Explore careers at Jashom and work on cutting edge AI, cloud, and automation solutions. Build your future with a fast growing tech team.',
-    h1: 'Careers at Jashom',
-  },
-
-  '/careers/openings/': {
-    title: 'Current Job Openings at Jashom | AI & Tech Careers',
-    description:
-      'Browse current job openings at Jashom. Join our team to work on AI, cloud infrastructure, and next gen digital solutions.',
-    h1: 'Current Job Openings at Jashom',
-  },
-
-  '/cookies/': {
-    title: 'Cookies Policy | Jashom Technologies',
-    description:
-      'Learn how Jashom uses cookies to enhance user experience, analyze traffic, and improve website performance.',
-    h1: 'Cookies Policy',
-  },
-
-  '/portfolio/': {
-    title: 'Jashom Portfolio | AI, Cloud & Digital Transformation Projects',
-    description:
-      'Explore Jashom\'s portfolio showcasing AI, cloud, and digital transformation projects delivering scalable and high performance solutions.',
-    h1: 'Jashom Portfolio',
-  },
-
-  '/portfolio/case-study/cloud-gpu-fine-tuning/': {
-    title: 'Cloud GPU Fine Tuning Case Study | Jashom AI Solutions',
-    description:
-      'Discover how Jashom optimized cloud GPU fine tuning for AI models, improving performance, scalability, and cost efficiency.',
-    h1: 'Cloud GPU Fine Tuning Case Study',
-  },
-
-  '/portfolio/case-study/gpu-workload-orchestration/': {
-    title: 'GPU Workload Orchestration Case Study | Jashom Technologies',
-    description:
-      'Learn how Jashom streamlined GPU workload orchestration to maximize efficiency, reduce costs, and enhance performance.',
-    h1: 'GPU Workload Orchestration Case Study',
-  },
-
-  '/portfolio/case-study/llm-inference-optimization/': {
-    title: 'LLM Inference Optimization Case Study | Jashom Technologies',
-    description:
-      'See how Jashom optimized LLM inference to achieve faster response times, reduced costs, and improved AI performance at scale.',
-    h1: 'LLM Inference Optimization Case Study',
-  },
-
-  '/portfolio/case-study/redfish-bmc-telemetry/': {
-    title: 'Redfish BMC Telemetry Case Study | Jashom Technologies',
-    description:
-      'Explore how Jashom implemented Redfish BMC telemetry to enhance system monitoring, reliability, and infrastructure visibility.',
-    h1: 'Redfish BMC Telemetry Case Study',
-  },
-
-  '/privacy/': {
-    title: 'Privacy Policy | Jashom Data Protection & Compliance',
-    description:
-      'Read Jashom\'s privacy policy to understand how we collect, use, and protect your personal data in compliance with global standards.',
-    h1: 'Privacy Policy',
-  },
-
-  '/security/': {
-    title: 'Security at Jashom | Data Protection & Infrastructure Security',
-    description:
-      'Learn about Jashom\'s security practices, ensuring data protection, system integrity, and enterprise grade infrastructure security.',
-    h1: 'Security at Jashom',
-  },
-
-  '/terms/': {
-    title: 'Terms & Conditions | Jashom Website Usage Policy',
-    description:
-      'Review Jashom\'s terms and conditions outlining website usage, legal policies, and user responsibilities.',
-    h1: 'Terms & Conditions',
-  },
-
-  // NOTE: '/contact/' and '/about-us/' are handled above. Add other routes here when needed.
+  '/': routeMeta('GPU Optimization Services | CUDA Development Company | Jashom', 'Jashom provides advanced GPU optimization, CUDA development, and high-performance computing solutions to accelerate AI, simulation, and enterprise workloads efficiently.', 'GPU Optimization Services'),
+  '/gpu-optimization-service/': routeMeta('NVIDIA GPU Optimization Services | Optimize NVIDIA GPU Performance', 'Improve speed and efficiency with expert NVIDIA GPU optimization services. We help businesses optimize NVIDIA GPU performance for AI, HPC, and data-intensive applications.', 'NVIDIA GPU Optimization Services'),
+  '/cuda-development-service/': routeMeta('CUDA Development Services | Expert CUDA Developers for GPU Computing', 'Hire experienced CUDA developers to build high-performance GPU applications. Jashom delivers scalable CUDA development solutions for AI, deep learning, and parallel computing.', 'CUDA Development Services'),
+  '/hire-cuda-developer/': routeMeta('Hire CUDA Developers | Dedicated CUDA Programmers & GPU Experts', 'Looking to hire CUDA developers? Get skilled GPU programmers for NVIDIA CUDA projects, performance optimization, and custom parallel computing solutions.', 'Hire CUDA Developers'),
+  '/hire-rust-developers/': routeMeta('Hire Rust Developers - Hire Best Expert Rust Developer - Jashom', 'Hire dedicated Rust developers from Jashom to accelerate your project. Our experienced Rust engineers deliver reliable, secure, and efficient applications tailored to your business needs.', 'Hire Rust Developers'),
+  '/about-us/': routeMeta('About Jashom | GPU Optimization & CUDA Development Experts', 'Learn about Jashom, a technology-driven company specializing in GPU optimization, NVIDIA CUDA development, and high-performance computing solutions for modern AI and enterprise applications.', 'About Jashom'),
+  '/contact/': routeMeta('Contact Jashom | GPU & CUDA Development Consultation', 'Get in touch with Jashom for expert GPU optimization and CUDA development services. Contact our team to discuss your performance challenges and project requirements.', 'Contact Jashom'),
+  '/about/team/': routeMeta('Meet the Jashom Team | Experts in AI, Cloud & Digital Innovation', 'Get to know the Jashom team experts in AI, cloud computing, and digital transformation driving innovation and scalable business solutions.', 'Meet the Jashom Team'),
+  '/brochure/': routeMeta('Jashom Brochure | AI, Cloud & Digital Transformation Solutions', 'Download the Jashom brochure to explore our AI driven solutions, cloud expertise, and digital transformation services for modern enterprises.', 'Jashom Brochure'),
+  '/careers/': routeMeta('Careers at Jashom | Join Our AI & Technology Team', 'Explore careers at Jashom and work on cutting edge AI, cloud, and automation solutions. Build your future with a fast growing tech team.', 'Careers at Jashom'),
+  '/careers/openings/': routeMeta('Current Job Openings at Jashom | AI & Tech Careers', 'Browse current job openings at Jashom. Join our team to work on AI, cloud infrastructure, and next gen digital solutions.', 'Current Job Openings at Jashom'),
+  '/cookies/': routeMeta('Cookies Policy | Jashom Technologies', 'Learn how Jashom uses cookies to enhance user experience, analyze traffic, and improve website performance.', 'Cookies Policy'),
+  '/portfolio/': routeMeta('Jashom Portfolio | AI, Cloud & Digital Transformation Projects', "Explore Jashom's portfolio showcasing AI, cloud, and digital transformation projects delivering scalable and high performance solutions.", 'Jashom Portfolio'),
+  '/portfolio/case-study/cloud-gpu-fine-tuning/': routeMeta('Cloud GPU Fine Tuning Case Study | Jashom AI Solutions', 'Discover how Jashom optimized cloud GPU fine tuning for AI models, improving performance, scalability, and cost efficiency.', 'Cloud GPU Fine Tuning Case Study'),
+  '/portfolio/case-study/gpu-workload-orchestration/': routeMeta('GPU Workload Orchestration Case Study | Jashom Technologies', 'Learn how Jashom streamlined GPU workload orchestration to maximize efficiency, reduce costs, and enhance performance.', 'GPU Workload Orchestration Case Study'),
+  '/portfolio/case-study/llm-inference-optimization/': routeMeta('LLM Inference Optimization Case Study | Jashom Technologies', 'See how Jashom optimized LLM inference to achieve faster response times, reduced costs, and improved AI performance at scale.', 'LLM Inference Optimization Case Study'),
+  '/portfolio/case-study/redfish-bmc-telemetry/': routeMeta('Redfish BMC Telemetry Case Study | Jashom Technologies', 'Explore how Jashom implemented Redfish BMC telemetry to enhance system monitoring, reliability, and infrastructure visibility.', 'Redfish BMC Telemetry Case Study'),
+  '/privacy/': routeMeta('Privacy Policy | Jashom Data Protection & Compliance', "Read Jashom's privacy policy to understand how we collect, use, and protect your personal data in compliance with global standards.", 'Privacy Policy'),
+  '/security/': routeMeta('Security at Jashom | Data Protection & Infrastructure Security', "Learn about Jashom's security practices, ensuring data protection, system integrity, and enterprise grade infrastructure security.", 'Security at Jashom'),
+  '/terms/': routeMeta('Terms & Conditions | Jashom Website Usage Policy', "Review Jashom's terms and conditions outlining website usage, legal policies, and user responsibilities.", 'Terms & Conditions'),
 };
 
 // Static routes only (no :slug or params). Must have leading and trailing slash.

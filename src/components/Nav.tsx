@@ -57,6 +57,31 @@ function ServiceIcon({ name }: { readonly name: string }) {
   }
 }
 
+const DROP_ANIM = {
+  initial: { opacity: 0, transform: "translateY(6px) scale(0.98)" },
+  animate: { opacity: 1, transform: "translateY(0px) scale(1)" },
+  exit: { opacity: 0, transform: "translateY(4px) scale(0.99)" },
+  transition: { duration: 0.18, ease: [0.23, 1, 0.32, 1] as const },
+  style: { transformOrigin: "top center" as const },
+};
+
+function DropPanel({ className, reduced, children }: { readonly className: string; readonly reduced: boolean | null; readonly children: React.ReactNode }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, transform: reduced ? "none" : "translateY(6px) scale(0.98)" }}
+      animate={{ opacity: 1, transform: "translateY(0px) scale(1)" }}
+      exit={{ opacity: 0, transform: "translateY(4px) scale(0.99)" }}
+      transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
+      style={{ transformOrigin: "top center" }}
+      className={`absolute top-full pt-3 ${className}`}
+    >
+      <div className="bg-paper border border-line rounded-none p-2 shadow-[0_16px_40px_rgba(17,17,19,0.08)] flex flex-col gap-1">
+        {children}
+      </div>
+    </motion.div>
+  );
+}
+
 const LINKS = [
   { label: "Contact", href: "/contact/" },
 ];
@@ -159,37 +184,24 @@ export default function Nav({ forceBg = false }: { readonly forceBg?: boolean })
             </button>
             <AnimatePresence>
               {servicesOpen && (
-                <motion.div
-                  initial={{ opacity: 0, transform: reduced ? "none" : "translateY(6px) scale(0.98)" }}
-                  animate={{ opacity: 1, transform: "translateY(0px) scale(1)" }}
-                  exit={{ opacity: 0, transform: "translateY(4px) scale(0.99)" }}
-                  transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
-                  style={{ transformOrigin: "top center" }}
-                  className="absolute left-0 top-full pt-3 w-[300px]"
-                >
-                  <div className="bg-paper border border-line rounded-none p-2 shadow-[0_16px_40px_rgba(17,17,19,0.08)] flex flex-col gap-1">
-                    {SERVICES.map((s) => (
-                      <Link
-                        key={s.label}
-                        href={s.href}
-                        onClick={() => setServicesOpen(false)}
-                        className="group flex items-center gap-3 p-3 rounded-none hover:bg-tint transition-all duration-200"
-                      >
-                        <div className="flex-shrink-0 flex items-center justify-center w-9 h-9 border border-line bg-tint text-ink transition-all duration-200 group-hover:bg-paper group-hover:-translate-y-0.5">
-                          <ServiceIcon name={s.iconName} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-mono font-medium text-[0.875rem] text-ink leading-tight mb-0.5">
-                            {s.label}
-                          </h4>
-                          <p className="text-[0.75rem] text-ink-2 leading-snug">
-                            {s.desc}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </motion.div>
+                <DropPanel reduced={reduced} className="left-0 w-[300px]">
+                  {SERVICES.map((s) => (
+                    <Link
+                      key={s.label}
+                      href={s.href}
+                      onClick={() => setServicesOpen(false)}
+                      className="group flex items-center gap-3 p-3 rounded-none hover:bg-tint transition-all duration-200"
+                    >
+                      <div className="flex-shrink-0 flex items-center justify-center w-9 h-9 border border-line bg-tint text-ink transition-all duration-200 group-hover:bg-paper group-hover:-translate-y-0.5">
+                        <ServiceIcon name={s.iconName} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-mono font-medium text-[0.875rem] text-ink leading-tight mb-0.5">{s.label}</h4>
+                        <p className="text-[0.75rem] text-ink-2 leading-snug">{s.desc}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </DropPanel>
               )}
             </AnimatePresence>
           </div>
@@ -213,30 +225,17 @@ export default function Nav({ forceBg = false }: { readonly forceBg?: boolean })
             </button>
             <AnimatePresence>
               {hireOpen && (
-                <motion.div
-                  initial={{ opacity: 0, transform: reduced ? "none" : "translateY(6px) scale(0.98)" }}
-                  animate={{ opacity: 1, transform: "translateY(0px) scale(1)" }}
-                  exit={{ opacity: 0, transform: "translateY(4px) scale(0.99)" }}
-                  transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
-                  style={{ transformOrigin: "top center" }}
-                  className="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-[200px]"
-                >
-                  <div className="bg-paper border border-line rounded-none p-2 shadow-[0_16px_40px_rgba(17,17,19,0.08)] flex flex-col gap-1">
-                    {[
-                      { label: "Hire CUDA Developer", href: "/hire-cuda-developer/" },
-                      { label: "Hire Rust Developer", href: "/hire-rust-developers/" },
-                    ].map((item) => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        onClick={() => setHireOpen(false)}
-                        className="px-3 py-2 text-[0.875rem] text-ink-2 hover:text-ink hover:bg-tint transition-all duration-150 rounded-none block font-mono"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </motion.div>
+                <DropPanel reduced={reduced} className="left-1/2 -translate-x-1/2 w-[200px]">
+                  {[
+                    { label: "Hire CUDA Developer", href: "/hire-cuda-developer/" },
+                    { label: "Hire Rust Developer", href: "/hire-rust-developers/" },
+                  ].map((item) => (
+                    <Link key={item.label} href={item.href} onClick={() => setHireOpen(false)}
+                      className="px-3 py-2 text-[0.875rem] text-ink-2 hover:text-ink hover:bg-tint transition-all duration-150 rounded-none block font-mono">
+                      {item.label}
+                    </Link>
+                  ))}
+                </DropPanel>
               )}
             </AnimatePresence>
           </div>
@@ -260,33 +259,20 @@ export default function Nav({ forceBg = false }: { readonly forceBg?: boolean })
             </button>
             <AnimatePresence>
               {companyOpen && (
-                <motion.div
-                  initial={{ opacity: 0, transform: reduced ? "none" : "translateY(6px) scale(0.98)" }}
-                  animate={{ opacity: 1, transform: "translateY(0px) scale(1)" }}
-                  exit={{ opacity: 0, transform: "translateY(4px) scale(0.99)" }}
-                  transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
-                  style={{ transformOrigin: "top center" }}
-                  className="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-[200px]"
-                >
-                  <div className="bg-paper border border-line rounded-none p-2 shadow-[0_16px_40px_rgba(17,17,19,0.08)] flex flex-col gap-1">
-                    {[
-                      { label: "About Us", href: "/about-us/" },
-                      { label: "Team", href: "/team/" },
-                      { label: "Portfolio", href: "/portfolio/" },
-                      { label: "Blog", href: "/blogs/" },
-                      { label: "Career", href: "/careers/" },
-                    ].map((item) => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        onClick={() => setCompanyOpen(false)}
-                        className="px-3 py-2 text-[0.875rem] text-ink-2 hover:text-ink hover:bg-tint transition-all duration-150 rounded-none block font-mono"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </motion.div>
+                <DropPanel reduced={reduced} className="left-1/2 -translate-x-1/2 w-[200px]">
+                  {[
+                    { label: "About Us", href: "/about-us/" },
+                    { label: "Team", href: "/team/" },
+                    { label: "Portfolio", href: "/portfolio/" },
+                    { label: "Blog", href: "/blogs/" },
+                    { label: "Career", href: "/careers/" },
+                  ].map((item) => (
+                    <Link key={item.label} href={item.href} onClick={() => setCompanyOpen(false)}
+                      className="px-3 py-2 text-[0.875rem] text-ink-2 hover:text-ink hover:bg-tint transition-all duration-150 rounded-none block font-mono">
+                      {item.label}
+                    </Link>
+                  ))}
+                </DropPanel>
               )}
             </AnimatePresence>
           </div>

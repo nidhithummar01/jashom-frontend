@@ -145,6 +145,24 @@ const FONT_PRESETS: FontPreset[] = [
   },
 ];
 
+function ColorRow({ id, label, value, onChange }: {
+  readonly id: string;
+  readonly label: string;
+  readonly value: string;
+  readonly onChange: (v: string) => void;
+}) {
+  return (
+    <div className="flex items-center justify-between">
+      <label htmlFor={id} className="font-mono text-[0.75rem] text-ink uppercase">{label}</label>
+      <div className="flex items-center gap-2">
+        <span className="font-mono text-[0.6875rem] text-ink-2 select-all">{value}</span>
+        <input id={id} type="color" value={value} onChange={(e) => onChange(e.target.value)}
+          className="w-8 h-8 border border-line cursor-pointer p-0" />
+      </div>
+    </div>
+  );
+}
+
 export default function Customizer() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"colors" | "fonts">("colors");
@@ -399,48 +417,20 @@ export default function Customizer() {
     localStorage.setItem("customizer-dark", preset.isDark ? "true" : "false");
 
     // Automatically set all sections to the selected color preset version
-    if (presetId === "white-theme") {
+    const resetAllSections = (color: string) => {
       const nextColors = Object.keys(sectionColors).reduce((acc, key) => {
-        acc[key] = "white";
+        acc[key] = color;
         return acc;
       }, {} as Record<string, string>);
       setSectionColors(nextColors);
       localStorage.setItem("customizer-section-colors", JSON.stringify(nextColors));
-      Object.keys(nextColors).forEach((sectId) => {
-        applySectionColor(sectId, "white");
-      });
-    } else if (presetId === "grey-theme") {
-      const nextColors = Object.keys(sectionColors).reduce((acc, key) => {
-        acc[key] = "grey";
-        return acc;
-      }, {} as Record<string, string>);
-      setSectionColors(nextColors);
-      localStorage.setItem("customizer-section-colors", JSON.stringify(nextColors));
-      Object.keys(nextColors).forEach((sectId) => {
-        applySectionColor(sectId, "grey");
-      });
-    } else if (presetId === "black-theme") {
-      const nextColors = Object.keys(sectionColors).reduce((acc, key) => {
-        acc[key] = "black";
-        return acc;
-      }, {} as Record<string, string>);
-      setSectionColors(nextColors);
-      localStorage.setItem("customizer-section-colors", JSON.stringify(nextColors));
-      Object.keys(nextColors).forEach((sectId) => {
-        applySectionColor(sectId, "black");
-      });
-    } else {
-      // Revert all sections to default style for standard presets
-      const nextColors = Object.keys(sectionColors).reduce((acc, key) => {
-        acc[key] = "default";
-        return acc;
-      }, {} as Record<string, string>);
-      setSectionColors(nextColors);
-      localStorage.setItem("customizer-section-colors", JSON.stringify(nextColors));
-      Object.keys(nextColors).forEach((sectId) => {
-        applySectionColor(sectId, "default");
-      });
-    }
+      Object.keys(nextColors).forEach((sectId) => applySectionColor(sectId, color));
+    };
+
+    if (presetId === "white-theme") resetAllSections("white");
+    else if (presetId === "grey-theme") resetAllSections("grey");
+    else if (presetId === "black-theme") resetAllSections("black");
+    else resetAllSections("default");
   };
 
   const handleCustomColorChange = (key: string, value: string) => {
@@ -624,80 +614,11 @@ export default function Customizer() {
                 </p>
 
                 <div className="space-y-3">
-                  {/* Background picker */}
-                  <div className="flex items-center justify-between">
-                    <label htmlFor="custom-bg" className="font-mono text-[0.75rem] text-ink uppercase">Page Background</label>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-[0.6875rem] text-ink-2 select-all">{customBg}</span>
-                      <input
-                        id="custom-bg"
-                        type="color"
-                        value={customBg}
-                        onChange={(e) => handleCustomColorChange("bg", e.target.value)}
-                        className="w-8 h-8 border border-line cursor-pointer p-0"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Card Background picker */}
-                  <div className="flex items-center justify-between">
-                    <label htmlFor="custom-card" className="font-mono text-[0.75rem] text-ink uppercase">Card Background</label>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-[0.6875rem] text-ink-2 select-all">{customCard}</span>
-                      <input
-                        id="custom-card"
-                        type="color"
-                        value={customCard}
-                        onChange={(e) => handleCustomColorChange("card", e.target.value)}
-                        className="w-8 h-8 border border-line cursor-pointer p-0"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Text picker */}
-                  <div className="flex items-center justify-between">
-                    <label htmlFor="custom-text" className="font-mono text-[0.75rem] text-ink uppercase">Primary Text</label>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-[0.6875rem] text-ink-2 select-all">{customText}</span>
-                      <input
-                        id="custom-text"
-                        type="color"
-                        value={customText}
-                        onChange={(e) => handleCustomColorChange("text", e.target.value)}
-                        className="w-8 h-8 border border-line cursor-pointer p-0"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Accent picker */}
-                  <div className="flex items-center justify-between">
-                    <label htmlFor="custom-accent" className="font-mono text-[0.75rem] text-ink uppercase">Accent / CTA</label>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-[0.6875rem] text-ink-2 select-all">{customAccent}</span>
-                      <input
-                        id="custom-accent"
-                        type="color"
-                        value={customAccent}
-                        onChange={(e) => handleCustomColorChange("accent", e.target.value)}
-                        className="w-8 h-8 border border-line cursor-pointer p-0"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Border picker */}
-                  <div className="flex items-center justify-between">
-                    <label htmlFor="custom-border" className="font-mono text-[0.75rem] text-ink uppercase">Borders</label>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-[0.6875rem] text-ink-2 select-all">{customBorder}</span>
-                      <input
-                        id="custom-border"
-                        type="color"
-                        value={customBorder}
-                        onChange={(e) => handleCustomColorChange("border", e.target.value)}
-                        className="w-8 h-8 border border-line cursor-pointer p-0"
-                      />
-                    </div>
-                  </div>
+                  <ColorRow id="custom-bg" label="Page Background" value={customBg} onChange={(v) => handleCustomColorChange("bg", v)} />
+                  <ColorRow id="custom-card" label="Card Background" value={customCard} onChange={(v) => handleCustomColorChange("card", v)} />
+                  <ColorRow id="custom-text" label="Primary Text" value={customText} onChange={(v) => handleCustomColorChange("text", v)} />
+                  <ColorRow id="custom-accent" label="Accent / CTA" value={customAccent} onChange={(v) => handleCustomColorChange("accent", v)} />
+                  <ColorRow id="custom-border" label="Borders" value={customBorder} onChange={(v) => handleCustomColorChange("border", v)} />
 
                   {/* Dark Mode toggle */}
                   <div className="flex items-center justify-between pt-2">
