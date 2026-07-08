@@ -40,10 +40,9 @@ export function Stagger({ children, className, itemClassName, step = 0.06 }: Sta
 
   return (
     <div className={className}>
-      {children.map((child, i) => (
-        // NOSONAR — children are arbitrary ReactNode with no stable identity
+      {React.Children.toArray(children).map((child, i) => (
         <motion.div
-          key={`stagger-${i}`}
+          key={(child as React.ReactElement).key ?? undefined}
           className={itemClassName}
           initial={{ opacity: 0, transform: reduced ? "none" : "translateY(20px)" }}
           whileInView={{ opacity: 1, transform: "translateY(0px)" }}

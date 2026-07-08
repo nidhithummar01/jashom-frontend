@@ -7,6 +7,8 @@ import { Reveal, Stagger } from "@/components/motion/Reveal";
 import Magnetic from "@/components/motion/Magnetic";
 import HireCudaHeroSvg from "./HireCudaHeroSvg";
 import { submitContactForm } from "@/lib/submitContact";
+import { RELATED_SERVICES as RELATED } from "@/lib/relatedServices";
+
 const BADGES = ["15 Days Risk-Free Trial", "24x7 Technical Support", "On-Time Delivery"];
 
 const EXPERTISE = [
@@ -57,11 +59,6 @@ const REVIEWS = [
   { quote: "Effective communication, good performance, and quantifiable performance benefits. They used their graphics prowess to enhance our analytics engine.", who: "Director of Technology" },
   { quote: "The team provided CUDA versions that were optimized and that reduced the training time of our AI models by a large margin.", who: "Head of AI Research" },
   { quote: "Professional, responsive, and highly skilled in GPU computing. We achieved performance milestones much faster than anticipated.", who: "Product Engineering Manager" },
-];
-
-const RELATED = [
-  { title: "GPU Optimization Service", body: "Finetune your GPU workloads for maximum speed and efficiency, eliminating bottlenecks and maximizing resource utilization.", href: "/gpu-optimization-service/" },
-  { title: "CUDA Development Service", body: "Build high-performance parallel applications with expert CUDA development tailored for speed, scalability and precision.", href: "/cuda-development-service/" },
 ];
 
 const CONTACT_HIGHLIGHTS = [

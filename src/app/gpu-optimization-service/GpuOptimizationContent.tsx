@@ -283,11 +283,10 @@ function CudaSimulation() {
         {Array.from({ length: 32 }, (_, i) => {
           const isActive = i === activeBlock;
           const isProcessed = i < activeBlock;
-          const blockClass = isActive
-            ? "bg-ink border-ink text-linen scale-105 shadow-sm"
-            : isProcessed
-              ? "bg-tint/40 border-line text-ink-2"
-              : "bg-paper border-line text-ink-3";
+          let blockClass: string;
+          if (isActive) blockClass = "bg-ink border-ink text-linen scale-105 shadow-sm";
+          else if (isProcessed) blockClass = "bg-tint/40 border-line text-ink-2";
+          else blockClass = "bg-paper border-line text-ink-3";
           return (
             <div
               key={`block-${i}`}

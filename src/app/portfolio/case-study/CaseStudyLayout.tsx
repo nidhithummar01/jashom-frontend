@@ -35,7 +35,10 @@ function Blocks({ blocks }: { readonly blocks: Block[] }) {
   return (
     <div className="flex flex-col gap-4">
       {blocks.map((b, i) => {
-        const key = b.t === "p" ? b.text?.slice(0, 30) : b.t === "sub" ? b.heading : `${b.t}-${i}`;
+        let key: string;
+        if (b.t === "p") key = b.text?.slice(0, 30) ?? `p-${i}`;
+        else if (b.t === "sub") key = b.heading;
+        else key = `${b.t}-${i}`;
         if (b.t === "p") return <p key={key} className="text-ink-2 max-w-[68ch]">{b.text}</p>;
         if (b.t === "bullets")
           return (

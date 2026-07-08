@@ -4,13 +4,7 @@ import { useState } from "react";
 import SplitHeading from "@/components/motion/SplitHeading";
 import { Reveal } from "@/components/motion/Reveal";
 import { submitContactForm } from "@/lib/submitContact";
-
-const SERVICES = [
-  "GPU Optimization Service",
-  "CUDA Development Service",
-  "AI/ML Development",
-  "AI Consulting",
-];
+import { CONTACT_SERVICES } from "@/lib/contactServices";
 
 export default function Contact() {
   const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
@@ -92,7 +86,7 @@ export default function Contact() {
                     <label htmlFor="service" className="text-sm text-ink-2">Service interest</label>
                     <select id="service" name="service" required defaultValue="" className="field-j">
                       <option value="" disabled>Select a service</option>
-                      {SERVICES.map((s) => (
+                      {CONTACT_SERVICES.map((s) => (
                         <option key={s} value={s}>{s}</option>
                       ))}
                     </select>

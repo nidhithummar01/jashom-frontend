@@ -23,8 +23,8 @@ RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs --chmod=755 /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs --chmod=644 /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs --chmod=555 /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs --chmod=444 /app/.next/static ./.next/static
 
 USER nextjs
 

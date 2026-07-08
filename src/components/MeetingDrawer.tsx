@@ -3,18 +3,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { submitContactForm } from "@/lib/submitContact";
+import { CONTACT_SERVICES } from "@/lib/contactServices";
 
 interface MeetingDrawerProps {
   readonly isOpen: boolean;
   readonly onClose: () => void;
 }
-
-const SERVICES = [
-  "GPU Optimization Service",
-  "CUDA Development Service",
-  "AI/ML Development",
-  "AI Consulting",
-];
 
 export default function MeetingDrawer({ isOpen, onClose }: MeetingDrawerProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
@@ -229,7 +223,7 @@ export default function MeetingDrawer({ isOpen, onClose }: MeetingDrawerProps) {
                     <option value="" disabled>
                       Select service interest *
                     </option>
-                    {SERVICES.map((s) => (
+                    {CONTACT_SERVICES.map((s) => (
                       <option key={s} value={s}>
                         {s}
                       </option>

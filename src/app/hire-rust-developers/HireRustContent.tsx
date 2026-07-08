@@ -8,6 +8,7 @@ import Magnetic from "@/components/motion/Magnetic";
 import HireRustHeroSvg from "./HireRustHeroSvg";
 import { submitContactForm } from "@/lib/submitContact";
 import HireCards from "@/components/HireCards";
+import { RELATED_SERVICES as RELATED } from "@/lib/relatedServices";
 
 const BADGES = [
   { label: "Flexible Hiring", sub: "Scalable engagement models" },
@@ -62,10 +63,6 @@ const REVIEWS = [
   { quote: "Clear communication, strong ownership and practical Rust architecture made the engagement smooth from start to finish.", who: "Product Lead, Technology Startup" },
 ];
 
-const RELATED = [
-  { title: "GPU Optimization Service", body: "Finetune your GPU workloads for maximum speed and efficiency, eliminating bottlenecks and maximizing resource utilization.", href: "/gpu-optimization-service/" },
-  { title: "CUDA Development Service", body: "Build high-performance parallel applications with expert CUDA development tailored for speed, scalability and precision.", href: "/cuda-development-service/" },
-];
 
 const CONTACT_HIGHLIGHTS = [
   { title: "Quick Response", body: "Project inquiries are answered within 24 hours." },
