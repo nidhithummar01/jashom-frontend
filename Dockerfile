@@ -22,9 +22,11 @@ ENV PORT=8080
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
-COPY --from=builder --chown=nextjs:nodejs --chmod=555 /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs --chmod=555 /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs --chmod=444 /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+RUN chmod -R 555 public .next/standalone && chmod -R 444 .next/static
 
 USER nextjs
 
