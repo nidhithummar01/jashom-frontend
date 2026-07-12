@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/sections/Footer";
-import Customizer from "@/components/Customizer";
 import QuickActions from "@/components/QuickActions";
 import ContactContent from "./ContactContent";
 
@@ -17,7 +16,6 @@ export default function ContactPage() {
       <Nav />
       <ContactContent />
       <Footer />
-      <Customizer />
       <QuickActions
         actions={[
           { label: "Call Us", href: "tel:+919023906363", external: true },

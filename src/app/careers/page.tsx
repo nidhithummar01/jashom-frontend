@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/sections/Footer";
-import Customizer from "@/components/Customizer";
 import QuickActions from "@/components/QuickActions";
 import CareersContent from "./CareersContent";
 import { getPublishedJobs } from "@/lib/jobs";
@@ -22,7 +21,6 @@ export default async function CareersPage() {
       <Nav />
       <CareersContent jobs={jobs} />
       <Footer />
-      <Customizer />
       <QuickActions
         actions={[
           { label: "View Openings", href: "/careers/" },

@@ -13,8 +13,6 @@ import Blog from "@/components/sections/Blog";
 import Contact from "@/components/sections/Contact";
 import FinalCTA from "@/components/sections/FinalCTA";
 import Footer from "@/components/sections/Footer";
-import Customizer from "@/components/Customizer";
-
 export default function Home() {
   return (
     <>
@@ -35,7 +33,6 @@ export default function Home() {
         <FinalCTA />
       </main>
       <Footer />
-      <Customizer />
     </>
   );
 }

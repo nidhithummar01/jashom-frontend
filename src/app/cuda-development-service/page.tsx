@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/sections/Footer";
-import Customizer from "@/components/Customizer";
 import QuickActions from "@/components/QuickActions";
 import CudaDevelopmentContent from "./CudaDevelopmentContent";
 import { getPublishedBlogs } from "@/lib/blogs";
@@ -19,7 +18,6 @@ export default async function CudaDevelopmentServicePage() {
       <Nav />
       <CudaDevelopmentContent blogPosts={blogPosts} />
       <Footer />
-      <Customizer />
       <QuickActions
         actions={[
           { label: "Get a Free Quote", href: "/contact/" },

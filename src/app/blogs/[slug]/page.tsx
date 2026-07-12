@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
 import Footer from "@/components/sections/Footer";
-import Customizer from "@/components/Customizer";
 import QuickActions from "@/components/QuickActions";
 import { getBlogBySlug, getPublishedBlogs } from "@/lib/blogs";
 import BlogArticle from "../BlogArticle";
@@ -40,7 +39,6 @@ export default async function BlogPostPage({
       <Nav />
       <BlogArticle post={post} allPosts={allPosts} />
       <Footer />
-      <Customizer />
       <QuickActions
         actions={[
           { label: "Subscribe", href: "/contact/" },

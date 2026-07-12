@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
 import Footer from "@/components/sections/Footer";
-import Customizer from "@/components/Customizer";
 import QuickActions from "@/components/QuickActions";
 import { CASE_STUDIES, getCaseStudy } from "../case-studies-data";
 import CaseStudyLayout from "../CaseStudyLayout";
@@ -28,7 +27,6 @@ export default async function CaseStudyPage({ params }: { readonly params: Promi
       <Nav />
       <CaseStudyLayout data={data} />
       <Footer />
-      <Customizer />
       <QuickActions
         actions={[
           { label: "Request Similar Work", href: "/contact/" },

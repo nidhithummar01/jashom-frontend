@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/sections/Footer";
-import Customizer from "@/components/Customizer";
 import QuickActions from "@/components/QuickActions";
 import TeamContent from "./TeamContent";
 
@@ -17,7 +16,6 @@ export default function TeamPage() {
       <Nav />
       <TeamContent />
       <Footer />
-      <Customizer />
       <QuickActions
         actions={[
           { label: "Meet the Team", href: "/about/team/" },

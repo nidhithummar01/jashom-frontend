@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/sections/Footer";
-import Customizer from "@/components/Customizer";
 import QuickActions from "@/components/QuickActions";
 import PortfolioContent from "./PortfolioContent";
 
@@ -17,7 +16,6 @@ export default function PortfolioPage() {
       <Nav />
       <PortfolioContent />
       <Footer />
-      <Customizer />
       <QuickActions
         actions={[
           { label: "Request Similar Work", href: "/contact/" },
