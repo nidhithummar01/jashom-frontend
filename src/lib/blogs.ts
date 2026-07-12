@@ -29,7 +29,7 @@ export interface BlogPost {
 export async function getPublishedBlogs(): Promise<BlogPost[]> {
   try {
     const res = await fetch(`${API_URL}/v1/admin/blogs?status=published&limit=100`, {
-      next: { revalidate: 60 },
+      cache: "no-store",
     });
     if (!res.ok) return [];
     return res.json();
