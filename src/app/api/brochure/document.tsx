@@ -112,7 +112,7 @@ const s = StyleSheet.create({
   tagText: { fontSize: 8, color: C.ink2 },
 });
 
-function Bullet({ text, dark = true }: { text: string; dark?: boolean }) {
+function Bullet({ text, dark = true }: { readonly text: string; readonly dark?: boolean }) {
   return (
     <View style={s.bulletRow}>
       <View style={dark ? s.bullet : s.bulletLight} />
@@ -121,7 +121,7 @@ function Bullet({ text, dark = true }: { text: string; dark?: boolean }) {
   );
 }
 
-function PageFooter({ label, dark = true }: { label: string; dark?: boolean }) {
+function PageFooter({ label, dark = true }: { readonly label: string; readonly dark?: boolean }) {
   return (
     <View style={dark ? s.footer : s.footerLight} fixed>
       <Text style={s.footerText}>Jashom Technologies Pvt. Ltd.</Text>
