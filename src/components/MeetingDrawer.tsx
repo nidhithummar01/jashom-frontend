@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { submitContactForm } from "@/lib/submitContact";
 import { CONTACT_SERVICES } from "@/lib/contactServices";
@@ -11,7 +12,8 @@ interface MeetingDrawerProps {
 }
 
 export default function MeetingDrawer({ isOpen, onClose }: MeetingDrawerProps) {
-  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
+  const router = useRouter();
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +30,8 @@ export default function MeetingDrawer({ isOpen, onClose }: MeetingDrawerProps) {
         company: fd.get("company") as string,
         message: service ? `[Service: ${service}]\n\n${rawMsg}` : rawMsg,
       });
-      setStatus("sent");
+      onClose();
+      router.push("/thank-you/");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
       setStatus("error");
@@ -142,39 +145,7 @@ export default function MeetingDrawer({ isOpen, onClose }: MeetingDrawerProps) {
 
             {/* Drawer Body */}
             <div className="flex-1 overflow-y-auto p-6 flex flex-col justify-start">
-              {status === "sent" ? (
-                <div className="flex flex-col items-center justify-center text-center p-6 border border-line bg-linen my-auto">
-                  <div className="w-12 h-12 border border-line rounded-full flex items-center justify-center mb-4 bg-tint text-ink">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 15 15"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M11.4669 3.72684C11.7175 3.91484 11.771 4.27125 11.583 4.52184L6.58302 11.1885C6.49575 11.3049 6.36246 11.3765 6.21951 11.3838C6.07657 11.3911 5.93514 11.3333 5.83407 11.2268L3.33407 8.56015C3.12921 8.34163 3.12921 7.98734 3.33407 7.76882C3.53893 7.5503 3.87107 7.5503 4.07593 7.76882L6.10842 9.93681L10.6719 3.84299C10.8599 3.5924 11.2163 3.53884 11.4669 3.72684Z"
-                        fill="currentColor"
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="font-mono text-xl uppercase tracking-wider text-ink mb-2">
-                    Message received
-                  </h3>
-                  <p className="text-ink-2 text-sm max-w-[36ch]">
-                    Thank you — our team will get back to you within 24 hours.
-                  </p>
-                  <button
-                    onClick={onClose}
-                    className="btn btn-secondary mt-6 !py-2 !px-4"
-                  >
-                    Close Window
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={onSubmit} className="flex flex-col gap-3">
+              <form onSubmit={onSubmit} className="flex flex-col gap-3">
                   <div className="grid sm:grid-cols-2 gap-3">
                     <input
                       id="drawer-name"
@@ -282,7 +253,6 @@ export default function MeetingDrawer({ isOpen, onClose }: MeetingDrawerProps) {
                     </div>
                   </div>
                 </form>
-              )}
             </div>
           </motion.div>
         </>
