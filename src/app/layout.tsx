@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Expert NVIDIA GPU optimization and CUDA development services. Jashom helps organizations unlock maximum performance from their AI and machine learning workloads.",
   icons: {
-    icon: "/logo/jashom-dark.svg",
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
 };
 
