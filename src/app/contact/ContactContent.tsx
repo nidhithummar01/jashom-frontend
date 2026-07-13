@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import SplitHeading from "@/components/motion/SplitHeading";
 import { Reveal } from "@/components/motion/Reveal";
@@ -16,8 +17,9 @@ const FAQS = [
 ];
 
 export default function ContactContent() {
+  const router = useRouter();
   const reduced = useReducedMotion();
-  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +33,7 @@ export default function ContactContent() {
         company: fd.get("company") as string,
         message: fd.get("message") as string,
       });
-      setStatus("sent");
+      router.push("/thank-you/");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
       setStatus("error");
@@ -101,13 +103,7 @@ export default function ContactContent() {
                 </Reveal>
               </div>
               <div className="lg:col-span-7">
-                {status === "sent" ? (
-                  <div className="h-full flex flex-col items-start justify-center bg-linen border border-line rounded-none p-10">
-                    <p className="font-mono text-3xl mb-3">Message received.</p>
-                    <p className="text-ink-2">Our team will respond to you within 2 business days.</p>
-                  </div>
-                ) : (
-                  <Reveal delay={0.08}>
+                <Reveal delay={0.08}>
                     <div className="flex flex-col gap-6">
                       <div>
                         <h2 className="text-[1.25rem] md:text-[1.4rem] font-medium mb-2">Let&rsquo;s build something powerful together.</h2>
@@ -126,7 +122,6 @@ export default function ContactContent() {
                       </form>
                     </div>
                   </Reveal>
-                )}
               </div>
             </div>
           </div>

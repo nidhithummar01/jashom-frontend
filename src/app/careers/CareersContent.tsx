@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import SplitHeading from "@/components/motion/SplitHeading";
 import { Reveal, Stagger } from "@/components/motion/Reveal";
@@ -85,7 +86,8 @@ function JobCard({ job, onApply }: { readonly job: Job; readonly onApply: (job: 
 }
 
 function ApplyModal({ job, onClose }: { readonly job: Job; readonly onClose: () => void }) {
-  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
+  const router = useRouter();
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -108,7 +110,7 @@ function ApplyModal({ job, onClose }: { readonly job: Job; readonly onClose: () 
         linkedinUrl: (fd.get("linkedinUrl") as string) || undefined,
         portfolioUrl: (fd.get("portfolioUrl") as string) || undefined,
       });
-      setStatus("sent");
+      router.push("/thank-you/");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
       setStatus("error");
@@ -137,20 +139,6 @@ function ApplyModal({ job, onClose }: { readonly job: Job; readonly onClose: () 
 
         {/* Body */}
         <div className="p-6">
-          {status === "sent" ? (
-            <div className="flex flex-col items-center text-center py-6 gap-4">
-              <div className="w-12 h-12 border border-line bg-paper flex items-center justify-center text-ink">
-                <svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.4669 3.72684C11.7175 3.91484 11.771 4.27125 11.583 4.52184L6.58302 11.1885C6.49575 11.3049 6.36246 11.3765 6.21951 11.3838C6.07657 11.3911 5.93514 11.3333 5.83407 11.2268L3.33407 8.56015C3.12921 8.34163 3.12921 7.98734 3.33407 7.76882C3.53893 7.5503 3.87107 7.5503 4.07593 7.76882L6.10842 9.93681L10.6719 3.84299C10.8599 3.5924 11.2163 3.53884 11.4669 3.72684Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd" />
-                </svg>
-              </div>
-              <p className="font-mono text-[1.1rem] uppercase tracking-wider text-ink">Application Submitted</p>
-              <p className="text-ink-2 text-[0.875rem] max-w-[36ch]">
-                Thank you — we&rsquo;ll review your application and get back to you soon.
-              </p>
-              <button onClick={onClose} className="btn btn-secondary mt-2">Close</button>
-            </div>
-          ) : (
             <form onSubmit={onSubmit} className="flex flex-col gap-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
@@ -188,7 +176,6 @@ function ApplyModal({ job, onClose }: { readonly job: Job; readonly onClose: () 
                 Your information is kept confidential and used only for this application.
               </p>
             </form>
-          )}
         </div>
     </dialog>
   );
@@ -197,7 +184,8 @@ function ApplyModal({ job, onClose }: { readonly job: Job; readonly onClose: () 
 export default function CareersContent({ jobs }: { readonly jobs: Job[] }) {
   const reduced = useReducedMotion();
   const [applyingTo, setApplyingTo] = useState<Job | null>(null);
-  const [generalFormStatus, setGeneralFormStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
+  const router = useRouter();
+  const [generalFormStatus, setGeneralFormStatus] = useState<"idle" | "loading" | "error">("idle");
   const [generalErrorMsg, setGeneralErrorMsg] = useState("");
 
   const publishedJobs = jobs.filter((j) => j.status === "published");
@@ -216,7 +204,7 @@ export default function CareersContent({ jobs }: { readonly jobs: Job[] }) {
         coverLetter: (fd.get("message") as string) || undefined,
         linkedinUrl: (fd.get("linkedinUrl") as string) || undefined,
       });
-      setGeneralFormStatus("sent");
+      router.push("/thank-you/");
     } catch (err) {
       setGeneralErrorMsg(err instanceof Error ? err.message : "Something went wrong");
       setGeneralFormStatus("error");
@@ -329,13 +317,7 @@ export default function CareersContent({ jobs }: { readonly jobs: Job[] }) {
                 <Reveal><p className="text-ink-2 max-w-[48ch]">If you are passionate and skilled, we&rsquo;ll get along very well :)</p></Reveal>
               </div>
               <div className="lg:col-span-7">
-                {generalFormStatus === "sent" ? (
-                  <div className="h-full flex flex-col items-start justify-center bg-linen border border-line p-10">
-                    <p className="font-mono text-3xl mb-3">Application received.</p>
-                    <p className="text-ink-2">Thank you — we&rsquo;ll be in touch about future opportunities.</p>
-                  </div>
-                ) : (
-                  <Reveal delay={0.08}>
+                <Reveal delay={0.08}>
                     <form onSubmit={handleGeneralSubmit} className="grid sm:grid-cols-2 gap-5">
                       <div className="flex flex-col gap-1.5">
                         <label htmlFor="gen-name" className="text-sm text-ink-2">Full Name *</label>
@@ -374,7 +356,6 @@ export default function CareersContent({ jobs }: { readonly jobs: Job[] }) {
                       </div>
                     </form>
                   </Reveal>
-                )}
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import SplitHeading from "@/components/motion/SplitHeading";
 import { Reveal } from "@/components/motion/Reveal";
 import { submitContactForm } from "@/lib/submitContact";
@@ -26,7 +27,8 @@ export default function HireContactForm({
   readonly showPrivacyNote?: boolean;
   readonly sectionClassName?: string;
 }) {
-  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
+  const router = useRouter();
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   return (
@@ -50,14 +52,8 @@ export default function HireContactForm({
             )}
           </div>
           <div className="lg:col-span-7">
-            {status === "sent" ? (
-              <div className="h-full flex flex-col items-start justify-center bg-linen border border-line rounded-none p-10">
-                <p className="font-mono text-3xl mb-3">Request received.</p>
-                <p className="text-ink-2">Thank you — we&rsquo;ll get back to you within 24 hours.</p>
-              </div>
-            ) : (
-              <Reveal delay={0.08}>
-                <form
+            <Reveal delay={0.08}>
+              <form
                   onSubmit={async (e) => {
                     e.preventDefault();
                     const fd = new FormData(e.currentTarget);
@@ -72,7 +68,7 @@ export default function HireContactForm({
                         company: fd.get("company") as string,
                         message: model ? `[Hiring Model: ${model}]\n\n${rawMsg}` : rawMsg || messageFallback,
                       });
-                      setStatus("sent");
+                      router.push("/thank-you/");
                     } catch (err) {
                       setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
                       setStatus("error");
@@ -100,8 +96,7 @@ export default function HireContactForm({
                     {showPrivacyNote && <p className="text-[0.8125rem] text-ink-3">By submitting this form, you agree to our privacy policy and terms of service.</p>}
                   </div>
                 </form>
-              </Reveal>
-            )}
+            </Reveal>
           </div>
         </div>
       </div>
