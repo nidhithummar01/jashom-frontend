@@ -292,7 +292,7 @@ export default function Nav({ forceBg = false }: { readonly forceBg?: boolean })
               onClick={() => setIsDrawerOpen(true)}
               className="btn btn-primary !py-3 !px-5 text-center cursor-pointer"
             >
-              Schedule a Meeting
+              Contact Now
             </button>
           </Magnetic>
         </div>
@@ -422,7 +422,7 @@ export default function Nav({ forceBg = false }: { readonly forceBg?: boolean })
                 }}
                 className="btn btn-primary w-full mt-8 text-center cursor-pointer"
               >
-                Schedule a Meeting
+                Contact Now
               </button>
             </div>
           </motion.div>
