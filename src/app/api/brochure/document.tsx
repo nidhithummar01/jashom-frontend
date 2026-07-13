@@ -247,53 +247,58 @@ export function JashomBrochure() {
           <Text style={s.h1Light}>What We Do</Text>
         </View>
         <View style={s.body}>
-
-          <View style={[s.cardLight, { marginBottom: 14 }]}>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
-              <View style={{ flex: 1 }}>
-                <Text style={s.cardTag}>Service 01</Text>
-                <Text style={s.cardTitleLight}>NVIDIA GPU Optimization Services</Text>
-                <Text style={s.cardBody}>
-                  End-to-end GPU performance engineering for AI, HPC, and data-intensive applications. We profile your workloads, identify bottlenecks, and implement kernel-level optimisations that deliver measurable throughput improvements.
-                </Text>
+          <View style={s.row}>
+            <View style={[s.cardLight, { flex: 1 }]}>
+              <Text style={s.cardTag}>Service 01</Text>
+              <Text style={s.cardTitleLight}>NVIDIA GPU Optimization</Text>
+              <Text style={s.cardBody}>
+                End-to-end GPU performance engineering for AI, HPC, and data-intensive applications. We profile workloads, find bottlenecks, and implement kernel-level optimisations.
+              </Text>
+              <View style={{ marginTop: 10 }}>
+                <Bullet dark={false} text="Custom CUDA kernel profiling and rewrite" />
+                <Bullet dark={false} text="Memory bandwidth and occupancy optimisation" />
+                <Bullet dark={false} text="Multi-GPU and distributed inference tuning" />
+                <Bullet dark={false} text="Power efficiency improvements" />
               </View>
             </View>
-            <View style={{ marginTop: 10 }}>
-              <Bullet dark={false} text="Custom CUDA kernel profiling and rewrite" />
-              <Bullet dark={false} text="Memory bandwidth and occupancy optimisation" />
-              <Bullet dark={false} text="Multi-GPU and distributed inference tuning" />
-              <Bullet dark={false} text="Power efficiency and thermal performance improvements" />
+            <View style={[s.cardLight, { flex: 1 }]}>
+              <Text style={s.cardTag}>Service 02</Text>
+              <Text style={s.cardTitleLight}>CUDA Development Services</Text>
+              <Text style={s.cardBody}>
+                Build scalable, production-ready GPU applications. Our CUDA developers design parallel algorithms for AI training, inference, simulation, and signal processing.
+              </Text>
+              <View style={{ marginTop: 10 }}>
+                <Bullet dark={false} text="Parallel algorithm design and implementation" />
+                <Bullet dark={false} text="AI model acceleration (training + inference)" />
+                <Bullet dark={false} text="Custom GPU libraries for scientific computing" />
+                <Bullet dark={false} text="Integration with PyTorch, TensorRT, ONNX" />
+              </View>
             </View>
           </View>
-
-          <View style={[s.cardLight, { marginBottom: 14 }]}>
-            <Text style={s.cardTag}>Service 02</Text>
-            <Text style={s.cardTitleLight}>CUDA Development Services</Text>
-            <Text style={s.cardBody}>
-              Build scalable, production-ready GPU applications from scratch. Our CUDA developers design parallel algorithms for AI training, deep learning inference, simulation, and signal processing workloads.
-            </Text>
-            <View style={{ marginTop: 10 }}>
-              <Bullet dark={false} text="Parallel algorithm design and implementation" />
-              <Bullet dark={false} text="AI model acceleration (training + inference)" />
-              <Bullet dark={false} text="Custom GPU libraries for scientific computing" />
-              <Bullet dark={false} text="Integration with PyTorch, TensorRT, and ONNX" />
-            </View>
-          </View>
-
-          <View style={s.row}>
-            <View style={s.cardLight}>
+          <View style={[s.row, { marginTop: 14 }]}>
+            <View style={[s.cardLight, { flex: 1 }]}>
               <Text style={s.cardTag}>Service 03</Text>
               <Text style={s.cardTitleLight}>Hire CUDA Developers</Text>
               <Text style={s.cardBody}>
-                Get dedicated CUDA programmers embedded in your team. We supply senior GPU engineers on monthly retainer or project basis with full IP transfer.
+                Dedicated CUDA programmers embedded in your team. Senior GPU engineers on monthly retainer or project basis with full IP transfer.
               </Text>
+              <View style={{ marginTop: 10 }}>
+                <Bullet dark={false} text="Senior CUDA & GPU engineers on demand" />
+                <Bullet dark={false} text="Monthly retainer or fixed-scope projects" />
+                <Bullet dark={false} text="Full IP transfer and NDA-ready" />
+              </View>
             </View>
-            <View style={s.cardLight}>
+            <View style={[s.cardLight, { flex: 1 }]}>
               <Text style={s.cardTag}>Service 04</Text>
               <Text style={s.cardTitleLight}>Hire Rust Developers</Text>
               <Text style={s.cardBody}>
                 Experienced Rust engineers for GPU orchestration, telemetry pipelines, and high-throughput systems. Memory-safe, fast, and production-proven.
               </Text>
+              <View style={{ marginTop: 10 }}>
+                <Bullet dark={false} text="GPU orchestration and control plane systems" />
+                <Bullet dark={false} text="High-throughput telemetry pipelines" />
+                <Bullet dark={false} text="Memory-safe systems programming" />
+              </View>
             </View>
           </View>
         </View>
