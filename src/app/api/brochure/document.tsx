@@ -477,23 +477,6 @@ export function JashomBrochure() {
           </View>
 
           <View style={s.divider} />
-          <Text style={s.h2}>Quick Links</Text>
-          <View style={[s.row, { marginTop: 10 }]}>
-            <View style={s.card}>
-              <Text style={s.cardTitle}>GPU Optimization</Text>
-              <Text style={s.cardBody}>jashom.com/gpu-optimization-service/</Text>
-            </View>
-            <View style={s.card}>
-              <Text style={s.cardTitle}>CUDA Development</Text>
-              <Text style={s.cardBody}>jashom.com/cuda-development-service/</Text>
-            </View>
-            <View style={s.card}>
-              <Text style={s.cardTitle}>Hire CUDA Experts</Text>
-              <Text style={s.cardBody}>jashom.com/hire-cuda-developer/</Text>
-            </View>
-          </View>
-
-          <View style={s.divider} />
           {/* Final tagline */}
           <View style={{ alignItems: "center", marginTop: 8 }}>
             <Text style={{ fontSize: 16, color: C.white, fontFamily: "Helvetica-Bold", textAlign: "center", letterSpacing: -0.3 }}>
