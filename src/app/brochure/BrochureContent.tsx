@@ -51,8 +51,8 @@ export default function BrochureContent() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <a
-              href="/brochure/jashom-brochure.pdf"
-              download="Jashom-Company-Brochure.pdf"
+              href="/api/brochure"
+             
               className="btn-primary flex items-center gap-2.5 px-8 py-3.5 text-[0.875rem] font-mono uppercase tracking-wider"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -114,8 +114,8 @@ export default function BrochureContent() {
                 <div className="flex items-center justify-between px-5 py-4 bg-[#f9f9f8] dark:bg-[#111113] border-t border-line">
                   <span className="font-mono text-[0.72rem] text-ink-3">PDF · Jashom Technologies</span>
                   <a
-                    href="/brochure/jashom-brochure.pdf"
-                    download="Jashom-Company-Brochure.pdf"
+                    href="/api/brochure"
+                   
                     className="flex items-center gap-1.5 font-mono text-[0.72rem] text-ink-2 hover:text-ink transition-colors"
                   >
                     <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -157,8 +157,8 @@ export default function BrochureContent() {
 
               <Reveal delay={0.3}>
                 <a
-                  href="/brochure/jashom-brochure.pdf"
-                  download="Jashom-Company-Brochure.pdf"
+                  href="/api/brochure"
+                 
                   className="btn-primary inline-flex items-center gap-2.5 px-8 py-3.5 text-[0.875rem] font-mono uppercase tracking-wider w-fit"
                 >
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">

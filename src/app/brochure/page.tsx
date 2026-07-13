@@ -19,7 +19,7 @@ export default function BrochurePage() {
       <Footer />
       <QuickActions
         actions={[
-          { label: "Download Brochure", href: "/brochure/jashom-brochure.pdf", external: true },
+          { label: "Download Brochure", href: "/api/brochure", external: true },
           { label: "Contact Us", href: "/contact/" },
           { label: "View Services", href: "/gpu-optimization-service/" },
         ]}
