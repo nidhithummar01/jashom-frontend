@@ -5,9 +5,10 @@ import QuickActions from "@/components/QuickActions";
 import PortfolioContent from "./PortfolioContent";
 
 export const metadata: Metadata = {
-  title: "Portfolio | AI, GPU & Healthcare Solutions | Jashom",
+  title: "Jashom Portfolio | AI, Cloud & Digital Transformation Projects",
   description:
-    "Explore Jashom's portfolio of applied AI, GPU optimization, and healthcare AI systems. Powering AI and redefining efficiency.",
+    "Explore Jashom's portfolio showcasing AI, cloud, and digital transformation projects delivering scalable and high performance solutions.",
+  alternates: { canonical: "https://www.jashom.com/portfolio/" },
 };
 
 export default function PortfolioPage() {

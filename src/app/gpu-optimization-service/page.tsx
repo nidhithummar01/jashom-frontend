@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "NVIDIA GPU Optimization Services | Optimize NVIDIA GPU Performance",
   description:
     "Improve speed and efficiency with expert NVIDIA GPU optimization services. We help businesses optimize NVIDIA GPU performance for AI, HPC, and data-intensive applications.",
+  alternates: { canonical: "https://www.jashom.com/gpu-optimization-service/" },
 };
 
 export default async function GpuOptimizationServicePage() {

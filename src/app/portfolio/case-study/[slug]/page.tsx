@@ -14,7 +14,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const data = getCaseStudy(slug);
   if (!data) return {};
-  return { title: data.metaTitle, description: data.metaDescription };
+  return {
+    title: data.metaTitle,
+    description: data.metaDescription,
+    alternates: { canonical: `https://www.jashom.com/portfolio/case-study/${slug}/` },
+  };
 }
 
 export default async function CaseStudyPage({ params }: { readonly params: Promise<{ slug: string }> }) {

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Hire CUDA Developers | Dedicated CUDA Programmers & GPU Experts",
   description:
     "Looking to hire CUDA developers? Get skilled GPU programmers for NVIDIA CUDA projects, performance optimization, and custom parallel computing solutions.",
+  alternates: { canonical: "https://www.jashom.com/hire-cuda-developer/" },
 };
 
 export default function HireCudaDeveloperPage() {

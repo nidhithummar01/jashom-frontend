@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import Nav from "@/components/Nav";
+
+export const metadata: Metadata = {
+  title: "GPU Optimization Services & CUDA Development Company | Jashom",
+  description:
+    "Jashom provides advanced GPU optimization, CUDA development, and high-performance computing solutions to accelerate AI, simulation, and enterprise workloads efficiently.",
+  alternates: { canonical: "https://www.jashom.com/" },
+};
 import Hero from "@/components/sections/Hero";
 import AskChatGPT from "@/components/sections/AskChatGPT";
 import UsedBy from "@/components/sections/UsedBy";

@@ -8,9 +8,10 @@ import { getPublishedJobs } from "@/lib/jobs";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Careers at Jashom | Join Our Team",
+  title: "Careers at Jashom | Join Our AI & Technology Team",
   description:
-    "Join the team to create digital products that the world has never seen before! Explore career opportunities at Jashom.",
+    "Explore careers at Jashom and work on cutting edge AI, cloud, and automation solutions. Build your future with a fast growing tech team.",
+  alternates: { canonical: "https://www.jashom.com/careers/" },
 };
 
 export default async function CareersPage() {

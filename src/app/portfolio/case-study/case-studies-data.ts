@@ -29,7 +29,7 @@ const stat = (value: string, label: string) => ({ value, label });
 export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "llm-inference-optimization",
-    metaTitle: "LLM Inference Optimization on Constrained GPU Infrastructure | Case Study | Jashom",
+    metaTitle: "LLM Inference Optimization Case Study | Jashom Technologies",
     metaDescription: "See how Jashom optimized LLM inference to achieve faster response times, reduced costs, and improved AI performance at scale.",
     title: "LLM Inference Optimization on Constrained GPU Infrastructure",
     hardware: "Hardware: Multi-node GPU cluster (12 distributed nodes)",
@@ -101,7 +101,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     slug: "gpu-workload-orchestration",
-    metaTitle: "GPU Workload Orchestration Framework on Rocky Linux 9.7 | Case Study | Jashom",
+    metaTitle: "GPU Workload Orchestration Case Study | Jashom Technologies",
     metaDescription: "Learn how Jashom streamlined GPU workload orchestration to maximize efficiency, reduce costs, and enhance performance.",
     title: "GPU Workload Orchestration Framework on Rocky Linux 9.7",
     hardware: "Hardware: NVIDIA RTX 3090 · Rocky Linux 9.7 · Docker + NVIDIA Container Toolkit",
@@ -184,7 +184,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     slug: "cloud-gpu-fine-tuning",
-    metaTitle: "Cloud GPU Fine-Tuning Strategy for Production LLM Deployment | Case Study | Jashom",
+    metaTitle: "Cloud GPU Fine Tuning Case Study | Jashom AI Solutions",
     metaDescription: "Discover how Jashom optimized cloud GPU fine tuning for AI models, improving performance, scalability, and cost efficiency.",
     title: "Cloud GPU Fine-Tuning Strategy for Production LLM Deployment",
     hardware: "Hardware: Cloud GPU Fleet: RTX 4090 / A100 / H100 (provider-agnostic)",
@@ -273,7 +273,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     slug: "redfish-bmc-telemetry",
-    metaTitle: "Real-Time GPU Server Hardware Telemetry via Redfish BMC Integration | Case Study | Jashom",
+    metaTitle: "Redfish BMC Telemetry Case Study | Jashom Technologies",
     metaDescription: "Explore how Jashom implemented Redfish BMC telemetry to enhance system monitoring, reliability, and infrastructure visibility.",
     title: "Real-Time GPU Server Hardware Telemetry via Redfish BMC Integration",
     hardware: "Hardware: Lambda Scalar GPU Servers · Supermicro AST2600 BMC · Electron / Node.js",

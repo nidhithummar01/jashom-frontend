@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Contact Jashom | GPU & CUDA Development Consultation",
   description:
     "Get in touch with Jashom for expert GPU optimization and CUDA development services. Contact our team to discuss your performance challenges and project requirements.",
+  alternates: { canonical: "https://www.jashom.com/contact/" },
 };
 
 export default function ContactPage() {

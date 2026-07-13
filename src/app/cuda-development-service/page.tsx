@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "CUDA Development Services | Expert CUDA Developers for GPU Computing",
   description:
     "Hire experienced CUDA developers to build high-performance GPU applications. Jashom delivers scalable CUDA development solutions for AI, deep learning, and parallel computing.",
+  alternates: { canonical: "https://www.jashom.com/cuda-development-service/" },
 };
 
 export default async function CudaDevelopmentServicePage() {

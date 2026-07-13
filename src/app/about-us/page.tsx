@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "About Jashom | GPU Optimization & CUDA Development Experts",
   description:
     "Learn about Jashom, a technology-driven company specializing in GPU optimization, NVIDIA CUDA development, and high-performance computing solutions for modern AI and enterprise applications.",
+  alternates: { canonical: "https://www.jashom.com/about-us/" },
 };
 
 export default function AboutUsPage() {
