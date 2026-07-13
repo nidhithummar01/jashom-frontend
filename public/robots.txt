@@ -1,2 +1,5 @@
 User-agent: *
-Allow:
+Allow: /
+Disallow: /cdn-cgi/
+
+Sitemap: https://www.jashom.com/sitemap.xml
