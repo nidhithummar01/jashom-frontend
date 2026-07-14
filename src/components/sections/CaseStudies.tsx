@@ -7,30 +7,35 @@ const CASES: Array<{
   title: string;
   tech: string[];
   glyph: GlyphVariant;
+  slug: string;
 }> = [
   {
     category: "Enterprise AI · LLM Deployment",
     title: "LLM Inference Optimization on Constrained GPU Infrastructure",
     tech: ["CUDA", "TensorRT", "LLM"],
     glyph: "chip",
+    slug: "llm-inference-optimization",
   },
   {
     category: "Infrastructure · GPU Operations",
     title: "GPU Workload Orchestration Framework on Rocky Linux 9.7",
     tech: ["FastAPI", "Docker", "Rocky Linux"],
     glyph: "nodes",
+    slug: "gpu-workload-orchestration",
   },
   {
     category: "AI Engineering · Cloud Infrastructure",
     title: "Cloud GPU Fine-Tuning Strategy for Production LLM Deployment",
     tech: ["LoRA", "DeepSpeed", "Cloud GPU"],
     glyph: "tune",
+    slug: "cloud-gpu-fine-tuning",
   },
   {
     category: "Infrastructure Monitoring · GPU Data Centers",
     title: "Real-Time GPU Server Hardware Telemetry via Redfish BMC",
     tech: ["Redfish", "BMC", "Telemetry"],
     glyph: "pulse",
+    slug: "redfish-bmc-telemetry",
   },
 ];
 
@@ -60,7 +65,7 @@ export default function CaseStudies() {
 
         <Stagger className="grid md:grid-cols-2 gap-5" itemClassName="h-full" step={0.07}>
           {CASES.map((c) => (
-            <a key={c.title} href="#contact" className="card-neon group block p-7 md:p-9 h-full">
+            <a key={c.title} href={`/portfolio/case-study/${c.slug}/`} className="card-neon group block p-7 md:p-9 h-full">
               <CardGlyph variant={c.glyph} />
               <p className="neon-meta text-[0.8125rem] text-ink-2 mb-5">{c.category}</p>
               <h3 className="text-[20px] leading-snug mb-8 max-w-none">
