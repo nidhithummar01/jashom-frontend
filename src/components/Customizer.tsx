@@ -468,6 +468,9 @@ export default function Customizer() {
     applyFontPreset("current");
   };
 
+  return null;
+
+  // kept below for reference — hidden
   return (
     <>
       {/* Floating button */}

@@ -16,7 +16,8 @@ export default function QuickActions({ actions, label = "Quick actions" }: { rea
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
 
-  if (!actions || actions.length === 0) return null;
+  void actions; void label; void open; void reduced;
+  return null;
 
   return (
     <div className="fixed bottom-6 left-6 z-50 hidden sm:flex flex-col items-start gap-3">

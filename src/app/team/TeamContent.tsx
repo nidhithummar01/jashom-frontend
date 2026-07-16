@@ -47,8 +47,8 @@ const TEAM = [
   },
   {
     name: "Abhishek Bhagwat",
-    role: "Lead CUDA Engineer",
-    bio: "Specializes in kernel-level optimization and memory hierarchy tuning. Has delivered 100x+ throughput improvements across ML training pipelines.",
+    role: "Sales Manager",
+    bio: "Drives sales strategy and client acquisition by aligning business needs with tailored GPU and CUDA solutions.",
     linkedin: "https://www.linkedin.com/in/abhishek-bhagwat-037221248/",
     photo: "/team/abhishek-bhagwat.jpg",
   },
