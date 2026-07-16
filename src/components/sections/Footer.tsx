@@ -53,11 +53,8 @@ const COLUMNS: FooterColumn[] = [
 ];
 
 export default function Footer() {
-  const [theme, setTheme] = useState<"system" | "light" | "dark" | "mono">("light");
-  const [mounted, setMounted] = useState(false);
   const [isDark, setIsDark] = useState(false);
 
-  // Track actual dark state by watching html.classList
   useEffect(() => {
     const root = document.documentElement;
     setIsDark(root.classList.contains("dark"));
@@ -67,52 +64,6 @@ export default function Footer() {
     observer.observe(root, { attributeFilter: ["class"] });
     return () => observer.disconnect();
   }, []);
-
-  useEffect(() => {
-    setMounted(true);
-    const saved = localStorage.getItem("theme") as "system" | "light" | "dark" | "mono" | null;
-    if (saved) {
-      setTheme(saved);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!mounted || theme !== "system") return;
-
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const listener = (e: MediaQueryListEvent) => {
-      const root = document.documentElement;
-      root.classList.remove("mono");
-      if (e.matches) {
-        root.classList.add("dark");
-      } else {
-        root.classList.remove("dark");
-      }
-    };
-
-    media.addEventListener("change", listener);
-    return () => media.removeEventListener("change", listener);
-  }, [theme, mounted]);
-
-  const handleThemeChange = (newTheme: "system" | "light" | "dark" | "mono") => {
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-
-    const root = document.documentElement;
-    root.classList.remove("dark");
-    root.classList.remove("mono");
-
-    if (newTheme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      if (systemTheme === "dark") {
-        root.classList.add("dark");
-      }
-    } else if (newTheme === "dark") {
-      root.classList.add("dark");
-    } else if (newTheme === "mono") {
-      root.classList.add("mono");
-    }
-  };
 
   return (
     <footer className="bg-linen border-t border-line">
