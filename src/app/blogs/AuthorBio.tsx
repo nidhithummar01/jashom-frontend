@@ -13,7 +13,7 @@ const AUTHORS: Record<string, {
       "Jashom helps AI startups, research organizations, and enterprises accelerate compute-intensive workloads through advanced CUDA development and GPU optimization — building scalable, production-ready infrastructure for AI models, simulations, and large-scale data processing.",
       "Jay writes about GPU computing, AI infrastructure, and the engineering challenges of scaling high-performance systems.",
     ],
-    linkedin: "https://www.linkedin.com/in/jay-dave/",
+    linkedin: "https://www.linkedin.com/in/jayksdave/",
     initials: "JD",
   },
   "Soham Thaker": {
@@ -24,7 +24,7 @@ const AUTHORS: Record<string, {
       "With a background spanning system architecture, Rust development and technical team leadership, Soham focuses on turning complex technical requirements into reliable, production-ready systems.",
       "He writes about AI engineering, system design, and the practical challenges of building at scale.",
     ],
-    linkedin: "https://www.linkedin.com/in/soham-thaker/",
+    linkedin: "https://www.linkedin.com/in/thakersoham/",
     initials: "ST",
   },
 };
