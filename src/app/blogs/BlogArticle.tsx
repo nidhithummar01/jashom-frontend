@@ -5,6 +5,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import Magnetic from "@/components/motion/Magnetic";
 import type { BlogPost } from "@/lib/blogs";
 import { formatDate } from "@/lib/blogs";
+import AuthorBio from "./AuthorBio";
 
 function BlogContent({ post }: { readonly post: BlogPost }) {
   if (post.content) {
@@ -122,6 +123,9 @@ export default function BlogArticle({
 
               {/* Content — rendered as HTML from admin panel */}
               <BlogContent post={post} />
+
+              {/* Author Bio */}
+              <AuthorBio authorName={post.author_name} />
             </div>
 
             {/* Right Column: Sidebar related blogs */}
