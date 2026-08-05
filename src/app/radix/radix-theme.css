@@ -133,7 +133,8 @@
   }
 }
 
-/* Frontier Labs logo grid — 2 / 3 / 6 cols */
+/* Trusted by GPU and inference teams at frontier AI labs
+  logo grid — 2 / 3 / 6 cols */
 @media (min-width: 768px) {
   .jashom-radix .j-logo-grid { grid-template-columns: repeat(3, 1fr) !important; }
 }

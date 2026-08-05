@@ -15,7 +15,8 @@ export default function UsedBy() {
     <Box style={{ background: "var(--bg-primary)", borderBottom: "1px solid #e4e3de" }} py="7">
       <Container style={{ maxWidth: 1280 }} px="5">
         <Box style={{ textAlign: "center" }} mb="5">
-          <span className="j-eyebrow">Frontier Labs</span>
+          <span className="j-eyebrow">Trusted by GPU and inference teams at frontier AI labs
+ </span>
         </Box>
         <Box
           style={{

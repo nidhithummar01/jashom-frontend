@@ -63,7 +63,8 @@ export default function UsedBy() {
         {/* Section Title */}
         <div className="text-center mb-10">
           <h2 className="text-[clamp(1.6rem,2.5vw,2.1rem)] text-ink font-normal tracking-tight">
-            Frontier Labs
+            Trusted by GPU and inference teams at frontier AI labs
+ 
           </h2>
         </div>
 
