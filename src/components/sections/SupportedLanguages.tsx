@@ -137,6 +137,24 @@ export default function SupportedLanguages() {
         {/* Languages Grid */}
         <Stagger className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-t border-l border-line" itemClassName="h-full" step={0.05}>
           {LANGUAGES.map((lang) => (
+            lang.name === "REQUEST" ? (
+              <a
+                key={lang.name}
+                href="/contact/"
+                className="bg-paper border-r border-b border-line group flex flex-col items-start p-6 md:p-7 h-full hover:bg-tint/50 transition-all duration-300 cursor-pointer"
+              >
+                {/* Icon Container */}
+                <div className="mb-6 transition-transform duration-300 group-hover:-translate-y-1">
+                  {lang.icon}
+                </div>
+                <h3 className="font-mono text-[1.05rem] font-bold text-ink mb-1.5 uppercase tracking-wide">
+                  {lang.name}
+                </h3>
+                <p className="text-[0.8125rem] md:text-[0.875rem] text-ink-2 font-mono tracking-tight leading-normal">
+                  {lang.description}
+                </p>
+              </a>
+            ) : (
             <div
               key={lang.name}
               className="bg-paper border-r border-b border-line group flex flex-col items-start p-6 md:p-7 h-full hover:bg-tint/50 transition-all duration-300"
@@ -156,6 +174,7 @@ export default function SupportedLanguages() {
                 {lang.description}
               </p>
             </div>
+            )
           ))}
         </Stagger>
       </div>
