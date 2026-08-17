@@ -117,9 +117,9 @@ const WHY = [
 ];
 
 const TESTIMONIALS = [
-  { quote: "Their kernel optimization expertise dramatically reduced our server response times. The changes were precise, validated, and production-safe.", name: "Arjun Mehta", org: "Director of Engineering, NovaAI Labs" },
-  { quote: "After their OS tuning work, our Linux infrastructure became noticeably more stable under peak load. Clear, measurable gains.", name: "Sofia Alvarez", org: "CTO, Quantix Systems" },
-  { quote: "We hired their Linux engineers for a complex optimization project. The results — lower latency, better resource use — were exactly what we needed.", name: "Daniel Brooks", org: "Chief Operating Officer, CoreTech Solutions" },
+  { quote: "Their kernel optimization expertise dramatically reduced our server response times. The changes were precise, validated, and production-safe.", name: "Ethan Parker", org: "Director of Engineering, BrightPath Solutions" },
+  { quote: "After their OS tuning work, our Linux infrastructure became noticeably more stable under peak load. Clear, measurable gains.", name: "Megan Collins", org: "CTO, NorthPeak Digital" },
+  { quote: "We hired their Linux engineers for a complex optimization project. The results — lower latency, better resource use — were exactly what we needed.", name: "Ryan Mitchell", org: "Chief Operating Officer, ClearStone Consulting" },
 ];
 
 const FAQS = [
