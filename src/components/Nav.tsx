@@ -19,6 +19,12 @@ const SERVICES = [
     href: "/cuda-development-service/",
     iconName: "cuda" as const,
   },
+  {
+    label: "Kernel Optimization",
+    desc: "Tune Linux OS kernels for peak enterprise performance",
+    href: "/kernel-optimization-services/",
+    iconName: "kernel" as const,
+  },
 ];
 
 function ServiceIcon({ name }: { readonly name: string }) {
@@ -50,6 +56,17 @@ function ServiceIcon({ name }: { readonly name: string }) {
         <svg {...common}>
           <polyline points="2 13 6 6 10 17 14 10 18 14 22 9" />
           <line x1="2" y1="20" x2="22" y2="20" />
+        </svg>
+      );
+    case "kernel":
+      return (
+        <svg {...common}>
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+          <line x1="7" y1="8" x2="7" y2="12" />
+          <line x1="12" y1="6" x2="12" y2="14" />
+          <line x1="17" y1="9" x2="17" y2="13" />
         </svg>
       );
     default:

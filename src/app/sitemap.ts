@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/`, lastModified: new Date(), priority: 1.0, changeFrequency: "weekly" },
     { url: `${BASE}/gpu-optimization-service/`, lastModified: new Date(), priority: 0.9, changeFrequency: "monthly" },
     { url: `${BASE}/cuda-development-service/`, lastModified: new Date(), priority: 0.9, changeFrequency: "monthly" },
+    { url: `${BASE}/kernel-optimization-services/`, lastModified: new Date(), priority: 0.9, changeFrequency: "monthly" },
     { url: `${BASE}/hire-cuda-developer/`, lastModified: new Date(), priority: 0.8, changeFrequency: "monthly" },
     { url: `${BASE}/hire-rust-developers/`, lastModified: new Date(), priority: 0.8, changeFrequency: "monthly" },
     // Company
